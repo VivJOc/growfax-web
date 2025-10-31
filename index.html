@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Growfax - Downloads</title>
+    <link rel="icon" href="Growfax_banner.jpg" type="image/jpeg">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 5px solid #ffaa00;
+        }
+        .header img {
+            max-width: 150px;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .download-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .download-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        .download-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .download-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .download-item h3 {
+            margin: 5px 0 10px 0;
+            font-size: 1.1em;
+            color: #555;
+        }
+        .download-item a {
+            display: block;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        .download-item a:hover {
+            background-color: #0056b3;
+        }
+        .discord-section {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #7289da;
+            color: #fff;
+            border-radius: 8px;
+        }
+        .discord-section img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 10px;
+            border-radius: 50%;
+        }
+        .discord-section a {
+            color: #fff;
+            font-weight: bold;
+            text-decoration: underline;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="Growfax_banner.jpg" alt="Growfax Logo">
+        <h1>Growfax</h1>
+        <p>Download and Community Hub</p>
+    </div>
+
+    <div class="container">
+        <h2>📂 File Downloads</h2>
+
+        <ul class="download-list">
+            <li class="download-item">
+                <img src="windows.png" alt="Windows Logo">
+                <h3>Growfax Hosts Patcher (Windows)</h3>
+                <a href="Growfax_Patched_.bat" download>Download Growfax_Patched_.bat</a>
+            </li>
+
+            <li class="download-item">
+                <img src="virtual-host.png" alt="Virtual Host Logo">
+                <h3>Hosts File (Virtual Host Android)</h3>
+                <a href="Growfax_VirtualHost.txt" download>Download Growfax_VirtualHost.txt</a>
+            </li>
+
+            <li class="download-item">
+                <img src="surge5.png" alt="Surge 5 Logo">
+                <h3>Hosts File (iOS/Surge 5)</h3>
+                <a href="GrowFax ios.txt" download>Download GrowFax ios.txt</a>
+            </li>
+
+            <li class="download-item">
+                <img src="powertunnel.jpeg" alt="PowerTunnel Logo">
+                <h3>Hosts File (PowerTunnel)</h3>
+                <a href="PowerTunel_Host.txt" download>Download PowerTunel_Host.txt</a>
+            </li>
+        </ul>
+
+        <div class="discord-section">
+            <img src="discord.jpeg" alt="Discord Logo">
+            <h2>Join the Growfax Discord Community!</h2>
+            <p>Click the link below to join our Discord server:</p>
+            <a href="https://discord.gg/smgS6sq83y" target="_blank">Join Growfax Discord</a>
+        </div>
+
+    </div>
+
+</body>
+</html>
