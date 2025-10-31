@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Growfax - Downloads</title>
-    <link rel="icon" href="Growfax_banner.png" type="image/png">
+    <link rel="icon" href="Growfax_banner.jpg" type="image/jpeg"> 
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -21,10 +21,11 @@
             border-bottom: 5px solid #ffaa00;
         }
         .header img {
-            max-width: 150px;
+            max-width: 100%; /* Agar gambar responsif */
             height: auto;
             border-radius: 8px;
             margin-bottom: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Menambahkan sedikit bayangan pada banner */
         }
         .container {
             width: 90%;
@@ -104,7 +105,7 @@
 <body>
 
     <div class="header">
-        <img src="Growfax_banner.jpg" alt="Growfax Logo">
+        <img src="Growfax_banner.jpg" alt="Growfax Banner"> 
         <h1>Growfax</h1>
         <p>Download and Community Hub</p>
     </div>
@@ -116,25 +117,25 @@
             <li class="download-item">
                 <img src="windows.png" alt="Windows Logo">
                 <h3>Growfax Hosts Patcher (Windows)</h3>
-                <a href="Growfax_Patched_.bat" download>Download Growfax_Patched_.bat</a>
+                <a href="Growfax_Patched_.bat" download="Growfax_Patched_.bat">Download for Windows</a>
             </li>
 
             <li class="download-item">
                 <img src="virtual-host.png" alt="Virtual Host Logo">
                 <h3>Hosts File (Virtual Host Android)</h3>
-                <a href="Growfax_VirtualHost.txt" download>Download Growfax_VirtualHost.txt</a>
+                <a href="Growfax_VirtualHost.txt" download="Growfax_VirtualHost.txt">Download for Virtual Host</a>
             </li>
 
             <li class="download-item">
                 <img src="surge5.png" alt="Surge 5 Logo">
                 <h3>Hosts File (iOS/Surge 5)</h3>
-                <a href="GrowFax ios.txt" download>Download GrowFax ios.txt</a>
+                <a href="GrowFax ios.txt" download="GrowFax ios.txt">Download for iOS/Surge 5</a>
             </li>
 
             <li class="download-item">
                 <img src="powertunnel.jpeg" alt="PowerTunnel Logo">
                 <h3>Hosts File (PowerTunnel)</h3>
-                <a href="PowerTunel_Host.txt" download>Download PowerTunel_Host.txt</a>
+                <a href="PowerTunel_Host.txt" download="PowerTunel_Host.txt">Download for PowerTunnel</a>
             </li>
         </ul>
 
