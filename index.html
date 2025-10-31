@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Growfax Official Download Page</title>
+    <title>Growfax Official - Shop & Downloads</title>
     
 <link rel="icon" href="Growfax_banner.jpg" type="image/jpeg"> 
     <style>
         :root {
             --primary-color: #007bff; /* Blue */
             --secondary-color: #333;
-            --background-color: #f8f9fa; /* Light Gray */
+            --background-color: #f8f8f8; /* Light Gray */
             --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --paypal-color: #0070ba; /* PayPal Blue */
             --discord-color: #7289da;
         }
 
@@ -29,34 +30,59 @@
             background-color: #fff;
             padding: 15px 0;
             text-align: center;
-            border-bottom: 3px solid var(--primary-color);
+            position: sticky; /* Membuat header tetap di atas saat scroll */
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         .header-content {
             max-width: 1200px;
             margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
         }
         .header-content h1 {
             color: var(--secondary-color);
             margin: 0;
-            font-size: 2.5em;
+            font-size: 2em;
+        }
+        .nav-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 15px;
+            margin-left: 10px;
+            border: 2px solid var(--primary-color);
+            border-radius: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .nav-links a:hover {
+            background-color: var(--primary-color);
+            color: #fff;
         }
 
-        /* Banner Section */
+        /* Banner Section (Modified for Shop) */
         .banner-section {
             background-color: var(--secondary-color);
             padding: 40px 0;
             text-align: center;
+            color: #fff;
         }
         .banner-section img {
-            max-width: 300px; /* Maximum banner width */
+            max-width: 250px; 
             height: auto;
             border-radius: 8px;
-            box-shadow: var(--card-shadow);
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+        }
+        .banner-section h2 {
+            font-size: 3em;
+            margin-bottom: 5px;
+            color: #ffaa00; /* Accent Color */
         }
         .banner-section p {
-            color: #ccc;
-            font-size: 1.1em;
+            font-size: 1.2em;
             max-width: 600px;
             margin: 0 auto;
         }
@@ -66,9 +92,79 @@
             width: 90%;
             max-width: 1100px;
             margin: 30px auto;
+            padding-top: 20px; /* Padding untuk anchor link */
         }
 
-        /* Download Cards Layout */
+        /* --- SHOP ROLE STYLES --- */
+        .role-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .role-item {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .role-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .role-item h3 {
+            font-size: 1.8em;
+            margin: 0 0 10px 0;
+            color: var(--primary-color);
+        }
+        .role-item .price {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+        .role-item .price span {
+            font-size: 0.5em;
+            font-weight: normal;
+            vertical-align: top;
+            margin-right: 5px;
+        }
+        .role-item ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: left;
+            margin-bottom: 25px;
+        }
+        .role-item ul li {
+            margin: 8px 0;
+            font-size: 1em;
+            border-bottom: 1px dashed #eee;
+            padding-bottom: 5px;
+        }
+        .role-item a.paypal-button {
+            display: block;
+            background-color: var(--paypal-color);
+            color: #fff;
+            padding: 12px 0;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+            text-transform: uppercase;
+        }
+        .role-item a.paypal-button:hover {
+            background-color: #005ea6;
+        }
+        .separator {
+            border-top: 3px solid #ccc;
+            margin: 60px 0;
+        }
+
+        /* --- DOWNLOAD STYLES (Reusing Card Styling) --- */
         .download-list {
             list-style: none;
             padding: 0;
@@ -78,6 +174,7 @@
             margin-top: 20px;
         }
         .download-item {
+            /* Inherits styles from .role-item for consistency */
             background-color: #fff;
             border-radius: 10px;
             padding: 20px;
@@ -85,11 +182,6 @@
             box-shadow: var(--card-shadow);
             transition: transform 0.3s, box-shadow 0.3s;
         }
-        .download-item:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-
         .download-item img {
             width: 70px;
             height: 70px;
@@ -103,20 +195,20 @@
             font-size: 1.2em;
             color: var(--secondary-color);
         }
-
         .download-item a {
             display: inline-block;
             background-color: var(--primary-color);
             color: #fff;
             padding: 10px 20px;
             text-decoration: none;
-            border-radius: 25px; /* Pill button */
+            border-radius: 25px; 
             font-weight: bold;
             transition: background-color 0.2s;
         }
         .download-item a:hover {
             background-color: #0056b3;
         }
+
 
         /* Discord Section */
         .discord-section {
@@ -153,6 +245,8 @@
             margin-top: 40px;
             color: #999;
             font-size: 0.9em;
+            background-color: #fff;
+            border-top: 1px solid #eee;
         }
     </style>
 </head>
@@ -161,30 +255,81 @@
     <div class="header">
         <div class="header-content">
             <h1>Growfax Official</h1>
+            <div class="nav-links">
+                <a href="#shop">🛒 Shop Role</a>
+                <a href="#downloads">📥 Downloads</a>
+            </div>
         </div>
     </div>
 
     <div class="banner-section">
         
 <img src="Growfax_banner.jpg" alt="Growfax Banner"> 
-        <p>Your hub for all Growtopia-related tools and files. Choose your platform below to get started.</p>
+        <h2>Welcome to Growfax</h2>
+        <p>Your centralized hub for community roles and essential tools. Find what you need below.</p>
     </div>
 
-    <div class="container">
-        <h2>📥 Available Downloads</h2>
+    <div class="container" id="shop">
+        <h2>✨ Official Growfax Role Shop</h2>
+        <p style="text-align: center; color: red; font-weight: bold;">⚠️ All payments are USD via PayPal Direct. Contact staff immediately after payment.</p>
+
+        <ul class="role-list">
+            <li class="role-item">
+                <h3>VIP Member</h3>
+                <p class="price"><span>USD</span>10.00</p>
+                <ul>
+                    <li>✅ Priority Support</li>
+                    <li>✅ VIP Chat Channel Access</li>
+                    <li>✅ Custom Role Color</li>
+                    <li>❌ Exclusive Tools Access</li>
+                </ul>
+                <a href="YOUR_PAYPAL_LINK_VIP" target="_blank" class="paypal-button">Pay with PayPal</a>
+            </li>
+
+            <li class="role-item">
+                <h3 style="color: gold;">Elite Tier</h3>
+                <p class="price"><span>USD</span>25.00</p>
+                <ul>
+                    <li>✅ All VIP Perks Included</li>
+                    <li>✅ Access to Private Alpha Tools</li>
+                    <li>✅ Dedicated Support Line</li>
+                    <li>✅ Monthly Giveaways Entry</li>
+                </ul>
+                <a href="YOUR_PAYPAL_LINK_ELITE" target="_blank" class="paypal-button">Pay with PayPal</a>
+            </li>
+
+            <li class="role-item">
+                <h3 style="color: purple;">Lifetime Supporter</h3>
+                <p class="price"><span>USD</span>50.00</p>
+                <ul>
+                    <li>✅ All Elite Perks Included</li>
+                    <li>🔥 Lifetime Role (Never Expires)</li>
+                    <li>🔥 Direct Contact with Admin</li>
+                    <li>🔥 Early Access to All Projects</li>
+                </ul>
+                <a href="YOUR_PAYPAL_LINK_LIFETIME" target="_blank" class="paypal-button">Pay with PayPal</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="container" id="downloads">
+        <h2>📥 Essential File Downloads</h2>
+        <p style="text-align: center; margin-bottom: 30px;">Choose the appropriate hosts file or patcher for your operating system or utility.</p>
 
         <ul class="download-list">
             <li class="download-item">
                 <img src="windows.png" alt="Windows Logo">
-                <h3>Windows Hosts Patcher</h3>
-                <p>Easy hosts patching tool for PC users.</p>
+                <h3>Windows Hosts Patcher (BAT)</h3>
+                <p>Executable script to easily patch your Windows hosts file.</p>
                 <a href="Growfax_Patched_.bat" download="Growfax_Patched_.bat">Download for Windows</a>
             </li>
 
             <li class="download-item">
                 <img src="virtual-host.png" alt="Virtual Host Logo">
                 <h3>Hosts File (Virtual Host)</h3>
-                <p>Hosts file for Android Virtual Host app.</p>
+                <p>Standard hosts file for the Android Virtual Host app.</p>
                 <a href="Growfax_VirtualHost.txt" download="Growfax_VirtualHost.txt">Download for Virtual Host</a>
             </li>
 
@@ -198,18 +343,17 @@
             <li class="download-item">
                 <img src="powertunnel.jpeg" alt="PowerTunnel Logo">
                 <h3>Hosts File (PowerTunnel)</h3>
-                <p>Hosts file for PowerTunnel utility.</p>
+                <p>Hosts file specifically for the PowerTunnel utility.</p>
                 <a href="PowerTunel_Host.txt" download="PowerTunel_Host.txt">Download for PowerTunnel</a>
             </li>
         </ul>
+    </div>
 
-        <div class="discord-section">
-            <img src="discord.jpeg" alt="Discord Logo">
-            <h2>Join Our Community</h2>
-            <p>Connect with other members and get support on our official Discord server.</p>
-            <a href="https://discord.gg/smgS6sq83y" target="_blank">Join Growfax Discord Now!</a>
-        </div>
-
+    <div class="discord-section">
+        <img src="discord.jpeg" alt="Discord Logo">
+        <h2>Join Our Community</h2>
+        <p>Connect with other members and get support on our official Discord server.</p>
+        <a href="https://discord.gg/smgS6sq83y" target="_blank">Join Growfax Discord Now!</a>
     </div>
 
     <div class="footer">
