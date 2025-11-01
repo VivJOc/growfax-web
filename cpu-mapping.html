@@ -84,28 +84,36 @@ resize();
 
 let data = new Array(400).fill(H / 2);
 let cpu = 50;
-let smoothCpu = cpu;
+let targetCPU = 50;
+let smoothCPU = 50;
+let t = 0;
 let lastUpdate = 0;
 
 function nextCPU() {
-  // Perlahan ubah target CPU
-  cpu += (Math.random() - 0.5) * 4;
-  if (Math.random() < 0.01) cpu += Math.random() * 15; // spike jarang
+  // tiap beberapa detik, ubah target CPU
+  if (Math.random() < 0.02) {
+    targetCPU = 50 + (Math.random() - 0.5) * 60; // naik/turun tapi seimbang
+  }
+
+  // interpolasi halus menuju target
+  cpu += (targetCPU - cpu) * 0.01;
+  smoothCPU += (cpu - smoothCPU) * 0.05;
+
+  // clamp
   cpu = Math.max(0, Math.min(100, cpu));
-  // Smooth transition (angka CPU bergerak halus)
-  smoothCpu += (cpu - smoothCpu) * 0.05;
-  percentEl.textContent = `${smoothCpu.toFixed(1)}%`;
-  return smoothCpu;
+  smoothCPU = Math.max(0, Math.min(100, smoothCPU));
+
+  percentEl.textContent = `${smoothCPU.toFixed(1)}%`;
+  return smoothCPU;
 }
 
-let t = 0;
 function draw(timestamp) {
-  if (timestamp - lastUpdate < 80) {  // frame rate 12-13 fps
+  if (timestamp - lastUpdate < 120) { // fps lambat biar smooth (sekitar 8fps)
     requestAnimationFrame(draw);
     return;
   }
   lastUpdate = timestamp;
-  
+
   ctx.clearRect(0, 0, W, H);
   const grad = ctx.createLinearGradient(0, 0, 0, H);
   grad.addColorStop(0, "#001100");
@@ -122,13 +130,10 @@ function draw(timestamp) {
     ctx.stroke();
   }
 
-  // data
+  // data update
   data.shift();
   const val = nextCPU();
-  const wave =
-    H / 2 -
-    Math.sin(t / 12) * 20 -
-    (val - 50) * 1.5;
+  const wave = H/2 - Math.sin(t/25) * 10 - (val - 50) * 1.2;
   t += 1;
   data.push(wave);
 
