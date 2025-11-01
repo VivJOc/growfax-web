@@ -82,46 +82,72 @@ function resize() {
 window.addEventListener('resize', resize);
 resize();
 
-let data = new Array(400).fill(H/2);
+let data = new Array(400).fill(H / 2);
 let cpu = 50;
+let smoothCpu = cpu;
+let lastUpdate = 0;
+
 function nextCPU() {
-  cpu += (Math.random()-0.5)*10;
-  if (Math.random() < 0.02) cpu += Math.random()*30; // spike
+  // Perlahan ubah target CPU
+  cpu += (Math.random() - 0.5) * 4;
+  if (Math.random() < 0.01) cpu += Math.random() * 15; // spike jarang
   cpu = Math.max(0, Math.min(100, cpu));
-  percentEl.textContent = `${cpu.toFixed(1)}%`;
-  return cpu;
+  // Smooth transition (angka CPU bergerak halus)
+  smoothCpu += (cpu - smoothCpu) * 0.05;
+  percentEl.textContent = `${smoothCpu.toFixed(1)}%`;
+  return smoothCpu;
 }
 
-function draw() {
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  // background
-  const grad = ctx.createLinearGradient(0,0,0,H);
-  grad.addColorStop(0,"#001100");
-  grad.addColorStop(1,"#000000");
+let t = 0;
+function draw(timestamp) {
+  if (timestamp - lastUpdate < 80) {  // frame rate 12-13 fps
+    requestAnimationFrame(draw);
+    return;
+  }
+  lastUpdate = timestamp;
+  
+  ctx.clearRect(0, 0, W, H);
+  const grad = ctx.createLinearGradient(0, 0, 0, H);
+  grad.addColorStop(0, "#001100");
+  grad.addColorStop(1, "#000000");
   ctx.fillStyle = grad;
-  ctx.fillRect(0,0,W,H);
+  ctx.fillRect(0, 0, W, H);
+
   // grid
   ctx.strokeStyle = "rgba(0,255,100,0.06)";
-  for (let y=0;y<H;y+=40){
-    ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();
+  for (let y = 0; y < H; y += 40) {
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(W, y);
+    ctx.stroke();
   }
-  // move and add new data
+
+  // data
   data.shift();
   const val = nextCPU();
-  const y = H - (val/100)*(H*0.8);
-  data.push(y);
-  // draw wave
+  const wave =
+    H / 2 -
+    Math.sin(t / 12) * 20 -
+    (val - 50) * 1.5;
+  t += 1;
+  data.push(wave);
+
+  // draw waveform
   ctx.beginPath();
   ctx.moveTo(0, data[0]);
-  for (let i=1;i<data.length;i++) ctx.lineTo(i*(W/data.length), data[i]);
+  for (let i = 1; i < data.length; i++) {
+    ctx.lineTo((i * W) / data.length, data[i]);
+  }
   ctx.strokeStyle = "#00ff66";
   ctx.lineWidth = 2;
   ctx.shadowColor = "#00ff66";
-  ctx.shadowBlur = 12;
+  ctx.shadowBlur = 15;
   ctx.stroke();
   ctx.shadowBlur = 0;
+
   requestAnimationFrame(draw);
 }
+
 draw();
 </script>
 </body>
