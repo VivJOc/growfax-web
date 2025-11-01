@@ -13,217 +13,98 @@
     --accent: #0078d7;
     --card-shadow: 0 8px 20px rgba(0,0,0,0.08);
     --discord-color: #7289da;
+    --toast-bg: rgba(0,0,0,0.8);
   }
-
-  [data-theme="dark"] {
+  [data-theme="dark"]{
     --bg: #0f1720;
     --card-bg: #0b1220;
     --text: #e6eef8;
     --accent: #4da3ff;
     --card-shadow: 0 8px 28px rgba(0,0,0,0.6);
     --discord-color: #5b6ea6;
+    --toast-bg: rgba(255,255,255,0.08);
   }
+  html,body{height:100%;margin:0;font-family:"Segoe UI", Tahoma, Geneva, Verdana, sans-serif;background:var(--bg);color:var(--text);line-height:1.6;transition:background .25s,color .25s}
+  header{background:var(--card-bg);box-shadow:var(--card-shadow);position:sticky;top:0;z-index:1200}
+  .header-content{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .header-left{display:flex;align-items:center;gap:14px}
+  h1{font-size:1.4rem;margin:0;font-weight:700}
+  .controls{display:flex;align-items:center;gap:10px}
+  .theme-toggle,.lang-select,.open-welcome{font-size:0.98rem;padding:8px 12px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);background:transparent;color:var(--text);cursor:pointer}
+  .lang-select{appearance:none}
+  .banner-section{text-align:center;padding:56px 20px;background:linear-gradient(90deg, rgba(0,0,0,0.03), rgba(255,255,255,0.02))}
+  .banner-section img{max-width:240px;border-radius:10px;margin-bottom:18px}
+  .banner-section h2{font-size:1.9rem;color:#ffaa00;margin:8px 0;text-shadow:0 0 10px rgba(255,170,0,0.18)}
+  .banner-section p{font-size:1.05rem;opacity:.92;margin:0}
+  .time-display{margin-top:10px;font-size:0.98rem;font-weight:600;opacity:.9}
+  .container{max-width:1000px;margin:48px auto;text-align:center;padding:0 18px}
+  .container h2{font-size:1.6rem;margin-bottom:28px}
+  .platform-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:20px}
+  .platform-buttons a{display:flex;align-items:center;justify-content:center;gap:12px;width:300px;padding:14px 18px;border-radius:12px;color:#fff;font-weight:700;text-decoration:none;border:1px solid transparent;font-size:1.02rem;transition:transform .18s ease,box-shadow .18s}
+  .platform-buttons a img{width:30px;height:30px;border-radius:6px}
+  .platform-buttons a:hover{transform:translateY(-4px)}
+  .btn-android{background:#34c759;--glow:#4cff77;box-shadow:0 6px 24px rgba(76,255,119,0.08)}
+  .btn-windows{background:#0078d7;--glow:#4da3ff;box-shadow:0 6px 24px rgba(77,163,255,0.08)}
+  .btn-ios{background:#007aff;--glow:#7acbff;box-shadow:0 6px 24px rgba(122,203,255,0.08)}
+  .btn-powertunnel{background:#b71c1c;--glow:#ff5a5a;box-shadow:0 6px 24px rgba(255,90,90,0.08)}
+  .discord-section{background:var(--discord-color);color:#fff;padding:32px;border-radius:12px;max-width:820px;margin:42px auto 60px;text-align:center;box-shadow:var(--card-shadow)}
+  .discord-section img{width:58px;height:58px;border-radius:8px;margin-bottom:10px}
+  footer{text-align:center;margin:30px 0 40px;font-size:.95rem;opacity:.85}
 
-  body {
-    margin: 0;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-    transition: background 0.3s, color 0.3s;
-  }
+  /* Modal */
+  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:1300}
+  .modal{width:92%;max-width:560px;background:var(--card-bg);color:var(--text);border-radius:12px;padding:18px;box-shadow:0 14px 40px rgba(0,0,0,0.2);transform:translateY(16px);transition:transform .18s,opacity .18s}
+  .modal h3{margin:0 0 8px;font-size:1.15rem}
+  .modal p{margin:0 0 12px;color:var(--text);opacity:.9}
+  .modal .meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+  .meta .chip{background:rgba(0,0,0,0.05);padding:6px 10px;border-radius:8px;font-weight:600}
+  [data-theme="dark"] .meta .chip{background:rgba(255,255,255,0.04)}
+  .modal .changelog{background:rgba(0,0,0,0.03);padding:8px;border-radius:8px;font-size:0.95rem;margin-bottom:12px}
+  [data-theme="dark"] .modal .changelog{background:rgba(255,255,255,0.03)}
+  .modal .buttons{display:flex;justify-content:flex-end;gap:10px}
+  .btn{padding:8px 12px;border-radius:8px;border:0;cursor:pointer;font-weight:700}
+  .btn.secondary{background:transparent;border:1px solid rgba(0,0,0,0.08)}
+  .btn.primary{background:var(--accent);color:#fff}
 
-  header {
-    background: var(--card-bg);
-    box-shadow: var(--card-shadow);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-  }
+  /* Welcome popup */
+  .welcome-backdrop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.4), rgba(0,0,0,0.6));z-index:1400}
+  .welcome{width:92%;max-width:520px;background:var(--card-bg);color:var(--text);padding:20px;border-radius:12px;box-shadow:0 18px 48px rgba(0,0,0,0.28)}
+  .welcome h2{margin:0 0 8px}
+  .welcome .row{display:flex;gap:10px;align-items:center;margin:10px 0}
+  .welcome label{min-width:90px;font-weight:700}
+  .welcome select,.welcome input[type="radio"]{padding:8px;border-radius:8px}
+  .welcome .actions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
 
-  .header-content {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 16px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+  /* Floating discord button */
+  .floating-chat{position:fixed;right:18px;bottom:18px;width:56px;height:56px;border-radius:50%;background:var(--discord-color);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,0.2);cursor:pointer;z-index:1500}
+  .floating-chat img{width:28px;height:28px;border-radius:6px}
 
-  .header-content h1 {
-    font-size: 1.6rem;
-    margin: 0;
-    font-weight: 700;
-  }
+  /* Toast */
+  .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:86px;background:var(--toast-bg);color:#fff;padding:8px 12px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;z-index:1600}
+  [data-theme="dark"] .toast{color:#fff}
 
-  .controls {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .theme-toggle, .lang-select {
-    font-size: 1rem;
-    padding: 8px 14px;
-    border-radius: 10px;
-    border: 1px solid rgba(0,0,0,0.08);
-    background: transparent;
-    color: var(--text);
-    cursor: pointer;
-    transition: background 0.3s, transform 0.2s;
-  }
-
-  .theme-toggle:hover, .lang-select:hover {
-    background: rgba(0,0,0,0.05);
-    transform: translateY(-1px);
-  }
-
-  .banner-section {
-    text-align: center;
-    padding: 60px 20px;
-    background: linear-gradient(90deg, rgba(0,0,0,0.05), rgba(255,255,255,0.03));
-  }
-
-  .banner-section img {
-    max-width: 250px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-  }
-
-  .banner-section h2 {
-    font-size: 2rem;
-    color: #ffaa00;
-    margin: 10px 0;
-    text-shadow: 0 0 12px rgba(255,170,0,0.25);
-  }
-
-  .banner-section p {
-    font-size: 1.1rem;
-    opacity: 0.9;
-  }
-
-  .time-display {
-    margin-top: 10px;
-    font-size: 1rem;
-    font-weight: 600;
-    opacity: 0.85;
-  }
-
-  .container {
-    max-width: 1000px;
-    margin: 60px auto;
-    text-align: center;
-    padding: 0 20px;
-  }
-
-  .container h2 {
-    font-size: 1.8rem;
-    margin-bottom: 40px;
-  }
-
-  .platform-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 25px;
-  }
-
-  .platform-buttons a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
-    width: 300px;
-    padding: 16px 22px;
-    border-radius: 14px;
-    color: #fff;
-    font-weight: 700;
-    text-decoration: none;
-    border: 1px solid transparent;
-    font-size: 1.05rem;
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
-  }
-
-  .platform-buttons a img {
-    width: 30px;
-    height: 30px;
-    border-radius: 6px;
-  }
-
-  .platform-buttons a:hover {
-    transform: translateY(-4px);
-    opacity: 0.97;
-  }
-
-  @keyframes buttonGlow {
-    0% { box-shadow: 0 0 10px var(--glow-color); }
-    50% { box-shadow: 0 0 26px var(--glow-color); }
-    100% { box-shadow: 0 0 10px var(--glow-color); }
-  }
-
-  .btn-android { background:#34c759; --glow-color:#4cff77; animation:buttonGlow 2s infinite ease-in-out; }
-  .btn-windows { background:#0078d7; --glow-color:#4da3ff; animation:buttonGlow 2s infinite ease-in-out; }
-  .btn-ios { background:#007aff; --glow-color:#7acbff; animation:buttonGlow 2s infinite ease-in-out; }
-  .btn-powertunnel { background:#b71c1c; --glow-color:#ff5a5a; animation:buttonGlow 2s infinite ease-in-out; }
-
-  .discord-section {
-    background: var(--discord-color);
-    color: white;
-    padding: 40px 20px;
-    border-radius: 14px;
-    max-width: 800px;
-    margin: 60px auto;
-    text-align: center;
-    box-shadow: var(--card-shadow);
-  }
-
-  .discord-section img {
-    width: 60px;
-    height: 60px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-  }
-
-  .discord-section a {
-    color: white;
-    font-weight: 700;
-    text-decoration: underline;
-  }
-
-  footer {
-    text-align: center;
-    margin: 50px 0 20px;
-    font-size: 0.95rem;
-    opacity: 0.8;
-  }
-
-  @media (max-width: 600px) {
-    .header-content {
-      flex-direction: column;
-      gap: 10px;
-      text-align: center;
-    }
-
-    .platform-buttons a {
-      width: 90%;
-    }
-
-    .banner-section h2 {
-      font-size: 1.6rem;
-    }
+  @media (max-width:600px){
+    .header-content{padding:12px}
+    .platform-buttons a{width:92%}
+    .modal{margin:0 12px}
   }
 </style>
 </head>
 <body data-theme="light">
   <header>
     <div class="header-content">
-      <h1>Growfax Official</h1>
+      <div class="header-left">
+        <h1>Growfax Official</h1>
+        <nav><a href="#downloads" style="color:var(--accent);text-decoration:none;font-weight:700;margin-left:8px">📥 Downloads</a></nav>
+      </div>
+
       <div class="controls">
-        <select id="langSelect" class="lang-select">
+        <button id="openWelcome" class="open-welcome" title="Welcome & Preferences">⚙️</button>
+        <select id="langSelect" class="lang-select" title="Language">
           <option value="en">🇬🇧 English</option>
           <option value="id">🇮🇩 Bahasa</option>
         </select>
-        <button id="themeToggle" class="theme-toggle">🌞 Light</button>
+        <button id="themeToggle" class="theme-toggle" aria-pressed="false" title="Toggle theme">🌞 Light</button>
       </div>
     </div>
   </header>
@@ -235,13 +116,24 @@
     <div id="timeDisplay" class="time-display">Loading time...</div>
   </section>
 
-  <main class="container">
+  <main class="container" id="downloads">
     <h2>📥 Essential File Downloads</h2>
     <div class="platform-buttons">
-      <a href="Growfax_VirtualHost.txt" class="btn-android" download><img src="virtual-host.png" alt="">Play on Android</a>
-      <a href="Growfax_Patched_.bat" class="btn-windows" download><img src="windows.png" alt="">Play on Windows</a>
-      <a href="GrowFax_ios.txt" class="btn-ios" download><img src="surge5.png" alt="">Play on iOS</a>
-      <a href="PowerTunnel_Host.txt" class="btn-powertunnel" download><img src="powertunnel.jpeg" alt="">Play via PowerTunnel</a>
+      <a href="Growfax_VirtualHost.txt" class="btn-android" data-filename="Growfax_VirtualHost.txt" data-filekey="virtualhost" download>
+        <img src="virtual-host.png" alt="">Play on Android
+      </a>
+
+      <a href="Growfax_Patched_.bat" class="btn-windows" data-filename="Growfax_Patched_.bat" data-filekey="patched" download>
+        <img src="windows.png" alt="">Play on Windows
+      </a>
+
+      <a href="GrowFax_ios.txt" class="btn-ios" data-filename="GrowFax_ios.txt" data-filekey="ios" download>
+        <img src="surge5.png" alt="">Play on iOS
+      </a>
+
+      <a href="PowerTunnel_Host.txt" class="btn-powertunnel" data-filename="PowerTunnel_Host.txt" data-filekey="powertunnel" download>
+        <img src="powertunnel.jpeg" alt="">Play via PowerTunnel
+      </a>
     </div>
   </main>
 
@@ -249,105 +141,354 @@
     <img src="discord.jpeg" alt="Discord Logo">
     <h3>Join Our Community</h3>
     <p>Connect with others and get support in our official Discord server.</p>
-    <a href="https://discord.gg/smgS6sq83y" target="_blank">Join Growfax Discord</a>
+    <a href="https://discord.gg/smgS6sq83y" target="_blank" rel="noopener">Join Growfax Discord</a>
   </section>
 
   <footer>© 2025 Growfax. All rights reserved.</footer>
 
+  <!-- Modal (file info) -->
+  <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h3 id="modalTitle">File info</h3>
+      <p id="modalDesc">Details before download</p>
+
+      <div class="meta">
+        <div class="chip" id="modalVersion">v0.0</div>
+        <div class="chip" id="modalUpdated">Updated: —</div>
+      </div>
+
+      <div class="changelog" id="modalChangelog">Changelog: —</div>
+
+      <div style="display:flex;gap:8px;align-items:center;justify-content:space-between">
+        <div style="font-size:.9rem;color:var(--text);opacity:.85" id="modalFilename">Filename</div>
+        <div class="buttons">
+          <button class="btn secondary" id="modalCancel">Cancel</button>
+          <button class="btn primary" id="modalConfirm">Download</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Welcome popup (first-visit) -->
+  <div id="welcomeBackdrop" class="welcome-backdrop" aria-hidden="true">
+    <div class="welcome" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+      <h2 id="welcomeTitle">Welcome to Growfax</h2>
+      <p style="margin:6px 0 12px;opacity:.9">Set your preferred language and theme. We'll remember this for next time.</p>
+      <div class="row">
+        <label for="welcomeLang">Language</label>
+        <select id="welcomeLang" class="lang-select">
+          <option value="en">🇬🇧 English</option>
+          <option value="id">🇮🇩 Bahasa</option>
+        </select>
+      </div>
+      <div class="row">
+        <label>Theme</label>
+        <div style="display:flex;gap:10px;align-items:center">
+          <label><input type="radio" name="welcomeTheme" value="light" checked> Light</label>
+          <label><input type="radio" name="welcomeTheme" value="dark"> Dark</label>
+        </div>
+      </div>
+
+      <div class="actions" style="display:flex;justify-content:flex-end;gap:8px;margin-top:14px">
+        <button class="btn secondary" id="welcomeSkip">Skip</button>
+        <button class="btn primary" id="welcomeSave">Save & Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Discord chat -->
+  <a id="floatingChat" class="floating-chat" href="https://discord.gg/smgS6sq83y" target="_blank" rel="noopener" title="Open Discord">
+    <img src="discord.jpeg" alt="Discord">
+  </a>
+
+  <!-- Toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite">Saved</div>
+
 <script>
-  // --- THEME ---
-  const themeBtn = document.getElementById("themeToggle");
-  function setTheme(theme){
-    document.body.dataset.theme = theme;
-    themeBtn.textContent = theme === "dark" ? "🌙 Dark" : "🌞 Light";
-    localStorage.setItem("theme", theme);
-  }
-  themeBtn.onclick = ()=> setTheme(document.body.dataset.theme === "dark" ? "light" : "dark");
-  setTheme(localStorage.getItem("theme") || "light");
+/* ---------------------------
+   Utilities & state
+   --------------------------- */
+const langSelect = document.getElementById('langSelect');
+const themeToggle = document.getElementById('themeToggle');
+const openWelcome = document.getElementById('openWelcome');
+const toast = document.getElementById('toast');
+const modalBackdrop = document.getElementById('modalBackdrop');
+const modalTitle = document.getElementById('modalTitle');
+const modalDesc = document.getElementById('modalDesc');
+const modalVersion = document.getElementById('modalVersion');
+const modalUpdated = document.getElementById('modalUpdated');
+const modalChangelog = document.getElementById('modalChangelog');
+const modalFilename = document.getElementById('modalFilename');
+const modalConfirm = document.getElementById('modalConfirm');
+const modalCancel = document.getElementById('modalCancel');
 
-  // --- TRANSLATION ---
-  const langSelect = document.getElementById("langSelect");
-  const elements = document.querySelectorAll("body *:not(script):not(style)");
+const welcomeBackdrop = document.getElementById('welcomeBackdrop');
+const welcomeLang = document.getElementById('welcomeLang');
+const welcomeSave = document.getElementById('welcomeSave');
+const welcomeSkip = document.getElementById('welcomeSkip');
+
+const timeDisplay = document.getElementById('timeDisplay');
+
+const FILE_META = {
+  virtualhost: { version: 'v2.1', updated: 'Oct 29, 2025', changelog: '- Fixed host parsing\n- Improved TLS handling', size: '2.3 KB' },
+  patched: { version: 'v1.9', updated: 'Oct 20, 2025', changelog: '- Patched launcher\n- Minor fixes', size: '12.1 KB' },
+  ios: { version: 'v1.4', updated: 'Sep 30, 2025', changelog: '- iOS config update\n- Surge tweak', size: '3.7 KB' },
+  powertunnel: { version: 'v3.0', updated: 'Oct 10, 2025', changelog: '- PowerTunnel rules updated\n- Stability improvements', size: '1.9 KB' }
+};
+
+/* ---------------------------
+   Translation logic (stable)
+   --------------------------- */
+const elements = document.querySelectorAll('body *:not(script):not(style)');
+elements.forEach(el=>{
+  if (el.childNodes.length === 1 && el.textContent.trim() !== '') {
+    el.dataset.original = el.textContent.trim();
+  }
+});
+
+const translations = {
+  id: {
+    "Growfax Official": "Growfax Resmi",
+    "📥 Downloads": "📥 Unduhan",
+    "Welcome to Growfax": "Selamat Datang di Growfax",
+    "Private Growtopia Server": "Server Growtopia Pribadi",
+    "Local Time (New York):": "Waktu Lokal (New York):",
+    "Waktu Lokal (Jakarta):": "Waktu Lokal (Jakarta):",
+    "📥 Essential File Downloads": "📥 Unduhan File Penting",
+    "Play on Android": "Main di Android",
+    "Play on Windows": "Main di Windows",
+    "Play on iOS": "Main di iOS",
+    "Play via PowerTunnel": "Main lewat PowerTunnel",
+    "Join Our Community": "Bergabung dengan Komunitas Kami",
+    "Connect with others and get support in our official Discord server.": "Terhubung dengan anggota lain dan dapatkan dukungan di server Discord resmi kami.",
+    "Join Growfax Discord": "Gabung Discord Growfax",
+    "© 2025 Growfax. All rights reserved.": "© 2025 Growfax. Semua hak dilindungi.",
+    "Are you sure you want to download": "Apakah Anda yakin ingin mengunduh",
+    "Details before download": "Detail sebelum mengunduh",
+    "Cancel": "Batal",
+    "Download": "Unduh",
+    "Filename": "Nama berkas",
+    "Version": "Versi",
+    "Updated": "Diperbarui",
+    "Changelog": "Catatan pembaruan",
+    "Size": "Ukuran",
+    "Welcome to Growfax": "Selamat Datang di Growfax",
+    "Set your preferred language and theme. We'll remember this for next time.": "Pilih bahasa dan tema favoritmu. Kami akan menyimpannya untuk kunjungan berikutnya.",
+    "Save & Continue": "Simpan & Lanjutkan",
+    "Skip": "Lewati",
+    "Language": "Bahasa",
+    "Theme": "Tema"
+  }
+};
+
+function applyTranslations(lang){
   elements.forEach(el=>{
-    if (el.childNodes.length === 1 && el.textContent.trim()!=="")
-      el.dataset.original = el.textContent.trim();
-  });
-
-  const translations = {
-    id: {
-      "Growfax Official": "Growfax Resmi",
-      "Welcome to Growfax": "Selamat Datang di Growfax",
-      "Private Growtopia Server": "Server Growtopia Pribadi",
-      "📥 Essential File Downloads": "📥 Unduhan File Penting",
-      "Play on Android": "Main di Android",
-      "Play on Windows": "Main di Windows",
-      "Play on iOS": "Main di iOS",
-      "Play via PowerTunnel": "Main lewat PowerTunnel",
-      "Join Our Community": "Bergabung dengan Komunitas Kami",
-      "Connect with others and get support in our official Discord server.": "Terhubung dengan anggota lain dan dapatkan dukungan di server Discord resmi kami.",
-      "Join Growfax Discord": "Gabung Discord Growfax",
-      "© 2025 Growfax. All rights reserved.": "© 2025 Growfax. Semua hak dilindungi."
-    }
-  };
-
-  function translate(lang){
-    elements.forEach(el=>{
-      const original=el.dataset.original;
-      if(!original) return;
-      el.textContent = lang==="en" ? original : translations[lang]?.[original] || original;
-    });
-  }
-
-  // --- LOCAL TIME ---
-  const timeDisplay=document.getElementById("timeDisplay");
-  let timeZone="America/New_York";
-
-  function getIndoGreeting(hour){
-    if (hour < 11) return "pagi";     // Morning
-    if (hour < 15) return "siang";    // Afternoon
-    if (hour < 18) return "sore";     // Evening
-    return "malam";                   // Night
-  }
-
-  function updateTime(){
-    const now=new Date();
-    const lang=langSelect.value;
-    if(lang==="id"){
-      const options={timeZone:"Asia/Jakarta", hour12:false, hour:"2-digit", minute:"2-digit", second:"2-digit", day:"2-digit", month:"2-digit", year:"numeric"};
-      const indoTime=new Intl.DateTimeFormat("id-ID",options).format(now);
-      const hour=parseInt(now.toLocaleString("en-US",{timeZone:"Asia/Jakarta",hour:"2-digit",hour12:false}));
-      const greeting=getIndoGreeting(hour);
-      timeDisplay.textContent=`Waktu Lokal (Jakarta): ${indoTime} - ${greeting}`;
+    const orig = el.dataset.original;
+    if(!orig) return;
+    if(lang === 'en'){
+      el.textContent = orig;
     } else {
-      const options={timeZone:"America/New_York", hour12:true, timeStyle:"medium", dateStyle:"medium"};
-      const usTime=now.toLocaleString("en-US",options);
-      timeDisplay.textContent=`Local Time (New York): ${usTime}`;
+      el.textContent = translations[lang]?.[orig] || orig;
     }
-  }
-
-  setInterval(updateTime,1000);
-
-  langSelect.onchange=()=>{
-    const lang=langSelect.value;
-    localStorage.setItem("lang",lang);
-    translate(lang);
-    updateTime();
-  };
-
-  const savedLang=localStorage.getItem("lang")||"en";
-  langSelect.value=savedLang;
-  translate(savedLang);
-  updateTime();
-
-  // --- DOWNLOAD CONFIRM ---
-  document.querySelectorAll(".platform-buttons a").forEach(a=>{
-    a.addEventListener("click",e=>{
-      const file=a.getAttribute("href");
-      const lang=langSelect.value;
-      const msg=lang==="id"?"Apakah Anda yakin ingin mengunduh ":"Are you sure you want to download ";
-      if(!confirm(msg+file+"?")) e.preventDefault();
-    });
   });
+  // keep modal buttons text localized
+  modalCancel.textContent = lang === 'id' ? (translations.id['Cancel'] || 'Batal') : 'Cancel';
+  modalConfirm.textContent = lang === 'id' ? (translations.id['Download'] || 'Unduh') : 'Download';
+  // welcome dialog
+  welcomeSave.textContent = lang === 'id' ? (translations.id['Save & Continue'] || 'Simpan & Lanjutkan') : 'Save & Continue';
+  welcomeSkip.textContent = lang === 'id' ? (translations.id['Skip'] || 'Lewati') : 'Skip';
+}
+
+/* ---------------------------
+   Theme control
+   --------------------------- */
+function setTheme(theme){
+  document.body.setAttribute('data-theme', theme);
+  themeToggle.textContent = theme === 'dark' ? '🌙 Dark' : '🌞 Light';
+  themeToggle.setAttribute('aria-pressed', theme === 'dark');
+  localStorage.setItem('growfax_theme', theme);
+}
+themeToggle.addEventListener('click', ()=> {
+  setTheme(document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+setTheme(localStorage.getItem('growfax_theme') || 'light');
+
+/* ---------------------------
+   Language control
+   --------------------------- */
+langSelect.addEventListener('change', ()=>{
+  const lang = langSelect.value;
+  localStorage.setItem('growfax_lang', lang);
+  applyTranslations(lang);
+  updateTime(); // update time format/timezone immediately
+  showToast(lang === 'id' ? 'Bahasa: Indonesia' : 'Language: English');
+});
+
+/* initialize language */
+(function initLang(){
+  const saved = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en');
+  langSelect.value = saved;
+  applyTranslations(saved);
+})();
+
+/* ---------------------------
+   Time display (NY / Jakarta)
+   --------------------------- */
+function getIndoGreeting(hour){
+  if(hour < 11) return 'pagi';
+  if(hour < 15) return 'siang';
+  if(hour < 18) return 'sore';
+  return 'malam';
+}
+function updateTime(){
+  const now = new Date();
+  const lang = langSelect.value || 'en';
+  if(lang === 'id'){
+    const options = { timeZone: 'Asia/Jakarta', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' };
+    const indoTime = new Intl.DateTimeFormat('id-ID', options).format(now);
+    const hour = parseInt(now.toLocaleString('en-US', { timeZone: 'Asia/Jakarta', hour: '2-digit', hour12: false }));
+    const greeting = getIndoGreeting(hour);
+    timeDisplay.textContent = `Waktu Lokal (Jakarta): ${indoTime} - ${greeting}`;
+  } else {
+    const options = { timeZone: 'America/New_York', hour12: true, timeStyle: 'medium', dateStyle: 'medium' };
+    const usTime = now.toLocaleString('en-US', options);
+    timeDisplay.textContent = `Local Time (New York): ${usTime}`;
+  }
+}
+updateTime();
+setInterval(updateTime, 1000);
+
+/* ---------------------------
+   Simulated File Update Checker (modal)
+   --------------------------- */
+let pendingDownload = null;
+document.querySelectorAll('.platform-buttons a').forEach(a=>{
+  a.addEventListener('click', (e)=>{
+    // If user uses modifier or middle-click, let them (open new tab)
+    if(e.ctrlKey || e.metaKey || e.button === 1) return;
+    e.preventDefault();
+    const key = a.dataset.filekey;
+    const meta = FILE_META[key] || { version: 'v1.0', updated: 'Unknown', changelog: 'No details', size: '—' };
+    const filename = a.dataset.filename || key;
+    // fill modal with localized content
+    modalTitle.textContent = (langSelect.value === 'id') ? (translations.id['Details before download'] || 'Detail sebelum mengunduh') : 'Details before download';
+    modalDesc.textContent = (langSelect.value === 'id') ? `Simulated info for ${filename}` : `Simulated info for ${filename}`;
+    modalVersion.textContent = `${(langSelect.value === 'id') ? (translations.id['Version'] || 'Versi') + ': ' : 'Version: '}${meta.version}`;
+    modalUpdated.textContent = `${(langSelect.value === 'id') ? (translations.id['Updated'] || 'Diperbarui') + ': ' : 'Updated: '}${meta.updated}`;
+    modalChangelog.innerText = `${(langSelect.value === 'id') ? (translations.id['Changelog'] || 'Catatan pembaruan') + ':' : 'Changelog:'}\n${meta.changelog}\n\n${(langSelect.value === 'id') ? (translations.id['Size'] || 'Ukuran') + ': ' : 'Size: '}${meta.size}`;
+    modalFilename.textContent = (langSelect.value === 'id' ? (translations.id['Filename'] || 'Nama berkas') : 'Filename') + `: ${filename}`;
+    pendingDownload = { href: a.getAttribute('href'), filename };
+    showModal();
+  });
+});
+
+function showModal(){
+  modalBackdrop.style.display = 'flex';
+  modalBackdrop.setAttribute('aria-hidden','false');
+  // focus confirm button
+  setTimeout(()=>modalConfirm.focus(),200);
+}
+function hideModal(){
+  modalBackdrop.style.display = 'none';
+  modalBackdrop.setAttribute('aria-hidden','true');
+  pendingDownload = null;
+}
+
+modalCancel.addEventListener('click', ()=> hideModal());
+
+modalBackdrop.addEventListener('click', (e)=>{
+  if(e.target === modalBackdrop) hideModal();
+});
+
+modalConfirm.addEventListener('click', ()=>{
+  if(!pendingDownload) return hideModal();
+  // simulate download — create temporary anchor to trigger download
+  const a = document.createElement('a');
+  a.href = pendingDownload.href;
+  a.download = pendingDownload.filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  hideModal();
+  showToast(langSelect.value === 'id' ? 'Mulai mengunduh...' : 'Download started...');
+});
+
+/* ---------------------------
+   Welcome popup (first visit)
+   --------------------------- */
+function showWelcome(){
+  welcomeBackdrop.style.display = 'flex';
+  welcomeBackdrop.setAttribute('aria-hidden','false');
+}
+function hideWelcome(){ welcomeBackdrop.style.display = 'none'; welcomeBackdrop.setAttribute('aria-hidden','true'); }
+
+openWelcome.addEventListener('click', ()=> showWelcome());
+
+welcomeSave.addEventListener('click', ()=>{
+  const chosenLang = document.getElementById('welcomeLang').value;
+  const theme = Array.from(document.querySelectorAll('input[name="welcomeTheme"]')).find(r=>r.checked).value;
+  // apply
+  langSelect.value = chosenLang;
+  localStorage.setItem('growfax_lang', chosenLang);
+  applyTranslations(chosenLang);
+  updateTime();
+  setTheme(theme);
+  hideWelcome();
+  showToast(chosenLang === 'id' ? 'Bahasa disimpan' : 'Preferences saved');
+});
+
+welcomeSkip.addEventListener('click', ()=>{
+  hideWelcome();
+  showToast(langSelect.value === 'id' ? 'Dipilih nanti' : 'Maybe later');
+});
+
+/* Show welcome on first visit */
+(function firstVisit(){
+  const seen = localStorage.getItem('growfax_seen');
+  if(!seen){
+    // prefill welcome fields
+    welcomeLang.value = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en');
+    const savedTheme = localStorage.getItem('growfax_theme') || 'light';
+    document.querySelectorAll('input[name="welcomeTheme"]').forEach(r=> r.checked = (r.value === savedTheme));
+    showWelcome();
+    localStorage.setItem('growfax_seen','1');
+  }
+})();
+
+/* ---------------------------
+   Floating chat click shows toast then opens
+   --------------------------- */
+document.getElementById('floatingChat').addEventListener('click', (e)=>{
+  // show quick toast then link opens naturally because it's an anchor
+  showToast(langSelect.value === 'id' ? 'Membuka Discord...' : 'Opening Discord...');
+  // let anchor open (no preventDefault)
+});
+
+/* ---------------------------
+   Toast helper
+   --------------------------- */
+let toastTimer = null;
+function showToast(text, ms=1800){
+  toast.textContent = text;
+  toast.style.opacity = '1';
+  toast.style.transform = 'translateX(-50%) translateY(0)';
+  toast.style.pointerEvents = 'auto';
+  if(toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=> {
+    toast.style.opacity = '0';
+    toast.style.pointerEvents = 'none';
+  }, ms);
+}
+
+/* ---------------------------
+   Init
+   --------------------------- */
+// apply translations based on saved language
+const initLang = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en');
+langSelect.value = initLang;
+applyTranslations(initLang);
+updateTime();
+
 </script>
 </body>
 </html>
