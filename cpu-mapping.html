@@ -94,7 +94,7 @@ let t = ((Date.now() - startTime) / 50) || 0;
 let data = new Array(400).fill(H / 2);
 let lastUpdate = 0;
 
-// kalau lama gak dibuka, kita simulasi bahwa CPU udah "bergerak"
+// kalau lama gak dibuka, simulasi bahwa CPU udah "bergerak"
 const elapsed = (Date.now() - (saved.lastSeen || startTime)) / 1000;
 if (elapsed > 1) {
   const drift = Math.sin(elapsed / 5) * 10;
@@ -123,13 +123,19 @@ function draw(timestamp) {
   }
   lastUpdate = timestamp;
 
-  ctx.clearRect(0, 0, W, H);
+  // memastikan tidak ada teks "draw" atau artefak visual
+  ctx.save();
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.restore();
+
   const grad = ctx.createLinearGradient(0, 0, 0, H);
   grad.addColorStop(0, "#001100");
   grad.addColorStop(1, "#000000");
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, W, H);
 
+  // grid
   ctx.strokeStyle = "rgba(0,255,100,0.06)";
   for (let y = 0; y < H; y += 40) {
     ctx.beginPath();
@@ -138,12 +144,14 @@ function draw(timestamp) {
     ctx.stroke();
   }
 
+  // data baru
   data.shift();
   const val = nextCPU();
   const wave = H / 2 - Math.sin(t / 35) * 10 - (val - 25) * 1.2;
   t += 0.8;
   data.push(wave);
 
+  // waveform
   ctx.beginPath();
   ctx.moveTo(0, data[0]);
   for (let i = 1; i < data.length; i++) {
@@ -170,11 +178,6 @@ function draw(timestamp) {
 
   requestAnimationFrame(draw);
 }
-
-draw();
-</script>
-</body>
-</html>
 
 draw();
 </script>
