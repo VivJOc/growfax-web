@@ -41,7 +41,7 @@ canvas {
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
-  font-size: 80px;
+  font-size: 50px; /* lebih kecil */
   font-weight: bold;
   color: var(--accent);
   text-shadow: 0 0 20px var(--accent);
@@ -82,33 +82,38 @@ function resize() {
 window.addEventListener('resize', resize);
 resize();
 
+// simpan waktu awal agar animasi tidak reset saat reload
+let startTime = localStorage.getItem('growfaxCpuStart') || Date.now();
+localStorage.setItem('growfaxCpuStart', startTime);
+
 let data = new Array(400).fill(H / 2);
-let cpu = 50;
-let targetCPU = 50;
-let smoothCPU = 50;
-let t = 0;
+let cpu = 30;
+let targetCPU = 30;
+let smoothCPU = 30;
+let t = (Date.now() - startTime) / 50; // terus lanjut
+
 let lastUpdate = 0;
 
 function nextCPU() {
-  // tiap beberapa detik, ubah target CPU
-  if (Math.random() < 0.02) {
-    targetCPU = 50 + (Math.random() - 0.5) * 60; // naik/turun tapi seimbang
+  // ubah target CPU tapi range lebih kecil (10-45%)
+  if (Math.random() < 0.015) {
+    targetCPU = 25 + (Math.random() - 0.5) * 30;
   }
 
-  // interpolasi halus menuju target
+  // gerakan halus
   cpu += (targetCPU - cpu) * 0.01;
-  smoothCPU += (cpu - smoothCPU) * 0.05;
+  smoothCPU += (cpu - smoothCPU) * 0.03;
 
-  // clamp
-  cpu = Math.max(0, Math.min(100, cpu));
-  smoothCPU = Math.max(0, Math.min(100, smoothCPU));
+  // batasi nilai
+  cpu = Math.max(10, Math.min(45, cpu));
+  smoothCPU = Math.max(10, Math.min(45, smoothCPU));
 
   percentEl.textContent = `${smoothCPU.toFixed(1)}%`;
   return smoothCPU;
 }
 
 function draw(timestamp) {
-  if (timestamp - lastUpdate < 120) { // fps lambat biar smooth (sekitar 8fps)
+  if (timestamp - lastUpdate < 120) { 
     requestAnimationFrame(draw);
     return;
   }
@@ -130,14 +135,14 @@ function draw(timestamp) {
     ctx.stroke();
   }
 
-  // data update
+  // data baru
   data.shift();
   const val = nextCPU();
-  const wave = H/2 - Math.sin(t/25) * 10 - (val - 50) * 1.2;
-  t += 1;
+  const wave = H / 2 - Math.sin(t / 35) * 10 - (val - 25) * 1.2;
+  t += 0.8;
   data.push(wave);
 
-  // draw waveform
+  // waveform
   ctx.beginPath();
   ctx.moveTo(0, data[0]);
   for (let i = 1; i < data.length; i++) {
