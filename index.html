@@ -6,6 +6,12 @@
 <title>Growfax Official</title>
 <link rel="icon" href="Growfax_banner.jpg" type="image/jpeg">
 <style>
+  /* ============================================================
+     Growfax Official — FULL UI stylesheet (futuristic neon/fax)
+     - Long, self-contained styling to match the original.
+     - Dark/light theme variables, responsive rules, micro-animations.
+     ============================================================ */
+
   :root{
     --bg:#f8f8f8;
     --card-bg:#fff;
@@ -15,6 +21,10 @@
     --discord-color:#7289da;
     --muted:#667;
     --toast-bg:rgba(0,0,0,0.8);
+    --glass: rgba(255,255,255,0.6);
+    --success:#2ecc71;
+    --danger:#e74c3c;
+    --mono: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   }
   [data-theme="dark"]{
     --bg:#0f1720;
@@ -25,20 +35,36 @@
     --discord-color:#5b6ea6;
     --muted:#9aa;
     --toast-bg:rgba(255,255,255,0.08);
+    --glass: rgba(255,255,255,0.03);
   }
 
-  html,body{height:100%;margin:0;font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;background:var(--bg);color:var(--text);line-height:1.6;transition:background .25s,color .25s}
+  html,body{height:100%;margin:0;font-family:var(--mono);background:var(--bg);color:var(--text);line-height:1.6;transition:background .25s,color .25s}
+  /* -------------------------
+     Header / Navigation
+     ------------------------- */
   header{background:var(--card-bg);box-shadow:var(--card-shadow);position:sticky;top:0;z-index:1200}
   .header-content{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px}
   .header-left{display:flex;align-items:center;gap:14px}
+  .brand-wrap{display:flex;align-items:center;gap:12px}
+  .brand-wrap img{width:46px;height:46px;border-radius:8px;object-fit:cover}
   h1{font-size:1.4rem;margin:0;font-weight:700}
+  nav.primary a{color:var(--accent);text-decoration:none;font-weight:700;margin-left:12px}
+  nav.primary a:hover{opacity:.86;transform:translateY(-1px)}
   .controls{display:flex;align-items:center;gap:10px}
   .theme-toggle,.lang-select,.open-welcome{font-size:0.98rem;padding:8px 12px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);background:transparent;color:var(--text);cursor:pointer}
+
+  /* -------------------------
+     Banner / Hero
+     ------------------------- */
   .banner-section{text-align:center;padding:56px 20px;background:linear-gradient(90deg, rgba(0,0,0,0.03), rgba(255,255,255,0.02))}
   .banner-section img{max-width:240px;border-radius:10px;margin-bottom:18px}
   .banner-section h2{font-size:1.9rem;color:#ffaa00;margin:8px 0;text-shadow:0 0 10px rgba(255,170,0,0.18)}
   .banner-section p{font-size:1.05rem;opacity:.92;margin:0}
   .time-display{margin-top:10px;font-size:0.98rem;font-weight:600;opacity:.9}
+
+  /* -------------------------
+     Container (main content)
+     ------------------------- */
   .container{max-width:1000px;margin:48px auto;text-align:center;padding:0 18px}
   .container h2{font-size:1.6rem;margin-bottom:28px}
   .platform-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:20px}
@@ -49,11 +75,21 @@
   .btn-windows{background:#0078d7;--glow:#4da3ff;box-shadow:0 6px 24px rgba(77,163,255,0.08)}
   .btn-ios{background:#007aff;--glow:#7acbff;box-shadow:0 6px 24px rgba(122,203,255,0.08)}
   .btn-powertunnel{background:#b71c1c;--glow:#ff5a5a;box-shadow:0 6px 24px rgba(255,90,90,0.08)}
+
+  /* -------------------------
+     Discord Section
+     ------------------------- */
   .discord-section{background:var(--discord-color);color:#fff;padding:32px;border-radius:12px;max-width:820px;margin:42px auto 60px;text-align:center;box-shadow:var(--card-shadow)}
   .discord-section img{width:58px;height:58px;border-radius:8px;margin-bottom:10px}
+
+  /* -------------------------
+     Footer
+     ------------------------- */
   footer{text-align:center;margin:30px 0 40px;font-size:.95rem;opacity:.85}
 
-  /* Modal */
+  /* -------------------------
+     Modal (file info)
+     ------------------------- */
   .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:1300}
   .modal{width:92%;max-width:560px;background:var(--card-bg);color:var(--text);border-radius:12px;padding:18px;box-shadow:0 14px 40px rgba(0,0,0,0.2);transform:translateY(16px);transition:transform .18s,opacity .18s}
   .modal h3{margin:0 0 8px;font-size:1.15rem}
@@ -68,7 +104,9 @@
   .btn.secondary{background:transparent;border:1px solid rgba(0,0,0,0.08)}
   .btn.primary{background:var(--accent);color:#fff}
 
-  /* Welcome popup */
+  /* -------------------------
+     Welcome popup
+     ------------------------- */
   .welcome-backdrop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.4), rgba(0,0,0,0.6));z-index:1400}
   .welcome{width:92%;max-width:520px;background:var(--card-bg);color:var(--text);padding:20px;border-radius:12px;box-shadow:0 18px 48px rgba(0,0,0,0.28)}
   .welcome h2{margin:0 0 8px}
@@ -77,15 +115,21 @@
   .welcome select,.welcome input[type="radio"]{padding:8px;border-radius:8px}
   .welcome .actions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
 
-  /* Floating discord */
+  /* -------------------------
+     Floating Discord button
+     ------------------------- */
   .floating-chat{position:fixed;right:18px;bottom:18px;width:56px;height:56px;border-radius:50%;background:var(--discord-color);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,0.2);cursor:pointer;z-index:1500}
   .floating-chat img{width:28px;height:28px;border-radius:6px}
 
-  /* Toast */
+  /* -------------------------
+     Toast message
+     ------------------------- */
   .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:86px;background:var(--toast-bg);color:#fff;padding:8px 12px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;z-index:1600}
   [data-theme="dark"] .toast{color:#fff}
 
-  /* Chatbot UI */
+  /* -------------------------
+     Chatbot UI (Faxbot)
+     ------------------------- */
   .chat-fab{position:fixed;right:18px;bottom:86px;width:64px;height:64px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 12px 30px rgba(0,0,0,0.25);cursor:pointer;z-index:1550;border:4px solid rgba(255,255,255,0.06);font-size:1.6rem}
   .chat-window{position:fixed;right:18px;bottom:160px;width:360px;max-width:92%;height:480px;border-radius:12px;background:var(--card-bg);box-shadow:0 20px 60px rgba(0,0,0,0.3);display:none;flex-direction:column;overflow:hidden;z-index:1555}
   .chat-window.open{display:flex}
@@ -102,7 +146,7 @@
   .chat-input input{flex:1;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.08);background:transparent;color:var(--text)}
   .chat-input button{padding:8px 12px;border-radius:8px;border:0;background:var(--accent);color:#fff;font-weight:700;cursor:pointer}
 
-  /* typing text + animated dots */
+  /* Typing animation for the bot */
   .typing-container{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:0.95rem}
   .typing-dots{display:inline-block;position:relative;width:26px;height:10px}
   .typing-dots span{position:absolute;left:0;top:0;width:6px;height:6px;border-radius:50%;background:var(--muted);opacity:0;transform:translateY(0)}
@@ -122,16 +166,29 @@
 </style>
 </head>
 <body data-theme="light">
+  <!-- ===========================
+       Header
+       =========================== -->
   <header>
     <div class="header-content">
       <div class="header-left">
-        <h1>Growfax Official</h1>
-        <nav><a href="#downloads" style="color:var(--accent);text-decoration:none;font-weight:700;margin-left:8px">📥 Downloads</a></nav>
+        <div class="brand-wrap">
+          <img src="Growfax_banner.jpg" alt="Growfax Logo">
+          <div>
+            <h1>Growfax Official</h1>
+            <div style="font-size:0.85rem;color:var(--muted)">Private Growtopia Server</div>
+          </div>
+        </div>
+
+        <nav class="primary" aria-label="Main navigation">
+          <a href="#downloads" id="navDownloads">📥 Downloads</a>
+          <!-- CPU Mapping nav will be injected by script to avoid duplicate if already present -->
+        </nav>
       </div>
 
       <div class="controls">
         <button id="openWelcome" class="open-welcome" title="Welcome & Preferences">⚙️</button>
-        <select id="langSelect" class="lang-select" title="Language">
+        <select id="langSelect" class="lang-select" title="Language" aria-label="Select language">
           <option value="en">🇬🇧 English</option>
           <option value="id">🇮🇩 Bahasa</option>
         </select>
@@ -140,35 +197,44 @@
     </div>
   </header>
 
-  <section class="banner-section">
+  <!-- ===========================
+       Banner / Hero
+       =========================== -->
+  <section class="banner-section" role="region" aria-label="Main banner">
     <img src="Growfax_banner.jpg" alt="Growfax Banner">
     <h2>Welcome to Growfax</h2>
     <p>Private Growtopia Server</p>
     <div id="timeDisplay" class="time-display">Loading time...</div>
   </section>
 
-  <main class="container" id="downloads">
+  <!-- ===========================
+       Downloads (main)
+       =========================== -->
+  <main class="container" id="downloads" role="main">
     <h2>📥 Essential File Downloads</h2>
-    <div class="platform-buttons">
-      <a href="Growfax_VirtualHost.txt" class="btn-android" data-filename="Growfax_VirtualHost.txt" data-filekey="virtualhost" download>
+    <div class="platform-buttons" role="list">
+      <a href="Growfax_VirtualHost.txt" class="btn-android" data-filename="Growfax_VirtualHost.txt" data-filekey="virtualhost" download role="listitem">
         <img src="virtual-host.png" alt="">Play on Android
       </a>
 
-      <a href="Growfax_Patched_.bat" class="btn-windows" data-filename="Growfax_Patched_.bat" data-filekey="patched" download>
+      <a href="Growfax_Patched_.bat" class="btn-windows" data-filename="Growfax_Patched_.bat" data-filekey="patched" download role="listitem">
         <img src="windows.png" alt="">Play on Windows
       </a>
 
-      <a href="GrowFax_ios.txt" class="btn-ios" data-filename="GrowFax_ios.txt" data-filekey="ios" download>
+      <a href="GrowFax_ios.txt" class="btn-ios" data-filename="GrowFax_ios.txt" data-filekey="ios" download role="listitem">
         <img src="surge5.png" alt="">Play on iOS
       </a>
 
-      <a href="PowerTunnel_Host.txt" class="btn-powertunnel" data-filename="PowerTunnel_Host.txt" data-filekey="powertunnel" download>
+      <a href="PowerTunnel_Host.txt" class="btn-powertunnel" data-filename="PowerTunnel_Host.txt" data-filekey="powertunnel" download role="listitem">
         <img src="powertunnel.jpeg" alt="">Play via PowerTunnel
       </a>
     </div>
   </main>
 
-  <section class="discord-section">
+  <!-- ===========================
+       Discord community section
+       =========================== -->
+  <section class="discord-section" aria-label="Discord community">
     <img src="discord.jpeg" alt="Discord Logo">
     <h3>Join Our Community</h3>
     <p>Connect with others and get support in our official Discord server.</p>
@@ -177,7 +243,9 @@
 
   <footer>© 2025 Growfax. All rights reserved.</footer>
 
-  <!-- Modal (file info) -->
+  <!-- ===========================
+       Modal (file info)
+       =========================== -->
   <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <h3 id="modalTitle">File info</h3>
@@ -200,7 +268,9 @@
     </div>
   </div>
 
-  <!-- Welcome popup (first-visit) -->
+  <!-- ===========================
+       Welcome popup (first-visit)
+       =========================== -->
   <div id="welcomeBackdrop" class="welcome-backdrop" aria-hidden="true">
     <div class="welcome" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
       <h2 id="welcomeTitle">Welcome to Growfax</h2>
@@ -227,18 +297,26 @@
     </div>
   </div>
 
-  <!-- Floating Discord chat -->
+  <!-- ===========================
+       Floating Discord chat
+       =========================== -->
   <a id="floatingChat" class="floating-chat" href="https://discord.gg/smgS6sq83y" target="_blank" rel="noopener" title="Open Discord">
     <img src="discord.jpeg" alt="Discord">
   </a>
 
-  <!-- Toast -->
+  <!-- ===========================
+       Toast (temporary messages)
+       =========================== -->
   <div id="toast" class="toast" role="status" aria-live="polite">Saved</div>
 
-  <!-- Chatbot FAB (emoji avatar) -->
+  <!-- ===========================
+       Chatbot FAB (emoji avatar)
+       =========================== -->
   <div id="chatFab" class="chat-fab" title="Open Faxbot chat">🤖</div>
 
-  <!-- Chat window -->
+  <!-- ===========================
+       Chat window
+       =========================== -->
   <div id="chatWindow" class="chat-window" role="dialog" aria-modal="false" aria-label="Faxbot chat">
     <div class="chat-header">
       <div class="avatar-emoji">🤖</div>
@@ -256,6 +334,14 @@
   </div>
 
 <script>
+/* ============================================================
+   Growfax Official — FULL script
+   - All logic in one place: translations, theme, time, modal,
+     download simulation, welcome popup, chat engine, and
+     integration to CPU Mapping (cpu-mapping.html).
+   - Extensive comments included for maintainability.
+   ============================================================ */
+
 /* ===========================
    Core refs & state
    =========================== */
@@ -289,6 +375,11 @@ const botStatusEl = document.getElementById('botStatus');
 const timeDisplay = document.getElementById('timeDisplay');
 const discordLink = document.getElementById('discordLink');
 
+let pendingDownload = null;
+
+/* ===========================
+   File metadata (simulated)
+   =========================== */
 const FILE_META = {
   virtualhost: { version: 'v2.1', updated: 'Oct 29, 2025', changelog: '- Fixed host parsing\\n- Improved TLS handling', size: '2.3 KB' },
   patched: { version: 'v1.9', updated: 'Oct 20, 2025', changelog: '- Patched launcher\\n- Minor fixes', size: '12.1 KB' },
@@ -298,14 +389,18 @@ const FILE_META = {
 
 /* ===========================
    Translation baseline
+   - We collect text nodes and store original text content
+   - Then apply translations by mapping strings -> translated text
    =========================== */
 const elements = document.querySelectorAll('body *:not(script):not(style)');
 elements.forEach(el=>{
+  // Only store simple text nodes to avoid breaking complex elements
   if (el.childNodes.length === 1 && el.textContent.trim() !== '') {
     el.dataset.original = el.textContent.trim();
   }
 });
 
+/* Translation dictionary (expandable) */
 const translations = {
   id: {
     "Growfax Official": "Growfax Resmi",
@@ -349,7 +444,7 @@ function applyTranslations(lang){
     if(!orig) return;
     el.textContent = lang === 'en' ? orig : (translations[lang]?.[orig] || orig);
   });
-  // modal & welcome button labels (fixed elements)
+  // fix buttons/labels manually (elements that are not simple text nodes)
   modalCancel.textContent = lang === 'id' ? (translations.id['Cancel'] || 'Batal') : 'Cancel';
   modalConfirm.textContent = lang === 'id' ? (translations.id['Download'] || 'Unduh') : 'Download';
   welcomeSave.textContent = lang === 'id' ? (translations.id['Save & Continue'] || 'Simpan & Lanjutkan') : 'Save & Continue';
@@ -360,6 +455,8 @@ function applyTranslations(lang){
 
 /* ===========================
    Theme control
+   - uses localStorage: 'growfax_theme'
+   - toggles body attribute data-theme
    =========================== */
 function setTheme(theme){
   document.body.setAttribute('data-theme', theme);
@@ -373,7 +470,7 @@ themeToggle.addEventListener('click', ()=> {
 setTheme(localStorage.getItem('growfax_theme') || 'light');
 
 /* ===========================
-   Language control
+   Language control (persist)
    =========================== */
 langSelect.addEventListener('change', ()=> {
   const lang = langSelect.value;
@@ -390,6 +487,8 @@ langSelect.addEventListener('change', ()=> {
 
 /* ===========================
    Time display (NY / Jakarta)
+   - updates every second
+   - shows localized greeting for Jakarta (indonesia)
    =========================== */
 function getIndoGreeting(hour){
   if(hour < 11) return 'pagi';
@@ -417,10 +516,12 @@ setInterval(updateTime, 1000);
 
 /* ===========================
    Simulated File Update Checker (modal)
+   - shows metadata before download
+   - prevents accidental middle-click downloads from being intercepted
    =========================== */
-let pendingDownload = null;
 document.querySelectorAll('.platform-buttons a').forEach(a=>{
   a.addEventListener('click', (e)=>{
+    // Allow ctrl/meta click (open in new tab) and middle-click
     if(e.ctrlKey || e.metaKey || e.button === 1) return;
     e.preventDefault();
     const key = a.dataset.filekey;
@@ -484,6 +585,8 @@ closeChat.addEventListener('click', ()=> hideChat());
 
 /* ===========================
    Chat storage & UI helpers
+   - stored under key: growfax_chat_history_v2
+   - handles errors and JSON parsing safely
    =========================== */
 const CHAT_KEY = 'growfax_chat_history_v2';
 function loadChatHistory(){
@@ -496,7 +599,8 @@ function renderMessages(){
   history.forEach(m=>{
     const div = document.createElement('div');
     div.className = 'msg ' + (m.role==='bot' ? 'bot' : 'user');
-    div.textContent = m.text;
+    // preserve newlines in messages
+    div.innerHTML = (m.role==='bot') ? (m.text.replace(/\n/g,'<br>')) : (m.text.replace(/\n/g,'<br>'));
     chatMessages.appendChild(div);
   });
   chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -504,10 +608,11 @@ function renderMessages(){
 
 /* ===========================
    Simulated AI engine (helpful assistant)
-   - uses KB then templates, typing animation (dots)
+   - uses small KB then templates, typing animation (dots)
+   - extended KB for many common queries
    =========================== */
 
-/* personality templates */
+/* personality & templates */
 const SIM_TEMPLATES = {
   greetings: {
     en: [
@@ -535,7 +640,7 @@ const SIM_TEMPLATES = {
   }
 };
 
-/* basic KB */
+/* extended knowledge base (KB) */
 const KB = [
   { keys: ['android','virtualhost','virtual host'], reply: {
       en: "To play on Android: download the Virtual Host file, import it into your Virtual Host app, then enable the host. Want step-by-step instructions?",
@@ -568,9 +673,18 @@ const KB = [
   { keys: ['help','how','install','guide','step'], reply: {
       en: "Tell me which platform (Android, Windows, iOS, PowerTunnel) and I'll give step-by-step instructions.",
       id: "Katakan platformnya (Android, Windows, iOS, PowerTunnel) dan saya beri panduan langkah demi langkah."
+    }},
+  { keys: ['cpu','monitor','performance'], reply: {
+      en: "You can open CPU Mapping (top nav) to view a simulated real-time CPU monitor. It's client-side only.",
+      id: "Buka CPU Mapping (di navbar) untuk melihat simulasi CPU real-time. Semua berjalan di sisi klien."
+    }},
+  { keys: ['thanks','thank you','terima kasih'], reply: {
+      en: "You're welcome! If you need more help, ask anytime.",
+      id: "Sama-sama! Kalau masih butuh bantuan, beri tahu saya."
     }}
 ];
 
+/* helper to find KB reply */
 function findKBReply(text){
   const norm = text.toLowerCase();
   for(const item of KB){
@@ -581,7 +695,7 @@ function findKBReply(text){
   return null;
 }
 
-/* create typing node (text + animated dots) */
+/* create typing node (bot typing animation) */
 function createTypingNode(){
   const container = document.createElement('div');
   container.className = 'msg bot typing';
@@ -603,7 +717,7 @@ function createTypingNode(){
   return container;
 }
 
-/* simulate typing then deliver reply (auto language) */
+/* simulate typing then deliver reply */
 function simulateTypingAndReply(replyText){
   // remove any existing typing nodes
   const existing = chatMessages.querySelectorAll('.typing');
@@ -625,7 +739,7 @@ function simulateTypingAndReply(replyText){
   }, delay);
 }
 
-/* generate reply */
+/* generate reply with some heuristics */
 function generateBotReply(userText){
   const lang = langSelect.value || 'en';
   const kbReply = findKBReply(userText);
@@ -636,7 +750,7 @@ function generateBotReply(userText){
   }
 
   // question-like detection
-  const qPattern = /\b(how|what|why|help|install|error|fix|step)\b/i;
+  const qPattern = /\b(how|what|why|help|install|error|fix|step|guide)\b/i;
   if(qPattern.test(userText)){
     // try to guess platform from user's recent messages
     const history = loadChatHistory();
@@ -665,13 +779,21 @@ function generateBotReply(userText){
     return;
   }
 
+  // friendly small talk
+  if(/\b(hi|hello|hey|halo|hai)\b/i.test(userText)){
+    const pool = SIM_TEMPLATES.greetings[lang] || SIM_TEMPLATES.greetings['en'];
+    const pick = pool[Math.floor(Math.random() * pool.length)];
+    simulateTypingAndReply(pick);
+    return;
+  }
+
   // fallback
   const fallbackPool = SIM_TEMPLATES.fallback[lang] || SIM_TEMPLATES.fallback['en'];
   const pick = fallbackPool[Math.floor(Math.random() * fallbackPool.length)];
   simulateTypingAndReply(pick);
 }
 
-/* user sends */
+/* user sends (UI hook) */
 function sendUserMessage(text){
   if(!text || !text.trim()) return;
   const history = loadChatHistory();
@@ -682,7 +804,7 @@ function sendUserMessage(text){
   setTimeout(()=> generateBotReply(text.trim()), 300 + Math.min(text.length * 8, 700));
 }
 
-/* Bot greeting */
+/* Bot greeting (when chat opens) */
 function sendBotGreeting(){
   const lang = langSelect.value || 'en';
   const msgs = SIM_TEMPLATES.greetings[lang] || SIM_TEMPLATES.greetings['en'];
@@ -693,10 +815,11 @@ function sendBotGreeting(){
   renderMessages();
 }
 
-/* UI events */
+/* UI events — chat send / keyboard */
 chatSend.addEventListener('click', ()=> sendUserMessage(chatInput.value));
 chatInput.addEventListener('keydown', (e)=> { if(e.key === 'Enter'){ e.preventDefault(); sendUserMessage(chatInput.value); }});
 
+/* init chat with welcome message (first time) */
 (function initChat(){
   renderMessages();
   const seen = localStorage.getItem('growfax_seen_welcome_msg_v2');
@@ -711,12 +834,14 @@ chatInput.addEventListener('keydown', (e)=> { if(e.key === 'Enter'){ e.preventDe
   }
 })();
 
-/* floating discord click */
+/* floating discord click (toast feedback) */
 document.getElementById('floatingChat').addEventListener('click', (e)=>{
   showToast(langSelect.value === 'id' ? 'Membuka Discord...' : 'Opening Discord...');
 });
 
-/* toast */
+/* ===========================
+   Toast helper
+   =========================== */
 let toastTimer = null;
 function showToast(text, ms=1500){
   toast.textContent = text;
@@ -730,18 +855,98 @@ function showToast(text, ms=1500){
   }, ms);
 }
 
-/* initial translations + time */
+/* ===========================
+   Initial translations + time
+   =========================== */
 const initLang = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en');
 langSelect.value = initLang;
 applyTranslations(initLang);
 updateTime();
 
-/* allow middle click / aux click on download links */
+/* ===========================
+   Allow middle click / aux click default behavior on links
+   =========================== */
 document.querySelectorAll('.platform-buttons a').forEach(a=>{
   a.addEventListener('auxclick', (e) => {/* allow default behavior */});
 });
 
-/* end */
+/* ===========================
+   CPU Mapping integration
+   - Inject a nav link to cpu-mapping.html if not present
+   - Use smooth page transition when clicking
+   =========================== */
+(function ensureCpuNav(){
+  const nav = document.querySelector('nav.primary');
+  if(nav && !document.querySelector('#cpuNav')){
+    const cpuButton = document.createElement('a');
+    cpuButton.id = 'cpuNav';
+    cpuButton.href = 'cpu-mapping.html';
+    cpuButton.textContent = '🧠 CPU Mapping';
+    cpuButton.style.marginLeft = '12px';
+    cpuButton.style.textDecoration = 'none';
+    cpuButton.style.fontWeight = '700';
+    cpuButton.addEventListener('click', (e)=>{
+      // smooth fade before navigation
+      e.preventDefault();
+      document.body.style.transition = 'opacity 0.25s';
+      document.body.style.opacity = '0';
+      setTimeout(()=> window.location.href = cpuButton.href, 260);
+    });
+    nav.appendChild(cpuButton);
+  }
+})();
+
+/* ===========================
+   Misc small UI effects
+   =========================== */
+// status indicator pulse if present
+const status = document.querySelector('#status-indicator');
+if (status) {
+  setInterval(() => {
+    status.style.opacity = status.style.opacity === '1' ? '0.5' : '1';
+  }, 600);
+}
+
+// graceful page link transition for all html links
+document.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', e => {
+    // only internal html
+    try {
+      const href = link.getAttribute('href');
+      if(href && href.endsWith('.html') && !link.hasAttribute('data-no-transition')){
+        e.preventDefault();
+        document.body.style.opacity = '0';
+        setTimeout(() => (window.location.href = href), 300);
+      }
+    } catch(err){ /* ignore */ }
+  });
+});
+
+/* ===========================
+   Console debug friendly message
+   =========================== */
+console.log('%cGrowfax Engine Ready ✅', 'color: #00ff88; font-weight: bold;');
+
+/* ===========================
+   End of file logic area
+   - Nothing below this line manipulates DOM outside of functions
+   - You may add custom code here if needed
+   =========================== */
+
+/* (Extra comments and spaces to make file longer and fully-detailed, per request)
+   - The file above implements:
+     * theme toggle with localStorage
+     * language switch and translations
+     * welcome popup with preferences
+     * file info modal simulation
+     * animated chatbot with KB, typing, storage, fallback
+     * toast notifications
+     * cpu mapping nav injected and smooth transitions
+     * accessibility labels
+   - If you want the cpu-mapping.html file as well, tell me and I'll paste the full page.
+*/
+
+/* END OF SCRIPT */
 </script>
 </body>
 </html>
