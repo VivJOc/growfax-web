@@ -6,459 +6,123 @@
 <title>Growfax — CPU Mapping</title>
 <link rel="icon" href="Growfax_banner.jpg" type="image/jpeg">
 <style>
-/* =========================================================
-   cpu-mapping.html
-   - Neon-green EKG-style CPU waveform with continuous scroll
-   - Large center CPU percentage that fluctuates
-   - Theme-sync with index.html via localStorage 'growfax_theme'
-   - Smooth transitions and "Back" button to index.html
-   ========================================================= */
-
-:root{
-  --bg: #000000;
-  --panel:#07110b;
-  --accent: #00ff66; /* neon green */
-  --muted:#2d3a2f;
-  --glass: rgba(255,255,255,0.03);
+:root {
+  --bg: #000;
+  --accent: #00ff66;
   --text: #cdeed0;
-  --shadow: 0 14px 50px rgba(0,0,0,0.6);
-  --grid: rgba(0,255,102,0.06);
-  --card-radius: 12px;
-  --mono: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  --muted: #2d3a2f;
 }
-
-[data-theme="light"]{
-  --bg:#f3fbff;
-  --panel: linear-gradient(180deg,#eaf8ff,#ffffff);
-  --accent:#007b34;
-  --muted:#c7d9cf;
-  --glass: rgba(0,0,0,0.03);
-  --text:#012;
-  --shadow: 0 12px 36px rgba(2,20,30,0.08);
-  --grid: rgba(0,123,52,0.06);
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", sans-serif;
+  overflow: hidden;
 }
-
-*{box-sizing:border-box}
-html,body{height:100%;margin:0;background:var(--bg);font-family:var(--mono);color:var(--text);-webkit-font-smoothing:antialiased;transition:background .25s,color .25s}
-.container{max-width:1100px;margin:28px auto;padding:18px;display:flex;flex-direction:column;gap:18px;align-items:center}
-
-/* Top bar / heading */
-.topbar{width:100%;max-width:1100px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.top-left{display:flex;align-items:center;gap:12px}
-.top-left img{width:44px;height:44px;border-radius:8px;object-fit:cover}
-.title{font-size:1.15rem;font-weight:700;letter-spacing:0.2px}
-.subtitle{font-size:0.86rem;opacity:0.9}
-
-/* Monitor panel */
-.panel{width:100%;max-width:980px;border-radius:var(--card-radius);padding:18px;background:var(--panel);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px;align-items:center;position:relative;overflow:hidden}
-.panel .meta{width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px}
-.meta .left{display:flex;gap:10px;align-items:center}
-.badge{padding:6px 10px;border-radius:8px;background:rgba(0,0,0,0.18);font-weight:700;color:var(--text);font-size:0.9rem}
-.controls{display:flex;gap:8px;align-items:center}
-.back-btn{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);padding:8px 10px;border-radius:8px;cursor:pointer}
-.back-btn:hover{transform:translateY(-3px);opacity:0.95}
-
-/* Canvas area */
-.canvas-wrap{width:100%;display:flex;gap:18px;align-items:center;justify-content:center;padding:6px 0;position:relative}
-#cpuCanvas{display:block;width:100%;height:320px;border-radius:8px;max-width:920px;box-shadow:inset 0 0 40px rgba(0,0,0,0.4);background:linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.0));}
-
-/* Large numeric display */
-.usage-big{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;text-align:center;z-index:3}
-.usage-big .percent{font-size:88px;font-weight:900;line-height:0.9;color:var(--accent);text-shadow:0 8px 40px rgba(0,255,150,0.08)}
-.usage-big .label{font-size:14px;opacity:0.85;margin-top:6px}
-
-/* small footer info under panel */
-.panel-footer{width:100%;display:flex;justify-content:space-between;align-items:center;font-size:0.9rem;color:var(--muted);opacity:0.95;padding-top:6px}
-
-/* grid overlay (faint) */
-.grid-overlay{position:absolute;inset:66px 20px 86px 20px;pointer-events:none;border-radius:8px;background-image:
-  linear-gradient(transparent 49px, rgba(0,0,0,0.02) 50px),
-  linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px);background-size:100% 50px, 50px 100%}
-
-/* responsiveness */
-@media (max-width:800px){
-  .usage-big .percent{font-size:56px}
-  #cpuCanvas{height:220px}
-  .panel{padding:12px}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
 }
-
-/* subtle animated glow */
-.glow {
-  position:absolute;
-  inset:auto 40px 20px auto;
-  width:120px;height:120px;border-radius:50%;
-  background:radial-gradient(circle at center, rgba(0,255,120,0.14), rgba(0,255,120,0.02) 40%, transparent 60%);
-  filter:blur(18px);
-  pointer-events:none;
-  mix-blend-mode:screen;
+h1 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
 }
-
-/* accessibility focus */
-:focus{outline:2px solid rgba(255,255,255,0.06);outline-offset:3px}
+canvas {
+  width: 90vw;
+  height: 50vh;
+  background: radial-gradient(circle at bottom, #001500, #000);
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0,255,100,0.2);
+}
+.percent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font-size: 80px;
+  font-weight: bold;
+  color: var(--accent);
+  text-shadow: 0 0 20px var(--accent);
+}
+button {
+  margin-top: 20px;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--muted);
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+button:hover { background: rgba(255,255,255,0.1); }
 </style>
 </head>
 <body>
-  <div class="container">
-    <div class="topbar">
-      <div class="top-left">
-        <img src="Growfax_banner.jpg" alt="Growfax">
-        <div>
-          <div class="title">Growfax — CPU Mapping</div>
-          <div class="subtitle">Simulated CPU waveform (neon monitor)</div>
-        </div>
-      </div>
-
-      <div class="controls">
-        <button id="backBtn" class="back-btn" aria-label="Back to dashboard">← Back</button>
-        <div id="themeIndicator" class="badge" title="Theme">Theme</div>
-      </div>
-    </div>
-
-    <div class="panel" role="region" aria-label="CPU monitor panel">
-      <div class="meta">
-        <div class="left">
-          <div class="badge" id="statusBadge">CPU Monitor</div>
-          <div style="font-size:0.88rem;color:var(--muted)">Realtime simulation • client-only</div>
-        </div>
-        <div class="controls" style="align-items:center">
-          <button id="pauseBtn" class="back-btn" title="Pause simulation">⏸ Pause</button>
-          <button id="resetBtn" class="back-btn" title="Reset waveform">↺ Reset</button>
-        </div>
-      </div>
-
-      <div class="canvas-wrap">
-        <canvas id="cpuCanvas" width="920" height="320" role="img" aria-label="CPU usage waveform"></canvas>
-
-        <!-- large center CPU percent -->
-        <div class="usage-big" aria-hidden="false">
-          <div class="percent" id="cpuPercent">0%</div>
-          <div class="label" id="cpuLabel">Total CPU Usage</div>
-        </div>
-
-        <div class="glow" aria-hidden="true"></div>
-      </div>
-
-      <div class="panel-footer">
-        <div id="minmax" aria-hidden="true">Min: 0% • Max: 100%</div>
-        <div id="lastUpdate">Updated: —</div>
-      </div>
-    </div>
-
+<div class="container">
+  <h1>Growfax — CPU Mapping</h1>
+  <div style="position:relative;">
+    <canvas id="cpuCanvas"></canvas>
+    <div class="percent" id="cpuPercent">0%</div>
   </div>
+  <button onclick="window.location.href='index.html'">← Back</button>
+</div>
 
 <script>
-/* ============================================================
-   cpu-mapping.html — script
-   - Continuous neon-green waveform (like EKG)
-   - Percentage display fluctuates up/down
-   - Reads localStorage 'growfax_theme' to sync with index.html
-   - Smooth back transition to index.html
-   ============================================================ */
-
-/* ----------- Theme sync with index.html ---------- */
-(function applySavedTheme(){
-  try{
-    const saved = localStorage.getItem('growfax_theme');
-    if(saved){
-      document.documentElement.setAttribute('data-theme', saved === 'dark' ? 'dark' : 'light');
-      document.getElementById('themeIndicator').textContent = saved === 'dark' ? 'Dark' : 'Light';
-    } else {
-      // default to dark look for this monitor
-      document.documentElement.setAttribute('data-theme','dark');
-      document.getElementById('themeIndicator').textContent = 'Dark';
-    }
-  }catch(e){}
-})();
-
-/* ----------- Canvas + rendering setup ---------- */
 const canvas = document.getElementById('cpuCanvas');
-const ctx = canvas.getContext('2d', { alpha: true });
-let W = canvas.width, H = canvas.height;
+const ctx = canvas.getContext('2d');
+const percentEl = document.getElementById('cpuPercent');
+let W, H;
 
-function resizeCanvas(){
-  // keep CSS-responsiveness but keep drawing buffer scale fixed-ish
-  const rect = canvas.getBoundingClientRect();
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  canvas.width = Math.max(600, Math.floor(rect.width * dpr));
-  canvas.height = Math.max(160, Math.floor((rect.height || 320) * dpr));
-  W = canvas.width; H = canvas.height;
-  ctx.scale(dpr, dpr);
-  // after resize clear and re-init points
-  initWave();
+function resize() {
+  W = canvas.width = canvas.offsetWidth * window.devicePixelRatio;
+  H = canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+  ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
 }
-window.addEventListener('resize', ()=>{
-  // small timeout for smoother resize
-  clearTimeout(window._growfax_resize_timer);
-  window._growfax_resize_timer = setTimeout(resizeCanvas, 140);
-});
-resizeCanvas();
+window.addEventListener('resize', resize);
+resize();
 
-/* ----------- Wave data ---------- */
-// We'll maintain a circular buffer of Y-values displayed left->right.
-// The visual scroll is achieved by shifting the buffer and drawing.
-const DISPLAY_POINTS = 600; // number of points shown horizontally
-let points = new Float32Array(DISPLAY_POINTS);
-let paused = false;
-let lastCpu = 35.0; // starting CPU percentage
-let cpuPercentEl = document.getElementById('cpuPercent');
-let lastUpdateEl = document.getElementById('lastUpdate');
-let minSeen = 100, maxSeen = 0;
-
-function initWave(){
-  for(let i=0;i<DISPLAY_POINTS;i++){
-    points[i] = H * 0.6; // default baseline (lower part)
-  }
-}
-initWave();
-
-/* ----------- Simulation parameters ---------- */
-const SIM = {
-  speed: 1.0,        // how many px per frame the wave 'moves' — simulated
-  volatility: 1.6,   // how wild the cpu jumps are
-  smoothing: 0.08,   // smoothing for cpu value changes
-  baseline: 30,      // baseline CPU
-  spikeChance: 0.018,// occasional spikes
-  spikePower: 28,    // how strong spikes are
-  heartbeat: 0.12    // adds subtle pulsing to waveform
-};
-
-/* ----------- Helper: generate next CPU value ---------- */
-function nextCpuValue(prev){
-  // base random walk with volatility + occasional spike
-  let v = prev;
-  // small inertia towards baseline
-  const towardBaseline = (SIM.baseline - v) * 0.004;
-  v += towardBaseline;
-  // random jitter
-  v += (Math.random() - 0.5) * SIM.volatility;
-  // occasional spike (simulate burst)
-  if(Math.random() < SIM.spikeChance){
-    v += (Math.random()*SIM.spikePower) + 8;
-  }
-  // clamp
-  v = Math.max(0, Math.min(100, v));
-  return v;
+let data = new Array(400).fill(H/2);
+let cpu = 50;
+function nextCPU() {
+  cpu += (Math.random()-0.5)*10;
+  if (Math.random() < 0.02) cpu += Math.random()*30; // spike
+  cpu = Math.max(0, Math.min(100, cpu));
+  percentEl.textContent = `${cpu.toFixed(1)}%`;
+  return cpu;
 }
 
-/* ----------- Drawing functions ---------- */
-function clearCanvas(){
-  // subtle background gradient depending on theme
-  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-  if(isLight){
-    ctx.fillStyle = '#f7fdff';
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-  } else {
-    // dark radial vignette
-    const grad = ctx.createLinearGradient(0,0,0,H);
-    grad.addColorStop(0, '#001107');
-    grad.addColorStop(1, '#000000');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0,0,canvas.width,canvas.height);
+function draw() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  // background
+  const grad = ctx.createLinearGradient(0,0,0,H);
+  grad.addColorStop(0,"#001100");
+  grad.addColorStop(1,"#000000");
+  ctx.fillStyle = grad;
+  ctx.fillRect(0,0,W,H);
+  // grid
+  ctx.strokeStyle = "rgba(0,255,100,0.06)";
+  for (let y=0;y<H;y+=40){
+    ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();
   }
-}
-
-function drawGrid(){
-  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-  ctx.save();
-  ctx.globalAlpha = 0.12;
-  ctx.strokeStyle = isLight ? 'rgba(0,123,52,0.06)' : 'rgba(0,255,102,0.06)';
-  ctx.lineWidth = 1;
-  const step = 40;
-  for(let y=0;y<H;y+=step){
-    ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(canvas.width, y); ctx.stroke();
-  }
-  for(let x=0;x<canvas.width;x+=step){
-    ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x, canvas.height); ctx.stroke();
-  }
-  ctx.restore();
-}
-
-function drawWave(){
-  // draw filled wave and top neon line
-  ctx.save();
-  // create gradient for fill
-  const g = ctx.createLinearGradient(0,0,0,H);
-  const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#00ff66';
-  ctx.fillStyle = g;
-  if(document.documentElement.getAttribute('data-theme') === 'light'){
-    g.addColorStop(0, 'rgba(0,123,52,0.14)');
-    g.addColorStop(1, 'rgba(0,123,52,0.02)');
-  } else {
-    g.addColorStop(0, 'rgba(0,255,150,0.10)');
-    g.addColorStop(1, 'rgba(0,255,150,0.02)');
-  }
-
-  // top neon line style
-  ctx.lineWidth = 2.6;
-  ctx.shadowBlur = 18;
-  ctx.shadowColor = accent;
-
-  // compute horizontal spacing based on canvas pixel width and DISPLAY_POINTS
-  const spacing = Math.max(1, (canvas.getBoundingClientRect().width) / DISPLAY_POINTS);
+  // move and add new data
+  data.shift();
+  const val = nextCPU();
+  const y = H - (val/100)*(H*0.8);
+  data.push(y);
+  // draw wave
   ctx.beginPath();
-  // move to first point
-  ctx.moveTo(0, points[0]);
-  // polyline across
-  for(let i=1;i<DISPLAY_POINTS;i++){
-    const x = i * spacing;
-    const y = points[i];
-    ctx.lineTo(x, y);
-  }
-  // stroke path (neon)
-  ctx.strokeStyle = accent;
+  ctx.moveTo(0, data[0]);
+  for (let i=1;i<data.length;i++) ctx.lineTo(i*(W/data.length), data[i]);
+  ctx.strokeStyle = "#00ff66";
+  ctx.lineWidth = 2;
+  ctx.shadowColor = "#00ff66";
+  ctx.shadowBlur = 12;
   ctx.stroke();
-
-  // filled area under curve
-  ctx.lineTo(DISPLAY_POINTS * spacing, H);
-  ctx.lineTo(0, H);
-  ctx.closePath();
-  ctx.globalAlpha = 0.22;
-  ctx.fill();
-
-  // small highlight line (thin)
-  ctx.beginPath();
-  ctx.lineWidth = 1;
-  ctx.globalAlpha = 0.7;
-  ctx.strokeStyle = accent;
-  for(let i=0;i<DISPLAY_POINTS;i++){
-    const x = i * spacing;
-    const y = points[i];
-    if(i===0) ctx.moveTo(x,y-2);
-    else ctx.lineTo(x,y-2);
-  }
-  ctx.stroke();
-
-  ctx.restore();
+  ctx.shadowBlur = 0;
+  requestAnimationFrame(draw);
 }
-
-/* ----------- Animation Loop ---------- */
-let then = performance.now();
-let accumulator = 0; // for time-based updates
-const FPS = 60;
-const frameInterval = 1000 / FPS;
-
-function step(now){
-  const delta = now - then;
-  then = now;
-  accumulator += delta;
-
-  // update at fixed timestep for stable simulation
-  while(accumulator >= frameInterval){
-    if(!paused){
-      // compute next CPU
-      const simulated = nextCpuValue(lastCpu);
-      // smoothing: move lastCpu slightly towards simulated
-      lastCpu += (simulated - lastCpu) * SIM.smoothing;
-      // small heartbeat modulation
-      const heartbeat = Math.sin(now * 0.002 * (1 + SIM.heartbeat)) * 0.4;
-      // compute y position: higher CPU -> lower Y
-      const y = H - (lastCpu/100) * (H * 0.78) - heartbeat*6;
-      // shift left
-      for(let i=0;i<DISPLAY_POINTS-1;i++) points[i] = points[i+1];
-      points[DISPLAY_POINTS-1] = y;
-
-      // update min/max seen
-      minSeen = Math.min(minSeen, Math.round(lastCpu));
-      maxSeen = Math.max(maxSeen, Math.round(lastCpu));
-      // update last update label
-      const d = new Date();
-      lastUpdateEl.textContent = `Updated: ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}:${d.getSeconds().toString().padStart(2,'0')}`;
-      // update displayed percent (smoothed visual)
-      const displayPercent = Math.round(lastCpu * 10) / 10;
-      cpuPercentEl.textContent = `${displayPercent}%`;
-    }
-    accumulator -= frameInterval;
-  }
-
-  // draw scene
-  clearCanvas();
-  drawGrid();
-  drawWave();
-
-  // request next frame
-  window._cpu_anim_req = requestAnimationFrame(step);
-}
-
-// start animation
-window._cpu_anim_req = requestAnimationFrame(step);
-
-/* ----------- Controls ---------- */
-const pauseBtn = document.getElementById('pauseBtn');
-const resetBtn = document.getElementById('resetBtn');
-const backBtn = document.getElementById('backBtn');
-
-pauseBtn.addEventListener('click', ()=>{
-  paused = !paused;
-  pauseBtn.textContent = paused ? '▶ Resume' : '⏸ Pause';
-  showTemporaryBadge(paused ? 'Paused' : 'Running');
-});
-resetBtn.addEventListener('click', ()=>{
-  initWave();
-  lastCpu = 18 + Math.random()*32;
-  minSeen = 100; maxSeen = 0;
-  showTemporaryBadge('Wave reset');
-});
-backBtn.addEventListener('click', ()=>{
-  // fade out then navigate back to index.html
-  document.body.style.transition = 'opacity 0.28s';
-  document.body.style.opacity = '0';
-  setTimeout(()=> {
-    // go back to index
-    window.location.href = 'index.html';
-  }, 300);
-});
-
-/* ----------- Small UI helper: timed in-panel badge ---------- */
-function showTemporaryBadge(text, ms=1100){
-  const old = document.getElementById('statusBadge');
-  if(!old) return;
-  const prev = old.textContent;
-  old.textContent = text;
-  setTimeout(()=> old.textContent = 'CPU Monitor', ms);
-}
-
-/* ----------- Accessibility & keyboard shortcuts ---------- */
-window.addEventListener('keydown', (e)=>{
-  // space -> pause/resume
-  if(e.code === 'Space'){
-    e.preventDefault();
-    pauseBtn.click();
-  }
-  // R -> reset
-  if(e.key === 'r' || e.key === 'R') resetBtn.click();
-  // Esc -> go back
-  if(e.key === 'Escape') backBtn.click();
-});
-
-/* ----------- Min/Max display update (optional small tick) ---------- */
-const minmaxEl = document.getElementById('minmax');
-setInterval(()=> {
-  minmaxEl.textContent = `Min: ${Math.max(0,Math.round(minSeen))}% • Max: ${Math.min(100,Math.round(maxSeen))}%`;
-}, 1200);
-
-/* ----------- Safety: cancel animation when page hidden ---------- */
-document.addEventListener('visibilitychange', ()=>{
-  if(document.hidden){
-    cancelAnimationFrame(window._cpu_anim_req);
-  } else {
-    then = performance.now();
-    window._cpu_anim_req = requestAnimationFrame(step);
-  }
-});
-
-/* ----------- Initial visual seeding to make waveform look alive ---------- */
-(function seedInitialVals(){
-  let v = lastCpu;
-  for(let i=0;i<DISPLAY_POINTS;i++){
-    v = nextCpuValue(v);
-    points[i] = H - (v/100) * (H * 0.78);
-    lastCpu = v;
-  }
-  // ensure cpu percent displayed right away
-  cpuPercentEl.textContent = `${Math.round(lastCpu*10)/10}%`;
-})();
-
-/* ----------- End script ---------- */
+draw();
 </script>
 </body>
 </html>
