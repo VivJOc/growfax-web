@@ -7,7 +7,6 @@
 <link rel="icon" href="Growfax_banner.jpg" type="image/jpeg">
 <style>
 :root {
-    --primary-color: #007bff;
     --secondary-color: #333;
     --background-color: #f8f8f8;
     --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -16,8 +15,10 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0; padding: 0; background-color: var(--background-color);
-    color: var(--secondary-color); line-height: 1.6;
+    margin: 0; padding: 0;
+    background-color: var(--background-color);
+    color: var(--secondary-color);
+    line-height: 1.6;
 }
 
 /* Header */
@@ -44,17 +45,17 @@ body {
     font-size: 2em;
 }
 .nav-links a {
-    color: var(--primary-color);
+    color: #007bff;
     text-decoration: none;
     font-weight: bold;
     padding: 8px 15px;
     margin-left: 10px;
-    border: 2px solid var(--primary-color);
+    border: 2px solid #007bff;
     border-radius: 20px;
     transition: background-color 0.3s, color 0.3s;
 }
 .nav-links a:hover {
-    background-color: var(--primary-color);
+    background-color: #007bff;
     color: #fff;
 }
 
@@ -64,17 +65,40 @@ body {
     padding: 40px 0;
     text-align: center;
     color: #fff;
+    position: relative;
+    overflow: hidden;
 }
+
+/* Efek animasi logo */
 .banner-section img {
     max-width: 250px;
     height: auto;
     border-radius: 8px;
     margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+    animation: floatLogo 4s ease-in-out infinite, shine 5s linear infinite;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
+
+/* Efek pantulan (gerak lembut ke atas-bawah) */
+@keyframes floatLogo {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Efek berkilau shimmer di logo */
+@keyframes shine {
+    0% { filter: brightness(1) drop-shadow(0 0 5px rgba(255,255,255,0.2)); }
+    50% { filter: brightness(1.3) drop-shadow(0 0 25px rgba(255,255,255,0.6)); }
+    100% { filter: brightness(1) drop-shadow(0 0 5px rgba(255,255,255,0.2)); }
+}
+
 .banner-section h2 {
     font-size: 3em;
     margin-bottom: 5px;
     color: #ffaa00;
+    text-shadow: 0 0 10px rgba(255,170,0,0.5);
 }
 .banner-section p {
     font-size: 1.2em;
@@ -82,7 +106,7 @@ body {
     margin: 0 auto;
 }
 
-/* Kontainer utama */
+/* Container utama */
 .container {
     width: 90%;
     max-width: 1100px;
@@ -91,7 +115,7 @@ body {
     text-align: center;
 }
 
-/* Tombol Platform */
+/* Tombol platform */
 .platform-buttons {
     display: flex;
     flex-direction: column;
@@ -111,27 +135,29 @@ body {
     font-size: 1.1em;
     font-weight: 600;
     text-decoration: none;
-    transition: transform 0.2s ease, opacity 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.3s;
 }
 
 .platform-buttons a img {
     width: 28px;
     height: 28px;
     margin-right: 10px;
+    border-radius: 5px;
 }
 
 .platform-buttons a:hover {
     transform: translateY(-3px);
     opacity: 0.9;
+    box-shadow: 0 0 12px rgba(255,255,255,0.6);
 }
 
 /* Warna tombol */
 .btn-android { background-color: #34c759; }
 .btn-windows { background-color: #0078d7; }
 .btn-ios { background-color: #007aff; }
-.btn-macos { background-color: #b71c1c; }
+.btn-windows2 { background-color: #b71c1c; } /* PowerTunnel */
 
-/* Discord section */
+/* Discord */
 .discord-section {
     text-align: center;
     margin-top: 50px;
@@ -171,51 +197,51 @@ body {
 <body>
 
 <div class="header">
-<div class="header-content">
-<h1>Growfax Official</h1>
-<div class="nav-links">
-<a href="#downloads">📥 Downloads</a>
-</div>
-</div>
+  <div class="header-content">
+    <h1>Growfax Official</h1>
+    <div class="nav-links">
+      <a href="#downloads">📥 Downloads</a>
+    </div>
+  </div>
 </div>
 
 <div class="banner-section">
-<img src="Growfax_banner.jpg" alt="Growfax Banner">
-<h2>Welcome to Growfax</h2>
-<p>Your centralized hub for essential tools and community resources.</p>
+  <img src="Growfax_banner.jpg" alt="Growfax Banner">
+  <h2>Welcome to Growfax</h2>
+  <p>Your centralized hub for essential tools and community resources.</p>
 </div>
 
 <div class="container" id="downloads">
-<h2>📥 Essential File Downloads</h2>
+  <h2>📥 Essential File Downloads</h2>
 
-<div class="platform-buttons">
-  <a href="Growfax_VirtualHost.txt" class="btn-android" download>
-    <img src="android.png" alt="Android Logo"> Play on Android
-  </a>
+  <div class="platform-buttons">
+    <a href="Growfax_VirtualHost.txt" class="btn-android" download>
+      <img src="virtual-host.png" alt="Virtual Host Logo"> Play on Android
+    </a>
 
-  <a href="Growfax_Patched_.bat" class="btn-windows" download>
-    <img src="windows.png" alt="Windows Logo"> Play on Windows
-  </a>
+    <a href="Growfax_Patched_.bat" class="btn-windows" download>
+      <img src="windows.png" alt="Windows Logo"> Play on Windows
+    </a>
 
-  <a href="GrowFax ios.txt" class="btn-ios" download>
-    <img src="apple.png" alt="iOS Logo"> Play on iOS
-  </a>
+    <a href="GrowFax ios.txt" class="btn-ios" download>
+      <img src="surge5.png" alt="Surge 5 Logo"> Play on iOS
+    </a>
 
-  <a href="PowerTunel_Host.txt" class="btn-macos" download>
-    <img src="apple.png" alt="macOS Logo"> Play on macOS
-  </a>
-</div>
+    <a href="PowerTunel_Host.txt" class="btn-windows2" download>
+      <img src="powertunnel.jpeg" alt="PowerTunnel Logo"> Play on Windows
+    </a>
+  </div>
 </div>
 
 <div class="discord-section">
-<img src="discord.jpeg" alt="Discord Logo">
-<h2>Join Our Community</h2>
-<p>Connect with other members and get support in our official Discord server.</p>
-<a href="https://discord.gg/smgS6sq83y" target="_blank">Join Growfax Discord Now!</a>
+  <img src="discord.jpeg" alt="Discord Logo">
+  <h2>Join Our Community</h2>
+  <p>Connect with other members and get support in our official Discord server.</p>
+  <a href="https://discord.gg/smgS6sq83y" target="_blank">Join Growfax Discord Now!</a>
 </div>
 
 <div class="footer">
-&copy; 2025 Growfax. All rights reserved.
+  &copy; 2025 Growfax. All rights reserved.
 </div>
 
 </body>
