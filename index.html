@@ -135,6 +135,47 @@ body {
     text-decoration: none;
     transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.3s;
     border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Glow animation for buttons */
+@keyframes buttonGlow {
+    0% { box-shadow: 0 0 8px rgba(255,255,255,0.2); }
+    50% { box-shadow: 0 0 20px currentColor; }
+    100% { box-shadow: 0 0 8px rgba(255,255,255,0.2); }
+}
+
+/* Android button - green glow */
+.btn-android {
+    background-color: #34c759;
+    border-color: #2ea94f;
+    animation: buttonGlow 2s infinite ease-in-out;
+    color: #fff;
+}
+
+/* Windows button - blue glow */
+.btn-windows {
+    background-color: #0078d7;
+    border-color: #0063b1;
+    animation: buttonGlow 2s infinite ease-in-out;
+    color: #fff;
+}
+
+/* iOS button - light blue glow */
+.btn-ios {
+    background-color: #007aff;
+    border-color: #005bb5;
+    animation: buttonGlow 2s infinite ease-in-out;
+    color: #fff;
+}
+
+/* PowerTunnel button - red glow */
+.btn-powertunnel {
+    background-color: #b71c1c;
+    border-color: #8b0000;
+    animation: buttonGlow 2s infinite ease-in-out;
+    color: #fff;
 }
 
 .platform-buttons a img {
@@ -147,14 +188,7 @@ body {
 .platform-buttons a:hover {
     transform: translateY(-3px);
     opacity: 0.9;
-    box-shadow: 0 0 12px rgba(255,255,255,0.6);
 }
-
-/* Button colors */
-.btn-android { background-color: #34c759; border-color: #2ea94f; }
-.btn-windows { background-color: #0078d7; border-color: #0063b1; }
-.btn-ios { background-color: #007aff; border-color: #005bb5; }
-.btn-powertunnel { background-color: #b71c1c; border-color: #8b0000; }
 
 /* Discord section */
 .discord-section {
@@ -250,7 +284,7 @@ body {
       const fileName = this.getAttribute('href');
       const confirmDownload = confirm(`Are you sure you want to download "${fileName}"?`);
       if (!confirmDownload) {
-        event.preventDefault(); // Cancel download
+        event.preventDefault();
       }
     });
   });
