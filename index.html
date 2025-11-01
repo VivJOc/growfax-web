@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -69,7 +69,7 @@ body {
     overflow: hidden;
 }
 
-/* Efek animasi logo */
+/* Animated logo */
 .banner-section img {
     max-width: 250px;
     height: auto;
@@ -104,7 +104,7 @@ body {
     margin: 0 auto;
 }
 
-/* Container utama */
+/* Main container */
 .container {
     width: 90%;
     max-width: 1100px;
@@ -113,7 +113,7 @@ body {
     text-align: center;
 }
 
-/* Tombol platform */
+/* Download buttons */
 .platform-buttons {
     display: flex;
     flex-direction: column;
@@ -150,13 +150,13 @@ body {
     box-shadow: 0 0 12px rgba(255,255,255,0.6);
 }
 
-/* Warna tombol */
+/* Button colors */
 .btn-android { background-color: #34c759; border-color: #2ea94f; }
 .btn-windows { background-color: #0078d7; border-color: #0063b1; }
 .btn-ios { background-color: #007aff; border-color: #005bb5; }
 .btn-powertunnel { background-color: #b71c1c; border-color: #8b0000; }
 
-/* Discord */
+/* Discord section */
 .discord-section {
     text-align: center;
     margin-top: 50px;
@@ -207,7 +207,7 @@ body {
 <div class="banner-section">
   <img src="Growfax_banner.jpg" alt="Growfax Banner">
   <h2>Welcome to Growfax</h2>
-  <p>private growtopia server.</p>
+  <p>Private Growtopia server.</p>
 </div>
 
 <div class="container" id="downloads">
@@ -222,11 +222,11 @@ body {
       <img src="windows.png" alt="Windows Logo"> Play on Windows
     </a>
 
-    <a href="GrowFax ios.txt" class="btn-ios" download>
+    <a href="GrowFax_ios.txt" class="btn-ios" download>
       <img src="surge5.png" alt="Surge 5 Logo"> Play on iOS
     </a>
 
-    <a href="PowerTunel_Host.txt" class="btn-powertunnel" download>
+    <a href="PowerTunnel_Host.txt" class="btn-powertunnel" download>
       <img src="powertunnel.jpeg" alt="PowerTunnel Logo"> Play via PowerTunnel
     </a>
   </div>
@@ -243,14 +243,14 @@ body {
   &copy; 2025 Growfax. All rights reserved.
 </div>
 
-<!-- Script konfirmasi download -->
+<!-- Download confirmation script -->
 <script>
   document.querySelectorAll('.platform-buttons a').forEach(button => {
     button.addEventListener('click', function(event) {
       const fileName = this.getAttribute('href');
-      const confirmDownload = confirm(`Apakah Anda yakin ingin mengunduh file "${fileName}"?`);
+      const confirmDownload = confirm(`Are you sure you want to download "${fileName}"?`);
       if (!confirmDownload) {
-        event.preventDefault(); // Batalkan unduhan
+        event.preventDefault(); // Cancel download
       }
     });
   });
