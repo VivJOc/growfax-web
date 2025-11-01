@@ -6,32 +6,34 @@
 <title>Growfax Official</title>
 <link rel="icon" href="Growfax_banner.jpg" type="image/jpeg">
 <style>
-  :root {
-    --bg: #f8f8f8;
-    --card-bg: #ffffff;
-    --text: #1a1a1a;
-    --accent: #0078d7;
-    --card-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    --discord-color: #7289da;
-    --toast-bg: rgba(0,0,0,0.8);
+  :root{
+    --bg:#f8f8f8;
+    --card-bg:#fff;
+    --text:#1a1a1a;
+    --accent:#0078d7;
+    --card-shadow:0 8px 20px rgba(0,0,0,0.08);
+    --discord-color:#7289da;
+    --muted:#667;
+    --toast-bg:rgba(0,0,0,0.8);
   }
   [data-theme="dark"]{
-    --bg: #0f1720;
-    --card-bg: #0b1220;
-    --text: #e6eef8;
-    --accent: #4da3ff;
-    --card-shadow: 0 8px 28px rgba(0,0,0,0.6);
-    --discord-color: #5b6ea6;
-    --toast-bg: rgba(255,255,255,0.08);
+    --bg:#0f1720;
+    --card-bg:#0b1220;
+    --text:#e6eef8;
+    --accent:#4da3ff;
+    --card-shadow:0 8px 28px rgba(0,0,0,0.6);
+    --discord-color:#5b6ea6;
+    --muted:#9aa;
+    --toast-bg:rgba(255,255,255,0.08);
   }
-  html,body{height:100%;margin:0;font-family:"Segoe UI", Tahoma, Geneva, Verdana, sans-serif;background:var(--bg);color:var(--text);line-height:1.6;transition:background .25s,color .25s}
+
+  html,body{height:100%;margin:0;font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;background:var(--bg);color:var(--text);line-height:1.6;transition:background .25s,color .25s}
   header{background:var(--card-bg);box-shadow:var(--card-shadow);position:sticky;top:0;z-index:1200}
   .header-content{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px}
   .header-left{display:flex;align-items:center;gap:14px}
   h1{font-size:1.4rem;margin:0;font-weight:700}
   .controls{display:flex;align-items:center;gap:10px}
   .theme-toggle,.lang-select,.open-welcome{font-size:0.98rem;padding:8px 12px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);background:transparent;color:var(--text);cursor:pointer}
-  .lang-select{appearance:none}
   .banner-section{text-align:center;padding:56px 20px;background:linear-gradient(90deg, rgba(0,0,0,0.03), rgba(255,255,255,0.02))}
   .banner-section img{max-width:240px;border-radius:10px;margin-bottom:18px}
   .banner-section h2{font-size:1.9rem;color:#ffaa00;margin:8px 0;text-shadow:0 0 10px rgba(255,170,0,0.18)}
@@ -75,7 +77,7 @@
   .welcome select,.welcome input[type="radio"]{padding:8px;border-radius:8px}
   .welcome .actions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
 
-  /* Floating discord button */
+  /* Floating discord */
   .floating-chat{position:fixed;right:18px;bottom:18px;width:56px;height:56px;border-radius:50%;background:var(--discord-color);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,0.2);cursor:pointer;z-index:1500}
   .floating-chat img{width:28px;height:28px;border-radius:6px}
 
@@ -83,11 +85,40 @@
   .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:86px;background:var(--toast-bg);color:#fff;padding:8px 12px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;z-index:1600}
   [data-theme="dark"] .toast{color:#fff}
 
-  @media (max-width:600px){
-    .header-content{padding:12px}
-    .platform-buttons a{width:92%}
-    .modal{margin:0 12px}
+  /* Chatbot UI */
+  .chat-fab{position:fixed;right:18px;bottom:86px;width:64px;height:64px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 12px 30px rgba(0,0,0,0.25);cursor:pointer;z-index:1550;border:4px solid rgba(255,255,255,0.06);font-size:1.6rem}
+  .chat-window{position:fixed;right:18px;bottom:160px;width:360px;max-width:92%;height:480px;border-radius:12px;background:var(--card-bg);box-shadow:0 20px 60px rgba(0,0,0,0.3);display:none;flex-direction:column;overflow:hidden;z-index:1555}
+  .chat-window.open{display:flex}
+  .chat-header{display:flex;align-items:center;gap:10px;padding:12px;border-bottom:1px solid rgba(0,0,0,0.06)}
+  .avatar-emoji{font-size:1.6rem;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:rgba(0,0,0,0.04)}
+  .chat-header .meta{display:flex;flex-direction:column}
+  .chat-header .meta strong{font-size:1rem}
+  .chat-messages{flex:1;padding:12px;overflow:auto;display:flex;flex-direction:column;gap:10px;background:linear-gradient(180deg, rgba(0,0,0,0.01), transparent)}
+  .msg{max-width:85%;padding:10px 12px;border-radius:10px;font-size:0.95rem;line-height:1.3}
+  .msg.bot{align-self:flex-start;background:rgba(0,0,0,0.04);color:var(--text)}
+  [data-theme="dark"] .msg.bot{background:rgba(255,255,255,0.03)}
+  .msg.user{align-self:flex-end;background:var(--accent);color:#fff}
+  .chat-input{display:flex;gap:8px;padding:10px;border-top:1px solid rgba(0,0,0,0.06);align-items:center}
+  .chat-input input{flex:1;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.08);background:transparent;color:var(--text)}
+  .chat-input button{padding:8px 12px;border-radius:8px;border:0;background:var(--accent);color:#fff;font-weight:700;cursor:pointer}
+
+  /* typing text + animated dots */
+  .typing-container{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:0.95rem}
+  .typing-dots{display:inline-block;position:relative;width:26px;height:10px}
+  .typing-dots span{position:absolute;left:0;top:0;width:6px;height:6px;border-radius:50%;background:var(--muted);opacity:0;transform:translateY(0)}
+  .typing-dots span:nth-child(1){left:0;animation:dotAnim 1s infinite 0s}
+  .typing-dots span:nth-child(2){left:8px;animation:dotAnim 1s infinite 0.16s}
+  .typing-dots span:nth-child(3){left:16px;animation:dotAnim 1s infinite 0.32s}
+  @keyframes dotAnim{
+    0%{opacity:0;transform:translateY(0)}
+    30%{opacity:1;transform:translateY(-5px)}
+    60%{opacity:1;transform:translateY(0)}
+    100%{opacity:0;transform:translateY(0)}
   }
+
+  .typing-indicator{font-size:0.9rem;color:var(--muted);opacity:.95}
+
+  @media (max-width:600px){ .chat-window{right:12px;left:12px;bottom:140px;width:auto;height:60vh} .platform-buttons a{width:92%} }
 </style>
 </head>
 <body data-theme="light">
@@ -141,7 +172,7 @@
     <img src="discord.jpeg" alt="Discord Logo">
     <h3>Join Our Community</h3>
     <p>Connect with others and get support in our official Discord server.</p>
-    <a href="https://discord.gg/smgS6sq83y" target="_blank" rel="noopener">Join Growfax Discord</a>
+    <a id="discordLink" href="https://discord.gg/smgS6sq83y" target="_blank" rel="noopener">Join Growfax Discord</a>
   </section>
 
   <footer>© 2025 Growfax. All rights reserved.</footer>
@@ -160,7 +191,7 @@
       <div class="changelog" id="modalChangelog">Changelog: —</div>
 
       <div style="display:flex;gap:8px;align-items:center;justify-content:space-between">
-        <div style="font-size:.9rem;color:var(--text);opacity:.85" id="modalFilename">Filename</div>
+        <div style="font-size:.9rem;color:var(--muted)" id="modalFilename">Filename</div>
         <div class="buttons">
           <button class="btn secondary" id="modalCancel">Cancel</button>
           <button class="btn primary" id="modalConfirm">Download</button>
@@ -204,10 +235,30 @@
   <!-- Toast -->
   <div id="toast" class="toast" role="status" aria-live="polite">Saved</div>
 
+  <!-- Chatbot FAB (emoji avatar) -->
+  <div id="chatFab" class="chat-fab" title="Open Faxbot chat">🤖</div>
+
+  <!-- Chat window -->
+  <div id="chatWindow" class="chat-window" role="dialog" aria-modal="false" aria-label="Faxbot chat">
+    <div class="chat-header">
+      <div class="avatar-emoji">🤖</div>
+      <div class="meta"><strong id="botName">Faxbot</strong><small id="botStatus" style="color:var(--muted)">Online</small></div>
+      <div style="flex:1"></div>
+      <button id="closeChat" class="theme-toggle" style="padding:6px 8px;font-size:0.85rem">✕</button>
+    </div>
+
+    <div id="chatMessages" class="chat-messages" aria-live="polite"></div>
+
+    <div class="chat-input" role="form" aria-label="Send message">
+      <input id="chatInput" type="text" placeholder="Ask Faxbot..." aria-label="Message input">
+      <button id="chatSend">Send</button>
+    </div>
+  </div>
+
 <script>
-/* ---------------------------
-   Utilities & state
-   --------------------------- */
+/* ===========================
+   Core refs & state
+   =========================== */
 const langSelect = document.getElementById('langSelect');
 const themeToggle = document.getElementById('themeToggle');
 const openWelcome = document.getElementById('openWelcome');
@@ -227,18 +278,27 @@ const welcomeLang = document.getElementById('welcomeLang');
 const welcomeSave = document.getElementById('welcomeSave');
 const welcomeSkip = document.getElementById('welcomeSkip');
 
+const chatFab = document.getElementById('chatFab');
+const chatWindow = document.getElementById('chatWindow');
+const chatMessages = document.getElementById('chatMessages');
+const chatInput = document.getElementById('chatInput');
+const chatSend = document.getElementById('chatSend');
+const closeChat = document.getElementById('closeChat');
+const botNameEl = document.getElementById('botName');
+const botStatusEl = document.getElementById('botStatus');
 const timeDisplay = document.getElementById('timeDisplay');
+const discordLink = document.getElementById('discordLink');
 
 const FILE_META = {
-  virtualhost: { version: 'v2.1', updated: 'Oct 29, 2025', changelog: '- Fixed host parsing\n- Improved TLS handling', size: '2.3 KB' },
-  patched: { version: 'v1.9', updated: 'Oct 20, 2025', changelog: '- Patched launcher\n- Minor fixes', size: '12.1 KB' },
-  ios: { version: 'v1.4', updated: 'Sep 30, 2025', changelog: '- iOS config update\n- Surge tweak', size: '3.7 KB' },
-  powertunnel: { version: 'v3.0', updated: 'Oct 10, 2025', changelog: '- PowerTunnel rules updated\n- Stability improvements', size: '1.9 KB' }
+  virtualhost: { version: 'v2.1', updated: 'Oct 29, 2025', changelog: '- Fixed host parsing\\n- Improved TLS handling', size: '2.3 KB' },
+  patched: { version: 'v1.9', updated: 'Oct 20, 2025', changelog: '- Patched launcher\\n- Minor fixes', size: '12.1 KB' },
+  ios: { version: 'v1.4', updated: 'Sep 30, 2025', changelog: '- iOS config update\\n- Surge tweak', size: '3.7 KB' },
+  powertunnel: { version: 'v3.0', updated: 'Oct 10, 2025', changelog: '- PowerTunnel rules updated\\n- Stability improvements', size: '1.9 KB' }
 };
 
-/* ---------------------------
-   Translation logic (stable)
-   --------------------------- */
+/* ===========================
+   Translation baseline
+   =========================== */
 const elements = document.querySelectorAll('body *:not(script):not(style)');
 elements.forEach(el=>{
   if (el.childNodes.length === 1 && el.textContent.trim() !== '') {
@@ -272,12 +332,14 @@ const translations = {
     "Updated": "Diperbarui",
     "Changelog": "Catatan pembaruan",
     "Size": "Ukuran",
-    "Welcome to Growfax": "Selamat Datang di Growfax",
     "Set your preferred language and theme. We'll remember this for next time.": "Pilih bahasa dan tema favoritmu. Kami akan menyimpannya untuk kunjungan berikutnya.",
     "Save & Continue": "Simpan & Lanjutkan",
     "Skip": "Lewati",
     "Language": "Bahasa",
-    "Theme": "Tema"
+    "Theme": "Tema",
+    "Faxbot": "Faxbot",
+    "Opening Discord...": "Membuka Discord...",
+    "Faxbot is typing...": "Faxbot sedang mengetik..."
   }
 };
 
@@ -285,23 +347,20 @@ function applyTranslations(lang){
   elements.forEach(el=>{
     const orig = el.dataset.original;
     if(!orig) return;
-    if(lang === 'en'){
-      el.textContent = orig;
-    } else {
-      el.textContent = translations[lang]?.[orig] || orig;
-    }
+    el.textContent = lang === 'en' ? orig : (translations[lang]?.[orig] || orig);
   });
-  // keep modal buttons text localized
+  // modal & welcome button labels (fixed elements)
   modalCancel.textContent = lang === 'id' ? (translations.id['Cancel'] || 'Batal') : 'Cancel';
   modalConfirm.textContent = lang === 'id' ? (translations.id['Download'] || 'Unduh') : 'Download';
-  // welcome dialog
   welcomeSave.textContent = lang === 'id' ? (translations.id['Save & Continue'] || 'Simpan & Lanjutkan') : 'Save & Continue';
   welcomeSkip.textContent = lang === 'id' ? (translations.id['Skip'] || 'Lewati') : 'Skip';
+  botNameEl.textContent = 'Faxbot';
+  discordLink.textContent = lang === 'id' ? (translations.id['Join Growfax Discord'] || 'Gabung Discord Growfax') : 'Join Growfax Discord';
 }
 
-/* ---------------------------
+/* ===========================
    Theme control
-   --------------------------- */
+   =========================== */
 function setTheme(theme){
   document.body.setAttribute('data-theme', theme);
   themeToggle.textContent = theme === 'dark' ? '🌙 Dark' : '🌞 Light';
@@ -313,27 +372,25 @@ themeToggle.addEventListener('click', ()=> {
 });
 setTheme(localStorage.getItem('growfax_theme') || 'light');
 
-/* ---------------------------
+/* ===========================
    Language control
-   --------------------------- */
-langSelect.addEventListener('change', ()=>{
+   =========================== */
+langSelect.addEventListener('change', ()=> {
   const lang = langSelect.value;
   localStorage.setItem('growfax_lang', lang);
   applyTranslations(lang);
-  updateTime(); // update time format/timezone immediately
+  updateTime();
   showToast(lang === 'id' ? 'Bahasa: Indonesia' : 'Language: English');
 });
-
-/* initialize language */
 (function initLang(){
   const saved = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en');
   langSelect.value = saved;
   applyTranslations(saved);
 })();
 
-/* ---------------------------
+/* ===========================
    Time display (NY / Jakarta)
-   --------------------------- */
+   =========================== */
 function getIndoGreeting(hour){
   if(hour < 11) return 'pagi';
   if(hour < 15) return 'siang';
@@ -358,19 +415,17 @@ function updateTime(){
 updateTime();
 setInterval(updateTime, 1000);
 
-/* ---------------------------
+/* ===========================
    Simulated File Update Checker (modal)
-   --------------------------- */
+   =========================== */
 let pendingDownload = null;
 document.querySelectorAll('.platform-buttons a').forEach(a=>{
   a.addEventListener('click', (e)=>{
-    // If user uses modifier or middle-click, let them (open new tab)
     if(e.ctrlKey || e.metaKey || e.button === 1) return;
     e.preventDefault();
     const key = a.dataset.filekey;
     const meta = FILE_META[key] || { version: 'v1.0', updated: 'Unknown', changelog: 'No details', size: '—' };
     const filename = a.dataset.filename || key;
-    // fill modal with localized content
     modalTitle.textContent = (langSelect.value === 'id') ? (translations.id['Details before download'] || 'Detail sebelum mengunduh') : 'Details before download';
     modalDesc.textContent = (langSelect.value === 'id') ? `Simulated info for ${filename}` : `Simulated info for ${filename}`;
     modalVersion.textContent = `${(langSelect.value === 'id') ? (translations.id['Version'] || 'Versi') + ': ' : 'Version: '}${meta.version}`;
@@ -381,53 +436,25 @@ document.querySelectorAll('.platform-buttons a').forEach(a=>{
     showModal();
   });
 });
-
-function showModal(){
-  modalBackdrop.style.display = 'flex';
-  modalBackdrop.setAttribute('aria-hidden','false');
-  // focus confirm button
-  setTimeout(()=>modalConfirm.focus(),200);
-}
-function hideModal(){
-  modalBackdrop.style.display = 'none';
-  modalBackdrop.setAttribute('aria-hidden','true');
-  pendingDownload = null;
-}
-
+function showModal(){ modalBackdrop.style.display='flex'; modalBackdrop.setAttribute('aria-hidden','false'); setTimeout(()=>modalConfirm.focus(),200); }
+function hideModal(){ modalBackdrop.style.display='none'; modalBackdrop.setAttribute('aria-hidden','true'); pendingDownload=null; }
 modalCancel.addEventListener('click', ()=> hideModal());
-
-modalBackdrop.addEventListener('click', (e)=>{
-  if(e.target === modalBackdrop) hideModal();
-});
-
+modalBackdrop.addEventListener('click', (e)=>{ if(e.target===modalBackdrop) hideModal(); });
 modalConfirm.addEventListener('click', ()=>{
   if(!pendingDownload) return hideModal();
-  // simulate download — create temporary anchor to trigger download
-  const a = document.createElement('a');
-  a.href = pendingDownload.href;
-  a.download = pendingDownload.filename;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  hideModal();
-  showToast(langSelect.value === 'id' ? 'Mulai mengunduh...' : 'Download started...');
+  const a = document.createElement('a'); a.href = pendingDownload.href; a.download = pendingDownload.filename; document.body.appendChild(a); a.click(); a.remove();
+  hideModal(); showToast(langSelect.value === 'id' ? 'Mulai mengunduh...' : 'Download started...');
 });
 
-/* ---------------------------
-   Welcome popup (first visit)
-   --------------------------- */
-function showWelcome(){
-  welcomeBackdrop.style.display = 'flex';
-  welcomeBackdrop.setAttribute('aria-hidden','false');
-}
-function hideWelcome(){ welcomeBackdrop.style.display = 'none'; welcomeBackdrop.setAttribute('aria-hidden','true'); }
-
+/* ===========================
+   Welcome popup
+   =========================== */
+function showWelcome(){ welcomeBackdrop.style.display='flex'; welcomeBackdrop.setAttribute('aria-hidden','false'); }
+function hideWelcome(){ welcomeBackdrop.style.display='none'; welcomeBackdrop.setAttribute('aria-hidden','true'); }
 openWelcome.addEventListener('click', ()=> showWelcome());
-
 welcomeSave.addEventListener('click', ()=>{
   const chosenLang = document.getElementById('welcomeLang').value;
   const theme = Array.from(document.querySelectorAll('input[name="welcomeTheme"]')).find(r=>r.checked).value;
-  // apply
   langSelect.value = chosenLang;
   localStorage.setItem('growfax_lang', chosenLang);
   applyTranslations(chosenLang);
@@ -436,39 +463,262 @@ welcomeSave.addEventListener('click', ()=>{
   hideWelcome();
   showToast(chosenLang === 'id' ? 'Bahasa disimpan' : 'Preferences saved');
 });
+welcomeSkip.addEventListener('click', ()=> { hideWelcome(); showToast(langSelect.value === 'id' ? 'Dipilih nanti' : 'Maybe later'); });
+(function firstVisit(){ const seen = localStorage.getItem('growfax_seen'); if(!seen){ welcomeLang.value = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en'); const savedTheme = localStorage.getItem('growfax_theme') || 'light'; document.querySelectorAll('input[name="welcomeTheme"]').forEach(r=> r.checked = (r.value === savedTheme)); showWelcome(); localStorage.setItem('growfax_seen','1'); }})();
 
-welcomeSkip.addEventListener('click', ()=>{
-  hideWelcome();
-  showToast(langSelect.value === 'id' ? 'Dipilih nanti' : 'Maybe later');
+/* ===========================
+   Chat open/close & persistence
+   =========================== */
+function showChat(){ chatWindow.classList.add('open'); chatFab.style.display='none'; chatInput.focus(); botStatusEl.textContent = (langSelect.value === 'id') ? 'Online' : 'Online'; }
+function hideChat(){ chatWindow.classList.remove('open'); chatFab.style.display='flex'; }
+chatFab.addEventListener('click', ()=> {
+  if(chatWindow.classList.contains('open')) hideChat();
+  else {
+    showChat();
+    const history = loadChatHistory();
+    if(history.length === 0 || history[history.length-1].role === 'user') sendBotGreeting();
+    renderMessages();
+  }
 });
+closeChat.addEventListener('click', ()=> hideChat());
 
-/* Show welcome on first visit */
-(function firstVisit(){
-  const seen = localStorage.getItem('growfax_seen');
+/* ===========================
+   Chat storage & UI helpers
+   =========================== */
+const CHAT_KEY = 'growfax_chat_history_v2';
+function loadChatHistory(){
+  try{ return JSON.parse(localStorage.getItem(CHAT_KEY) || '[]'); } catch(e){ return []; }
+}
+function saveChatHistory(list){ localStorage.setItem(CHAT_KEY, JSON.stringify(list)); }
+function renderMessages(){
+  chatMessages.innerHTML = '';
+  const history = loadChatHistory();
+  history.forEach(m=>{
+    const div = document.createElement('div');
+    div.className = 'msg ' + (m.role==='bot' ? 'bot' : 'user');
+    div.textContent = m.text;
+    chatMessages.appendChild(div);
+  });
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+/* ===========================
+   Simulated AI engine (helpful assistant)
+   - uses KB then templates, typing animation (dots)
+   =========================== */
+
+/* personality templates */
+const SIM_TEMPLATES = {
+  greetings: {
+    en: [
+      "Hello! I'm Faxbot — I can help with downloads, installation steps, or troubleshooting. What would you like to do?",
+      "Hi there! Faxbot here. Tell me if you need step-by-step help installing or troubleshooting."
+    ],
+    id: [
+      "Halo! Saya Faxbot — saya bisa bantu unduhan, instalasi, atau pemecahan masalah. Mau mulai dari mana?",
+      "Hai! Faxbot siap membantu. Katakan apa yang ingin kamu lakukan (mis. instal di Android)."
+    ]
+  },
+  fallback: {
+    en: [
+      "Sorry, I didn't catch that. Could you try rephrasing? Try: 'Install on Android', 'Windows error', or 'Join Discord'.",
+      "I'm not sure — tell me more about what you want to do (e.g. install, download, or server status)."
+    ],
+    id: [
+      "Maaf, saya kurang mengerti. Coba jelaskan lagi, mis. 'Instal di Android', 'error Windows', atau 'Gabung Discord'.",
+      "Saya belum jelas — ceritakan masalah atau tujuanmu, saya bantu langkah demi langkah."
+    ]
+  },
+  step_offer: {
+    en: "If you want, I can give a step-by-step guide. Would you like that?",
+    id: "Kalau mau, saya bisa berikan panduan langkah demi langkah. Mau?"
+  }
+};
+
+/* basic KB */
+const KB = [
+  { keys: ['android','virtualhost','virtual host'], reply: {
+      en: "To play on Android: download the Virtual Host file, import it into your Virtual Host app, then enable the host. Want step-by-step instructions?",
+      id: "Untuk Android: unduh file Virtual Host, impor ke aplikasi Virtual Host, lalu aktifkan host. Mau panduan langkah demi langkah?"
+    }},
+  { keys: ['windows','patch','patched','bat'], reply: {
+      en: "For Windows: download the patched .bat file and run it (use Administrator if needed). If you see errors, paste the exact message and I'll help.",
+      id: "Untuk Windows: unduh file .bat yang sudah dipatch lalu jalankan (gunakan Administrator jika perlu). Kirim pesan error jika muncul."
+    }},
+  { keys: ['ios','surge','surge5','iphone'], reply: {
+      en: "iOS: use the provided iOS config file (Surge). Import the config into Surge and follow prompts. Need step-by-step for iOS?",
+      id: "Untuk iOS: gunakan file konfigurasi (Surge). Impor konfigurasi ke Surge dan ikuti petunjuk. Mau panduan langkah demi langkah?"
+    }},
+  { keys: ['power','powertunnel','power tunnel'], reply: {
+      en: "PowerTunnel: use the PowerTunnel host file from Downloads and import its rules. I can explain how to set rules if you want.",
+      id: "PowerTunnel: gunakan file PowerTunnel dari Downloads dan impor aturannya. Mau saya jelaskan cara setting?"
+    }},
+  { keys: ['discord','community','support'], reply: {
+      en: "Join our Discord for live help — link is in the site. I can also give instructions here if you prefer.",
+      id: "Gabung Discord kami untuk bantuan langsung — link ada di situs. Saya juga bisa bantu di sini."
+    }},
+  { keys: ['status','server','online'], reply: {
+      en: "Server status is simulated as online here. If you want a live checker, I can outline how to add one (needs server-side).",
+      id: "Status server disimulasikan online. Kalau mau status live, saya bisa jelaskan (perlu backend)."
+    }},
+  { keys: ['hello','hi','hey','halo','hai'], reply: {
+      en: SIM_TEMPLATES.greetings.en[0],
+      id: SIM_TEMPLATES.greetings.id[0]
+    }},
+  { keys: ['help','how','install','guide','step'], reply: {
+      en: "Tell me which platform (Android, Windows, iOS, PowerTunnel) and I'll give step-by-step instructions.",
+      id: "Katakan platformnya (Android, Windows, iOS, PowerTunnel) dan saya beri panduan langkah demi langkah."
+    }}
+];
+
+function findKBReply(text){
+  const norm = text.toLowerCase();
+  for(const item of KB){
+    for(const k of item.keys){
+      if(norm.includes(k)) return item.reply;
+    }
+  }
+  return null;
+}
+
+/* create typing node (text + animated dots) */
+function createTypingNode(){
+  const container = document.createElement('div');
+  container.className = 'msg bot typing';
+  const lang = langSelect.value || 'en';
+  const typingText = (lang === 'id') ? (translations.id['Faxbot is typing...'] || 'Faxbot sedang mengetik...') : 'Faxbot is typing...';
+  const spanText = document.createElement('span');
+  spanText.textContent = typingText;
+  spanText.style.marginRight = '8px';
+
+  const dots = document.createElement('span');
+  dots.className = 'typing-dots';
+  dots.innerHTML = '<span></span><span></span><span></span>';
+
+  const wrapper = document.createElement('div');
+  wrapper.className = 'typing-container';
+  wrapper.appendChild(spanText);
+  wrapper.appendChild(dots);
+  container.appendChild(wrapper);
+  return container;
+}
+
+/* simulate typing then deliver reply (auto language) */
+function simulateTypingAndReply(replyText){
+  // remove any existing typing nodes
+  const existing = chatMessages.querySelectorAll('.typing');
+  existing.forEach(n=>n.remove());
+
+  const typingNode = createTypingNode();
+  chatMessages.appendChild(typingNode);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+
+  // delay based on reply length
+  const delay = Math.min(1200 + replyText.length * 25, 3200);
+  setTimeout(()=>{
+    typingNode.remove();
+    // push reply to history
+    const history = loadChatHistory();
+    history.push({ role: 'bot', text: replyText, ts: Date.now() });
+    saveChatHistory(history);
+    renderMessages();
+  }, delay);
+}
+
+/* generate reply */
+function generateBotReply(userText){
+  const lang = langSelect.value || 'en';
+  const kbReply = findKBReply(userText);
+  if(kbReply){
+    const text = kbReply[lang] || kbReply['en'];
+    simulateTypingAndReply(text);
+    return;
+  }
+
+  // question-like detection
+  const qPattern = /\b(how|what|why|help|install|error|fix|step)\b/i;
+  if(qPattern.test(userText)){
+    // try to guess platform from user's recent messages
+    const history = loadChatHistory();
+    const lastUser = history.slice().reverse().find(m=>m.role==='user');
+    const platformGuess = lastUser && /android|windows|ios|power|powertunnel/i.test(lastUser.text) ? (lastUser.text.match(/android|windows|ios|power|powertunnel/i)[0]) : null;
+    if(platformGuess){
+      const mapping = {
+        android: { en: "I can give a step-by-step Android guide. Step 1: Download the Virtual Host file -> Step 2: Import into Virtual Host -> Step 3: Enable host.", id: "Saya bisa berikan panduan Android langkah demi langkah. Langkah 1: Unduh file Virtual Host -> Langkah 2: Impor ke Virtual Host -> Langkah 3: Aktifkan host." },
+        windows: { en: "I can give a step-by-step Windows guide. Step 1: Download patched .bat -> Step 2: Run as Administrator -> Step 3: Follow prompts.", id: "Saya bisa berikan panduan Windows langkah demi langkah. Langkah 1: Unduh .bat -> Langkah 2: Jalankan sebagai Administrator -> Langkah 3: Ikuti petunjuk." },
+        ios: { en: "I can give a step-by-step iOS guide. Step 1: Download iOS config -> Step 2: Import into Surge -> Step 3: Apply profile.", id: "Saya bisa berikan panduan iOS langkah demi langkah. Langkah 1: Unduh file iOS -> Langkah 2: Impor ke Surge -> Langkah 3: Terapkan profil." },
+        power: { en: "I can give PowerTunnel steps. Step 1: Download host file -> Step 2: Import rules into PowerTunnel -> Step 3: Enable and connect.", id: "Saya bisa berikan langkah PowerTunnel. Langkah 1: Unduh host file -> Langkah 2: Impor aturan ke PowerTunnel -> Langkah 3: Aktifkan dan koneksikan." }
+      };
+      const key = platformGuess.toLowerCase().includes('power') ? 'power' : platformGuess.toLowerCase().includes('android') ? 'android' : platformGuess.toLowerCase().includes('windows') ? 'windows' : 'ios';
+      const reply = mapping[key][lang] || mapping[key]['en'];
+      simulateTypingAndReply(reply + (lang==='id' ? ("\n\n" + SIM_TEMPLATES.step_offer.id) : ("\n\n" + SIM_TEMPLATES.step_offer.en)));
+      return;
+    } else {
+      simulateTypingAndReply(lang==='id' ? SIM_TEMPLATES.step_offer.id : SIM_TEMPLATES.step_offer.en);
+      return;
+    }
+  }
+
+  // thanks
+  if(/\b(thanks|thank you|terima kasih|thx|ty)\b/i.test(userText)){
+    simulateTypingAndReply(lang === 'id' ? 'Sama-sama! Kalau masih butuh bantuan, beri tahu saya.' : "You're welcome! If you need anything else, tell me.");
+    return;
+  }
+
+  // fallback
+  const fallbackPool = SIM_TEMPLATES.fallback[lang] || SIM_TEMPLATES.fallback['en'];
+  const pick = fallbackPool[Math.floor(Math.random() * fallbackPool.length)];
+  simulateTypingAndReply(pick);
+}
+
+/* user sends */
+function sendUserMessage(text){
+  if(!text || !text.trim()) return;
+  const history = loadChatHistory();
+  history.push({ role: 'user', text: text.trim(), ts: Date.now() });
+  saveChatHistory(history);
+  renderMessages();
+  chatInput.value = '';
+  setTimeout(()=> generateBotReply(text.trim()), 300 + Math.min(text.length * 8, 700));
+}
+
+/* Bot greeting */
+function sendBotGreeting(){
+  const lang = langSelect.value || 'en';
+  const msgs = SIM_TEMPLATES.greetings[lang] || SIM_TEMPLATES.greetings['en'];
+  const greeting = msgs[Math.floor(Math.random()*msgs.length)];
+  const history = loadChatHistory();
+  history.push({ role: 'bot', text: greeting, ts: Date.now() });
+  saveChatHistory(history);
+  renderMessages();
+}
+
+/* UI events */
+chatSend.addEventListener('click', ()=> sendUserMessage(chatInput.value));
+chatInput.addEventListener('keydown', (e)=> { if(e.key === 'Enter'){ e.preventDefault(); sendUserMessage(chatInput.value); }});
+
+(function initChat(){
+  renderMessages();
+  const seen = localStorage.getItem('growfax_seen_welcome_msg_v2');
   if(!seen){
-    // prefill welcome fields
-    welcomeLang.value = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en');
-    const savedTheme = localStorage.getItem('growfax_theme') || 'light';
-    document.querySelectorAll('input[name="welcomeTheme"]').forEach(r=> r.checked = (r.value === savedTheme));
-    showWelcome();
-    localStorage.setItem('growfax_seen','1');
+    const lang = langSelect.value || 'en';
+    const welcomeMsg = lang === 'id' ? 'Selamat datang di Growfax! Saya Faxbot, siap membantu.' : "Welcome to Growfax! I'm Faxbot — here to help.";
+    const history = loadChatHistory();
+    history.push({ role: 'bot', text: welcomeMsg, ts: Date.now() });
+    saveChatHistory(history);
+    localStorage.setItem('growfax_seen_welcome_msg_v2','1');
+    renderMessages();
   }
 })();
 
-/* ---------------------------
-   Floating chat click shows toast then opens
-   --------------------------- */
+/* floating discord click */
 document.getElementById('floatingChat').addEventListener('click', (e)=>{
-  // show quick toast then link opens naturally because it's an anchor
   showToast(langSelect.value === 'id' ? 'Membuka Discord...' : 'Opening Discord...');
-  // let anchor open (no preventDefault)
 });
 
-/* ---------------------------
-   Toast helper
-   --------------------------- */
+/* toast */
 let toastTimer = null;
-function showToast(text, ms=1800){
+function showToast(text, ms=1500){
   toast.textContent = text;
   toast.style.opacity = '1';
   toast.style.transform = 'translateX(-50%) translateY(0)';
@@ -480,15 +730,18 @@ function showToast(text, ms=1800){
   }, ms);
 }
 
-/* ---------------------------
-   Init
-   --------------------------- */
-// apply translations based on saved language
+/* initial translations + time */
 const initLang = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en');
 langSelect.value = initLang;
 applyTranslations(initLang);
 updateTime();
 
+/* allow middle click / aux click on download links */
+document.querySelectorAll('.platform-buttons a').forEach(a=>{
+  a.addEventListener('auxclick', (e) => {/* allow default behavior */});
+});
+
+/* end */
 </script>
 </body>
 </html>
