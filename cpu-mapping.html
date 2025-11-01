@@ -41,7 +41,7 @@ canvas {
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
-  font-size: 50px; /* lebih kecil */
+  font-size: 50px;
   font-weight: bold;
   color: var(--accent);
   text-shadow: 0 0 20px var(--accent);
@@ -82,29 +82,33 @@ function resize() {
 window.addEventListener('resize', resize);
 resize();
 
-// simpan waktu awal agar animasi tidak reset saat reload
-let startTime = localStorage.getItem('growfaxCpuStart') || Date.now();
-localStorage.setItem('growfaxCpuStart', startTime);
+// ambil data terakhir dari localStorage
+let saved = JSON.parse(localStorage.getItem("growfaxCPUstate") || "{}");
+let startTime = saved.startTime || Date.now();
+let cpu = saved.cpu ?? 30;
+let targetCPU = saved.targetCPU ?? 30;
+let smoothCPU = saved.smoothCPU ?? 30;
+let t = ((Date.now() - startTime) / 50) || 0;
 
+// isi data lama
 let data = new Array(400).fill(H / 2);
-let cpu = 30;
-let targetCPU = 30;
-let smoothCPU = 30;
-let t = (Date.now() - startTime) / 50; // terus lanjut
-
 let lastUpdate = 0;
 
+// kalau lama gak dibuka, kita simulasi bahwa CPU udah "bergerak"
+const elapsed = (Date.now() - (saved.lastSeen || startTime)) / 1000;
+if (elapsed > 1) {
+  const drift = Math.sin(elapsed / 5) * 10;
+  cpu = Math.min(45, Math.max(10, cpu + drift));
+  targetCPU = cpu + (Math.random() - 0.5) * 5;
+}
+
 function nextCPU() {
-  // ubah target CPU tapi range lebih kecil (10-45%)
   if (Math.random() < 0.015) {
     targetCPU = 25 + (Math.random() - 0.5) * 30;
   }
-
-  // gerakan halus
   cpu += (targetCPU - cpu) * 0.01;
   smoothCPU += (cpu - smoothCPU) * 0.03;
 
-  // batasi nilai
   cpu = Math.max(10, Math.min(45, cpu));
   smoothCPU = Math.max(10, Math.min(45, smoothCPU));
 
@@ -113,7 +117,7 @@ function nextCPU() {
 }
 
 function draw(timestamp) {
-  if (timestamp - lastUpdate < 120) { 
+  if (timestamp - lastUpdate < 120) {
     requestAnimationFrame(draw);
     return;
   }
@@ -126,7 +130,6 @@ function draw(timestamp) {
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, W, H);
 
-  // grid
   ctx.strokeStyle = "rgba(0,255,100,0.06)";
   for (let y = 0; y < H; y += 40) {
     ctx.beginPath();
@@ -135,14 +138,12 @@ function draw(timestamp) {
     ctx.stroke();
   }
 
-  // data baru
   data.shift();
   const val = nextCPU();
   const wave = H / 2 - Math.sin(t / 35) * 10 - (val - 25) * 1.2;
   t += 0.8;
   data.push(wave);
 
-  // waveform
   ctx.beginPath();
   ctx.moveTo(0, data[0]);
   for (let i = 1; i < data.length; i++) {
@@ -155,8 +156,25 @@ function draw(timestamp) {
   ctx.stroke();
   ctx.shadowBlur = 0;
 
+  // simpan state CPU ke localStorage tiap frame
+  localStorage.setItem(
+    "growfaxCPUstate",
+    JSON.stringify({
+      startTime,
+      cpu,
+      targetCPU,
+      smoothCPU,
+      lastSeen: Date.now(),
+    })
+  );
+
   requestAnimationFrame(draw);
 }
+
+draw();
+</script>
+</body>
+</html>
 
 draw();
 </script>
