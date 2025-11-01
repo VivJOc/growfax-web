@@ -265,7 +265,7 @@
   themeBtn.onclick = ()=> setTheme(document.body.dataset.theme === "dark" ? "light" : "dark");
   setTheme(localStorage.getItem("theme") || "light");
 
-  // --- TRANSLATION + TIME ---
+  // --- TRANSLATION ---
   const langSelect = document.getElementById("langSelect");
   const elements = document.querySelectorAll("body *:not(script):not(style)");
   elements.forEach(el=>{
@@ -300,11 +300,29 @@
 
   // --- LOCAL TIME ---
   const timeDisplay=document.getElementById("timeDisplay");
-  let timeZone="America/New_York"; // default English
+  let timeZone="America/New_York";
+
+  function getIndoGreeting(hour){
+    if (hour < 11) return "pagi";     // Morning
+    if (hour < 15) return "siang";    // Afternoon
+    if (hour < 18) return "sore";     // Evening
+    return "malam";                   // Night
+  }
+
   function updateTime(){
     const now=new Date();
-    const timeStr=now.toLocaleString("en-US",{timeZone, timeStyle:"medium", hour12:true, dateStyle:"medium"});
-    timeDisplay.textContent=(langSelect.value==="id"?"Waktu Lokal: ":"Local Time: ")+timeStr;
+    const lang=langSelect.value;
+    if(lang==="id"){
+      const options={timeZone:"Asia/Jakarta", hour12:false, hour:"2-digit", minute:"2-digit", second:"2-digit", day:"2-digit", month:"2-digit", year:"numeric"};
+      const indoTime=new Intl.DateTimeFormat("id-ID",options).format(now);
+      const hour=parseInt(now.toLocaleString("en-US",{timeZone:"Asia/Jakarta",hour:"2-digit",hour12:false}));
+      const greeting=getIndoGreeting(hour);
+      timeDisplay.textContent=`Waktu Lokal (Jakarta): ${indoTime} - ${greeting}`;
+    } else {
+      const options={timeZone:"America/New_York", hour12:true, timeStyle:"medium", dateStyle:"medium"};
+      const usTime=now.toLocaleString("en-US",options);
+      timeDisplay.textContent=`Local Time (New York): ${usTime}`;
+    }
   }
 
   setInterval(updateTime,1000);
@@ -313,14 +331,12 @@
     const lang=langSelect.value;
     localStorage.setItem("lang",lang);
     translate(lang);
-    timeZone = lang==="id" ? "Asia/Jakarta" : "America/New_York";
     updateTime();
   };
 
   const savedLang=localStorage.getItem("lang")||"en";
   langSelect.value=savedLang;
   translate(savedLang);
-  timeZone = savedLang==="id"?"Asia/Jakarta":"America/New_York";
   updateTime();
 
   // --- DOWNLOAD CONFIRM ---
