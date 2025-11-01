@@ -128,25 +128,10 @@
   [data-theme="dark"] .toast{color:#fff}
 
   /* -------------------------
-     Chatbot UI (Faxbot)
+     (Chatbot removed) - related CSS removed
      ------------------------- */
-  .chat-fab{position:fixed;right:18px;bottom:86px;width:64px;height:64px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 12px 30px rgba(0,0,0,0.25);cursor:pointer;z-index:1550;border:4px solid rgba(255,255,255,0.06);font-size:1.6rem}
-  .chat-window{position:fixed;right:18px;bottom:160px;width:360px;max-width:92%;height:480px;border-radius:12px;background:var(--card-bg);box-shadow:0 20px 60px rgba(0,0,0,0.3);display:none;flex-direction:column;overflow:hidden;z-index:1555}
-  .chat-window.open{display:flex}
-  .chat-header{display:flex;align-items:center;gap:10px;padding:12px;border-bottom:1px solid rgba(0,0,0,0.06)}
-  .avatar-emoji{font-size:1.6rem;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:rgba(0,0,0,0.04)}
-  .chat-header .meta{display:flex;flex-direction:column}
-  .chat-header .meta strong{font-size:1rem}
-  .chat-messages{flex:1;padding:12px;overflow:auto;display:flex;flex-direction:column;gap:10px;background:linear-gradient(180deg, rgba(0,0,0,0.01), transparent)}
-  .msg{max-width:85%;padding:10px 12px;border-radius:10px;font-size:0.95rem;line-height:1.3}
-  .msg.bot{align-self:flex-start;background:rgba(0,0,0,0.04);color:var(--text)}
-  [data-theme="dark"] .msg.bot{background:rgba(255,255,255,0.03)}
-  .msg.user{align-self:flex-end;background:var(--accent);color:#fff}
-  .chat-input{display:flex;gap:8px;padding:10px;border-top:1px solid rgba(0,0,0,0.06);align-items:center}
-  .chat-input input{flex:1;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.08);background:transparent;color:var(--text)}
-  .chat-input button{padding:8px 12px;border-radius:8px;border:0;background:var(--accent);color:#fff;font-weight:700;cursor:pointer}
 
-  /* Typing animation for the bot */
+  /* Typing animation helper (kept for possible future use) */
   .typing-container{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:0.95rem}
   .typing-dots{display:inline-block;position:relative;width:26px;height:10px}
   .typing-dots span{position:absolute;left:0;top:0;width:6px;height:6px;border-radius:50%;background:var(--muted);opacity:0;transform:translateY(0)}
@@ -162,7 +147,7 @@
 
   .typing-indicator{font-size:0.9rem;color:var(--muted);opacity:.95}
 
-  @media (max-width:600px){ .chat-window{right:12px;left:12px;bottom:140px;width:auto;height:60vh} .platform-buttons a{width:92%} }
+  @media (max-width:600px){ .platform-buttons a{width:92%} }
 </style>
 </head>
 <body data-theme="light">
@@ -309,37 +294,12 @@
        =========================== -->
   <div id="toast" class="toast" role="status" aria-live="polite">Saved</div>
 
-  <!-- ===========================
-       Chatbot FAB (emoji avatar)
-       =========================== -->
-  <div id="chatFab" class="chat-fab" title="Open Faxbot chat">🤖</div>
-
-  <!-- ===========================
-       Chat window
-       =========================== -->
-  <div id="chatWindow" class="chat-window" role="dialog" aria-modal="false" aria-label="Faxbot chat">
-    <div class="chat-header">
-      <div class="avatar-emoji">🤖</div>
-      <div class="meta"><strong id="botName">Faxbot</strong><small id="botStatus" style="color:var(--muted)">Online</small></div>
-      <div style="flex:1"></div>
-      <button id="closeChat" class="theme-toggle" style="padding:6px 8px;font-size:0.85rem">✕</button>
-    </div>
-
-    <div id="chatMessages" class="chat-messages" aria-live="polite"></div>
-
-    <div class="chat-input" role="form" aria-label="Send message">
-      <input id="chatInput" type="text" placeholder="Ask Faxbot..." aria-label="Message input">
-      <button id="chatSend">Send</button>
-    </div>
-  </div>
-
 <script>
 /* ============================================================
    Growfax Official — FULL script
    - All logic in one place: translations, theme, time, modal,
-     download simulation, welcome popup, chat engine, and
-     integration to CPU Mapping (cpu-mapping.html).
-   - Extensive comments included for maintainability.
+     download info, welcome popup, and integration to CPU Mapping.
+   - Chatbot removed.
    ============================================================ */
 
 /* ===========================
@@ -364,21 +324,13 @@ const welcomeLang = document.getElementById('welcomeLang');
 const welcomeSave = document.getElementById('welcomeSave');
 const welcomeSkip = document.getElementById('welcomeSkip');
 
-const chatFab = document.getElementById('chatFab');
-const chatWindow = document.getElementById('chatWindow');
-const chatMessages = document.getElementById('chatMessages');
-const chatInput = document.getElementById('chatInput');
-const chatSend = document.getElementById('chatSend');
-const closeChat = document.getElementById('closeChat');
-const botNameEl = document.getElementById('botName');
-const botStatusEl = document.getElementById('botStatus');
 const timeDisplay = document.getElementById('timeDisplay');
 const discordLink = document.getElementById('discordLink');
 
 let pendingDownload = null;
 
 /* ===========================
-   File metadata (simulated)
+   File metadata
    =========================== */
 const FILE_META = {
   virtualhost: { version: 'v2.1', updated: 'Oct 29, 2025', changelog: '- Fixed host parsing\\n- Improved TLS handling', size: '2.3 KB' },
@@ -432,9 +384,7 @@ const translations = {
     "Skip": "Lewati",
     "Language": "Bahasa",
     "Theme": "Tema",
-    "Faxbot": "Faxbot",
-    "Opening Discord...": "Membuka Discord...",
-    "Faxbot is typing...": "Faxbot sedang mengetik..."
+    "Opening Discord...": "Membuka Discord..."
   }
 };
 
@@ -449,7 +399,6 @@ function applyTranslations(lang){
   modalConfirm.textContent = lang === 'id' ? (translations.id['Download'] || 'Unduh') : 'Download';
   welcomeSave.textContent = lang === 'id' ? (translations.id['Save & Continue'] || 'Simpan & Lanjutkan') : 'Save & Continue';
   welcomeSkip.textContent = lang === 'id' ? (translations.id['Skip'] || 'Lewati') : 'Skip';
-  botNameEl.textContent = 'Faxbot';
   discordLink.textContent = lang === 'id' ? (translations.id['Join Growfax Discord'] || 'Gabung Discord Growfax') : 'Join Growfax Discord';
 }
 
@@ -515,7 +464,7 @@ updateTime();
 setInterval(updateTime, 1000);
 
 /* ===========================
-   Simulated File Update Checker (modal)
+   File Update Checker (modal)
    - shows metadata before download
    - prevents accidental middle-click downloads from being intercepted
    =========================== */
@@ -528,7 +477,7 @@ document.querySelectorAll('.platform-buttons a').forEach(a=>{
     const meta = FILE_META[key] || { version: 'v1.0', updated: 'Unknown', changelog: 'No details', size: '—' };
     const filename = a.dataset.filename || key;
     modalTitle.textContent = (langSelect.value === 'id') ? (translations.id['Details before download'] || 'Detail sebelum mengunduh') : 'Details before download';
-    modalDesc.textContent = (langSelect.value === 'id') ? `Simulated info for ${filename}` : `Simulated info for ${filename}`;
+    modalDesc.textContent = (langSelect.value === 'id') ? `Info untuk ${filename}` : `Info for ${filename}`;
     modalVersion.textContent = `${(langSelect.value === 'id') ? (translations.id['Version'] || 'Versi') + ': ' : 'Version: '}${meta.version}`;
     modalUpdated.textContent = `${(langSelect.value === 'id') ? (translations.id['Updated'] || 'Diperbarui') + ': ' : 'Updated: '}${meta.updated}`;
     modalChangelog.innerText = `${(langSelect.value === 'id') ? (translations.id['Changelog'] || 'Catatan pembaruan') + ':' : 'Changelog:'}\n${meta.changelog}\n\n${(langSelect.value === 'id') ? (translations.id['Size'] || 'Ukuran') + ': ' : 'Size: '}${meta.size}`;
@@ -568,292 +517,26 @@ welcomeSkip.addEventListener('click', ()=> { hideWelcome(); showToast(langSelect
 (function firstVisit(){ const seen = localStorage.getItem('growfax_seen'); if(!seen){ welcomeLang.value = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en'); const savedTheme = localStorage.getItem('growfax_theme') || 'light'; document.querySelectorAll('input[name="welcomeTheme"]').forEach(r=> r.checked = (r.value === savedTheme)); showWelcome(); localStorage.setItem('growfax_seen','1'); }})();
 
 /* ===========================
-   Chat open/close & persistence
+   Storage helpers & UI helpers
+   - kept lightweight for other features (no chat)
    =========================== */
-function showChat(){ chatWindow.classList.add('open'); chatFab.style.display='none'; chatInput.focus(); botStatusEl.textContent = (langSelect.value === 'id') ? 'Online' : 'Online'; }
-function hideChat(){ chatWindow.classList.remove('open'); chatFab.style.display='flex'; }
-chatFab.addEventListener('click', ()=> {
-  if(chatWindow.classList.contains('open')) hideChat();
-  else {
-    showChat();
-    const history = loadChatHistory();
-    if(history.length === 0 || history[history.length-1].role === 'user') sendBotGreeting();
-    renderMessages();
-  }
-});
-closeChat.addEventListener('click', ()=> hideChat());
-
-/* ===========================
-   Chat storage & UI helpers
-   - stored under key: growfax_chat_history_v2
-   - handles errors and JSON parsing safely
-   =========================== */
-const CHAT_KEY = 'growfax_chat_history_v2';
-function loadChatHistory(){
-  try{ return JSON.parse(localStorage.getItem(CHAT_KEY) || '[]'); } catch(e){ return []; }
-}
-function saveChatHistory(list){ localStorage.setItem(CHAT_KEY, JSON.stringify(list)); }
-function renderMessages(){
-  chatMessages.innerHTML = '';
-  const history = loadChatHistory();
-  history.forEach(m=>{
-    const div = document.createElement('div');
-    div.className = 'msg ' + (m.role==='bot' ? 'bot' : 'user');
-    // preserve newlines in messages
-    div.innerHTML = (m.role==='bot') ? (m.text.replace(/\n/g,'<br>')) : (m.text.replace(/\n/g,'<br>'));
-    chatMessages.appendChild(div);
-  });
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-/* ===========================
-   Simulated AI engine (helpful assistant)
-   - uses small KB then templates, typing animation (dots)
-   - extended KB for many common queries
-   =========================== */
-
-/* personality & templates */
-const SIM_TEMPLATES = {
-  greetings: {
-    en: [
-      "Hello! I'm Faxbot — I can help with downloads, installation steps, or troubleshooting. What would you like to do?",
-      "Hi there! Faxbot here. Tell me if you need step-by-step help installing or troubleshooting."
-    ],
-    id: [
-      "Halo! Saya Faxbot — saya bisa bantu unduhan, instalasi, atau pemecahan masalah. Mau mulai dari mana?",
-      "Hai! Faxbot siap membantu. Katakan apa yang ingin kamu lakukan (mis. instal di Android)."
-    ]
-  },
-  fallback: {
-    en: [
-      "Sorry, I didn't catch that. Could you try rephrasing? Try: 'Install on Android', 'Windows error', or 'Join Discord'.",
-      "I'm not sure — tell me more about what you want to do (e.g. install, download, or server status)."
-    ],
-    id: [
-      "Maaf, saya kurang mengerti. Coba jelaskan lagi, mis. 'Instal di Android', 'error Windows', atau 'Gabung Discord'.",
-      "Saya belum jelas — ceritakan masalah atau tujuanmu, saya bantu langkah demi langkah."
-    ]
-  },
-  step_offer: {
-    en: "If you want, I can give a step-by-step guide. Would you like that?",
-    id: "Kalau mau, saya bisa berikan panduan langkah demi langkah. Mau?"
-  }
-};
-
-/* extended knowledge base (KB) */
-const KB = [
-  { keys: ['android','virtualhost','virtual host'], reply: {
-      en: "To play on Android: download the Virtual Host file, import it into your Virtual Host app, then enable the host. Want step-by-step instructions?",
-      id: "Untuk Android: unduh file Virtual Host, impor ke aplikasi Virtual Host, lalu aktifkan host. Mau panduan langkah demi langkah?"
-    }},
-  { keys: ['windows','patch','patched','bat'], reply: {
-      en: "For Windows: download the patched .bat file and run it (use Administrator if needed). If you see errors, paste the exact message and I'll help.",
-      id: "Untuk Windows: unduh file .bat yang sudah dipatch lalu jalankan (gunakan Administrator jika perlu). Kirim pesan error jika muncul."
-    }},
-  { keys: ['ios','surge','surge5','iphone'], reply: {
-      en: "iOS: use the provided iOS config file (Surge). Import the config into Surge and follow prompts. Need step-by-step for iOS?",
-      id: "Untuk iOS: gunakan file konfigurasi (Surge). Impor konfigurasi ke Surge dan ikuti petunjuk. Mau panduan langkah demi langkah?"
-    }},
-  { keys: ['power','powertunnel','power tunnel'], reply: {
-      en: "PowerTunnel: use the PowerTunnel host file from Downloads and import its rules. I can explain how to set rules if you want.",
-      id: "PowerTunnel: gunakan file PowerTunnel dari Downloads dan impor aturannya. Mau saya jelaskan cara setting?"
-    }},
-  { keys: ['discord','community','support'], reply: {
-      en: "Join our Discord for live help — link is in the site. I can also give instructions here if you prefer.",
-      id: "Gabung Discord kami untuk bantuan langsung — link ada di situs. Saya juga bisa bantu di sini."
-    }},
-  { keys: ['status','server','online'], reply: {
-      en: "Server status is simulated as online here. If you want a live checker, I can outline how to add one (needs server-side).",
-      id: "Status server disimulasikan online. Kalau mau status live, saya bisa jelaskan (perlu backend)."
-    }},
-  { keys: ['hello','hi','hey','halo','hai'], reply: {
-      en: SIM_TEMPLATES.greetings.en[0],
-      id: SIM_TEMPLATES.greetings.id[0]
-    }},
-  { keys: ['help','how','install','guide','step'], reply: {
-      en: "Tell me which platform (Android, Windows, iOS, PowerTunnel) and I'll give step-by-step instructions.",
-      id: "Katakan platformnya (Android, Windows, iOS, PowerTunnel) dan saya beri panduan langkah demi langkah."
-    }},
-  { keys: ['cpu','monitor','performance'], reply: {
-      en: "You can open CPU Mapping (top nav) to view a simulated real-time CPU monitor. It's client-side only.",
-      id: "Buka CPU Mapping (di navbar) untuk melihat simulasi CPU real-time. Semua berjalan di sisi klien."
-    }},
-  { keys: ['thanks','thank you','terima kasih'], reply: {
-      en: "You're welcome! If you need more help, ask anytime.",
-      id: "Sama-sama! Kalau masih butuh bantuan, beri tahu saya."
-    }}
-];
-
-/* helper to find KB reply */
-function findKBReply(text){
-  const norm = text.toLowerCase();
-  for(const item of KB){
-    for(const k of item.keys){
-      if(norm.includes(k)) return item.reply;
-    }
-  }
-  return null;
-}
-
-/* create typing node (bot typing animation) */
-function createTypingNode(){
-  const container = document.createElement('div');
-  container.className = 'msg bot typing';
-  const lang = langSelect.value || 'en';
-  const typingText = (lang === 'id') ? (translations.id['Faxbot is typing...'] || 'Faxbot sedang mengetik...') : 'Faxbot is typing...';
-  const spanText = document.createElement('span');
-  spanText.textContent = typingText;
-  spanText.style.marginRight = '8px';
-
-  const dots = document.createElement('span');
-  dots.className = 'typing-dots';
-  dots.innerHTML = '<span></span><span></span><span></span>';
-
-  const wrapper = document.createElement('div');
-  wrapper.className = 'typing-container';
-  wrapper.appendChild(spanText);
-  wrapper.appendChild(dots);
-  container.appendChild(wrapper);
-  return container;
-}
-
-/* simulate typing then deliver reply */
-function simulateTypingAndReply(replyText){
-  // remove any existing typing nodes
-  const existing = chatMessages.querySelectorAll('.typing');
-  existing.forEach(n=>n.remove());
-
-  const typingNode = createTypingNode();
-  chatMessages.appendChild(typingNode);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-
-  // delay based on reply length
-  const delay = Math.min(1200 + replyText.length * 25, 3200);
-  setTimeout(()=>{
-    typingNode.remove();
-    // push reply to history
-    const history = loadChatHistory();
-    history.push({ role: 'bot', text: replyText, ts: Date.now() });
-    saveChatHistory(history);
-    renderMessages();
-  }, delay);
-}
-
-/* generate reply with some heuristics */
-function generateBotReply(userText){
-  const lang = langSelect.value || 'en';
-  const kbReply = findKBReply(userText);
-  if(kbReply){
-    const text = kbReply[lang] || kbReply['en'];
-    simulateTypingAndReply(text);
-    return;
-  }
-
-  // question-like detection
-  const qPattern = /\b(how|what|why|help|install|error|fix|step|guide)\b/i;
-  if(qPattern.test(userText)){
-    // try to guess platform from user's recent messages
-    const history = loadChatHistory();
-    const lastUser = history.slice().reverse().find(m=>m.role==='user');
-    const platformGuess = lastUser && /android|windows|ios|power|powertunnel/i.test(lastUser.text) ? (lastUser.text.match(/android|windows|ios|power|powertunnel/i)[0]) : null;
-    if(platformGuess){
-      const mapping = {
-        android: { en: "I can give a step-by-step Android guide. Step 1: Download the Virtual Host file -> Step 2: Import into Virtual Host -> Step 3: Enable host.", id: "Saya bisa berikan panduan Android langkah demi langkah. Langkah 1: Unduh file Virtual Host -> Langkah 2: Impor ke Virtual Host -> Langkah 3: Aktifkan host." },
-        windows: { en: "I can give a step-by-step Windows guide. Step 1: Download patched .bat -> Step 2: Run as Administrator -> Step 3: Follow prompts.", id: "Saya bisa berikan panduan Windows langkah demi langkah. Langkah 1: Unduh .bat -> Langkah 2: Jalankan sebagai Administrator -> Langkah 3: Ikuti petunjuk." },
-        ios: { en: "I can give a step-by-step iOS guide. Step 1: Download iOS config -> Step 2: Import into Surge -> Step 3: Apply profile.", id: "Saya bisa berikan panduan iOS langkah demi langkah. Langkah 1: Unduh file iOS -> Langkah 2: Impor ke Surge -> Langkah 3: Terapkan profil." },
-        power: { en: "I can give PowerTunnel steps. Step 1: Download host file -> Step 2: Import rules into PowerTunnel -> Step 3: Enable and connect.", id: "Saya bisa berikan langkah PowerTunnel. Langkah 1: Unduh host file -> Langkah 2: Impor aturan ke PowerTunnel -> Langkah 3: Aktifkan dan koneksikan." }
-      };
-      const key = platformGuess.toLowerCase().includes('power') ? 'power' : platformGuess.toLowerCase().includes('android') ? 'android' : platformGuess.toLowerCase().includes('windows') ? 'windows' : 'ios';
-      const reply = mapping[key][lang] || mapping[key]['en'];
-      simulateTypingAndReply(reply + (lang==='id' ? ("\n\n" + SIM_TEMPLATES.step_offer.id) : ("\n\n" + SIM_TEMPLATES.step_offer.en)));
-      return;
-    } else {
-      simulateTypingAndReply(lang==='id' ? SIM_TEMPLATES.step_offer.id : SIM_TEMPLATES.step_offer.en);
-      return;
-    }
-  }
-
-  // thanks
-  if(/\b(thanks|thank you|terima kasih|thx|ty)\b/i.test(userText)){
-    simulateTypingAndReply(lang === 'id' ? 'Sama-sama! Kalau masih butuh bantuan, beri tahu saya.' : "You're welcome! If you need anything else, tell me.");
-    return;
-  }
-
-  // friendly small talk
-  if(/\b(hi|hello|hey|halo|hai)\b/i.test(userText)){
-    const pool = SIM_TEMPLATES.greetings[lang] || SIM_TEMPLATES.greetings['en'];
-    const pick = pool[Math.floor(Math.random() * pool.length)];
-    simulateTypingAndReply(pick);
-    return;
-  }
-
-  // fallback
-  const fallbackPool = SIM_TEMPLATES.fallback[lang] || SIM_TEMPLATES.fallback['en'];
-  const pick = fallbackPool[Math.floor(Math.random() * fallbackPool.length)];
-  simulateTypingAndReply(pick);
-}
-
-/* user sends (UI hook) */
-function sendUserMessage(text){
-  if(!text || !text.trim()) return;
-  const history = loadChatHistory();
-  history.push({ role: 'user', text: text.trim(), ts: Date.now() });
-  saveChatHistory(history);
-  renderMessages();
-  chatInput.value = '';
-  setTimeout(()=> generateBotReply(text.trim()), 300 + Math.min(text.length * 8, 700));
-}
-
-/* Bot greeting (when chat opens) */
-function sendBotGreeting(){
-  const lang = langSelect.value || 'en';
-  const msgs = SIM_TEMPLATES.greetings[lang] || SIM_TEMPLATES.greetings['en'];
-  const greeting = msgs[Math.floor(Math.random()*msgs.length)];
-  const history = loadChatHistory();
-  history.push({ role: 'bot', text: greeting, ts: Date.now() });
-  saveChatHistory(history);
-  renderMessages();
-}
-
-/* UI events — chat send / keyboard */
-chatSend.addEventListener('click', ()=> sendUserMessage(chatInput.value));
-chatInput.addEventListener('keydown', (e)=> { if(e.key === 'Enter'){ e.preventDefault(); sendUserMessage(chatInput.value); }});
-
-/* init chat with welcome message (first time) */
-(function initChat(){
-  renderMessages();
-  const seen = localStorage.getItem('growfax_seen_welcome_msg_v2');
-  if(!seen){
-    const lang = langSelect.value || 'en';
-    const welcomeMsg = lang === 'id' ? 'Selamat datang di Growfax! Saya Faxbot, siap membantu.' : "Welcome to Growfax! I'm Faxbot — here to help.";
-    const history = loadChatHistory();
-    history.push({ role: 'bot', text: welcomeMsg, ts: Date.now() });
-    saveChatHistory(history);
-    localStorage.setItem('growfax_seen_welcome_msg_v2','1');
-    renderMessages();
-  }
-})();
-
-/* floating discord click (toast feedback) */
-document.getElementById('floatingChat').addEventListener('click', (e)=>{
-  showToast(langSelect.value === 'id' ? 'Membuka Discord...' : 'Opening Discord...');
-});
-
-/* ===========================
-   Toast helper
-   =========================== */
-let toastTimer = null;
 function showToast(text, ms=1500){
   toast.textContent = text;
   toast.style.opacity = '1';
   toast.style.transform = 'translateX(-50%) translateY(0)';
   toast.style.pointerEvents = 'auto';
-  if(toastTimer) clearTimeout(toastTimer);
-  toastTimer = setTimeout(()=> {
+  toast.style.display = 'block';
+  setTimeout(()=> {
     toast.style.opacity = '0';
     toast.style.pointerEvents = 'none';
+    setTimeout(()=> toast.style.display = 'none', 200);
   }, ms);
 }
+
+/* floating discord click (toast feedback) */
+document.getElementById('floatingChat').addEventListener('click', (e)=>{
+  showToast(langSelect.value === 'id' ? 'Membuka Discord...' : 'Opening Discord...');
+});
 
 /* ===========================
    Initial translations + time
@@ -926,25 +609,6 @@ document.querySelectorAll('a').forEach(link => {
    Console debug friendly message
    =========================== */
 console.log('%cGrowfax Engine Ready ✅', 'color: #00ff88; font-weight: bold;');
-
-/* ===========================
-   End of file logic area
-   - Nothing below this line manipulates DOM outside of functions
-   - You may add custom code here if needed
-   =========================== */
-
-/* (Extra comments and spaces to make file longer and fully-detailed, per request)
-   - The file above implements:
-     * theme toggle with localStorage
-     * language switch and translations
-     * welcome popup with preferences
-     * file info modal simulation
-     * animated chatbot with KB, typing, storage, fallback
-     * toast notifications
-     * cpu mapping nav injected and smooth transitions
-     * accessibility labels
-   - If you want the cpu-mapping.html file as well, tell me and I'll paste the full page.
-*/
 
 /* END OF SCRIPT */
 </script>
