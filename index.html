@@ -2,299 +2,274 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Growfax Official</title>
 <link rel="icon" href="Growfax_banner.jpg" type="image/jpeg">
 <style>
-  :root{
+  :root {
     --bg: #f8f8f8;
-    --card-bg: #fff;
-    --text: #222;
+    --card-bg: #ffffff;
+    --text: #1a1a1a;
     --accent: #0078d7;
-    --card-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    --card-shadow: 0 8px 20px rgba(0,0,0,0.08);
     --discord-color: #7289da;
   }
 
-  [data-theme="dark"]{
+  [data-theme="dark"] {
     --bg: #0f1720;
     --card-bg: #0b1220;
     --text: #e6eef8;
     --accent: #4da3ff;
-    --card-shadow: 0 6px 20px rgba(0,0,0,0.6);
+    --card-shadow: 0 8px 28px rgba(0,0,0,0.6);
     --discord-color: #5b6ea6;
   }
 
-  html,body{
-    height:100%;
-    margin:0;
-    font-family:"Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background:var(--bg);
-    color:var(--text);
-  }
-
-  .header{
-    background:var(--card-bg);
-    box-shadow:var(--card-shadow);
-    position:sticky;
-    top:0;
-    z-index:1000;
-  }
-  .header-content{
-    max-width:1200px;
-    margin:0 auto;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:12px 18px;
-    gap:12px;
-  }
-  h1{ margin:0; font-size:1.25rem; color:var(--text); }
-
-  .controls{ display:flex; align-items:center; gap:10px; }
-
-  .theme-toggle, .lang-select{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:6px 10px;
-    border-radius:10px;
-    background:transparent;
-    color:var(--text);
-    border:1px solid rgba(0,0,0,0.06);
-    cursor:pointer;
-  }
-
-  select.lang-select {
-    appearance: none;
-    font-size: 0.95rem;
-    background: transparent;
-    border: none;
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg);
     color: var(--text);
+    line-height: 1.6;
   }
 
-  /* Banner */
-  .banner-section{
-    background: linear-gradient(90deg, rgba(0,0,0,0.04), rgba(255,255,255,0.02));
-    padding:34px 0;
-    text-align:center;
-  }
-  .banner-section img{ max-width:200px; border-radius:8px; display:block; margin:0 auto 10px; }
-  .banner-section h2{ margin:6px 0; color:#ffaa00; text-shadow:0 0 8px rgba(255,170,0,0.25); }
-
-  .container{ width:90%; max-width:1100px; margin:26px auto; text-align:center; }
-
-  .platform-buttons{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:14px;
-    margin:32px 0;
+  header {
+    background: var(--card-bg);
+    box-shadow: var(--card-shadow);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
   }
 
-  .platform-buttons a{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:12px;
-    width:280px;
-    padding:14px 18px;
-    border-radius:14px;
-    color:#fff;
-    font-weight:700;
-    text-decoration:none;
-    position:relative;
-    overflow:hidden;
-    transition:transform .18s ease, opacity .18s ease;
-    border:1px solid transparent;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  .header-content {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 18px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
-  .platform-buttons a img{ width:28px; height:28px; border-radius:6px; }
-
-  .platform-buttons a:hover{ transform:translateY(-4px); opacity:0.98; }
-
-  /* sweep highlight */
-  .platform-buttons a::after{
-    content:"";
-    position:absolute;
-    top:-60%;
-    left:-60%;
-    width:40%;
-    height:220%;
-    transform:skewX(-25deg);
-    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.35) 50%, rgba(255,255,255,0) 100%);
-    opacity:0;
-    pointer-events:none;
+  h1 {
+    font-size: 1.8rem;
+    margin: 0;
+    font-weight: 700;
   }
-  .platform-buttons a:hover::after{
-    animation: sweep 1s ease-in-out;
-    opacity:0.55;
-  }
-  @keyframes sweep{ 0%{ left:-60%; } 100%{ left:160%; } }
 
-  /* Glow animation */
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .theme-toggle,
+  .lang-select {
+    font-size: 1rem;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  .banner-section {
+    padding: 60px 0;
+    text-align: center;
+    background: linear-gradient(90deg, rgba(0,0,0,0.05), rgba(255,255,255,0.03));
+  }
+
+  .banner-section img {
+    max-width: 250px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+
+  .banner-section h2 {
+    font-size: 2rem;
+    color: #ffaa00;
+    margin: 10px 0;
+    text-shadow: 0 0 12px rgba(255, 170, 0, 0.25);
+  }
+
+  .banner-section p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 60px auto;
+    text-align: center;
+  }
+
+  .container h2 {
+    font-size: 1.8rem;
+    margin-bottom: 40px;
+  }
+
+  .platform-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    justify-items: center;
+  }
+
+  .platform-buttons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    width: 320px;
+    padding: 16px 20px;
+    border-radius: 14px;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    border: 1px solid transparent;
+    font-size: 1.1rem;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  .platform-buttons a img {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+  }
+
+  .platform-buttons a:hover {
+    transform: translateY(-4px);
+    opacity: 0.97;
+  }
+
   @keyframes buttonGlow {
-    0% { box-shadow: 0 0 8px var(--glow-color, rgba(255,255,255,0.15)); }
-    50% { box-shadow: 0 0 28px var(--glow-color, rgba(255,255,255,0.28)); }
-    100% { box-shadow: 0 0 8px var(--glow-color, rgba(255,255,255,0.15)); }
+    0% { box-shadow: 0 0 10px var(--glow-color); }
+    50% { box-shadow: 0 0 28px var(--glow-color); }
+    100% { box-shadow: 0 0 10px var(--glow-color); }
   }
 
-  .btn-android{ --glow-color: rgba(76,255,119,0.45); background:#34c759; border:1px solid #2ea94f; animation:buttonGlow 2.2s infinite ease-in-out; }
-  .btn-windows{ --glow-color: rgba(77,163,255,0.45); background:#0078d7; border:1px solid #0063b1; animation:buttonGlow 2.2s infinite ease-in-out; }
-  .btn-ios{ --glow-color: rgba(122,203,255,0.45); background:#007aff; border:1px solid #005bb5; animation:buttonGlow 2.2s infinite ease-in-out; }
-  .btn-powertunnel{ --glow-color: rgba(255,90,90,0.45); background:#b71c1c; border:1px solid #8b0000; animation:buttonGlow 2.2s infinite ease-in-out; }
+  .btn-android { background:#34c759; --glow-color:#4cff77; animation:buttonGlow 2s infinite ease-in-out; }
+  .btn-windows { background:#0078d7; --glow-color:#4da3ff; animation:buttonGlow 2s infinite ease-in-out; }
+  .btn-ios { background:#007aff; --glow-color:#7acbff; animation:buttonGlow 2s infinite ease-in-out; }
+  .btn-powertunnel { background:#b71c1c; --glow-color:#ff5a5a; animation:buttonGlow 2s infinite ease-in-out; }
 
-  .discord-section{
-    margin-top:26px;
-    padding:20px;
-    border-radius:12px;
-    background:var(--discord-color);
-    color:white;
-    box-shadow:var(--card-shadow);
+  .discord-section {
+    background: var(--discord-color);
+    color: white;
+    padding: 40px 20px;
+    border-radius: 16px;
+    max-width: 900px;
+    margin: 60px auto;
+    box-shadow: var(--card-shadow);
   }
 
-  .footer{
-    margin:30px 0 70px;
-    text-align:center;
-    color:var(--text);
-    opacity:.85;
+  .discord-section img {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+
+  footer {
+    text-align: center;
+    margin: 40px 0;
+    font-size: 0.95rem;
+    opacity: 0.8;
   }
 </style>
 </head>
 <body data-theme="light">
-
-  <header class="header">
+  <header>
     <div class="header-content">
-      <div style="display:flex;align-items:center;gap:12px">
-        <h1 data-i18n="title">Growfax Official</h1>
-        <nav><a href="#downloads" style="color:var(--accent); text-decoration:none; font-weight:700;" data-i18n="downloads">📥 Downloads</a></nav>
-      </div>
-
-      <div class="controls" role="region" aria-label="controls">
-        <div class="lang-toggle">
-          🌐 
-          <select id="langSelect" class="lang-select" title="Change language">
-            <option value="en">🇬🇧 English</option>
-            <option value="id">🇮🇩 Bahasa</option>
-          </select>
-        </div>
-        <button id="themeToggle" class="theme-toggle" aria-pressed="false" title="Toggle theme">🌞 <strong id="themeLabel">Light</strong></button>
+      <h1>Growfax Official</h1>
+      <div class="controls">
+        <select id="langSelect" class="lang-select">
+          <option value="en">🇬🇧 English</option>
+          <option value="id">🇮🇩 Bahasa</option>
+        </select>
+        <button id="themeToggle" class="theme-toggle">🌞 Light</button>
       </div>
     </div>
   </header>
 
   <section class="banner-section">
     <img src="Growfax_banner.jpg" alt="Growfax Banner">
-    <h2 data-i18n="welcome">Welcome to Growfax</h2>
-    <p data-i18n="subtitle">Private Growtopia server.</p>
+    <h2>Welcome to Growfax</h2>
+    <p>Private Growtopia Server</p>
   </section>
 
-  <main class="container" id="downloads">
-    <h2 data-i18n="essential">📥 Essential File Downloads</h2>
-
+  <main class="container">
+    <h2>📥 Essential File Downloads</h2>
     <div class="platform-buttons">
-      <a href="Growfax_VirtualHost.txt" class="btn-android" download><img src="virtual-host.png" alt=""><span data-i18n="android">Play on Android</span></a>
-      <a href="Growfax_Patched_.bat" class="btn-windows" download><img src="windows.png" alt=""><span data-i18n="windows">Play on Windows</span></a>
-      <a href="GrowFax_ios.txt" class="btn-ios" download><img src="surge5.png" alt=""><span data-i18n="ios">Play on iOS</span></a>
-      <a href="PowerTunnel_Host.txt" class="btn-powertunnel" download><img src="powertunnel.jpeg" alt=""><span data-i18n="powertunnel">Play via PowerTunnel</span></a>
+      <a href="Growfax_VirtualHost.txt" class="btn-android" download><img src="virtual-host.png" alt="">Play on Android</a>
+      <a href="Growfax_Patched_.bat" class="btn-windows" download><img src="windows.png" alt="">Play on Windows</a>
+      <a href="GrowFax_ios.txt" class="btn-ios" download><img src="surge5.png" alt="">Play on iOS</a>
+      <a href="PowerTunnel_Host.txt" class="btn-powertunnel" download><img src="powertunnel.jpeg" alt="">Play via PowerTunnel</a>
     </div>
   </main>
 
   <section class="discord-section">
-    <img src="discord.jpeg" alt="Discord" style="width:48px;height:48px;border-radius:8px; display:block; margin:0 auto 10px;">
-    <h3 data-i18n="community">Join Our Community</h3>
-    <p data-i18n="connect">Connect with other members and get support in our official Discord server.</p>
-    <a href="https://discord.gg/smgS6sq83y" target="_blank" rel="noopener" style="color:inherit; font-weight:700; text-decoration:underline; display:inline-block; margin-top:10px;" data-i18n="join">Join Growfax Discord Now!</a>
+    <img src="discord.jpeg" alt="Discord Logo">
+    <h3>Join Our Community</h3>
+    <p>Connect with others and get support in our official Discord server.</p>
+    <a href="https://discord.gg/smgS6sq83y" style="color:white;font-weight:700;text-decoration:underline;">Join Growfax Discord</a>
   </section>
 
-  <footer class="footer">
-    <small data-i18n="footer">© 2025 Growfax. All rights reserved.</small>
-  </footer>
+  <footer>© 2025 Growfax. All rights reserved.</footer>
 
 <script>
-  // --- THEME TOGGLE ---
-  const themeToggleBtn = document.getElementById('themeToggle');
-  const themeLabel = document.getElementById('themeLabel');
-  function setTheme(theme){
-    document.body.setAttribute('data-theme', theme);
-    localStorage.setItem('growfax_theme', theme);
-    themeLabel.textContent = theme === 'dark' ? 'Dark' : 'Light';
-    themeToggleBtn.setAttribute('aria-pressed', theme === 'dark');
+  const themeBtn = document.getElementById("themeToggle");
+  const langSelect = document.getElementById("langSelect");
+  function setTheme(t){
+    document.body.dataset.theme=t;
+    themeBtn.textContent=t==="dark"?"🌙 Dark":"🌞 Light";
+    localStorage.setItem("theme",t);
   }
-  themeToggleBtn.addEventListener('click', ()=>{
-    const curr = document.body.getAttribute('data-theme') || 'light';
-    setTheme(curr === 'dark' ? 'light' : 'dark');
-  });
-  (function initTheme(){
-    const saved = localStorage.getItem('growfax_theme');
-    if(saved) setTheme(saved);
-    else setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  themeBtn.onclick=()=>{
+    const curr=document.body.dataset.theme;
+    setTheme(curr==="dark"?"light":"dark");
+  };
+  (()=>{
+    const saved=localStorage.getItem("theme");
+    setTheme(saved?saved:"light");
   })();
 
-  // --- LANGUAGE TRANSLATION ---
-  const langSelect = document.getElementById('langSelect');
-  const translations = {
-    en: {
-      title: "Growfax Official",
-      downloads: "📥 Downloads",
-      welcome: "Welcome to Growfax",
-      subtitle: "Private Growtopia server.",
-      essential: "📥 Essential File Downloads",
-      android: "Play on Android",
-      windows: "Play on Windows",
-      ios: "Play on iOS",
-      powertunnel: "Play via PowerTunnel",
-      community: "Join Our Community",
-      connect: "Connect with other members and get support in our official Discord server.",
-      join: "Join Growfax Discord Now!",
-      footer: "© 2025 Growfax. All rights reserved.",
-      confirm: "Are you sure you want to download"
-    },
-    id: {
-      title: "Growfax Resmi",
-      downloads: "📥 Unduhan",
-      welcome: "Selamat Datang di Growfax",
-      subtitle: "Server Growtopia pribadi.",
-      essential: "📥 Unduhan File Penting",
-      android: "Main di Android",
-      windows: "Main di Windows",
-      ios: "Main di iOS",
-      powertunnel: "Main lewat PowerTunnel",
-      community: "Bergabung dengan Komunitas Kami",
-      connect: "Terhubung dengan anggota lain dan dapatkan dukungan di server Discord resmi kami.",
-      join: "Gabung Discord Growfax Sekarang!",
-      footer: "© 2025 Growfax. Semua hak dilindungi.",
-      confirm: "Apakah Anda yakin ingin mengunduh"
+  const translations={
+    id:{
+      "Growfax Official":"Growfax Resmi",
+      "Welcome to Growfax":"Selamat Datang di Growfax",
+      "Private Growtopia Server":"Server Growtopia Pribadi",
+      "📥 Essential File Downloads":"📥 Unduhan File Penting",
+      "Play on Android":"Main di Android",
+      "Play on Windows":"Main di Windows",
+      "Play on iOS":"Main di iOS",
+      "Play via PowerTunnel":"Main lewat PowerTunnel",
+      "Join Our Community":"Bergabung dengan Komunitas Kami",
+      "Connect with others and get support in our official Discord server.":"Terhubung dengan anggota lain dan dapatkan dukungan di server Discord resmi kami.",
+      "Join Growfax Discord":"Gabung Discord Growfax",
+      "© 2025 Growfax. All rights reserved.":"© 2025 Growfax. Semua hak dilindungi."
     }
   };
-
-  function setLanguage(lang){
-    localStorage.setItem('growfax_lang', lang);
-    document.querySelectorAll('[data-i18n]').forEach(el=>{
-      const key = el.getAttribute('data-i18n');
-      if(translations[lang][key]) el.textContent = translations[lang][key];
+  function translate(lang){
+    document.querySelectorAll("body *").forEach(el=>{
+      const t=translations[lang]?.[el.textContent?.trim()];
+      if(t) el.textContent=t;
     });
   }
+  langSelect.onchange=()=>{
+    const lang=langSelect.value;
+    localStorage.setItem("lang",lang);
+    translate(lang);
+  };
+  (()=>{ const saved=localStorage.getItem("lang")||"en"; langSelect.value=saved; translate(saved); })();
 
-  langSelect.addEventListener('change', ()=> setLanguage(langSelect.value));
-
-  (function initLang(){
-    const saved = localStorage.getItem('growfax_lang') || 'en';
-    langSelect.value = saved;
-    setLanguage(saved);
-  })();
-
-  // --- DOWNLOAD CONFIRMATION ---
-  document.querySelectorAll('.platform-buttons a').forEach(btn=>{
-    btn.addEventListener('click', function(e){
-      if (e.ctrlKey || e.metaKey || e.button === 1) return;
-      const href = this.getAttribute('href') || 'file';
-      const lang = localStorage.getItem('growfax_lang') || 'en';
-      const ok = confirm(`${translations[lang].confirm} "${href}"?`);
-      if(!ok) e.preventDefault();
+  document.querySelectorAll(".platform-buttons a").forEach(a=>{
+    a.addEventListener("click",e=>{
+      const file=a.getAttribute("href");
+      const lang=langSelect.value;
+      const msg=lang==="id"?"Apakah Anda yakin ingin mengunduh ":"Are you sure you want to download ";
+      if(!confirm(msg+file+"?")) e.preventDefault();
     });
   });
 </script>
-
 </body>
 </html>
