@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Growfax Official & Role Shop</title>
+<title>Growfax Official</title>
 <link rel="icon" href="Growfax_banner.jpg" type="image/jpeg">
 <style>
 :root {
@@ -11,7 +11,6 @@
     --secondary-color: #333;
     --background-color: #f8f8f8;
     --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    --ipaymu-color: #00A651;
     --discord-color: #7289da;
 }
 
@@ -21,48 +20,152 @@ body {
     color: var(--secondary-color); line-height: 1.6;
 }
 
-.header { background-color: #fff; padding: 15px 0; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-.header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
-.header-content h1 { color: var(--secondary-color); margin: 0; font-size: 2em; }
-.nav-links a { color: var(--primary-color); text-decoration: none; font-weight: bold; padding: 8px 15px; margin-left: 10px; border: 2px solid var(--primary-color); border-radius: 20px; transition: background-color 0.3s, color 0.3s; }
-.nav-links a:hover { background-color: var(--primary-color); color: #fff; }
+/* Header */
+.header {
+    background-color: #fff;
+    padding: 15px 0;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+.header-content h1 {
+    color: var(--secondary-color);
+    margin: 0;
+    font-size: 2em;
+}
+.nav-links a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 15px;
+    margin-left: 10px;
+    border: 2px solid var(--primary-color);
+    border-radius: 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+.nav-links a:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+}
 
-.banner-section { background-color: var(--secondary-color); padding: 40px 0; text-align: center; color: #fff; }
-.banner-section img { max-width: 250px; height: auto; border-radius: 8px; margin-bottom: 10px; }
-.banner-section h2 { font-size: 3em; margin-bottom: 5px; color: #ffaa00; }
-.banner-section p { font-size: 1.2em; max-width: 600px; margin: 0 auto; }
+/* Banner */
+.banner-section {
+    background-color: var(--secondary-color);
+    padding: 40px 0;
+    text-align: center;
+    color: #fff;
+}
+.banner-section img {
+    max-width: 250px;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+.banner-section h2 {
+    font-size: 3em;
+    margin-bottom: 5px;
+    color: #ffaa00;
+}
+.banner-section p {
+    font-size: 1.2em;
+    max-width: 600px;
+    margin: 0 auto;
+}
 
-.container { width: 90%; max-width: 1100px; margin: 30px auto; padding-top: 20px; }
+/* Kontainer utama */
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 30px auto;
+    padding-top: 20px;
+    text-align: center;
+}
 
-.role-list { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px; }
-.role-item { background-color: #fff; border-radius: 10px; padding: 30px 20px; text-align: center; box-shadow: var(--card-shadow); transition: transform 0.3s, box-shadow 0.3s; }
-.role-item:hover { transform: translateY(-8px); box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); }
-.role-item h3 { font-size: 1.6em; margin: 0 0 10px 0; color: var(--primary-color); }
-.role-item .price { font-size: 2em; font-weight: bold; margin-bottom: 15px; color: var(--secondary-color); }
-.role-item .price span { font-size: 0.5em; font-weight: normal; vertical-align: top; margin-right: 5px; }
-.role-item ul { list-style-type: none; padding: 0; text-align: left; margin-bottom: 20px; }
-.role-item ul li { margin: 5px 0; font-size: 0.9em; border-bottom: 1px dashed #eee; padding-bottom: 5px; }
+/* Tombol Platform */
+.platform-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin: 40px 0;
+}
 
-.role-item form input[type="text"] { width: 90%; padding: 10px; margin-bottom: 15px; border-radius: 8px; border: 1px solid #ccc; }
-.role-item form button { display: block; width: 100%; border: none; background-color: var(--ipaymu-color); color: #fff; padding: 12px 0; border-radius: 25px; font-weight: bold; cursor: pointer; transition: background-color 0.2s; text-transform: uppercase; }
-.role-item form button:hover { background-color: #008f44; }
+.platform-buttons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 260px;
+    padding: 15px 25px;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 1.1em;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
 
-.separator { border-top: 3px solid #ccc; margin: 60px 0; }
+.platform-buttons a img {
+    width: 28px;
+    height: 28px;
+    margin-right: 10px;
+}
 
-.download-list { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; margin-top: 20px; }
-.download-item { min-height: 280px; background-color: #fff; border-radius: 10px; padding: 20px; text-align: center; box-shadow: var(--card-shadow); display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.3s, box-shadow 0.3s; }
-.download-item img { width: 70px; height: 70px; object-fit: contain; margin-bottom: 15px; border-radius: 5px; border: 1px solid #eee; }
-.download-item h3 { margin: 0 0 15px 0; font-size: 1.2em; color: var(--secondary-color); }
-.download-item p { font-size: 0.95em; margin-bottom: 15px; }
-.download-item a { display: block; background-color: var(--primary-color); color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 25px; font-weight: bold; transition: background-color 0.2s; margin-top: auto; }
-.download-item a:hover { background-color: #0056b3; }
+.platform-buttons a:hover {
+    transform: translateY(-3px);
+    opacity: 0.9;
+}
 
-.discord-section { text-align: center; margin-top: 50px; padding: 30px; background-color: var(--discord-color); color: #fff; border-radius: 10px; box-shadow: var(--card-shadow); }
-.discord-section img { width: 50px; height: 50px; margin-bottom: 15px; border-radius: 50%; }
-.discord-section h2 { margin-top: 0; }
-.discord-section a { color: #fff; font-weight: bold; text-decoration: underline; font-size: 1.1em; display: block; margin-top: 15px; }
+/* Warna tombol */
+.btn-android { background-color: #34c759; }
+.btn-windows { background-color: #0078d7; }
+.btn-ios { background-color: #007aff; }
+.btn-macos { background-color: #b71c1c; }
 
-.footer { text-align: center; padding: 20px; margin-top: 40px; color: #999; font-size: 0.9em; background-color: #fff; border-top: 1px solid #eee; }
+/* Discord section */
+.discord-section {
+    text-align: center;
+    margin-top: 50px;
+    padding: 30px;
+    background-color: var(--discord-color);
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: var(--card-shadow);
+}
+.discord-section img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 15px;
+    border-radius: 50%;
+}
+.discord-section a {
+    color: #fff;
+    font-weight: bold;
+    text-decoration: underline;
+    font-size: 1.1em;
+    display: block;
+    margin-top: 15px;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    color: #999;
+    font-size: 0.9em;
+    background-color: #fff;
+    border-top: 1px solid #eee;
+}
 </style>
 </head>
 <body>
@@ -71,7 +174,6 @@ body {
 <div class="header-content">
 <h1>Growfax Official</h1>
 <div class="nav-links">
-<a href="#shop">🛒 Role Shop</a>
 <a href="#downloads">📥 Downloads</a>
 </div>
 </div>
@@ -80,172 +182,29 @@ body {
 <div class="banner-section">
 <img src="Growfax_banner.jpg" alt="Growfax Banner">
 <h2>Welcome to Growfax</h2>
-<p>Your centralized hub for community Roles and essential tools. Find what you need below.</p>
+<p>Your centralized hub for essential tools and community resources.</p>
 </div>
-
-<div class="container" id="shop">
-<h2>✨ Official Growfax Role Shop</h2>
-<p style="text-align:center; color:green; font-weight:bold;">✅ Pembayaran via iPaymu LIVE. Masukkan Discord ID untuk auto-assign role.</p>
-
-<ul class="role-list">
-
-<!-- VIP -->
-<li class="role-item">
-<h3>VIP</h3>
-<p class="price">Rp 15.000</p>
-<ul>
-<li>✅ Basic Command For VIP</li>
-<li>❌ VIP+ Command Access</li>
-</ul>
-<form method="post" action="checkout.php">
-<input type="hidden" name="role" value="VIP">
-<input type="text" name="discord_id" placeholder="Masukkan Discord ID" required>
-<button type="submit">Bayar via iPaymu</button>
-</form>
-</li>
-
-<!-- VIP+ -->
-<li class="role-item">
-<h3 style="color:#007bff;">VIP+</h3>
-<p class="price">Rp 25.000</p>
-<ul>
-<li>✅ All VIP Benefits</li>
-<li>✅ VIP+ Command</li>
-<li>❌ Moderator Command Access</li>
-</ul>
-<form method="post" action="checkout.php">
-<input type="hidden" name="role" value="VIP+">
-<input type="text" name="discord_id" placeholder="Masukkan Discord ID" required>
-<button type="submit">Bayar via iPaymu</button>
-</form>
-</li>
-
-<!-- Moderator -->
-<li class="role-item">
-<h3 style="color:#4CAF50;">Moderator</h3>
-<p class="price">Rp 55.000</p>
-<ul>
-<li>✅ All VIP+ Benefits</li>
-<li>✅ Moderator Command Access</li>
-<li>✅ Moderator Tool Like Banned, Mute, Curse</li>
-<li>❌ Super Moderator Command</li>
-</ul>
-<form method="post" action="checkout.php">
-<input type="hidden" name="role" value="Moderator">
-<input type="text" name="discord_id" placeholder="Masukkan Discord ID" required>
-<button type="submit">Bayar via iPaymu</button>
-</form>
-</li>
-
-<!-- Super Moderator -->
-<li class="role-item">
-<h3 style="color:#FFC107;">Super Moderator</h3>
-<p class="price">Rp 70.000</p>
-<ul>
-<li>✅ All Moderator Benefits</li>
-<li>✅ Super Moderator Command</li>
-<li>✅ All Command Action</li>
-<li>❌ Developer Command</li>
-</ul>
-<form method="post" action="checkout.php">
-<input type="hidden" name="role" value="Super Moderator">
-<input type="text" name="discord_id" placeholder="Masukkan Discord ID" required>
-<button type="submit">Bayar via iPaymu</button>
-</form>
-</li>
-
-<!-- Developer -->
-<li class="role-item">
-<h3 style="color:#9C27B0;">Developer</h3>
-<p class="price">Rp 90.000</p>
-<ul>
-<li>✅ All Super Moderator Benefits</li>
-<li>✅ Developer Command</li>
-<li>❌ God Command Access</li>
-</ul>
-<form method="post" action="checkout.php">
-<input type="hidden" name="role" value="Developer">
-<input type="text" name="discord_id" placeholder="Masukkan Discord ID" required>
-<button type="submit">Bayar via iPaymu</button>
-</form>
-</li>
-
-<!-- God -->
-<li class="role-item">
-<h3 style="color:#E91E63;">God</h3>
-<p class="price">Rp 150.000</p>
-<ul>
-<li>✅ All Developer Benefits</li>
-<li>🔥 God Command Access</li>
-<li>🔥 Got everything Free Block Find (Limited under 100 Rarity - No Farmable)!</li>
-</ul>
-<form method="post" action="checkout.php">
-<input type="hidden" name="role" value="God">
-<input type="text" name="discord_id" placeholder="Masukkan Discord ID" required>
-<button type="submit">Bayar via iPaymu</button>
-</form>
-</li>
-
-<!-- God Max -->
-<li class="role-item">
-<h3 style="color:#F44336;">God Max</h3>
-<p class="price">Rp 250.000</p>
-<ul>
-<li>✅ All God Benefits</li>
-<li>👑 God Max Command Access</li>
-<li>👑 All Find Item Rarity (Cannot Find Lock)!</li>
-</ul>
-<form method="post" action="checkout.php">
-<input type="hidden" name="role" value="God Max">
-<input type="text" name="discord_id" placeholder="Masukkan Discord ID" required>
-<button type="submit">Bayar via iPaymu</button>
-</form>
-</li>
-
-</ul>
-</div>
-
-<div class="separator"></div>
 
 <div class="container" id="downloads">
 <h2>📥 Essential File Downloads</h2>
-<ul class="download-list">
-<li class="download-item">
-<div class="content-wrapper">
-<img src="windows.png" alt="Windows Logo">
-<h3>Windows Hosts Patcher (BAT)</h3>
-<p>Executable script to patch Windows hosts file.</p>
-</div>
-<a href="Growfax_Patched_.bat" download="Growfax_Patched_.bat">Download for Windows</a>
-</li>
 
-<li class="download-item">
-<div class="content-wrapper">
-<img src="virtual-host.png" alt="Virtual Host Logo">
-<h3>Hosts File (Virtual Host)</h3>
-<p>Standard hosts file for Android Virtual Host app.</p>
-</div>
-<a href="Growfax_VirtualHost.txt" download="Growfax_VirtualHost.txt">Download for Virtual Host</a>
-</li>
+<div class="platform-buttons">
+  <a href="Growfax_VirtualHost.txt" class="btn-android" download>
+    <img src="android.png" alt="Android Logo"> Play on Android
+  </a>
 
-<li class="download-item">
-<div class="content-wrapper">
-<img src="surge5.png" alt="Surge 5 Logo">
-<h3>Surge 5 Rule Configuration</h3>
-<p>Rule configuration for iOS apps like Surge 5.</p>
-</div>
-<a href="GrowFax ios.txt" download="GrowFax_iOS_Surge.txt">Download for Surge/iOS</a>
-</li>
+  <a href="Growfax_Patched_.bat" class="btn-windows" download>
+    <img src="windows.png" alt="Windows Logo"> Play on Windows
+  </a>
 
-<li class="download-item">
-<div class="content-wrapper">
-<img src="powertunnel.jpeg" alt="PowerTunnel Logo">
-<h3>Hosts File (PowerTunnel)</h3>
-<p>Specific hosts file for PowerTunnel utility.</p>
+  <a href="GrowFax ios.txt" class="btn-ios" download>
+    <img src="apple.png" alt="iOS Logo"> Play on iOS
+  </a>
+
+  <a href="PowerTunel_Host.txt" class="btn-macos" download>
+    <img src="apple.png" alt="macOS Logo"> Play on macOS
+  </a>
 </div>
-<a href="PowerTunel_Host.txt" download="PowerTunel_Host.txt">Download for PowerTunnel</a>
-</li>
-</ul>
 </div>
 
 <div class="discord-section">
