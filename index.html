@@ -30,9 +30,9 @@
     background: var(--bg);
     color: var(--text);
     line-height: 1.6;
+    transition: background 0.3s, color 0.3s;
   }
 
-  /* HEADER */
   header {
     background: var(--card-bg);
     box-shadow: var(--card-shadow);
@@ -78,7 +78,6 @@
     transform: translateY(-1px);
   }
 
-  /* BANNER */
   .banner-section {
     text-align: center;
     padding: 60px 20px;
@@ -103,7 +102,13 @@
     opacity: 0.9;
   }
 
-  /* CONTAINER */
+  .time-display {
+    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    opacity: 0.85;
+  }
+
   .container {
     max-width: 1000px;
     margin: 60px auto;
@@ -116,7 +121,6 @@
     margin-bottom: 40px;
   }
 
-  /* BUTTONS */
   .platform-buttons {
     display: flex;
     flex-wrap: wrap;
@@ -162,7 +166,6 @@
   .btn-ios { background:#007aff; --glow-color:#7acbff; animation:buttonGlow 2s infinite ease-in-out; }
   .btn-powertunnel { background:#b71c1c; --glow-color:#ff5a5a; animation:buttonGlow 2s infinite ease-in-out; }
 
-  /* DISCORD SECTION */
   .discord-section {
     background: var(--discord-color);
     color: white;
@@ -194,7 +197,6 @@
     opacity: 0.8;
   }
 
-  /* RESPONSIVE */
   @media (max-width: 600px) {
     .header-content {
       flex-direction: column;
@@ -230,6 +232,7 @@
     <img src="Growfax_banner.jpg" alt="Growfax Banner">
     <h2>Welcome to Growfax</h2>
     <p>Private Growtopia Server</p>
+    <div id="timeDisplay" class="time-display">Loading time...</div>
   </section>
 
   <main class="container">
@@ -252,21 +255,24 @@
   <footer>© 2025 Growfax. All rights reserved.</footer>
 
 <script>
-  // Theme toggle
+  // --- THEME ---
   const themeBtn = document.getElementById("themeToggle");
   function setTheme(theme){
     document.body.dataset.theme = theme;
     themeBtn.textContent = theme === "dark" ? "🌙 Dark" : "🌞 Light";
     localStorage.setItem("theme", theme);
   }
-  themeBtn.onclick = ()=>{
-    const curr = document.body.dataset.theme;
-    setTheme(curr === "dark" ? "light" : "dark");
-  };
+  themeBtn.onclick = ()=> setTheme(document.body.dataset.theme === "dark" ? "light" : "dark");
   setTheme(localStorage.getItem("theme") || "light");
 
-  // Translation
+  // --- TRANSLATION + TIME ---
   const langSelect = document.getElementById("langSelect");
+  const elements = document.querySelectorAll("body *:not(script):not(style)");
+  elements.forEach(el=>{
+    if (el.childNodes.length === 1 && el.textContent.trim()!=="")
+      el.dataset.original = el.textContent.trim();
+  });
+
   const translations = {
     id: {
       "Growfax Official": "Growfax Resmi",
@@ -283,20 +289,41 @@
       "© 2025 Growfax. All rights reserved.": "© 2025 Growfax. Semua hak dilindungi."
     }
   };
+
   function translate(lang){
-    document.querySelectorAll("body *").forEach(el=>{
-      const t=translations[lang]?.[el.textContent?.trim()];
-      if(t) el.textContent=t;
+    elements.forEach(el=>{
+      const original=el.dataset.original;
+      if(!original) return;
+      el.textContent = lang==="en" ? original : translations[lang]?.[original] || original;
     });
   }
+
+  // --- LOCAL TIME ---
+  const timeDisplay=document.getElementById("timeDisplay");
+  let timeZone="America/New_York"; // default English
+  function updateTime(){
+    const now=new Date();
+    const timeStr=now.toLocaleString("en-US",{timeZone, timeStyle:"medium", hour12:true, dateStyle:"medium"});
+    timeDisplay.textContent=(langSelect.value==="id"?"Waktu Lokal: ":"Local Time: ")+timeStr;
+  }
+
+  setInterval(updateTime,1000);
+
   langSelect.onchange=()=>{
     const lang=langSelect.value;
     localStorage.setItem("lang",lang);
     translate(lang);
+    timeZone = lang==="id" ? "Asia/Jakarta" : "America/New_York";
+    updateTime();
   };
-  translate(localStorage.getItem("lang")||"en");
 
-  // Download confirmation
+  const savedLang=localStorage.getItem("lang")||"en";
+  langSelect.value=savedLang;
+  translate(savedLang);
+  timeZone = savedLang==="id"?"Asia/Jakarta":"America/New_York";
+  updateTime();
+
+  // --- DOWNLOAD CONFIRM ---
   document.querySelectorAll(".platform-buttons a").forEach(a=>{
     a.addEventListener("click",e=>{
       const file=a.getAttribute("href");
