@@ -154,7 +154,7 @@ body {
 .btn-android { background-color: #34c759; border-color: #2ea94f; }
 .btn-windows { background-color: #0078d7; border-color: #0063b1; }
 .btn-ios { background-color: #007aff; border-color: #005bb5; }
-.btn-powertunnel { background-color: #b71c1c; border-color: #8b0000; } /* PowerTunnel */
+.btn-powertunnel { background-color: #b71c1c; border-color: #8b0000; }
 
 /* Discord */
 .discord-section {
@@ -242,6 +242,19 @@ body {
 <div class="footer">
   &copy; 2025 Growfax. All rights reserved.
 </div>
+
+<!-- Script konfirmasi download -->
+<script>
+  document.querySelectorAll('.platform-buttons a').forEach(button => {
+    button.addEventListener('click', function(event) {
+      const fileName = this.getAttribute('href');
+      const confirmDownload = confirm(`Apakah Anda yakin ingin mengunduh file "${fileName}"?`);
+      if (!confirmDownload) {
+        event.preventDefault(); // Batalkan unduhan
+      }
+    });
+  });
+</script>
 
 </body>
 </html>
