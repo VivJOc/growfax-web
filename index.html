@@ -1,295 +1,263 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Growfax Official</title>
 <link rel="icon" href="Growfax_banner.jpg" type="image/jpeg">
 <style>
-:root {
-    --secondary-color: #333;
-    --background-color: #f8f8f8;
-    --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  :root{
+    --bg: #f8f8f8;
+    --card-bg: #fff;
+    --text: #222;
+    --accent: #0078d7;
+    --card-shadow: 0 4px 10px rgba(0,0,0,0.08);
     --discord-color: #7289da;
-}
+  }
 
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0; padding: 0;
-    background-color: var(--background-color);
-    color: var(--secondary-color);
-    line-height: 1.6;
-}
+  [data-theme="dark"]{
+    --bg: #0f1720;
+    --card-bg: #0b1220;
+    --text: #e6eef8;
+    --accent: #4da3ff;
+    --card-shadow: 0 6px 20px rgba(0,0,0,0.6);
+    --discord-color: #5b6ea6;
+  }
 
-/* Header */
-.header {
-    background-color: #fff;
-    padding: 15px 0;
-    text-align: center;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-.header-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-}
-.header-content h1 {
-    color: var(--secondary-color);
-    margin: 0;
-    font-size: 2em;
-}
-.nav-links a {
-    color: #007bff;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 8px 15px;
-    margin-left: 10px;
-    border: 2px solid #007bff;
-    border-radius: 20px;
-    transition: background-color 0.3s, color 0.3s;
-}
-.nav-links a:hover {
-    background-color: #007bff;
-    color: #fff;
-}
+  html,body{
+    height:100%;
+    margin:0;
+    font-family:"Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
 
-/* Banner */
-.banner-section {
-    background-color: var(--secondary-color);
-    padding: 40px 0;
-    text-align: center;
-    color: #fff;
-    position: relative;
-    overflow: hidden;
-}
+  /* header */
+  .header{
+    background:var(--card-bg);
+    box-shadow:var(--card-shadow);
+    position:sticky;
+    top:0;
+    z-index:1000;
+  }
+  .header-content{
+    max-width:1200px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px 18px;
+    gap:12px;
+  }
+  h1{ margin:0; font-size:1.25rem; color:var(--text); }
 
-/* Animated logo */
-.banner-section img {
-    max-width: 250px;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    position: relative;
-    z-index: 1;
-    animation: floatLogo 4s ease-in-out infinite, shine 5s linear infinite;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-}
+  .controls{ display:flex; align-items:center; gap:10px; }
 
-@keyframes floatLogo {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
+  .theme-toggle{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:6px 10px;
+    border-radius:10px;
+    background:transparent;
+    color:var(--text);
+    border:1px solid rgba(0,0,0,0.06);
+    cursor:pointer;
+  }
 
-@keyframes shine {
-    0% { filter: brightness(1) drop-shadow(0 0 5px rgba(255,255,255,0.2)); }
-    50% { filter: brightness(1.3) drop-shadow(0 0 25px rgba(255,255,255,0.6)); }
-    100% { filter: brightness(1) drop-shadow(0 0 5px rgba(255,255,255,0.2)); }
-}
+  /* banner */
+  .banner-section{
+    background: linear-gradient(90deg, rgba(0,0,0,0.04), rgba(255,255,255,0.02));
+    padding:34px 0;
+    text-align:center;
+  }
+  .banner-section img{ max-width:200px; border-radius:8px; display:block; margin:0 auto 10px; }
+  .banner-section h2{ margin:6px 0; color:#ffaa00; text-shadow:0 0 8px rgba(255,170,0,0.25); }
+  .banner-section p{ margin:0; opacity:0.95; }
 
-.banner-section h2 {
-    font-size: 3em;
-    margin-bottom: 5px;
-    color: #ffaa00;
-    text-shadow: 0 0 10px rgba(255,170,0,0.5);
-}
-.banner-section p {
-    font-size: 1.2em;
-    max-width: 600px;
-    margin: 0 auto;
-}
+  /* container */
+  .container{ width:90%; max-width:1100px; margin:26px auto; text-align:center; }
 
-/* Main container */
-.container {
-    width: 90%;
-    max-width: 1100px;
-    margin: 30px auto;
-    padding-top: 20px;
-    text-align: center;
-}
+  .platform-buttons{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+    margin:32px 0;
+  }
 
-/* Download buttons */
-.platform-buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    margin: 40px 0;
-}
+  .platform-buttons a{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    width:280px;
+    padding:14px 18px;
+    border-radius:14px;
+    color:#fff;
+    font-weight:700;
+    text-decoration:none;
+    position:relative;
+    overflow:hidden;
+    transition:transform .18s ease, opacity .18s ease;
+    border:1px solid transparent;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  }
 
-.platform-buttons a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 260px;
-    padding: 15px 25px;
-    border-radius: 12px;
-    color: #fff;
-    font-size: 1.1em;
-    font-weight: 600;
-    text-decoration: none;
-    transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.3s;
-    border: 2px solid transparent;
-    position: relative;
-    overflow: hidden;
-}
+  .platform-buttons a img{ width:28px; height:28px; border-radius:6px; }
 
-/* Pulsing Glow Animation */
-@keyframes buttonGlow {
-    0% { box-shadow: 0 0 10px var(--glow-color, #fff); }
-    50% { box-shadow: 0 0 25px var(--glow-color, #fff); }
-    100% { box-shadow: 0 0 10px var(--glow-color, #fff); }
-}
+  .platform-buttons a:hover{ transform:translateY(-4px); opacity:0.98; }
 
-/* Android button - green glow */
-.btn-android {
-    --glow-color: #4cff77;
-    background-color: #34c759;
-    border-color: #2ea94f;
-    animation: buttonGlow 2s infinite ease-in-out;
-}
+  /* sweep highlight */
+  .platform-buttons a::after{
+    content:"";
+    position:absolute;
+    top:-60%;
+    left:-60%;
+    width:40%;
+    height:220%;
+    transform:skewX(-25deg);
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.35) 50%, rgba(255,255,255,0) 100%);
+    opacity:0;
+    pointer-events:none;
+  }
+  .platform-buttons a:hover::after{
+    animation: sweep 1s ease-in-out;
+    opacity:0.55;
+  }
+  @keyframes sweep{ 0%{ left:-60%; } 100%{ left:160%; } }
 
-/* Windows button - blue glow */
-.btn-windows {
-    --glow-color: #4da3ff;
-    background-color: #0078d7;
-    border-color: #0063b1;
-    animation: buttonGlow 2s infinite ease-in-out;
-}
+  /* pulsing colored glow */
+  @keyframes buttonGlow {
+    0% { box-shadow: 0 0 8px var(--glow-color, rgba(255,255,255,0.15)); }
+    50% { box-shadow: 0 0 28px var(--glow-color, rgba(255,255,255,0.28)); }
+    100% { box-shadow: 0 0 8px var(--glow-color, rgba(255,255,255,0.15)); }
+  }
 
-/* iOS button - light blue glow */
-.btn-ios {
-    --glow-color: #7acbff;
-    background-color: #007aff;
-    border-color: #005bb5;
-    animation: buttonGlow 2s infinite ease-in-out;
-}
+  .btn-android{ --glow-color: rgba(76,255,119,0.45); background:#34c759; border:1px solid #2ea94f; animation:buttonGlow 2.2s infinite ease-in-out; }
+  .btn-windows{ --glow-color: rgba(77,163,255,0.45); background:#0078d7; border:1px solid #0063b1; animation:buttonGlow 2.2s infinite ease-in-out; }
+  .btn-ios{ --glow-color: rgba(122,203,255,0.45); background:#007aff; border:1px solid #005bb5; animation:buttonGlow 2.2s infinite ease-in-out; }
+  .btn-powertunnel{ --glow-color: rgba(255,90,90,0.45); background:#b71c1c; border:1px solid #8b0000; animation:buttonGlow 2.2s infinite ease-in-out; }
 
-/* PowerTunnel button - red glow */
-.btn-powertunnel {
-    --glow-color: #ff5a5a;
-    background-color: #b71c1c;
-    border-color: #8b0000;
-    animation: buttonGlow 2s infinite ease-in-out;
-}
+  .discord-section{
+    margin-top:26px;
+    padding:20px;
+    border-radius:12px;
+    background:var(--discord-color);
+    color:white;
+    box-shadow:var(--card-shadow);
+  }
 
-.platform-buttons a img {
-    width: 28px;
-    height: 28px;
-    margin-right: 10px;
-    border-radius: 5px;
-}
+  .footer{
+    margin:30px 0 70px;
+    text-align:center;
+    color:var(--text);
+    opacity:.85;
+  }
 
-.platform-buttons a:hover {
-    transform: translateY(-3px);
-    opacity: 0.9;
-}
-
-/* Discord section */
-.discord-section {
-    text-align: center;
-    margin-top: 50px;
-    padding: 30px;
-    background-color: var(--discord-color);
-    color: #fff;
-    border-radius: 10px;
-    box-shadow: var(--card-shadow);
-}
-.discord-section img {
-    width: 50px;
-    height: 50px;
-    margin-bottom: 15px;
-    border-radius: 50%;
-}
-.discord-section a {
-    color: #fff;
-    font-weight: bold;
-    text-decoration: underline;
-    font-size: 1.1em;
-    display: block;
-    margin-top: 15px;
-}
-
-/* Footer */
-.footer {
-    text-align: center;
-    padding: 20px;
-    margin-top: 40px;
-    color: #999;
-    font-size: 0.9em;
-    background-color: #fff;
-    border-top: 1px solid #eee;
-}
+  @media (max-width:480px){
+    .platform-buttons a{ width:92%; padding:12px; }
+    .header-content{ padding:8px; gap:8px; }
+  }
 </style>
 </head>
-<body>
+<body data-theme="light">
 
-<div class="header">
-  <div class="header-content">
-    <h1>Growfax Official</h1>
-    <div class="nav-links">
-      <a href="#downloads">📥 Downloads</a>
+  <header class="header">
+    <div class="header-content">
+      <div style="display:flex;align-items:center;gap:12px">
+        <h1>Growfax Official</h1>
+        <nav><a href="#downloads" style="color:var(--accent); text-decoration:none; font-weight:700;">📥 Downloads</a></nav>
+      </div>
+
+      <div class="controls" role="region" aria-label="controls">
+        <button id="themeToggle" class="theme-toggle" aria-pressed="false" title="Toggle theme">🌞 <strong id="themeLabel">Light</strong></button>
+      </div>
     </div>
-  </div>
-</div>
+  </header>
 
-<div class="banner-section">
-  <img src="Growfax_banner.jpg" alt="Growfax Banner">
-  <h2>Welcome to Growfax</h2>
-  <p>Private Growtopia server.</p>
-</div>
+  <section class="banner-section">
+    <img src="Growfax_banner.jpg" alt="Growfax Banner">
+    <h2>Welcome to Growfax</h2>
+    <p>Private Growtopia server.</p>
+  </section>
 
-<div class="container" id="downloads">
-  <h2>📥 Essential File Downloads</h2>
+  <main class="container" id="downloads">
+    <h2>📥 Essential File Downloads</h2>
 
-  <div class="platform-buttons">
-    <a href="Growfax_VirtualHost.txt" class="btn-android" download>
-      <img src="virtual-host.png" alt="Virtual Host Logo"> Play on Android
-    </a>
+    <div class="platform-buttons" role="list">
+      <a href="Growfax_VirtualHost.txt" class="btn-android" download role="listitem">
+        <img src="virtual-host.png" alt="" aria-hidden="true">
+        <span>Play on Android</span>
+      </a>
 
-    <a href="Growfax_Patched_.bat" class="btn-windows" download>
-      <img src="windows.png" alt="Windows Logo"> Play on Windows
-    </a>
+      <a href="Growfax_Patched_.bat" class="btn-windows" download role="listitem">
+        <img src="windows.png" alt="" aria-hidden="true">
+        <span>Play on Windows</span>
+      </a>
 
-    <a href="GrowFax_ios.txt" class="btn-ios" download>
-      <img src="surge5.png" alt="Surge 5 Logo"> Play on iOS
-    </a>
+      <a href="GrowFax_ios.txt" class="btn-ios" download role="listitem">
+        <img src="surge5.png" alt="" aria-hidden="true">
+        <span>Play on iOS</span>
+      </a>
 
-    <a href="PowerTunnel_Host.txt" class="btn-powertunnel" download>
-      <img src="powertunnel.jpeg" alt="PowerTunnel Logo"> Play via PowerTunnel
-    </a>
-  </div>
-</div>
+      <a href="PowerTunnel_Host.txt" class="btn-powertunnel" download role="listitem">
+        <img src="powertunnel.jpeg" alt="" aria-hidden="true">
+        <span>Play via PowerTunnel</span>
+      </a>
+    </div>
+  </main>
 
-<div class="discord-section">
-  <img src="discord.jpeg" alt="Discord Logo">
-  <h2>Join Our Community</h2>
-  <p>Connect with other members and get support in our official Discord server.</p>
-  <a href="https://discord.gg/smgS6sq83y" target="_blank">Join Growfax Discord Now!</a>
-</div>
+  <section class="discord-section" aria-labelledby="discordHeading">
+    <img src="discord.jpeg" alt="Discord" style="width:48px;height:48px;border-radius:8px; display:block; margin:0 auto 10px;">
+    <h3 id="discordHeading">Join Our Community</h3>
+    <p>Connect with other members and get support in our official Discord server.</p>
+    <a href="https://discord.gg/smgS6sq83y" target="_blank" rel="noopener" style="color:inherit; font-weight:700; text-decoration:underline; display:inline-block; margin-top:10px;">Join Growfax Discord Now!</a>
+  </section>
 
-<div class="footer">
-  &copy; 2025 Growfax. All rights reserved.
-</div>
+  <footer class="footer">
+    <small>© 2025 Growfax. All rights reserved.</small>
+  </footer>
 
-<!-- Download confirmation script -->
 <script>
-  document.querySelectorAll('.platform-buttons a').forEach(button => {
-    button.addEventListener('click', function(event) {
-      const fileName = this.getAttribute('href');
-      const confirmDownload = confirm(`Are you sure you want to download "${fileName}"?`);
-      if (!confirmDownload) {
-        event.preventDefault();
-      }
+  // Theme toggle: persists in localStorage
+  const themeToggleBtn = document.getElementById('themeToggle');
+  const themeLabel = document.getElementById('themeLabel');
+
+  function setTheme(theme){
+    document.body.setAttribute('data-theme', theme);
+    localStorage.setItem('growfax_theme', theme);
+    themeLabel.textContent = theme === 'dark' ? 'Dark' : 'Light';
+    themeToggleBtn.setAttribute('aria-pressed', theme === 'dark');
+  }
+
+  themeToggleBtn.addEventListener('click', ()=>{
+    const curr = document.body.getAttribute('data-theme') || 'light';
+    setTheme(curr === 'dark' ? 'light' : 'dark');
+  });
+
+  (function initTheme(){
+    const saved = localStorage.getItem('growfax_theme');
+    if(saved) setTheme(saved);
+    else {
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setTheme(prefersDark ? 'dark' : 'light');
+    }
+  })();
+
+  // Download confirmation (English)
+  document.querySelectorAll('.platform-buttons a').forEach(btn=>{
+    btn.addEventListener('click', function(e){
+      // If user used modifier keys to open in new tab, let it pass without confirmation
+      if (e.ctrlKey || e.metaKey || e.button === 1) return;
+      const href = this.getAttribute('href') || 'file';
+      const ok = confirm(`Are you sure you want to download "${href}"?`);
+      if(!ok) e.preventDefault();
     });
   });
 </script>
 
 </body>
 </html>
-
