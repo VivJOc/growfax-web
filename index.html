@@ -7,188 +7,115 @@
 <link rel="icon" href="Growfax_banner.jpg" type="image/jpeg">
 <style>
 :root {
-    --secondary-color: #333;
-    --background-color: #f8f8f8;
-    --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    --discord-color: #7289da;
+  --secondary-color: #333;
+  --background-color: #f8f8f8;
+  --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --discord-color: #7289da;
 }
-
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0; padding: 0;
-    background-color: var(--background-color);
-    color: var(--secondary-color);
-    line-height: 1.6;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0; padding: 0;
+  background-color: var(--background-color);
+  color: var(--secondary-color);
+  line-height: 1.6;
 }
-
-/* Header */
 .header {
-    background-color: #fff;
-    padding: 15px 0;
-    text-align: center;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background-color: #fff;
+  padding: 15px 0;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 .header-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-}
-.header-content h1 {
-    color: var(--secondary-color);
-    margin: 0;
-    font-size: 2em;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
 }
 .nav-links a {
-    color: #007bff;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 8px 15px;
-    margin-left: 10px;
-    border: 2px solid #007bff;
-    border-radius: 20px;
-    transition: background-color 0.3s, color 0.3s;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 15px;
+  margin-left: 10px;
+  border: 2px solid #007bff;
+  border-radius: 20px;
+  transition: background-color 0.3s, color 0.3s;
 }
 .nav-links a:hover {
-    background-color: #007bff;
-    color: #fff;
+  background-color: #007bff;
+  color: #fff;
 }
-
-/* Banner */
 .banner-section {
-    background-color: var(--secondary-color);
-    padding: 40px 0;
-    text-align: center;
-    color: #fff;
-    position: relative;
-    overflow: hidden;
+  background-color: var(--secondary-color);
+  padding: 40px 0;
+  text-align: center;
+  color: #fff;
 }
-
 .banner-section img {
-    max-width: 250px;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    position: relative;
-    z-index: 1;
-    animation: floatLogo 4s ease-in-out infinite, shine 5s linear infinite;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  max-width: 250px;
+  border-radius: 8px;
+  animation: floatLogo 4s ease-in-out infinite;
 }
-
 @keyframes floatLogo {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+  0%,100% {transform:translateY(0)}
+  50% {transform:translateY(-10px)}
 }
-
-@keyframes shine {
-    0% { filter: brightness(1) drop-shadow(0 0 5px rgba(255,255,255,0.2)); }
-    50% { filter: brightness(1.3) drop-shadow(0 0 25px rgba(255,255,255,0.6)); }
-    100% { filter: brightness(1) drop-shadow(0 0 5px rgba(255,255,255,0.2)); }
-}
-
-.banner-section h2 {
-    font-size: 3em;
-    margin-bottom: 5px;
-    color: #ffaa00;
-    text-shadow: 0 0 10px rgba(255,170,0,0.5);
-}
-.banner-section p {
-    font-size: 1.2em;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-/* Container utama */
 .container {
-    width: 90%;
-    max-width: 1100px;
-    margin: 30px auto;
-    padding-top: 20px;
-    text-align: center;
+  width: 90%;
+  max-width: 1100px;
+  margin: 30px auto;
+  text-align: center;
 }
-
-/* Tombol platform */
 .platform-buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    margin: 40px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin: 40px 0;
 }
-
 .platform-buttons a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 260px;
-    padding: 15px 25px;
-    border-radius: 12px;
-    color: #fff;
-    font-size: 1.1em;
-    font-weight: 600;
-    text-decoration: none;
-    transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.3s;
-    border: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 260px;
+  padding: 15px 25px;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 1.1em;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.3s;
+  border: 2px solid transparent;
 }
-
-.platform-buttons a img {
-    width: 28px;
-    height: 28px;
-    margin-right: 10px;
-    border-radius: 5px;
-}
-
 .platform-buttons a:hover {
-    transform: translateY(-3px);
-    opacity: 0.9;
-    box-shadow: 0 0 12px rgba(255,255,255,0.6);
+  transform: translateY(-3px);
+  opacity: 0.9;
+  box-shadow: 0 0 12px rgba(255,255,255,0.6);
 }
-
-/* Warna tombol */
-.btn-android { background-color: #34c759; border-color: #2ea94f; }
-.btn-windows { background-color: #0078d7; border-color: #0063b1; }
-.btn-ios { background-color: #007aff; border-color: #005bb5; }
-.btn-powertunnel { background-color: #b71c1c; border-color: #8b0000; }
-
-/* Discord */
+.btn-android {background-color:#34c759;border-color:#2ea94f}
+.btn-windows {background-color:#0078d7;border-color:#0063b1}
+.btn-ios {background-color:#007aff;border-color:#005bb5}
+.btn-powertunnel {background-color:#b71c1c;border-color:#8b0000}
 .discord-section {
-    text-align: center;
-    margin-top: 50px;
-    padding: 30px;
-    background-color: var(--discord-color);
-    color: #fff;
-    border-radius: 10px;
-    box-shadow: var(--card-shadow);
+  background-color: var(--discord-color);
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: var(--card-shadow);
+  padding: 30px;
+  margin-top: 50px;
 }
-.discord-section img {
-    width: 50px;
-    height: 50px;
-    margin-bottom: 15px;
-    border-radius: 50%;
-}
-.discord-section a {
-    color: #fff;
-    font-weight: bold;
-    text-decoration: underline;
-    font-size: 1.1em;
-    display: block;
-    margin-top: 15px;
-}
-
-/* Footer */
 .footer {
-    text-align: center;
-    padding: 20px;
-    margin-top: 40px;
-    color: #999;
-    font-size: 0.9em;
-    background-color: #fff;
-    border-top: 1px solid #eee;
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+  color: #999;
+  background-color: #fff;
+  border-top: 1px solid #eee;
 }
 </style>
 </head>
@@ -213,34 +140,76 @@ body {
   <h2>📥 Essential File Downloads</h2>
 
   <div class="platform-buttons">
-    <a href="https://growfaxcdn.site/a9d12/android.txt" class="btn-android" target="_blank">
-      <img src="virtual-host.png" alt="Virtual Host Logo"> Play on Android
+    <a href="#" class="btn-android" id="btn-android">
+      <img src="virtual-host.png" width="28" height="28"> Play on Android
     </a>
 
-    <a href="https://growfaxcdn.site/z1m02/windows.bat" class="btn-windows" target="_blank">
-      <img src="windows.png" alt="Windows Logo"> Play on Windows
+    <a href="#" class="btn-windows" id="btn-windows">
+      <img src="windows.png" width="28" height="28"> Play on Windows
     </a>
 
-    <a href="https://growfaxcdn.site/q8k41/ios.txt" class="btn-ios" target="_blank">
-      <img src="surge5.png" alt="Surge 5 Logo"> Play on iOS
+    <a href="#" class="btn-ios" id="btn-ios">
+      <img src="surge5.png" width="28" height="28"> Play on iOS
     </a>
 
-    <a href="https://growfaxcdn.site/t3b61/powertunnel.txt" class="btn-powertunnel" target="_blank">
-      <img src="powertunnel.jpeg" alt="PowerTunnel Logo"> Play via PowerTunnel
+    <a href="#" class="btn-powertunnel" id="btn-powertunnel">
+      <img src="powertunnel.jpeg" width="28" height="28"> Play via PowerTunnel
     </a>
   </div>
 </div>
 
 <div class="discord-section">
-  <img src="discord.jpeg" alt="Discord Logo">
+  <img src="discord.jpeg" width="50" height="50" style="border-radius:50%;">
   <h2>Join Our Community</h2>
   <p>Connect with other members and get support in our official Discord server.</p>
-  <a href="https://discord.gg/smgS6sq83y" target="_blank">Join Growfax Discord Now!</a>
+  <a href="https://discord.gg/smgS6sq83y" target="_blank" style="color:white;text-decoration:underline;font-weight:bold;">Join Growfax Discord Now!</a>
 </div>
 
 <div class="footer">
   &copy; 2025 Growfax. All rights reserved.
 </div>
+
+<script>
+/* =======================
+   SEMUA MAPPING DI SINI
+   ======================= */
+const links = {
+  android: [
+    "https://growfax.web.id/files/a9d12/android.txt",
+    "https://growfax.web.id/files/x3b92/android_host.txt",
+    "https://growfax.web.id/files/kzq11/virtualhost_android.txt"
+  ],
+  ios: [
+    "https://growfax.web.id/files/q8k41/ios.txt",
+    "https://growfax.web.id/files/abx44/ios_host.txt"
+  ],
+  powertunnel: [
+    "https://growfax.web.id/files/t3b61/powertunnel.txt",
+    "https://growfax.web.id/files/az1y7/powertunnel_host.txt"
+  ],
+  windows: [
+    "https://growfax.web.id/files/z1m02/windows.bat",
+    "https://growfax.web.id/files/d9e77/growfax_patch.bat"
+  ]
+};
+
+// fungsi pilih acak
+function pickRandom(arr){return arr[Math.floor(Math.random()*arr.length)]}
+
+// event untuk tiap tombol
+document.getElementById("btn-android").onclick = ()=> {
+  window.open(pickRandom(links.android), "_blank");
+};
+document.getElementById("btn-ios").onclick = ()=> {
+  window.open(pickRandom(links.ios), "_blank");
+};
+document.getElementById("btn-powertunnel").onclick = ()=> {
+  window.open(pickRandom(links.powertunnel), "_blank");
+};
+document.getElementById("btn-windows").onclick = ()=> {
+  window.open(pickRandom(links.windows), "_blank");
+};
+</script>
 
 </body>
 </html>
