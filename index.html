@@ -32,6 +32,7 @@
     line-height: 1.6;
   }
 
+  /* HEADER */
   header {
     background: var(--card-bg);
     box-shadow: var(--card-shadow);
@@ -41,16 +42,16 @@
   }
 
   .header-content {
-    max-width: 1300px;
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 18px 30px;
+    padding: 16px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
-  h1 {
-    font-size: 1.8rem;
+  .header-content h1 {
+    font-size: 1.6rem;
     margin: 0;
     font-weight: 700;
   }
@@ -58,23 +59,29 @@
   .controls {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 10px;
   }
 
-  .theme-toggle,
-  .lang-select {
+  .theme-toggle, .lang-select {
     font-size: 1rem;
-    padding: 8px 12px;
+    padding: 8px 14px;
     border-radius: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0,0,0,0.08);
     background: transparent;
     color: var(--text);
     cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
   }
 
+  .theme-toggle:hover, .lang-select:hover {
+    background: rgba(0,0,0,0.05);
+    transform: translateY(-1px);
+  }
+
+  /* BANNER */
   .banner-section {
-    padding: 60px 0;
     text-align: center;
+    padding: 60px 20px;
     background: linear-gradient(90deg, rgba(0,0,0,0.05), rgba(255,255,255,0.03));
   }
 
@@ -88,18 +95,20 @@
     font-size: 2rem;
     color: #ffaa00;
     margin: 10px 0;
-    text-shadow: 0 0 12px rgba(255, 170, 0, 0.25);
+    text-shadow: 0 0 12px rgba(255,170,0,0.25);
   }
 
   .banner-section p {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     opacity: 0.9;
   }
 
+  /* CONTAINER */
   .container {
-    max-width: 1100px;
+    max-width: 1000px;
     margin: 60px auto;
     text-align: center;
+    padding: 0 20px;
   }
 
   .container h2 {
@@ -107,11 +116,12 @@
     margin-bottom: 40px;
   }
 
+  /* BUTTONS */
   .platform-buttons {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 25px;
-    justify-items: center;
   }
 
   .platform-buttons a {
@@ -119,20 +129,20 @@
     align-items: center;
     justify-content: center;
     gap: 14px;
-    width: 320px;
-    padding: 16px 20px;
+    width: 300px;
+    padding: 16px 22px;
     border-radius: 14px;
     color: #fff;
     font-weight: 700;
     text-decoration: none;
     border: 1px solid transparent;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     transition: transform 0.18s ease, box-shadow 0.18s ease;
   }
 
   .platform-buttons a img {
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
     border-radius: 6px;
   }
 
@@ -143,7 +153,7 @@
 
   @keyframes buttonGlow {
     0% { box-shadow: 0 0 10px var(--glow-color); }
-    50% { box-shadow: 0 0 28px var(--glow-color); }
+    50% { box-shadow: 0 0 26px var(--glow-color); }
     100% { box-shadow: 0 0 10px var(--glow-color); }
   }
 
@@ -152,13 +162,15 @@
   .btn-ios { background:#007aff; --glow-color:#7acbff; animation:buttonGlow 2s infinite ease-in-out; }
   .btn-powertunnel { background:#b71c1c; --glow-color:#ff5a5a; animation:buttonGlow 2s infinite ease-in-out; }
 
+  /* DISCORD SECTION */
   .discord-section {
     background: var(--discord-color);
     color: white;
     padding: 40px 20px;
-    border-radius: 16px;
-    max-width: 900px;
+    border-radius: 14px;
+    max-width: 800px;
     margin: 60px auto;
+    text-align: center;
     box-shadow: var(--card-shadow);
   }
 
@@ -169,11 +181,34 @@
     margin-bottom: 15px;
   }
 
+  .discord-section a {
+    color: white;
+    font-weight: 700;
+    text-decoration: underline;
+  }
+
   footer {
     text-align: center;
-    margin: 40px 0;
+    margin: 50px 0 20px;
     font-size: 0.95rem;
     opacity: 0.8;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .header-content {
+      flex-direction: column;
+      gap: 10px;
+      text-align: center;
+    }
+
+    .platform-buttons a {
+      width: 90%;
+    }
+
+    .banner-section h2 {
+      font-size: 1.6rem;
+    }
   }
 </style>
 </head>
@@ -211,42 +246,41 @@
     <img src="discord.jpeg" alt="Discord Logo">
     <h3>Join Our Community</h3>
     <p>Connect with others and get support in our official Discord server.</p>
-    <a href="https://discord.gg/smgS6sq83y" style="color:white;font-weight:700;text-decoration:underline;">Join Growfax Discord</a>
+    <a href="https://discord.gg/smgS6sq83y" target="_blank">Join Growfax Discord</a>
   </section>
 
   <footer>© 2025 Growfax. All rights reserved.</footer>
 
 <script>
+  // Theme toggle
   const themeBtn = document.getElementById("themeToggle");
-  const langSelect = document.getElementById("langSelect");
-  function setTheme(t){
-    document.body.dataset.theme=t;
-    themeBtn.textContent=t==="dark"?"🌙 Dark":"🌞 Light";
-    localStorage.setItem("theme",t);
+  function setTheme(theme){
+    document.body.dataset.theme = theme;
+    themeBtn.textContent = theme === "dark" ? "🌙 Dark" : "🌞 Light";
+    localStorage.setItem("theme", theme);
   }
-  themeBtn.onclick=()=>{
-    const curr=document.body.dataset.theme;
-    setTheme(curr==="dark"?"light":"dark");
+  themeBtn.onclick = ()=>{
+    const curr = document.body.dataset.theme;
+    setTheme(curr === "dark" ? "light" : "dark");
   };
-  (()=>{
-    const saved=localStorage.getItem("theme");
-    setTheme(saved?saved:"light");
-  })();
+  setTheme(localStorage.getItem("theme") || "light");
 
-  const translations={
-    id:{
-      "Growfax Official":"Growfax Resmi",
-      "Welcome to Growfax":"Selamat Datang di Growfax",
-      "Private Growtopia Server":"Server Growtopia Pribadi",
-      "📥 Essential File Downloads":"📥 Unduhan File Penting",
-      "Play on Android":"Main di Android",
-      "Play on Windows":"Main di Windows",
-      "Play on iOS":"Main di iOS",
-      "Play via PowerTunnel":"Main lewat PowerTunnel",
-      "Join Our Community":"Bergabung dengan Komunitas Kami",
-      "Connect with others and get support in our official Discord server.":"Terhubung dengan anggota lain dan dapatkan dukungan di server Discord resmi kami.",
-      "Join Growfax Discord":"Gabung Discord Growfax",
-      "© 2025 Growfax. All rights reserved.":"© 2025 Growfax. Semua hak dilindungi."
+  // Translation
+  const langSelect = document.getElementById("langSelect");
+  const translations = {
+    id: {
+      "Growfax Official": "Growfax Resmi",
+      "Welcome to Growfax": "Selamat Datang di Growfax",
+      "Private Growtopia Server": "Server Growtopia Pribadi",
+      "📥 Essential File Downloads": "📥 Unduhan File Penting",
+      "Play on Android": "Main di Android",
+      "Play on Windows": "Main di Windows",
+      "Play on iOS": "Main di iOS",
+      "Play via PowerTunnel": "Main lewat PowerTunnel",
+      "Join Our Community": "Bergabung dengan Komunitas Kami",
+      "Connect with others and get support in our official Discord server.": "Terhubung dengan anggota lain dan dapatkan dukungan di server Discord resmi kami.",
+      "Join Growfax Discord": "Gabung Discord Growfax",
+      "© 2025 Growfax. All rights reserved.": "© 2025 Growfax. Semua hak dilindungi."
     }
   };
   function translate(lang){
@@ -260,8 +294,9 @@
     localStorage.setItem("lang",lang);
     translate(lang);
   };
-  (()=>{ const saved=localStorage.getItem("lang")||"en"; langSelect.value=saved; translate(saved); })();
+  translate(localStorage.getItem("lang")||"en");
 
+  // Download confirmation
   document.querySelectorAll(".platform-buttons a").forEach(a=>{
     a.addEventListener("click",e=>{
       const file=a.getAttribute("href");
