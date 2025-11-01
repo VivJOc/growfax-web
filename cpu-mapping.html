@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Growfax CPU Mapping</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      color: #0f0;
+      font-family: "Courier New", monospace;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      color: #0f0;
+      text-shadow: 0 0 10px #0f0;
+    }
+
+    canvas {
+      border: 2px solid #0f0;
+      box-shadow: 0 0 15px #0f0;
+      border-radius: 10px;
+      background: radial-gradient(circle at center, #001100 0%, #000000 100%);
+    }
+
+    .usage {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 1.2rem;
+      color: #0f0;
+      text-shadow: 0 0 10px #0f0;
+    }
+
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: none;
+      color: #0f0;
+      border: 1px solid #0f0;
+      padding: 6px 12px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: 0.2s;
+    }
+
+    .back-button:hover {
+      background: #0f0;
+      color: #000;
+      box-shadow: 0 0 10px #0f0;
+    }
+
+    @media (prefers-color-scheme: light) {
+      body {
+        background-color: #e0f7ff;
+        color: #007bff;
+      }
+
+      h1, .usage {
+        color: #007bff;
+        text-shadow: 0 0 8px #007bff;
+      }
+
+      canvas {
+        border: 2px solid #007bff;
+        box-shadow: 0 0 10px #007bff;
+        background: linear-gradient(to bottom, #d0f0ff, #f0ffff);
+      }
+
+      .back-button {
+        border-color: #007bff;
+        color: #007bff;
+      }
+
+      .back-button:hover {
+        background: #007bff;
+        color: white;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="back-button" onclick="window.location.href='index.html'">← Kembali</button>
+  <h1>Growfax CPU Monitor</h1>
+  <canvas id="cpuChart" width="800" height="300"></canvas>
+  <div class="usage" id="usageLabel">CPU: 0%</div>
+
+  <script>
+    const canvas = document.getElementById("cpuChart");
+    const ctx = canvas.getContext("2d");
+    const usageLabel = document.getElementById("usageLabel");
+
+    const width = canvas.width;
+    const height = canvas.height;
+
+    let points = new Array(width).fill(height / 2);
+    let cpuUsage = 0;
+
+    function draw() {
+      // Simulasi CPU usage (0–100%)
+      cpuUsage += (Math.random() - 0.5) * 10;
+      cpuUsage = Math.max(0, Math.min(100, cpuUsage));
+
+      // Tambahkan titik baru berdasarkan CPU usage
+      const newY = height - (cpuUsage / 100) * height;
+      points.push(newY);
+      points.shift();
+
+      // Clear canvas
+      ctx.fillStyle = window.matchMedia('(prefers-color-scheme: light)').matches ? "#f0ffff" : "#000";
+      ctx.fillRect(0, 0, width, height);
+
+      // Gambar grid tipis
+      ctx.strokeStyle = window.matchMedia('(prefers-color-scheme: light)').matches ? "rgba(0,123,255,0.2)" : "rgba(0,255,0,0.2)";
+      ctx.lineWidth = 1;
+      for (let x = 0; x < width; x += 50) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+        ctx.stroke();
+      }
+      for (let y = 0; y < height; y += 50) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+      }
+
+      // Gambar garis CPU usage
+      ctx.strokeStyle = window.matchMedia('(prefers-color-scheme: light)').matches ? "#007bff" : "#0f0";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(0, points[0]);
+      for (let i = 1; i < points.length; i++) {
+        ctx.lineTo(i, points[i]);
+      }
+      ctx.stroke();
+
+      // Glow efek
+      ctx.shadowBlur = 15;
+      ctx.shadowColor = window.matchMedia('(prefers-color-scheme: light)').matches ? "#007bff" : "#0f0";
+
+      usageLabel.textContent = `CPU: ${cpuUsage.toFixed(1)}%`;
+
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+  </script>
+</body>
+</html>
