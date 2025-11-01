@@ -139,43 +139,43 @@ body {
     overflow: hidden;
 }
 
-/* Glow animation for buttons */
+/* Pulsing Glow Animation */
 @keyframes buttonGlow {
-    0% { box-shadow: 0 0 8px rgba(255,255,255,0.2); }
-    50% { box-shadow: 0 0 20px currentColor; }
-    100% { box-shadow: 0 0 8px rgba(255,255,255,0.2); }
+    0% { box-shadow: 0 0 10px var(--glow-color, #fff); }
+    50% { box-shadow: 0 0 25px var(--glow-color, #fff); }
+    100% { box-shadow: 0 0 10px var(--glow-color, #fff); }
 }
 
 /* Android button - green glow */
 .btn-android {
+    --glow-color: #4cff77;
     background-color: #34c759;
     border-color: #2ea94f;
     animation: buttonGlow 2s infinite ease-in-out;
-    color: #fff;
 }
 
 /* Windows button - blue glow */
 .btn-windows {
+    --glow-color: #4da3ff;
     background-color: #0078d7;
     border-color: #0063b1;
     animation: buttonGlow 2s infinite ease-in-out;
-    color: #fff;
 }
 
 /* iOS button - light blue glow */
 .btn-ios {
+    --glow-color: #7acbff;
     background-color: #007aff;
     border-color: #005bb5;
     animation: buttonGlow 2s infinite ease-in-out;
-    color: #fff;
 }
 
 /* PowerTunnel button - red glow */
 .btn-powertunnel {
+    --glow-color: #ff5a5a;
     background-color: #b71c1c;
     border-color: #8b0000;
     animation: buttonGlow 2s infinite ease-in-out;
-    color: #fff;
 }
 
 .platform-buttons a img {
@@ -292,3 +292,4 @@ body {
 
 </body>
 </html>
+
