@@ -155,7 +155,6 @@
     transition: opacity 0.2s ease;
   }
 
-  /* MODIFIED: Nav to support toggling */
   nav.primary{
     color:var(--accent);
     text-decoration:none;
@@ -163,32 +162,20 @@
     margin-left:auto; 
     font-size: 0.9rem;
     flex: 1 1 100%; 
-    margin-top: 6px; 
+    margin-top: 6px; /* ADJUSTED: Reduced margin for tighter fit */
     text-align: left;
-    display: flex; /* Ensure links are displayed side-by-side */
-    gap: 16px;
   }
   nav.primary a{
-      color:var(--muted); /* Muted by default */
+      color:var(--accent);
       text-decoration:none;
-      font-weight:600;
+      font-weight:700;
       margin-left:0;
-      margin-right: 0;
-      padding-bottom: 2px;
+      margin-right: 12px;
       /* Added opacity transition for smoother language change */
-      transition: opacity 0.2s ease, transform .18s, color .2s, border-color .2s;
+      transition: opacity 0.2s ease, transform .18s;
   }
-  nav.primary a:hover{opacity:.86;transform:translateY(-1px); color: var(--accent);}
+  nav.primary a:hover{opacity:.86;transform:translateY(-1px)}
   
-  /* ADDED: Styling for Active Nav Link */
-  .header-content nav.primary a.nav-toggle.active {
-      color: var(--accent); /* Highlight active link */
-      font-weight: 700;
-      border-bottom: 2px solid var(--accent);
-      transform: translateY(0); /* Remove hover effect when active */
-      opacity: 1;
-  }
-
   .controls{
     display:flex;
     align-items:center;
@@ -284,79 +271,6 @@
   }
 
   /* -------------------------
-     Shop Role Section (NEW) - Now also used for the togglable content
-     ------------------------- */
-  .shop-section {
-    text-align: center;
-    padding: 30px 10px;
-    background: var(--card-bg);
-    border-radius: 12px;
-    box-shadow: var(--card-shadow);
-    margin: 32px auto; /* Ensure margin top/bottom matches container flow */
-    max-width: 1000px;
-  }
-  .shop-section h2 {
-    margin-bottom: 8px; /* Reduce gap before subtitle */
-  }
-  .role-cards {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 16px;
-    margin-top: 20px;
-  }
-  .role-card {
-    width: 90%; /* Default mobile size */
-    max-width: 250px;
-    padding: 16px;
-    border-radius: 10px;
-    background: var(--bg);
-    border: 1px solid var(--border-color);
-    box-shadow: var(--logo-shadow);
-    transition: transform .2s, box-shadow .2s;
-    text-align: left;
-  }
-  .role-card h4 {
-    margin: 0 0 8px;
-    font-size: 1.1rem;
-    color: var(--accent);
-  }
-  .role-card p {
-    margin: 0 0 12px;
-    font-size: 0.95rem;
-    color: var(--muted);
-  }
-  .role-card .price {
-    display: block;
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #ffaa00; /* Yellow accent for price */
-    margin-bottom: 12px;
-    text-shadow: 0 0 6px rgba(255,170,0,0.2);
-    transition: opacity 0.2s ease;
-  }
-  .role-card a {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    background: #2ecc71; /* Success button for purchase */
-    color: #fff;
-    text-decoration: none;
-    font-weight: 600;
-    transition: background-color .15s;
-    text-align: center;
-  }
-  .role-card a:hover {
-    background: #27ae60;
-    transform: translateY(0); /* Override platform button hover */
-  }
-  .role-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-  }
-
-  /* -------------------------
      Footer
      ------------------------- */
   footer{
@@ -419,7 +333,7 @@
         text-align: left;
     }
     nav.primary a{
-        margin-left:0;
+        margin-left:12px;
         margin-right: 0;
         font-size: 1rem;
     }
@@ -445,15 +359,6 @@
     .container{margin:48px auto;padding:0 18px}
     .container h2{font-size:1.6rem;margin-bottom:28px}
     .discord-section{padding:32px;margin:42px auto 60px;}
-    
-    /* Shop Role PC Optimization */
-    .shop-section {
-        padding: 40px 20px;
-        margin: 42px auto 60px;
-    }
-    .role-card {
-        width: calc(33% - 16px); /* 3 cards per row */
-    }
 
     /* Floating button kembali ke posisi normal */
     .floating-chat{right:18px;bottom:18px;width:56px;height:56px;}
@@ -475,8 +380,8 @@
         </div>
 
         <nav class="primary" aria-label="Main navigation">
-          <a href="#downloads" id="navDownloads" class="nav-toggle active">📥 Downloads</a> 
-          <a href="#shop" id="navShop" class="nav-toggle">🛒 Shop Role</a> 
+          <a href="https://growfax.web.id/home" id="navDownloads">📥 Downloads</a> 
+          <a href="#shop" id="navShop" data-original="🛒 Shop Role">🛒 Shop Role</a> 
         </nav>
       </div>
 
@@ -505,78 +410,61 @@
   </section>
 
   <main class="container" id="home" role="main">
+    <h2>📥 Essential File Downloads</h2>
+    <div class="platform-buttons" role="list">
+      <a href="Growfax_VirtualHost.txt" class="btn-android" data-filename="Growfax_VirtualHost.txt" data-filekey="virtualhost" download role="listitem">
+        <img src="virtual-host.png" alt="">Play on Android
+      </a>
+
+      <a href="Growfax_Patched_.bat" class="btn-windows" data-filename="Growfax_Patched_.bat" data-filekey="patched" download role="listitem">
+        <img src="windows.png" alt="">Play on Windows
+      </a>
+
+      <a href="#" class="btn-ios" data-filename="GrowFax_ios_config.txt" data-filekey="ios" role="listitem">
+        <img src="surge5.png" alt="">Play on iOS
+      </a>
+
+      <a href="#" class="btn-powertunnel" data-filename="PowerTunnel_Host.txt" data-filekey="powertunnel" role="listitem">
+        <img src="powertunnel.jpeg" alt="">Play via PowerTunnel
+      </a>
+    </div>
     
-    <div id="downloads-content">
-      <h2>📥 Essential File Downloads</h2>
-      <div class="platform-buttons" role="list">
-        <a href="Growfax_VirtualHost.txt" class="btn-android" data-filename="Growfax_VirtualHost.txt" data-filekey="virtualhost" download role="listitem">
-          <img src="virtual-host.png" alt="">Play on Android
-        </a>
-
-        <a href="Growfax_Patched_.bat" class="btn-windows" data-filename="Growfax_Patched_.bat" data-filekey="patched" download role="listitem">
-          <img src="windows.png" alt="">Play on Windows
-        </a>
-
-        <a href="#" class="btn-ios" data-filename="GrowFax_ios_config.txt" data-filekey="ios" role="listitem">
-          <img src="surge5.png" alt="">Play on iOS
-        </a>
-
-        <a href="#" class="btn-powertunnel" data-filename="PowerTunnel_Host.txt" data-filekey="powertunnel" role="listitem">
-          <img src="powertunnel.jpeg" alt="">Play via PowerTunnel
-        </a>
-      </div>
-    </div>
-    <div id="shop-content" class="shop-section" style="display: none;">
-      <h2 id="shopRoleTitle" data-original="Growfax Role Shop">Growfax Role Shop</h2>
-      <p id="shopRoleSubtitle" data-original="Unlock exclusive features and support the server by purchasing a role.">Unlock exclusive features and support the server by purchasing a role.</p>
+    <h2 style="margin-top: 40px;" id="shop" data-original="🛒 Growfax Role Shop">🛒 Growfax Role Shop</h2>
+    <div class="role-packages" style="display:flex; flex-direction: column; align-items:center; gap: 12px; max-width: 600px; margin: 0 auto; padding-bottom: 20px;">
       
-      <div class="role-cards" role="list">
-        
-        <div class="role-card" role="listitem">
-          <h4 data-original="VIP Role">VIP Role</h4>
-          <p data-original="Access to VIP area and chat color.">Access to VIP area and chat color.</p>
-          <span class="price">Rp 15.000</span>
-          <a href="https://wa.me/yournumber?text=Saya%20ingin%20membeli%20Role%20VIP" target="_blank" data-original="Buy Now">Buy Now</a>
-        </div>
-
-        <div class="role-card" role="listitem">
-          <h4 data-original="VIP+ Role">VIP+ Role</h4>
-          <p data-original="All VIP features + exclusive monthly item.">All VIP features + exclusive monthly item.</p>
-          <span class="price">Rp 25.000</span>
-          <a href="https://wa.me/yournumber?text=Saya%20ingin%20membeli%20Role%20VIP%2B" target="_blank" data-original="Buy Now">Buy Now</a>
-        </div>
-
-        <div class="role-card" role="listitem">
-          <h4 data-original="Moderator Role">Moderator Role</h4>
-          <p data-original="Moderator status, basic tools, and special tag.">Moderator status, basic tools, and special tag.</p>
-          <span class="price">Rp 45.000</span>
-          <a href="https://wa.me/yournumber?text=Saya%20ingin%20membeli%20Role%20Moderator" target="_blank" data-original="Buy Now">Buy Now</a>
-        </div>
-        
-        <div class="role-card" role="listitem">
-          <h4 data-original="Super Moderator Role">Super Moderator Role</h4>
-          <p data-original="All Moderator features + advanced moderation tools.">All Moderator features + advanced moderation tools.</p>
-          <span class="price">Rp 70.000</span>
-          <a href="https://wa.me/yournumber?text=Saya%20ingin%20membeli%20Role%20Super%20Moderator" target="_blank" data-original="Buy Now">Buy Now</a>
-        </div>
-
-        <div class="role-card" role="listitem">
-          <h4 data-original="Developer Role">Developer Role</h4>
-          <p data-original="Developer status, access to testing server and private channel.">Developer status, access to testing server and private channel.</p>
-          <span class="price">Rp 130.000</span>
-          <a href="https://wa.me/yournumber?text=Saya%20ingin%20membeli%20Role%20Developer" target="_blank" data-original="Buy Now">Buy Now</a>
-        </div>
-
-        <div class="role-card" role="listitem">
-          <h4 data-original="God Role">God Role</h4>
-          <p data-original="Ultimate status and all exclusive features. Limited slots.">Ultimate status and all exclusive features. Limited slots.</p>
-          <span class="price">Rp 170.000</span>
-          <a href="https://wa.me/yournumber?text=Saya%20ingin%20membeli%20Role%20God" target="_blank" data-original="Buy Now">Buy Now</a>
-        </div>
-
+      <div class="package-card" style="width: 100%; padding: 16px; border-radius: 12px; background: var(--card-bg); box-shadow: var(--card-shadow); border: 1px solid var(--border-color); text-align: left; display: flex; justify-content: space-between; align-items: center; transition: transform .18s ease;">
+          <strong style="font-size: 1.1rem; color: #3498db;">💎 VIP</strong>
+          <span style="font-weight: 700; color: var(--accent); font-size: 1.1rem;">Rp 15.000</span>
       </div>
+      
+      <div class="package-card" style="width: 100%; padding: 16px; border-radius: 12px; background: var(--card-bg); box-shadow: var(--card-shadow); border: 1px solid var(--border-color); text-align: left; display: flex; justify-content: space-between; align-items: center; transition: transform .18s ease;">
+          <strong style="font-size: 1.1rem; color: #2ecc71;">✨ VIP+</strong>
+          <span style="font-weight: 700; color: var(--accent); font-size: 1.1rem;">Rp 25.000</span>
+      </div>
+      
+      <div class="package-card" style="width: 100%; padding: 16px; border-radius: 12px; background: var(--card-bg); box-shadow: var(--card-shadow); border: 1px solid var(--border-color); text-align: left; display: flex; justify-content: space-between; align-items: center; transition: transform .18s ease;">
+          <strong style="font-size: 1.1rem; color: #f39c12;">🛡️ Moderator</strong>
+          <span style="font-weight: 700; color: var(--accent); font-size: 1.1rem;">Rp 45.000</span>
+      </div>
+
+      <div class="package-card" style="width: 100%; padding: 16px; border-radius: 12px; background: var(--card-bg); box-shadow: var(--card-shadow); border: 1px solid var(--border-color); text-align: left; display: flex; justify-content: space-between; align-items: center; transition: transform .18s ease;">
+          <strong style="font-size: 1.1rem; color: #e67e22;">👑 Super Moderator</strong>
+          <span style="font-weight: 700; color: var(--accent); font-size: 1.1rem;">Rp 80.000</span>
+      </div>
+
+      <div class="package-card" style="width: 100%; padding: 16px; border-radius: 12px; background: var(--card-bg); box-shadow: var(--card-shadow); border: 1px solid var(--border-color); text-align: left; display: flex; justify-content: space-between; align-items: center; transition: transform .18s ease;">
+          <strong style="font-size: 1.1rem; color: #9b59b6;">💻 Developer</strong>
+          <span style="font-weight: 700; color: var(--accent); font-size: 1.1rem;">Rp 120.000</span>
+      </div>
+
+      <div class="package-card" style="width: 100%; padding: 16px; border-radius: 12px; background: var(--card-bg); box-shadow: var(--card-shadow); border: 1px solid var(--border-color); text-align: left; display: flex; justify-content: space-between; align-items: center; transition: transform .18s ease;">
+          <strong style="font-size: 1.1rem; color: #e74c3c;">⭐ God</strong>
+          <span style="font-weight: 700; color: var(--accent); font-size: 1.1rem;">Rp 180.000</span>
+      </div>
+      <p style="margin-top: 15px; font-size: 0.9rem; opacity: 0.8;" data-original="Hubungi Admin Discord untuk detail dan pembelian Role.">Hubungi Admin Discord untuk detail dan pembelian Role.</p>
     </div>
-    </main>
+    
+  </main>
 
   <section class="discord-section" aria-label="Discord community">
     <img src="discord.jpeg" alt="Discord Logo">
@@ -740,13 +628,6 @@ const timeDisplay = document.getElementById('timeDisplay');
 const discordLink = document.getElementById('discordLink');
 const reportBugLink = document.getElementById('reportBugLink');
 
-// Content Toggling Refs (NEW)
-const navDownloads = document.getElementById('navDownloads');
-const navShop = document.getElementById('navShop');
-const downloadsContent = document.getElementById('downloads-content');
-const shopContent = document.getElementById('shop-content');
-const navLinks = document.querySelectorAll('.nav-toggle');
-
 // Admin Area Refs
 const ADMIN_TOKEN = 'GFAx_2025_ADMN'; // Hardcoded token for static page simulation
 const openAdmin = document.getElementById('openAdmin');
@@ -823,7 +704,9 @@ const translations = {
   id: {
     "Growfax Official": "Growfax Resmi",
     "📥 Downloads": "📥 Unduhan",
-    "🛒 Shop Role": "🛒 Toko Role", // NEW TRANSLATION
+    "🛒 Shop Role": "🛒 Beli Role",
+    "🛒 Growfax Role Shop": "🛒 Toko Role Growfax",
+    "Hubungi Admin Discord untuk detail dan pembelian Role.": "Hubungi Admin Discord untuk detail dan pembelian Role.",
     "Welcome to Growfax": "Selamat Datang di Growfax",
     "Private Growtopia Server": "Server Growtopia Pribadi",
     "Local Time (New York):": "Waktu Lokal (New York):",
@@ -880,23 +763,6 @@ const translations = {
     "Meta Description": "Deskripsi Meta",
     "Meta Keywords (Comma-separated)": "Kata Kunci Meta (Dipisahkan Koma)",
     "Update SEO Meta": "Perbarui Meta SEO",
-
-    // SHOP ROLE TRANSLATIONS
-    "Growfax Role Shop": "Toko Role Growfax",
-    "Unlock exclusive features and support the server by purchasing a role.": "Buka fitur eksklusif dan dukung server dengan membeli role.",
-    "VIP Role": "Role VIP",
-    "Access to VIP area and chat color.": "Akses ke area VIP dan warna chat.",
-    "VIP+ Role": "Role VIP+",
-    "All VIP features + exclusive monthly item.": "Semua fitur VIP + item bulanan eksklusif.",
-    "Moderator Role": "Role Moderator",
-    "Moderator status, basic tools, and special tag.": "Status Moderator, alat dasar, dan tag spesial.",
-    "Super Moderator Role": "Role Super Moderator",
-    "All Moderator features + advanced moderation tools.": "Semua fitur Moderator + alat moderasi canggih.",
-    "Developer Role": "Role Developer",
-    "Developer status, access to testing server and private channel.": "Status Developer, akses ke server testing dan channel pribadi.",
-    "God Role": "Role God",
-    "Ultimate status and all exclusive features. Limited slots.": "Status tertinggi dan semua fitur eksklusif. Slot terbatas.",
-    "Buy Now": "Beli Sekarang",
   }
 };
 
@@ -1060,7 +926,7 @@ function updateAdminAreaTranslations(lang) {
         document.querySelector('#adminContent h4:nth-child(1)').textContent = lang === 'id' 
             ? (translations.id["Server Status"] || 'Status Server')
             : 'Server Status';
-        // News & Updates
+        // Analytical Dashboard
         document.querySelector('#adminContent h4:nth-child(3)').textContent = lang === 'id' 
             ? (translations.id["News & Updates"] || 'Berita & Pembaruan')
             : 'News & Updates';
@@ -1107,7 +973,7 @@ function updateAdminAreaTranslations(lang) {
 
 function applyTranslations(lang){
   const transitionDuration = 200; // ms
-  const elementsToTranslate = document.querySelectorAll('[data-original], #modalCancel, #modalConfirm, #welcomeSave, #welcomeSkip, #discordLink, #reportBugLink, #adminTokenSubmit, #closeAdmin, #toggleServerStatus, #saveNewsUpdate, #refreshAnalytics, .price, .nav-toggle'); // Added .nav-toggle
+  const elementsToTranslate = document.querySelectorAll('[data-original], #modalCancel, #modalConfirm, #welcomeSave, #welcomeSkip, #discordLink, #reportBugLink, #adminTokenSubmit, #closeAdmin, #toggleServerStatus, #saveNewsUpdate, #refreshAnalytics');
 
   // 1. Fade out (Opacity 0)
   elementsToTranslate.forEach(el => {
@@ -1135,14 +1001,9 @@ function applyTranslations(lang){
     discordLink.textContent = lang === 'id' ? (translations.id['Join Growfax Discord'] || 'Gabung Discord Growfax') : 'Join Growfax Discord';
     reportBugLink.textContent = lang === 'id' ? (translations.id['🐞 Report Bug'] || '🐞 Laporkan Bug') : '🐞 Report Bug';
     
-    // NEW NAV LINKS
-    navDownloads.textContent = lang === 'id' ? (translations.id['📥 Downloads'] || '📥 Unduhan') : '📥 Downloads';
-    navShop.textContent = lang === 'id' ? (translations.id['🛒 Shop Role'] || '🛒 Toko Role') : '🛒 Shop Role';
-
     // Update mailto link and Admin area translations
     updateReportBugLink(); 
     updateAdminAreaTranslations(lang); 
-
 
     // 4. Fade back in (Opacity 1)
     elementsToTranslate.forEach(el => {
@@ -1178,45 +1039,6 @@ function updateReportBugLink() {
   
   reportBugLink.setAttribute('href', mailtoURL);
 }
-
-/* ===========================
-   Content Toggling Logic (NEW)
-   =========================== */
-function toggleContent(targetId) {
-    // 1. Hide all content blocks that are meant to be toggled
-    downloadsContent.style.display = 'none';
-    shopContent.style.display = 'none';
-    
-    // 2. Show the target block
-    if (targetId === 'downloads-content') {
-        downloadsContent.style.display = 'block';
-    } else if (targetId === 'shop-content') {
-        // The shop section uses margin for spacing, so 'block' is fine
-        shopContent.style.display = 'block'; 
-    }
-    
-    // 3. Update active link class
-    navLinks.forEach(link => link.classList.remove('active'));
-    
-    const targetLink = document.querySelector(`[href="#${targetId.replace('-content', '')}"]`);
-    if (targetLink) {
-        targetLink.classList.add('active');
-    }
-    
-    // Optional: Track view
-    trackEvent('content_viewed', { content_id: targetId });
-}
-
-// Add event listeners for navigation links
-navDownloads.addEventListener('click', (e) => {
-    e.preventDefault();
-    toggleContent('downloads-content');
-});
-
-navShop.addEventListener('click', (e) => {
-    e.preventDefault();
-    toggleContent('shop-content');
-});
 
 
 /* ===========================
@@ -1555,42 +1377,21 @@ reportBugLink.addEventListener('click', () => {
 });
 
 /* ===========================
-   Shop Role Tracking (NEW)
-   =========================== */
-document.querySelectorAll('.role-card a').forEach(a => {
-    a.addEventListener('click', () => {
-        // Mendapatkan nama role dari elemen <h4> sebelumnya
-        const roleName = a.closest('.role-card').querySelector('h4').textContent.trim();
-        const price = a.closest('.role-card').querySelector('.price').textContent.trim();
-
-        // Track Shop Purchase Click
-        trackEvent('shop_purchase_click', {
-            role: roleName,
-            price: price,
-            // Asumsi: Ini akan membuka WA
-            method: 'whatsapp' 
-        });
-        
-        showToast(langSelect.value === 'id' ? `Mengarahkan ke WhatsApp untuk pembelian ${roleName}...` : `Redirecting to WhatsApp for ${roleName} purchase...`, 3000);
-    });
-});
-
-
-/* ===========================
    Initial translations + time
    =========================== */
 const initLang = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en');
 langSelect.value = initLang;
 applyTranslations(initLang);
 updateTime();
-// Initial toggle (set default view to Downloads)
-toggleContent('downloads-content');
-
 
 /* ===========================
    Allow middle click / aux click default behavior on links
    =========================== */
-document.querySelectorAll('a').forEach(a=>{\n  a.addEventListener('auxclick', (e) => {/* allow default behavior */});\n});\n\n/* ===========================
+document.querySelectorAll('a').forEach(a=>{
+  a.addEventListener('auxclick', (e) => {/* allow default behavior */});
+});
+
+/* ===========================
    Misc small UI effects
    =========================== */
 
