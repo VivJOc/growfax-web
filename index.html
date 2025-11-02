@@ -6,12 +6,6 @@
 <title>Growfax Official</title>
 <link rel="icon" href="Growfax_banner.jpg" type="image/jpeg">
 <style>
-  /* ============================================================
-     Growfax Official — FULL UI stylesheet (futuristic neon/fax)
-     - Long, self-contained styling to match the original.
-     - Dark/light theme variables, responsive rules, micro-animations.
-     ============================================================ */
-
   :root{
     --bg:#f8f8f8;
     --card-bg:#fff;
@@ -43,57 +37,45 @@
   }
 
   html,body{height:100%;margin:0;font-family:var(--mono);background:var(--bg);color:var(--text);line-height:1.6;transition:background .25s,color .25s}
-  /* -------------------------
-     Header / Navigation
-     ------------------------- */
+  /* Header */
   header{background:var(--card-bg);box-shadow:var(--card-shadow);position:sticky;top:0;z-index:1200}
-  .header-content{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .header-content{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
   .header-left{display:flex;align-items:center;gap:14px}
   .brand-wrap{display:flex;align-items:center;gap:12px}
   .brand-wrap img{width:46px;height:46px;border-radius:8px;object-fit:cover}
   h1{font-size:1.4rem;margin:0;font-weight:700}
   nav.primary a{color:var(--accent);text-decoration:none;font-weight:700;margin-left:12px}
   nav.primary a:hover{opacity:.86;transform:translateY(-1px)}
-  .controls{display:flex;align-items:center;gap:10px}
+  .controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
   .theme-toggle,.lang-select,.open-welcome{font-size:0.98rem;padding:8px 12px;border-radius:10px;border:1px solid var(--border-color);background:transparent;color:var(--text);cursor:pointer}
 
-  /* -------------------------
-     Banner / Hero
-     ------------------------- */
+  /* Banner */
   .banner-section{text-align:center;padding:56px 20px;background:linear-gradient(90deg, rgba(0,0,0,0.03), rgba(255,255,255,0.02))}
-  .banner-section img{max-width:240px;border-radius:10px;margin-bottom:18px}
+  .banner-section img{max-width:240px;border-radius:10px;margin-bottom:18px;object-fit:cover;width:100%;max-width:240px}
   .banner-section h2{font-size:1.9rem;color:#ffaa00;margin:8px 0;text-shadow:0 0 10px rgba(255,170,0,0.18)}
   .banner-section p{font-size:1.05rem;opacity:.92;margin:0}
   .time-display{margin-top:10px;font-size:0.98rem;font-weight:600;opacity:.9}
 
-  /* -------------------------
-     Container (main content)
-     ------------------------- */
+  /* Container main */
   .container{max-width:1000px;margin:48px auto;text-align:center;padding:0 18px}
   .container h2{font-size:1.6rem;margin-bottom:28px}
   .platform-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:20px}
   .platform-buttons a{display:flex;align-items:center;justify-content:center;gap:12px;width:300px;padding:14px 18px;border-radius:12px;color:#fff;font-weight:700;text-decoration:none;border:1px solid transparent;font-size:1.02rem;transition:transform .18s ease,box-shadow .18s}
-  .platform-buttons a img{width:30px;height:30px;border-radius:6px}
+  .platform-buttons a img{width:30px;height:30px;border-radius:6px;object-fit:cover}
   .platform-buttons a:hover{transform:translateY(-4px)}
   .btn-android{background:#34c759;--glow:#4cff77;box-shadow:0 6px 24px rgba(76,255,119,0.08)}
   .btn-windows{background:#0078d7;--glow:#4da3ff;box-shadow:0 6px 24px rgba(77,163,255,0.08)}
   .btn-ios{background:#007aff;--glow:#7acbff;box-shadow:0 6px 24px rgba(122,203,255,0.08)}
   .btn-powertunnel{background:#b71c1c;--glow:#ff5a5a;box-shadow:0 6px 24px rgba(255,90,90,0.08)}
 
-  /* -------------------------
-     Discord Section
-     ------------------------- */
+  /* Discord section */
   .discord-section{background:var(--discord-color);color:#fff;padding:32px;border-radius:12px;max-width:820px;margin:42px auto 60px;text-align:center;box-shadow:var(--card-shadow)}
-  .discord-section img{width:58px;height:58px;border-radius:8px;margin-bottom:10px}
+  .discord-section img{width:58px;height:58px;border-radius:8px;margin-bottom:10px;object-fit:cover}
 
-  /* -------------------------
-     Footer
-     ------------------------- */
+  /* Footer */
   footer{text-align:center;margin:30px 0 40px;font-size:.95rem;opacity:.85}
 
-  /* -------------------------
-     Modal (file info)
-     ------------------------- */
+  /* Modal */
   .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:1300}
   .modal{width:92%;max-width:560px;background:var(--card-bg);color:var(--text);border-radius:12px;padding:18px;box-shadow:0 14px 40px rgba(0,0,0,0.2);transform:translateY(16px);transition:transform .18s,opacity .18s}
   .modal h3{margin:0 0 8px;font-size:1.15rem}
@@ -101,61 +83,41 @@
   .modal .meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
   .meta .chip{background:rgba(0,0,0,0.05);padding:6px 10px;border-radius:8px;font-weight:600}
   [data-theme="dark"] .meta .chip{background:rgba(255,255,255,0.04)}
-  .modal .changelog{background:rgba(0,0,0,0.03);padding:8px;border-radius:8px;font-size:0.95rem;margin-bottom:12px}
+  .modal .changelog{background:rgba(0,0,0,0.03);padding:8px;border-radius:8px;font-size:0.95rem;margin-bottom:12px;white-space:pre-wrap}
   [data-theme="dark"] .modal .changelog{background:rgba(255,255,255,0.03)}
   .modal .buttons{display:flex;justify-content:flex-end;gap:10px}
   .btn{padding:8px 12px;border-radius:8px;border:0;cursor:pointer;font-weight:700}
   .btn.secondary{background:transparent;border:1px solid var(--border-color)}
   .btn.primary{background:var(--accent);color:#fff}
 
-  /* -------------------------
-     Welcome popup
-     ------------------------- */
+  /* Welcome popup */
   .welcome-backdrop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.4), rgba(0,0,0,0.6));z-index:1400}
   .welcome{width:92%;max-width:520px;background:var(--card-bg);color:var(--text);padding:20px;border-radius:12px;box-shadow:0 18px 48px rgba(0,0,0,0.28)}
   .welcome h2{margin:0 0 8px}
   .welcome .row{display:flex;gap:10px;align-items:center;margin:10px 0}
   .welcome label{min-width:90px;font-weight:700}
   .welcome select,.welcome input[type="radio"]{padding:8px;border-radius:8px}
-  .welcome .actions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
 
-  /* -------------------------
-     Floating Discord button
-     ------------------------- */
+  /* Floating Discord button */
   .floating-chat{position:fixed;right:18px;bottom:18px;width:56px;height:56px;border-radius:50%;background:var(--discord-color);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,0.2);cursor:pointer;z-index:1500}
-  .floating-chat img{width:28px;height:28px;border-radius:6px}
+  .floating-chat img{width:28px;height:28px;border-radius:6px;object-fit:cover}
 
-  /* -------------------------
-     Toast message
-     ------------------------- */
+  /* Toast */
   .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:86px;background:var(--toast-bg);color:#fff;padding:8px 12px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;z-index:1600}
   [data-theme="dark"] .toast{color:#fff}
 
-  /* -------------------------
-     (Chatbot removed) - related CSS removed
-     ------------------------- */
-
-  /* Typing animation helper (kept for possible future use) */
+  /* Typing dots (kept) */
   .typing-container{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:0.95rem}
   .typing-dots{display:inline-block;position:relative;width:26px;height:10px}
   .typing-dots span{position:absolute;left:0;top:0;width:6px;height:6px;border-radius:50%;background:var(--muted);opacity:0;transform:translateY(0)}
   .typing-dots span:nth-child(1){left:0;animation:dotAnim 1s infinite 0s}
   .typing-dots span:nth-child(2){left:8px;animation:dotAnim 1s infinite 0.16s}
   .typing-dots span:nth-child(3){left:16px;animation:dotAnim 1s infinite 0.32s}
-  @keyframes dotAnim{
-    0%{opacity:0;transform:translateY(0)}
-    30%{opacity:1;transform:translateY(-5px)}
-    60%{opacity:1;transform:translateY(0)}
-    100%{opacity:0;transform:translateY(0)}
-  }
-
-  .typing-indicator{font-size:0.9rem;color:var(--muted);opacity:.95}
+  @keyframes dotAnim{0%{opacity:0;transform:translateY(0)}30%{opacity:1;transform:translateY(-5px)}60%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(0)}}
 
   @media (max-width:600px){ .platform-buttons a{width:92%} }
 
-  /* ===========================
-     Report Bug (floating button + popup)
-     =========================== */
+  /* Report bug floating button + popup */
   .report-bug-btn {
     position: fixed;
     bottom: 20px;
@@ -206,15 +168,12 @@
   .report-popup .btn.secondary { background: transparent;border:1px solid var(--border-color) }
   .report-popup .btn.primary { background: var(--accent); color: #fff }
 
-  /* small image preview */
   .report-preview { max-width:100%; border-radius:8px; margin-top:8px; display:none; }
   @media (max-width:420px){ .report-popup{ padding:12px } .report-bug-btn{padding:10px 12px;font-size:0.9rem} }
 </style>
 </head>
 <body data-theme="light">
-  <!-- ===========================
-       Header
-       =========================== -->
+  <!-- Header -->
   <header>
     <div class="header-content">
       <div class="header-left">
@@ -228,7 +187,6 @@
 
         <nav class="primary" aria-label="Main navigation">
           <a href="#downloads" id="navDownloads">📥 Downloads</a>
-          <!-- CPU Mapping nav will be injected by script to avoid duplicate if already present -->
         </nav>
       </div>
 
@@ -243,9 +201,7 @@
     </div>
   </header>
 
-  <!-- ===========================
-       Banner / Hero
-       =========================== -->
+  <!-- Banner / Hero -->
   <section class="banner-section" role="region" aria-label="Main banner">
     <img src="Growfax_banner.jpg" alt="Growfax Banner">
     <h2>Welcome to Growfax</h2>
@@ -253,9 +209,7 @@
     <div id="timeDisplay" class="time-display">Loading time...</div>
   </section>
 
-  <!-- ===========================
-       Downloads (main)
-       =========================== -->
+  <!-- Downloads (main) -->
   <main class="container" id="downloads" role="main">
     <h2>📥 Essential File Downloads</h2>
     <div class="platform-buttons" role="list">
@@ -277,9 +231,7 @@
     </div>
   </main>
 
-  <!-- ===========================
-       Discord community section
-       =========================== -->
+  <!-- Discord community section -->
   <section class="discord-section" aria-label="Discord community">
     <img src="discord.jpeg" alt="Discord Logo">
     <h3>Join Our Community</h3>
@@ -289,9 +241,7 @@
 
   <footer>© 2025 Growfax. All rights reserved.</footer>
 
-  <!-- ===========================
-       Modal (file info)
-       =========================== -->
+  <!-- Modal (file info) -->
   <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <h3 id="modalTitle">File info</h3>
@@ -314,9 +264,7 @@
     </div>
   </div>
 
-  <!-- ===========================
-       Welcome popup (first-visit)
-       =========================== -->
+  <!-- Welcome popup (first-visit) -->
   <div id="welcomeBackdrop" class="welcome-backdrop" aria-hidden="true">
     <div class="welcome" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
       <h2 id="welcomeTitle">Welcome to Growfax</h2>
@@ -343,21 +291,15 @@
     </div>
   </div>
 
-  <!-- ===========================
-       Floating Discord chat
-       =========================== -->
+  <!-- Floating Discord chat -->
   <a id="floatingChat" class="floating-chat" href="https://discord.gg/smgS6sq83y" target="_blank" rel="noopener" title="Open Discord">
     <img src="discord.jpeg" alt="Discord">
   </a>
 
-  <!-- ===========================
-       Toast (temporary messages)
-       =========================== -->
+  <!-- Toast -->
   <div id="toast" class="toast" role="status" aria-live="polite">Saved</div>
 
-  <!-- ===========================
-       Report Bug button + popup
-       =========================== -->
+  <!-- Report Bug button + popup -->
   <button id="reportBugBtn" class="report-bug-btn">Report Bug</button>
 
   <div id="reportPopup" class="report-popup" role="dialog" aria-modal="true" aria-labelledby="reportTitle">
@@ -387,15 +329,10 @@
 
 <script>
 /* ============================================================
-   Growfax Official — FULL script
-   - All logic in one place: translations, theme, time, modal,
-     download info, welcome popup, and integration to CPU Mapping.
-   - Chatbot removed.
+   Full script (based on your original) — CPU Mapping removed
    ============================================================ */
 
-/* ===========================
-   Core refs & state
-   =========================== */
+/* Core refs & state */
 const langSelect = document.getElementById('langSelect');
 const themeToggle = document.getElementById('themeToggle');
 const openWelcome = document.getElementById('openWelcome');
@@ -420,9 +357,7 @@ const discordLink = document.getElementById('discordLink');
 
 let pendingDownload = null;
 
-/* ===========================
-   File metadata
-   =========================== */
+/* File metadata */
 const FILE_META = {
   virtualhost: { version: 'v2.1', updated: 'Oct 29, 2025', changelog: '- Fixed host parsing\\n- Improved TLS handling', size: '2.3 KB' },
   patched: { version: 'v1.9', updated: 'Oct 20, 2025', changelog: '- Patched launcher\\n- Minor fixes', size: '12.1 KB' },
@@ -430,20 +365,15 @@ const FILE_META = {
   powertunnel: { version: 'v3.0', updated: 'Oct 10, 2025', changelog: '- PowerTunnel rules updated\\n- Stability improvements', size: '1.9 KB' }
 };
 
-/* ===========================
-   Translation baseline
-   - We collect text nodes and store original text content
-   - Then apply translations by mapping strings -> translated text
-   =========================== */
+/* Collect simple text nodes for translation */
 const elements = document.querySelectorAll('body *:not(script):not(style)');
 elements.forEach(el=>{
-  // Only store simple text nodes to avoid breaking complex elements
   if (el.childNodes.length === 1 && el.textContent.trim() !== '') {
     el.dataset.original = el.textContent.trim();
   }
 });
 
-/* Translation dictionary (expandable) */
+/* Translation dictionary */
 const translations = {
   id: {
     "Growfax Official": "Growfax Resmi",
@@ -485,7 +415,7 @@ function applyTranslations(lang){
     if(!orig) return;
     el.textContent = lang === 'en' ? orig : (translations[lang]?.[orig] || orig);
   });
-  // fix buttons/labels manually (elements that are not simple text nodes)
+  // Fix for non-simple elements
   modalCancel.textContent = lang === 'id' ? (translations.id['Cancel'] || 'Batal') : 'Cancel';
   modalConfirm.textContent = lang === 'id' ? (translations.id['Download'] || 'Unduh') : 'Download';
   welcomeSave.textContent = lang === 'id' ? (translations.id['Save & Continue'] || 'Simpan & Lanjutkan') : 'Save & Continue';
@@ -493,11 +423,7 @@ function applyTranslations(lang){
   discordLink.textContent = lang === 'id' ? (translations.id['Join Growfax Discord'] || 'Gabung Discord Growfax') : 'Join Growfax Discord';
 }
 
-/* ===========================
-   Theme control
-   - uses localStorage: 'growfax_theme'
-   - toggles body attribute data-theme
-   =========================== */
+/* Theme control */
 function setTheme(theme){
   document.body.setAttribute('data-theme', theme);
   themeToggle.textContent = theme === 'dark' ? '🌙 Dark' : '🌞 Light';
@@ -509,9 +435,7 @@ themeToggle.addEventListener('click', ()=> {
 });
 setTheme(localStorage.getItem('growfax_theme') || 'light');
 
-/* ===========================
-   Language control (persist)
-   =========================== */
+/* Language control */
 langSelect.addEventListener('change', ()=> {
   const lang = langSelect.value;
   localStorage.setItem('growfax_lang', lang);
@@ -525,11 +449,7 @@ langSelect.addEventListener('change', ()=> {
   applyTranslations(saved);
 })();
 
-/* ===========================
-   Time display (NY / Jakarta)
-   - updates every second
-   - shows localized greeting for Jakarta (indonesia)
-   =========================== */
+/* Time display (Jakarta / New York) */
 function getIndoGreeting(hour){
   if(hour < 11) return 'pagi';
   if(hour < 15) return 'siang';
@@ -554,14 +474,9 @@ function updateTime(){
 updateTime();
 setInterval(updateTime, 1000);
 
-/* ===========================
-   File Update Checker (modal)
-   - shows metadata before download
-   - prevents accidental middle-click downloads from being intercepted
-   =========================== */
+/* File Update Checker (modal) */
 document.querySelectorAll('.platform-buttons a').forEach(a=>{
   a.addEventListener('click', (e)=>{
-    // Allow ctrl/meta click (open in new tab) and middle-click
     if(e.ctrlKey || e.metaKey || e.button === 1) return;
     e.preventDefault();
     const key = a.dataset.filekey;
@@ -587,9 +502,7 @@ modalConfirm.addEventListener('click', ()=>{
   hideModal(); showToast(langSelect.value === 'id' ? 'Mulai mengunduh...' : 'Download started...');
 });
 
-/* ===========================
-   Welcome popup
-   =========================== */
+/* Welcome popup */
 function showWelcome(){ welcomeBackdrop.style.display='flex'; welcomeBackdrop.setAttribute('aria-hidden','false'); }
 function hideWelcome(){ welcomeBackdrop.style.display='none'; welcomeBackdrop.setAttribute('aria-hidden','true'); }
 openWelcome.addEventListener('click', ()=> showWelcome());
@@ -607,10 +520,7 @@ welcomeSave.addEventListener('click', ()=>{
 welcomeSkip.addEventListener('click', ()=> { hideWelcome(); showToast(langSelect.value === 'id' ? 'Dipilih nanti' : 'Maybe later'); });
 (function firstVisit(){ const seen = localStorage.getItem('growfax_seen'); if(!seen){ welcomeLang.value = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en'); const savedTheme = localStorage.getItem('growfax_theme') || 'light'; document.querySelectorAll('input[name="welcomeTheme"]').forEach(r=> r.checked = (r.value === savedTheme)); showWelcome(); localStorage.setItem('growfax_seen','1'); }})();
 
-/* ===========================
-   Storage helpers & UI helpers
-   - kept lightweight for other features (no chat)
-   =========================== */
+/* Storage helpers & UI helpers */
 function showToast(text, ms=1500){
   toast.textContent = text;
   toast.style.opacity = '1';
@@ -629,52 +539,18 @@ document.getElementById('floatingChat').addEventListener('click', (e)=>{
   showToast(langSelect.value === 'id' ? 'Membuka Discord...' : 'Opening Discord...');
 });
 
-/* ===========================
-   Initial translations + time
-   =========================== */
+/* initial translations + time */
 const initLang = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en');
 langSelect.value = initLang;
 applyTranslations(initLang);
 updateTime();
 
-/* ===========================
-   Allow middle click / aux click default behavior on links
-   =========================== */
+/* allow middle click / aux click default behavior */
 document.querySelectorAll('.platform-buttons a').forEach(a=>{
   a.addEventListener('auxclick', (e) => {/* allow default behavior */});
 });
 
-/* ===========================
-   CPU Mapping integration
-   - Inject a nav link to cpu-mapping.html if not present
-   - Use smooth page transition when clicking
-   =========================== */
-(function ensureCpuNav(){
-  const nav = document.querySelector('nav.primary');
-  if(nav && !document.querySelector('#cpuNav')){
-    const cpuButton = document.createElement('a');
-    cpuButton.id = 'cpuNav';
-    cpuButton.href = 'cpu-mapping.html';
-    cpuButton.textContent = '🧠 CPU Mapping';
-    cpuButton.style.marginLeft = '12px';
-    cpuButton.style.textDecoration = 'none';
-    cpuButton.style.fontWeight = '700';
-    cpuButton.addEventListener('click', (e)=>{
-      // smooth fade before navigation
-      e.preventDefault();
-      document.body.style.transition = 'opacity 0.25s';
-      document.body.style.opacity = '0';
-      setTimeout(()=> window.location.href = cpuButton.href, 260);
-    });
-    nav.appendChild(cpuButton);
-  }
-})();
-
-/* ===========================
-   Report Bug UI logic
-   - Sends report directly to Discord webhook (no backend)
-   - IMPORTANT: Replace WEBHOOK_URL with your webhook before using
-   =========================== */
+/* Report Bug UI logic (sends to Discord webhook) */
 const reportBtn = document.getElementById('reportBugBtn');
 const reportPopup = document.getElementById('reportPopup');
 const closeReport = document.getElementById('closeReport');
@@ -690,7 +566,6 @@ const WEBHOOK_URL = "GANTI_DENGAN_WEBHOOK_KAMU";
 
 function openReportPopup(){
   reportPopup.style.display = 'flex';
-  // ensure popup is centered and visible
   reportPopup.scrollTop = 0;
   reportDesc.focus();
 }
@@ -707,7 +582,7 @@ reportBtn.addEventListener('click', openReportPopup);
 closeReport.addEventListener('click', closeReportPopup);
 cancelReportBtn.addEventListener('click', closeReportPopup);
 
-// preview image when selected
+// preview image
 reportImage.addEventListener('change', (e)=>{
   const f = e.target.files[0];
   if(!f) { reportPreview.style.display='none'; reportPreview.src=''; return; }
@@ -735,11 +610,10 @@ sendReportBtn.addEventListener('click', async ()=>{
     return;
   }
 
-  // Build payload: use form-data to include image as file attachment if provided
   const embed = {
     title: `🐞 Bug Report — ${name}`,
     description: desc,
-    color: 15158332, // red-ish
+    color: 15158332,
     timestamp: new Date().toISOString(),
     fields: [
       { name: "Reporter", value: name, inline: true },
@@ -751,7 +625,6 @@ sendReportBtn.addEventListener('click', async ()=>{
   form.append('payload_json', JSON.stringify({ username: 'Growfax Reporter', embeds: [embed] }));
 
   if(file){
-    // append file directly (Discord webhook supports file attachments)
     form.append('file', file, file.name);
   }
 
@@ -770,11 +643,7 @@ sendReportBtn.addEventListener('click', async ()=>{
   }
 });
 
-/* ===========================
-   Misc small UI effects (already present)
-   =========================== */
-
-// status indicator pulse if present
+/* Misc small UI effects */
 const status = document.querySelector('#status-indicator');
 if (status) {
   setInterval(() => {
@@ -782,10 +651,9 @@ if (status) {
   }, 600);
 }
 
-// graceful page link transition for all html links
+/* graceful page link transition for html links */
 document.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', e => {
-    // only internal html
     try {
       const href = link.getAttribute('href');
       if(href && href.endsWith('.html') && !link.hasAttribute('data-no-transition')){
@@ -797,12 +665,9 @@ document.querySelectorAll('a').forEach(link => {
   });
 });
 
-/* ===========================
-   Console debug friendly message
-   =========================== */
+/* Console debug */
 console.log('%cGrowfax Engine Ready ✅', 'color: #00ff88; font-weight: bold;');
 
-/* END OF SCRIPT */
 </script>
 </body>
 </html>
