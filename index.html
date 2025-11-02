@@ -8,8 +8,13 @@
 <style>
   /* ============================================================
      Growfax Official — FULL UI stylesheet (futuristic neon/fax)
-     - Mobile-First Optimization Applied
+     - Mobile-First Optimization Applied (Fixed Horizontal Scrolling)
      ============================================================ */
+
+  /* Global Reset: Ensure padding/border don't cause overflow */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
 
   :root{
     --bg:#f8f8f8;
@@ -39,26 +44,71 @@
     --border-color: rgba(255,255,255,0.06);
   }
 
-  html,body{height:100%;margin:0;font-family:var(--mono);background:var(--bg);color:var(--text);line-height:1.6;transition:background .25s,color .25s}
+  html,body{
+    height:100%;
+    margin:0;
+    font-family:var(--mono);
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+    transition:background .25s,color .25s;
+    overflow-x: hidden; /* FIX: Mencegah gulir horizontal */
+  }
   
   /* -------------------------
-     Header / Navigation (Optimasi Mobile: Flex-wrap dan penyusutan font)
+     Header / Navigation (Optimasi Mobile)
      ------------------------- */
   header{background:var(--card-bg);box-shadow:var(--card-shadow);position:sticky;top:0;z-index:1200}
-  .header-content{max-width:1100px;margin:0 auto;padding:14px 10px;display:flex;justify-content:space-between;align-items:center;gap:12px}
-  .header-left{display:flex;align-items:center;gap:14px}
-  .brand-wrap{display:flex;align-items:center;gap:8px} /* Kurangi gap untuk mobile */
-  .brand-wrap img{width:36px;height:36px;border-radius:6px;object-fit:cover} /* Perkecil logo untuk mobile */
-  h1{font-size:1.2rem;margin:0;font-weight:700} /* Perkecil judul */
-  .brand-wrap > div > div { font-size: 0.75rem; } /* Perkecil subjudul */
+  .header-content{
+    max-width:1100px;
+    margin:0 auto;
+    padding:14px 10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:8px; /* Kurangi gap */
+    flex-wrap: wrap; /* FIX: Memungkinkan elemen di header membungkus ke baris baru */
+  }
+  .header-left{
+    display:flex;
+    align-items:center;
+    gap:8px; 
+    flex: 1 1 50%; /* Mengizinkan header kiri menyusut */
+  }
+  .brand-wrap{display:flex;align-items:center;gap:8px}
+  .brand-wrap img{width:36px;height:36px;border-radius:6px;object-fit:cover}
+  h1{font-size:1.2rem;margin:0;font-weight:700}
+  .brand-wrap > div > div { font-size: 0.75rem; }
 
-  nav.primary a{color:var(--accent);text-decoration:none;font-weight:700;margin-left:8px; font-size: 0.9rem;} /* Perkecil font nav */
+  nav.primary{
+    color:var(--accent);
+    text-decoration:none;
+    font-weight:700;
+    margin-left:auto; /* Pindahkan ke kanan jika ada ruang */
+    font-size: 0.9rem;
+    flex: 1 1 100%; /* FIX: Memaksa navigasi ke baris baru di mobile */
+    margin-top: 8px; /* Jarak dari baris atas */
+    text-align: left;
+  }
+  nav.primary a{
+      color:var(--accent);
+      text-decoration:none;
+      font-weight:700;
+      margin-left:0;
+      margin-right: 12px; /* Jarak antar link di baris baru */
+  }
   nav.primary a:hover{opacity:.86;transform:translateY(-1px)}
-  .controls{display:flex;align-items:center;gap:8px}
+  
+  .controls{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    flex: 0 1 auto; /* Memastikan kontrol tidak menyusut terlalu banyak */
+  }
   .theme-toggle,.lang-select,.open-welcome{font-size:0.9rem;padding:6px 8px;border-radius:8px;border:1px solid var(--border-color);background:transparent;color:var(--text);cursor:pointer}
   
   /* -------------------------
-     Banner / Hero (Optimasi Mobile: Padding lebih kecil)
+     Banner / Hero
      ------------------------- */
   .banner-section{text-align:center;padding:40px 10px;background:linear-gradient(90deg, rgba(0,0,0,0.03), rgba(255,255,255,0.02))}
   .banner-section img{max-width:200px;border-radius:8px;margin-bottom:14px}
@@ -72,17 +122,17 @@
   .container{max-width:1000px;margin:32px auto;text-align:center;padding:0 10px}
   .container h2{font-size:1.4rem;margin-bottom:24px}
   
-  /* Platform Buttons: Di mobile, paksa tombol memanjang penuh (92%) */
+  /* Platform Buttons: Full width for mobile */
   .platform-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
   .platform-buttons a{
     display:flex;align-items:center;justify-content:center;gap:12px;
-    width:92%; /* Full width for mobile */
+    width:92%; 
     padding:14px 18px;border-radius:12px;color:#fff;font-weight:700;
     text-decoration:none;border:1px solid transparent;font-size:1.02rem;
     transition:transform .18s ease,box-shadow .18s;
   }
   .platform-buttons a img{width:30px;height:30px;border-radius:6px}
-  .platform-buttons a:hover{transform:translateY(-2px)} /* Kurangi efek hover di mobile */
+  .platform-buttons a:hover{transform:translateY(-2px)}
 
   .btn-android{background:#34c759;--glow:#4cff77;box-shadow:0 4px 16px rgba(76,255,119,0.08)}
   .btn-windows{background:#0078d7;--glow:#4da3ff;box-shadow:0 4px 16px rgba(77,163,255,0.08)}
@@ -90,7 +140,7 @@
   .btn-powertunnel{background:#b71c1c;--glow:#ff5a5a;box-shadow:0 4px 16px rgba(255,90,90,0.08)}
 
   /* -------------------------
-     Discord Section (Optimasi Mobile: Padding lebih kecil)
+     Discord Section
      ------------------------- */
   .discord-section{background:var(--discord-color);color:#fff;padding:24px;border-radius:10px;max-width:820px;margin:32px auto 50px;text-align:center;box-shadow:var(--card-shadow)}
   .discord-section img{width:48px;height:48px;border-radius:8px;margin-bottom:8px}
@@ -110,7 +160,7 @@
   .modal .changelog{font-size:0.9rem;}
 
   /* -------------------------
-     Floating Discord button (Optimasi Mobile: Jarak lebih kecil)
+     Floating Discord button
      ------------------------- */
   .floating-chat{position:fixed;right:12px;bottom:12px;width:48px;height:48px;border-radius:50%;background:var(--discord-color);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 6px 18px rgba(0,0,0,0.2);cursor:pointer;z-index:1500}
   .floating-chat img{width:24px;height:24px;border-radius:4px}
@@ -125,20 +175,34 @@
      =========================== */
   @media (min-width: 600px) {
     /* Header/Nav kembali ke ukuran besar */
-    .header-content{padding:14px 20px;}
+    .header-content {
+        flex-wrap: nowrap;
+        align-items: center;
+        padding: 14px 20px;
+    }
     .brand-wrap img{width:46px;height:46px;border-radius:8px}
     h1{font-size:1.4rem;}
     .brand-wrap > div > div { font-size: 0.85rem; }
-    nav.primary a{margin-left:12px; font-size: 1rem;}
+    nav.primary {
+        flex: 0 1 auto; /* Revert flex */
+        margin-top: 0;
+        margin-left: 12px; /* Revert margin */
+        text-align: left;
+    }
+    nav.primary a{
+        margin-left:12px;
+        margin-right: 0;
+        font-size: 1rem;
+    }
     .controls{gap:10px}
     .theme-toggle,.lang-select,.open-welcome{font-size:0.98rem;padding:8px 12px;}
 
     /* Tombol Unduhan kembali ke layout 300px */
     .platform-buttons{gap:20px}
     .platform-buttons a{
-      width:300px; /* Lebar tetap untuk desktop */
+      width:300px; 
     }
-    .platform-buttons a:hover{transform:translateY(-4px)} /* Efek hover lebih besar */
+    .platform-buttons a:hover{transform:translateY(-4px)}
 
     /* Banner/Content padding besar */
     .banner-section{padding:56px 20px;}
