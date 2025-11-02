@@ -81,7 +81,7 @@
   .header-content{
     max-width:1100px;
     margin:0 auto;
-    padding:14px 10px;
+    padding:10px 10px; /* ADJUSTED: Reduced padding for mobile */
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -134,7 +134,7 @@
     margin-left:auto; 
     font-size: 0.9rem;
     flex: 1 1 100%; 
-    margin-top: 8px; 
+    margin-top: 6px; /* ADJUSTED: Reduced margin for tighter fit */
     text-align: left;
   }
   nav.primary a{
@@ -153,6 +153,9 @@
     align-items:center;
     gap:6px;
     flex: 0 1 auto;
+    /* FIX FOR MOBILE WRAPPING: Allow buttons to wrap within the controls box */
+    flex-wrap: wrap; 
+    justify-content: flex-end; /* Keep the buttons aligned to the right */
   }
   /* Gaya untuk semua tombol kontrol di header */
   .theme-toggle,.lang-select,.open-welcome, .report-bug-btn, #openAdmin {
@@ -306,7 +309,7 @@
         margin-right: 0;
         font-size: 1rem;
     }
-    .controls{gap:10px}
+    .controls{gap:10px; flex-wrap: nowrap;} /* Reset wrap on PC */
     /* Ukuran PC untuk semua tombol kontrol */
     .theme-toggle,.lang-select,.open-welcome, .report-bug-btn, #openAdmin {
         font-size:0.98rem;
