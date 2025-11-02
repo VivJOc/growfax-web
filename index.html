@@ -155,7 +155,7 @@
     flex: 0 1 auto;
   }
   /* Gaya untuk semua tombol kontrol di header */
-  .theme-toggle,.lang-select,.open-welcome, .report-bug-btn {
+  .theme-toggle,.lang-select,.open-welcome, .report-bug-btn, #openAdmin {
     font-size:0.9rem;
     padding:6px 8px;
     border-radius:8px;
@@ -170,10 +170,10 @@
     /* Added opacity transition for smoother language change */
     transition: background-color .15s, opacity 0.2s ease;
   }
-  .report-bug-btn:hover, .theme-toggle:hover, .open-welcome:hover {
+  .report-bug-btn:hover, .theme-toggle:hover, .open-welcome:hover, #openAdmin:hover {
     background: rgba(0,0,0,0.05);
   }
-  [data-theme="dark"] .report-bug-btn:hover, [data-theme="dark"] .theme-toggle:hover, [data-theme="dark"] .open-welcome:hover {
+  [data-theme="dark"] .report-bug-btn:hover, [data-theme="dark"] .theme-toggle:hover, [data-theme="dark"] .open-welcome:hover, [data-theme="dark"] #openAdmin:hover {
     background: rgba(255,255,255,0.05);
   }
 
@@ -201,69 +201,6 @@
     font-weight:600;
     opacity:.9;
     transition: opacity 0.2s ease;
-  }
-
-  /* -------------------------
-     Event Section (NEW)
-     ------------------------- */
-  .event-section{
-    max-width:1000px; /* Match main container width */
-    margin:32px auto 0;
-    padding:20px 10px;
-    border-radius:10px;
-    background:var(--card-bg);
-    box-shadow:var(--card-shadow);
-    text-align:left;
-    transition: background .25s, box-shadow .25s, opacity 0.2s ease; 
-  }
-  .event-section h3{
-      margin:0 0 10px 0;
-      font-size:1.2rem;
-      color:var(--accent);
-      /* Added glow effect for event name */
-      text-shadow: 0 0 8px rgba(0, 120, 215, 0.4); 
-      transition: opacity 0.2s ease, text-shadow 0.25s;
-  }
-  [data-theme="dark"] .event-section h3{
-      text-shadow: 0 0 10px rgba(77, 163, 255, 0.6); 
-  }
-
-  .event-details{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      flex-wrap: wrap;
-      gap: 15px;
-      padding: 0 5px;
-  }
-  .event-details > div {
-      flex-basis: 100%; /* Full width on mobile */
-      transition: opacity 0.2s ease;
-  }
-  .event-details strong{
-      font-weight:700;
-      color:var(--text);
-      display:block;
-      margin-bottom: 4px;
-      font-size: 0.9rem;
-      transition: opacity 0.2s ease;
-  }
-  .event-details span{
-      font-size:1.0rem;
-      color:var(--muted);
-      font-weight: 600;
-      transition: opacity 0.2s ease;
-  }
-  #eventCountdown{
-      font-size:1.3rem;
-      font-weight:bold;
-      color:var(--success);
-      text-align: center;
-      flex-basis: 100%;
-      margin-top: 15px;
-      padding: 5px 0;
-      border-top: 1px solid var(--border-color);
-      transition: color 0.5s ease, opacity 0.2s ease;
   }
 
   /* -------------------------
@@ -314,14 +251,22 @@
   }
 
   /* -------------------------
-     Modal & Welcome Popup
+     Modal & Welcome/Admin Popup
      ------------------------- */
-  .modal-backdrop, .welcome-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:1300}
+  .modal-backdrop, .welcome-backdrop, .admin-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:1300}
   .modal, .welcome{width:92%;max-width:560px;background:var(--card-bg);color:var(--text);border-radius:12px;padding:16px;box-shadow:0 14px 40px rgba(0,0,0,0.2);transform:translateY(0);transition:transform .18s,opacity .18s}
   
   /* Added opacity transition to modal/welcome text elements */
-  .modal h3, .modal p, .modal .changelog, .welcome h2, .welcome p, .welcome label, .welcome button {
+  .modal h3, .modal p, .modal .changelog, .welcome h2, .welcome p, .welcome label, .welcome button, .modal h2, .modal h4 {
       transition: opacity 0.2s ease;
+  }
+  
+  /* NEW: Admin Modal specific styles (input and buttons) */
+  #adminTokenInput, #newsUpdateTextarea {
+    /* Ensure they match the theme */
+    border: 1px solid var(--border-color) !important;
+    background: var(--card-bg) !important;
+    color: var(--text) !important;
   }
 
   /* -------------------------
@@ -363,25 +308,10 @@
     }
     .controls{gap:10px}
     /* Ukuran PC untuk semua tombol kontrol */
-    .theme-toggle,.lang-select,.open-welcome, .report-bug-btn {
+    .theme-toggle,.lang-select,.open-welcome, .report-bug-btn, #openAdmin {
         font-size:0.98rem;
         padding:8px 12px;
         border-radius: 10px;
-    }
-
-    /* Event Section PC */
-    .event-section {
-        padding: 20px 20px;
-    }
-    .event-details {
-        padding: 0 10px;
-    }
-    .event-details > div {
-        flex-basis: 30%; /* Less than half to fit 3 items */
-    }
-    #eventCountdown{
-        font-size: 1.5rem;
-        margin-top: 10px;
     }
 
     /* Tombol Unduhan kembali ke layout 300px */
@@ -429,7 +359,7 @@
            class="report-bug-btn" 
            title="Report a Bug">🐞 Report Bug</a>
         
-        <button id="openWelcome" class="open-welcome" title="Welcome & Preferences">⚙️</button>
+        <button id="openAdmin" class="open-welcome" title="Admin Area">🔑 Admin</button> <button id="openWelcome" class="open-welcome" title="Welcome & Preferences">⚙️</button>
         
         <select id="langSelect" class="lang-select" title="Language" aria-label="Select language">
           <option value="en">🇬🇧 English</option>
@@ -445,10 +375,6 @@
     <h2>Welcome to Growfax</h2>
     <p>Private Growtopia Server</p>
     <div id="timeDisplay" class="time-display">Loading time...</div>
-  </section>
-  
-  <section id="event-display" class="event-section" role="region" aria-label="Current Growfax Event">
-    <div style="text-align: center; color: var(--muted);">Loading event schedule...</div>
   </section>
 
   <main class="container" id="downloads" role="main">
@@ -529,6 +455,36 @@
     </div>
   </div>
 
+  <div id="adminBackdrop" class="modal-backdrop admin-backdrop" aria-hidden="true">
+    <div class="modal admin-modal" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+        <h2 id="adminTitle">🔑 Admin Area</h2>
+        
+        <div id="adminLogin" style="text-align: center; padding: 20px;">
+            <p id="adminLoginPrompt">Enter the Admin Token to proceed:</p>
+            <input type="password" id="adminTokenInput" placeholder="Token" style="padding: 10px; width: 80%; max-width: 300px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text);">
+            <button class="btn primary" id="adminTokenSubmit" style="margin-top: 10px; width: 80%; max-width: 300px;">Submit</button>
+        </div>
+
+        <div id="adminContent" style="display: none; padding-top: 10px;">
+            <div style="margin-top: 15px; padding: 15px; border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
+                <h4 style="margin: 0 0 10px; color: var(--accent);">Server Status</h4>
+                <p>Status: <strong id="serverStatusDisplay" style="color: var(--success);">Online</strong></p>
+                <button class="btn danger" id="toggleServerStatus">Toggle Status (Simulate)</button>
+            </div>
+            
+            <div style="margin-top: 20px; padding: 15px; border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
+                <h4 style="margin: 0 0 10px; color: var(--accent);">News & Updates</h4>
+                <textarea id="newsUpdateTextarea" style="width: 100%; height: 100px; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text); resize: vertical;" placeholder="Enter news/update text..."></textarea>
+                <button class="btn primary" id="saveNewsUpdate" style="margin-top: 10px;">Save News</button>
+            </div>
+
+             <div style="margin-top: 20px; text-align: right; border-top: 1px solid var(--border-color); padding-top: 10px;">
+                <button class="btn secondary" id="closeAdmin">Close Admin Area</button>
+            </div>
+        </div>
+    </div>
+  </div>
+
   <a id="floatingChat" class="floating-chat" href="https://discord.gg/smgS6sq83y" target="_blank" rel="noopener" title="Open Discord">
     <img src="discord.jpeg" alt="Discord">
   </a>
@@ -565,8 +521,24 @@ const welcomeSkip = document.getElementById('welcomeSkip');
 const timeDisplay = document.getElementById('timeDisplay');
 const discordLink = document.getElementById('discordLink');
 const reportBugLink = document.getElementById('reportBugLink');
-const eventDisplay = document.getElementById('event-display');
 
+// NEW Admin Area Refs
+const ADMIN_TOKEN = 'GFAx_2025_ADMN'; // Hardcoded token for static page simulation
+const openAdmin = document.getElementById('openAdmin');
+const adminBackdrop = document.getElementById('adminBackdrop');
+const adminTitle = document.getElementById('adminTitle');
+const adminLogin = document.getElementById('adminLogin');
+const adminLoginPrompt = document.getElementById('adminLoginPrompt');
+const adminTokenInput = document.getElementById('adminTokenInput');
+const adminTokenSubmit = document.getElementById('adminTokenSubmit');
+const adminContent = document.getElementById('adminContent');
+const closeAdmin = document.getElementById('closeAdmin');
+const serverStatusDisplay = document.getElementById('serverStatusDisplay');
+const toggleServerStatus = document.getElementById('toggleServerStatus');
+const newsUpdateTextarea = document.getElementById('newsUpdateTextarea');
+const saveNewsUpdate = document.getElementById('saveNewsUpdate');
+
+let isServerOnline = true; // Simulated server status
 let pendingDownload = null;
 
 /* ===========================
@@ -585,27 +557,6 @@ const FILE_META = {
     copytext: `15.235.232.75 growtopia1.com\n15.235.232.75 growtopia2.com\n15.235.232.75 www.growtopia1.com\n15.235.232.75 www.growtopia2.com`
   }
 };
-
-/* ===========================
-   Event Schedule Data (NEW)
-   - Start time in 24h format (WIB/GMT+7)
-   - Duration is 2 hours per event
-   =========================== */
-const DAILY_EVENTS = [
-    { start: 0, name: 'Glowfaxt Hunt', world: 'GLOWHUNT', id_name: 'Perburuan Glowfaxt' },
-    { start: 2, name: 'Battle Arena', world: 'ARENA', id_name: 'Arena Pertarungan' },
-    { start: 4, name: 'Parkour Challenge', world: 'PARKOUR', id_name: 'Tantangan Parkour' },
-    { start: 6, name: 'Quiz Mania', world: 'QUIZ', id_name: 'Kuis Mania' },
-    { start: 8, name: 'Fashion Show', world: 'FASHION', id_name: 'Peragaan Busana' },
-    { start: 10, name: 'Glowfaxt Hunt', world: 'GLOWHUNT', id_name: 'Perburuan Glowfaxt' },
-    { start: 12, name: 'Battle Arena', world: 'ARENA', id_name: 'Arena Pertarungan' },
-    { start: 14, name: 'Parkour Challenge', world: 'PARKOUR', id_name: 'Tantangan Parkour' },
-    { start: 16, name: 'Quiz Mania', world: 'QUIZ', id_name: 'Kuis Mania' },
-    { start: 18, name: 'Fashion Show', world: 'FASHION', id_name: 'Peragaan Busana' },
-    { start: 20, name: 'Glowfaxt Hunt', world: 'GLOWHUNT', id_name: 'Perburuan Glowfaxt' },
-    { start: 22, name: 'Battle Arena', world: 'ARENA', id_name: 'Arena Pertarungan' }
-];
-
 
 /* ===========================
    Translation baseline
@@ -653,25 +604,65 @@ const translations = {
     "Opening Discord...": "Membuka Discord...",
     "🐞 Report Bug": "🐞 Laporkan Bug",
     
-    // NEW Event Translations
-    "Current Event": "Event Saat Ini",
-    "Next Event": "Event Berikutnya",
-    "Event Name": "Nama Event",
-    "World": "Dunia",
-    "Ends in": "Berakhir dalam",
-    "Starts in": "Dimulai dalam",
-    "h": "j", // hours
-    "m": "m", // minutes
-    "s": "d"  // seconds (detik)
+    // NEW Admin Translations
+    "🔑 Admin Area": "🔑 Area Admin",
+    "Enter the Admin Token to proceed:": "Masukkan Token Admin untuk melanjutkan:",
+    "Submit": "Kirim",
+    "Server Status": "Status Server",
+    "Online": "Online",
+    "Offline": "Offline",
+    "News & Updates": "Berita & Pembaruan",
+    "Toggle Status (Simulate)": "Ubah Status (Simulasi)",
+    "Save News": "Simpan Berita",
+    "Close Admin Area": "Tutup Area Admin"
   }
 };
 
 /* ===========================
    Smooth Translation Logic
    =========================== */
+function updateAdminAreaTranslations(lang) {
+    if (!adminLoginPrompt) return; // Exit if admin elements not loaded (shouldn't happen)
+    
+    adminLoginPrompt.textContent = lang === 'id' 
+        ? (translations.id["Enter the Admin Token to proceed:"] || 'Masukkan Token Admin untuk melanjutkan:') 
+        : 'Enter the Admin Token to proceed:';
+    
+    adminTitle.textContent = lang === 'id' 
+        ? (translations.id["🔑 Admin Area"] || '🔑 Area Admin') 
+        : '🔑 Admin Area';
+
+    // Update dynamic content
+    updateServerStatusDisplay(); 
+    
+    // Update button/header texts within admin content
+    if (adminContent.style.display !== 'none') {
+        document.querySelector('#adminContent h4:nth-child(1)').textContent = lang === 'id' 
+            ? (translations.id["Server Status"] || 'Status Server')
+            : 'Server Status';
+        document.querySelector('#adminContent h4:nth-child(2)').textContent = lang === 'id' 
+            ? (translations.id["News & Updates"] || 'Berita & Pembaruan')
+            : 'News & Updates';
+        
+        toggleServerStatus.textContent = lang === 'id' 
+            ? (translations.id["Toggle Status (Simulate)"] || 'Ubah Status (Simulasi)') 
+            : 'Toggle Status (Simulate)';
+        saveNewsUpdate.textContent = lang === 'id' 
+            ? (translations.id["Save News"] || 'Simpan Berita')
+            : 'Save News';
+        closeAdmin.textContent = lang === 'id' 
+            ? (translations.id["Close Admin Area"] || 'Tutup Area Admin')
+            : 'Close Admin Area';
+    }
+    // Update token input placeholder if needed (not supported by data-original system)
+    adminTokenInput.placeholder = lang === 'id' ? 'Token' : 'Token';
+    adminTokenSubmit.textContent = lang === 'id' ? (translations.id["Submit"] || 'Kirim') : 'Submit';
+}
+
+
 function applyTranslations(lang){
   const transitionDuration = 200; // ms
-  const elementsToTranslate = document.querySelectorAll('[data-original], #modalCancel, #modalConfirm, #welcomeSave, #welcomeSkip, #discordLink, #reportBugLink');
+  const elementsToTranslate = document.querySelectorAll('[data-original], #modalCancel, #modalConfirm, #welcomeSave, #welcomeSkip, #discordLink, #reportBugLink, #adminTokenSubmit, #closeAdmin, #toggleServerStatus, #saveNewsUpdate');
 
   // 1. Fade out (Opacity 0)
   elementsToTranslate.forEach(el => {
@@ -699,10 +690,9 @@ function applyTranslations(lang){
     discordLink.textContent = lang === 'id' ? (translations.id['Join Growfax Discord'] || 'Gabung Discord Growfax') : 'Join Growfax Discord';
     reportBugLink.textContent = lang === 'id' ? (translations.id['🐞 Report Bug'] || '🐞 Laporkan Bug') : '🐞 Report Bug';
     
-    // Update mailto link and event schedule immediately after translation
+    // Update mailto link and Admin area translations
     updateReportBugLink(); 
-    // Re-run the event scheduler to update event text instantly
-    updateEventSchedule(true); 
+    updateAdminAreaTranslations(lang); 
 
     // 4. Fade back in (Opacity 1)
     elementsToTranslate.forEach(el => {
@@ -800,217 +790,8 @@ updateTime();
 setInterval(updateTime, 1000);
 
 /* ===========================
-   Event Scheduling Logic (NEW)
-   =========================== */
-
-/**
- * Finds the currently running event and the next starting event based on WIB/GMT+7.
- * @param {Date} now - The current Date object (in local time).
- * @returns {{currentEvent: Object|null, nextEvent: Object, endTimestamp: Date, nextStartTimestamp: Date}}
- */
-function getCurrentEvent(now){
-    // Get current time components in Jakarta time (GMT+7)
-    const nowWIB = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Jakarta' }));
-    const currentHour = nowWIB.getHours();
-    const currentMinutes = nowWIB.getMinutes();
-    const currentSeconds = nowWIB.getSeconds();
-    
-    let currentEvent = null;
-    let nextEvent = null;
-    let endTimestamp = null;
-    let nextStartTimestamp = null;
-    
-    // Convert current time to seconds since midnight (for easier comparison)
-    const nowSecs = (currentHour * 3600) + (currentMinutes * 60) + currentSeconds;
-    
-    // 1. Find the current running event
-    for(let i = 0; i < DAILY_EVENTS.length; i++){
-        const event = DAILY_EVENTS[i];
-        const eventStartSecs = event.start * 3600;
-        const eventEndHour = (event.start + 2) % 24; 
-        let eventEndSecs = eventEndHour * 3600;
-
-        // Handle event crossing midnight (e.g., 22:00 to 00:00)
-        if (eventEndSecs < eventStartSecs) { 
-             if (nowSecs >= eventStartSecs || nowSecs < eventEndSecs) {
-                 currentEvent = event;
-                 break;
-             }
-        } else if (nowSecs >= eventStartSecs && nowSecs < eventEndSecs) {
-            // Event is running and doesn't cross midnight
-            currentEvent = event;
-            break;
-        }
-    }
-    
-    // 2. Determine timestamps (End of current or Start of next)
-    if(currentEvent){
-        // Calculate the end time of the current event
-        endTimestamp = new Date(nowWIB);
-        endTimestamp.setHours(currentEvent.start + 2, 0, 0, 0);
-
-        // If the calculated end time is in the past, it means it's tomorrow (crosses midnight)
-        if (endTimestamp.getTime() <= nowWIB.getTime()) {
-             endTimestamp.setDate(endTimestamp.getDate() + 1);
-        }
-        
-        // Find the next event in the schedule array
-        let currentIndex = DAILY_EVENTS.findIndex(e => e.start === currentEvent.start);
-        let nextIndex = (currentIndex + 1) % DAILY_EVENTS.length;
-        nextEvent = DAILY_EVENTS[nextIndex];
-        
-    } else {
-        // Find the next upcoming event (Inter-event period, should only happen if event duration is less than 24h cycle)
-        for(const event of DAILY_EVENTS){
-            if(currentHour < event.start){
-                nextEvent = event;
-                break;
-            }
-        }
-        // If still null (after 22:00 until 00:00)
-        if (!nextEvent) {
-            nextEvent = DAILY_EVENTS[0];
-        }
-    }
-
-    // Calculate the start time of the determined next event (if currentEvent exists, nextEvent is its successor)
-    nextStartTimestamp = new Date(nowWIB);
-    nextStartTimestamp.setHours(nextEvent.start, 0, 0, 0);
-    
-    // If the next start time is in the past, it's for tomorrow
-    if (nextStartTimestamp.getTime() <= nowWIB.getTime() && currentEvent === null) {
-        nextStartTimestamp.setDate(nextStartTimestamp.getDate() + 1);
-    }
-    // If current event is running, ensure next start time is correct (it might be past if the event just started, but we look forward)
-    else if (currentEvent !== null && nextStartTimestamp.getTime() <= nowWIB.getTime()) {
-        nextStartTimestamp.setDate(nextStartTimestamp.getDate() + 1);
-    }
-    
-    return { currentEvent, nextEvent, endTimestamp: endTimestamp || nextStartTimestamp, nextStartTimestamp };
-}
-
-/**
- * Formats time difference in milliseconds into human-readable string (e.g., 1j 30m 5d).
- */
-function formatTimeDifference(diffMs){
-    const lang = langSelect.value || 'en';
-    const totalSeconds = Math.max(0, Math.floor(diffMs / 1000));
-    const hours = Math.floor(totalSeconds / 3600);
-    const minutes = Math.floor((totalSeconds % 3600) / 60);
-    const seconds = totalSeconds % 60;
-    
-    let parts = [];
-    // Only show hours if > 0
-    if(hours > 0) parts.push(`${hours}${(lang === 'id' ? translations.id['h'] : 'h')}`);
-    // Show minutes unless hours are present and minutes are 0
-    if(minutes > 0 || (hours === 0 && seconds > 0)) parts.push(`${minutes}${(lang === 'id' ? translations.id['m'] : 'm')}`);
-    // Always show seconds, but only if minutes and hours are 0, or if total time is < 1 minute
-    if(hours === 0 && minutes < 1 && seconds >= 0) {
-        parts = []; // Clear previous parts if we only want seconds
-        parts.push(`${seconds}${(lang === 'id' ? translations.id['s'] : 's')}`);
-    }
-    
-    if (totalSeconds >= 3600) {
-        parts = [`${hours}${lang === 'id' ? 'j' : 'h'}`, `${minutes}${lang === 'id' ? 'm' : 'm'}`, `${seconds}${lang === 'id' ? 'd' : 's'}`].filter((p, i) => i < 2 || (i === 2 && hours === 0 && minutes === 0));
-        if (hours === 0) {
-           parts = [`${minutes}${lang === 'id' ? 'm' : 'm'}`, `${seconds}${lang === 'id' ? 'd' : 's'}`];
-        } else {
-           // If hours > 0, show H and M
-           parts = [`${hours}${lang === 'id' ? 'j' : 'h'}`, `${minutes}${lang === 'id' ? 'm' : 'm'}`];
-        }
-    } else if (totalSeconds >= 60) {
-        parts = [`${minutes}${lang === 'id' ? 'm' : 'm'}`, `${seconds}${lang === 'id' ? 'd' : 's'}`];
-    } else {
-        parts = [`${seconds}${lang === 'id' ? 'd' : 's'}`];
-    }
-
-    // Fallback for correct formatting
-    if (totalSeconds === 0) return '0s';
-
-    return parts.join(' ');
-}
-
-
-/**
- * Updates the Event Schedule display every second.
- * @param {boolean} [forceUpdate=false] - Forces DOM injection, useful for language changes.
- */
-let lastEventName = ''; // Global state to track event name changes
-
-function updateEventSchedule(forceUpdate = false){
-    const now = new Date();
-    const { currentEvent, nextEvent, endTimestamp, nextStartTimestamp } = getCurrentEvent(now);
-    const lang = langSelect.value || 'en';
-    
-    let html = '';
-    let countdownMs;
-    let countdownTextPrefix;
-    let eventName;
-    let worldName;
-    let isRunning = !!currentEvent;
-
-    if (isRunning) {
-        countdownMs = endTimestamp.getTime() - now.getTime();
-        countdownTextPrefix = lang === 'id' ? (translations.id['Ends in'] || 'Berakhir dalam') : 'Ends in';
-        eventName = lang === 'id' ? (currentEvent.id_name || currentEvent.name) : currentEvent.name;
-        worldName = currentEvent.world;
-    } else {
-        // Next event starts
-        countdownMs = nextStartTimestamp.getTime() - now.getTime();
-        countdownTextPrefix = lang === 'id' ? (translations.id['Starts in'] || 'Dimulai dalam') : 'Starts in';
-        eventName = lang === 'id' ? (nextEvent.id_name || nextEvent.name) : nextEvent.name;
-        worldName = nextEvent.world;
-    }
-
-    const currentDisplayEventName = `${isRunning ? 'Current' : 'Next'} - ${eventName}`;
-
-    // --- DOM Injection/Update Logic ---
-    if (forceUpdate || currentDisplayEventName !== lastEventName) {
-        // Only inject new HTML if the event itself has changed or language changed
-        html = `
-            <h3>${lang === 'id' ? (isRunning ? translations.id['Current Event'] : translations.id['Next Event']) : (isRunning ? 'Current Event' : 'Next Event')}</h3>
-            <div class="event-details">
-                <div>
-                    <strong>${lang === 'id' ? (translations.id['Event Name'] || 'Nama Event') : 'Event Name'}</strong>
-                    <span style="color: var(--accent); font-weight: 700;">${eventName}</span>
-                </div>
-                <div>
-                    <strong>${lang === 'id' ? (translations.id['World'] || 'Dunia') : 'World'}</strong>
-                    <span style="color: var(--text);">${worldName}</span>
-                </div>
-            </div>
-            <div id="eventCountdown"></div>
-        `;
-        eventDisplay.innerHTML = html;
-        lastEventName = currentDisplayEventName;
-    }
-    
-    // --- Countdown Update Logic ---
-    const countdownEl = document.getElementById('eventCountdown');
-    if (countdownEl) {
-        // Color changes based on remaining time
-        let countdownColor;
-        if (countdownMs <= (60 * 1000) && isRunning) {
-            countdownColor = 'var(--danger)'; // Red (last 1 minute)
-        } else if (countdownMs <= (5 * 60 * 1000) && isRunning) {
-            countdownColor = '#ff6347'; // Tomato (last 5 minutes)
-        } else if (isRunning) {
-            countdownColor = 'var(--success)'; // Green/Success
-        } else {
-            countdownColor = 'var(--accent)'; // Blue for next event
-        }
-        
-        countdownEl.textContent = `${countdownTextPrefix}: ${formatTimeDifference(countdownMs)}`;
-        countdownEl.style.color = countdownColor;
-    }
-
-    // Set a timeout to run again in 1 second
-    setTimeout(() => updateEventSchedule(false), 1000);
-}
-
-
-/* ===========================
    File Update Checker (modal)
+   - PowerTunnel: Copy-to-clipboard logic
    =========================== */
 document.querySelectorAll('.platform-buttons a').forEach(a=>{
   a.addEventListener('click', (e)=>{
@@ -1056,6 +837,78 @@ modalConfirm.addEventListener('click', ()=>{
   const a = document.createElement('a'); a.href = pendingDownload.href; a.download = pendingDownload.filename; document.body.appendChild(a); a.click(); a.remove();
   hideModal(); showToast(langSelect.value === 'id' ? 'Mulai mengunduh...' : 'Download started...');
 });
+
+/* ===========================
+   Admin Area Logic (NEW)
+   =========================== */
+function updateServerStatusDisplay() {
+    const lang = langSelect.value;
+    const onlineText = lang === 'id' ? (translations.id['Online'] || 'Online') : 'Online';
+    const offlineText = lang === 'id' ? (translations.id['Offline'] || 'Offline') : 'Offline';
+
+    serverStatusDisplay.textContent = isServerOnline ? onlineText : offlineText;
+    serverStatusDisplay.style.color = isServerOnline ? 'var(--success)' : 'var(--danger)';
+}
+
+function showAdminModal() {
+    adminBackdrop.style.display = 'flex';
+    adminBackdrop.setAttribute('aria-hidden', 'false');
+    // Always show login prompt first
+    adminLogin.style.display = 'block';
+    adminContent.style.display = 'none';
+    adminTokenInput.value = '';
+    // Re-apply current language settings to modal text
+    updateAdminAreaTranslations(langSelect.value); 
+    setTimeout(() => adminTokenInput.focus(), 300);
+}
+
+function hideAdminModal() {
+    adminBackdrop.style.display = 'none';
+    adminBackdrop.setAttribute('aria-hidden', 'true');
+}
+
+openAdmin.addEventListener('click', () => {
+    showAdminModal();
+});
+
+closeAdmin.addEventListener('click', hideAdminModal);
+adminBackdrop.addEventListener('click', (e) => {
+    if (e.target === adminBackdrop) hideAdminModal();
+});
+
+adminTokenSubmit.addEventListener('click', () => {
+    const token = adminTokenInput.value.trim();
+    const lang = langSelect.value;
+    
+    if (token === ADMIN_TOKEN) {
+        adminLogin.style.display = 'none';
+        adminContent.style.display = 'block';
+        updateServerStatusDisplay();
+        // Load simulated news from local storage
+        newsUpdateTextarea.value = localStorage.getItem('growfax_news_update') || ''; 
+        showToast(lang === 'id' ? '✅ Akses Admin diberikan!' : '✅ Admin Access granted!', 2000);
+    } else {
+        showToast(lang === 'id' ? '❌ Token Admin Salah.' : '❌ Incorrect Admin Token.', 2000);
+        adminTokenInput.value = '';
+        adminTokenInput.focus();
+    }
+});
+
+// Toggle Status Logic (Simulated)
+toggleServerStatus.addEventListener('click', () => {
+    isServerOnline = !isServerOnline;
+    updateServerStatusDisplay();
+    showToast(langSelect.value === 'id' ? 'Status Server diubah.' : 'Server Status changed.', 1500);
+});
+
+// Save News Logic (Simulated)
+saveNewsUpdate.addEventListener('click', () => {
+    const news = newsUpdateTextarea.value;
+    // Save to local storage for persistence
+    localStorage.setItem('growfax_news_update', news); 
+    showToast(langSelect.value === 'id' ? 'Pembaruan Berita disimpan.' : 'News Update saved.', 1500);
+});
+
 
 /* ===========================
    Welcome popup
@@ -1107,19 +960,32 @@ reportBugLink.addEventListener('click', () => {
 });
 
 /* ===========================
-   Initializations
+   Initial translations + time
    =========================== */
 const initLang = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en');
 langSelect.value = initLang;
-applyTranslations(initLang); // This will run updateEventSchedule(true) internally
+applyTranslations(initLang);
 updateTime();
 
-// Start the event schedule update loop
-updateEventSchedule(true); 
+/* ===========================
+   Allow middle click / aux click default behavior on links
+   =========================== */
+document.querySelectorAll('a').forEach(a=>{
+  a.addEventListener('auxclick', (e) => {/* allow default behavior */});
+});
 
 /* ===========================
    Misc small UI effects
    =========================== */
+
+// status indicator pulse if present
+const status = document.querySelector('#status-indicator');
+if (status) {
+  setInterval(() => {
+    status.style.opacity = status.style.opacity === '1' ? '0.5' : '1';
+  }, 600);
+}
+
 // graceful page link transition for all html links
 document.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', e => {
