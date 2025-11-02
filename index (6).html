@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Growfax Official - Private Growtopia Server & Downloads</title>
+<link rel="icon" href="Growfax_banner.jpg" type="image/jpeg">
+
+<meta name="description" content="Situs resmi Growfax, private server Growtopia. Unduh file host terbaru untuk Android, Windows, dan iOS. Mainkan Growtopia dengan fitur eksklusif dan komunitas aktif!"
+/>
+<meta name="keywords" content="Growfax, Growtopia Private Server, Growtopia PS, Download Growfax, Host Growtopia, Growfax Android, Growfax Windows, Role Purchase" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://growfax.web.id/home" />
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://growfax.web.id/home" />
+<meta property="og:title" content="Growfax Official - Private Growtopia Server & Downloads" />
+<meta property="og:description" content="Unduh file host terbaru untuk Growfax Private Server (Android, Windows, iOS) dan bergabunglah dengan komunitas Discord kami."
+/>
+<meta property="og:image" content="https://growfax.web.id/Growfax_banner.jpg" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content="https://growfax.web.id/home" />
+<meta name="twitter:title" content="Growfax Official - Private Growtopia Server & Downloads" />
+<meta name="twitter:description" content="Unduh file host terbaru untuk Growfax Private Server (Android, Windows, iOS) dan bergabunglah dengan komunitas Discord kami."
+/>
+<meta name="twitter:image" content="https://growfax.web.id/Growfax_banner.jpg" />
+
+<meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload" />
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" /> 
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer ||
+  [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX'); // Placeholder ID for Growfax Analytics
+</script>
+<style>
+  /* ============================================================
+     Growfax Official — FULL UI stylesheet (futuristic neon/fax)
+     - Mobile-First Optimization Applied (Fixed Horizontal Scrolling)
+     ============================================================ */
+
+  /* Global Reset: Ensure padding/border don't cause overflow */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  /* NEW: Keyframes for Logo Animation */
+  @keyframes pulse {
+    0% { transform: scale(1);
+    box-shadow: var(--logo-shadow); }
+    50% { transform: scale(1.02); box-shadow: var(--logo-shadow-hover); }
+    100% { transform: scale(1);
+    box-shadow: var(--logo-shadow); }
+  }
+
+  :root{
+    --bg:#f8f8f8;
+    --card-bg:#fff;
+    --text:#1a1a1a;
+    --accent:#0078d7;
+    --card-shadow:0 8px 20px rgba(0,0,0,0.08);
+    --discord-color:#7289da;
+    --muted:#667;
+    --toast-bg:rgba(0,0,0,0.8);
+    --glass: rgba(255,255,255,0.6);
+    --success:#2ecc71;
+    --danger:#e74c3c;
+    --mono: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    --border-color: rgba(0,0,0,0.08);
+    /* UPDATED: Custom properties for YELLOW glow effect in light mode */
+    --glow-color-light: rgba(255, 193, 7, 0.6);
+    /* soft yellow glow */
+    --text-shadow-light: 0 0 10px var(--glow-color-light), 0 2px 4px rgba(0,0,0,0.2);
+    --logo-shadow: 0 4px 12px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.08);
+    --logo-shadow-hover: 0 8px 20px rgba(255, 193, 7, 0.4);
+  }
+  [data-theme="dark"]{
+    --bg:#0f1720;
+    --card-bg:#0b1220;
+    --text:#e6eef8;
+    --accent:#4da3ff;
+    --card-shadow:0 8px 28px rgba(0,0,0,0.6);
+    --discord-color:#5b6ea6;
+    --muted:#9aa;
+    --toast-bg:rgba(255,255,255,0.08);
+    --glass: rgba(255,255,255,0.03);
+    --border-color: rgba(255,255,255,0.06);
+
+    /* UPDATED: Custom properties for YELLOW glow effect in dark mode */
+    --glow-color-dark: rgba(255, 170, 0, 0.8);
+    /* brighter gold glow */
+    --text-shadow-dark: 0 0 12px var(--glow-color-dark), 0 2px 8px rgba(0,0,0,0.6);
+    --logo-shadow: 0 6px 18px rgba(0,0,0,0.4), 0 3px 9px rgba(0,0,0,0.25);
+    --logo-shadow-hover: 0 10px 25px rgba(255, 170, 0, 0.5);
+  }
+
+  html,body{
+    height:100%;
+    margin:0;
+    font-family:var(--mono);
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+    transition:background .25s,color .25s;
+    overflow-x: hidden;
+  }
+  
+  /* -------------------------
+     Header / Navigation (Optimasi Mobile)
+     ------------------------- */
+  header{background:var(--card-bg);box-shadow:var(--card-shadow);position:sticky;top:0;z-index:1200}
+  .header-content{
+    max-width:1100px;
+    margin:0 auto;
+    padding:10px 10px; /* ADJUSTED: Reduced padding for mobile */
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:8px;
+    flex-wrap: wrap;
+  }
+  .header-left{
+    display:flex;
+    align-items:center;
+    gap:8px; 
+    flex: 1 1 50%;
+  }
+  .brand-wrap{display:flex;align-items:center;gap:8px}
+  
+  /* Glow, lift, and Pulse Animation for logo image */
+  .brand-wrap img{
+    width:36px;
+    height:36px;
+    border-radius:6px;
+    object-fit:cover;
+    transition: box-shadow .25s, transform .25s, opacity 0.2s ease;
+    box-shadow: var(--logo-shadow);
+    /* Apply animation */
+    animation: pulse 3s infinite ease-in-out;
+  }
+
+  h1{
+    font-size:1.2rem;
+    margin:0;
+    font-weight:700;
+    /* Added opacity transition for smoother language change */
+    transition: text-shadow .25s, opacity 0.2s ease;
+    color: var(--text);
+    text-shadow: var(--text-shadow-light); 
+  }
+  [data-theme="dark"] h1 {
+    text-shadow: var(--text-shadow-dark);
+  }
+
+  .brand-wrap > div > div { 
+    font-size: 0.75rem;
+    /* Added opacity transition for smoother language change */
+    transition: opacity 0.2s ease;
+  }
+
+  nav.primary{
+    color:var(--accent);
+    text-decoration:none;
+    font-weight:700;
+    margin-left:auto; 
+    font-size: 0.9rem;
+    flex: 1 1 100%; 
+    margin-top: 6px;
+    /* ADJUSTED: Reduced margin for tighter fit */
+    text-align: left;
+  }
+  nav.primary a{
+      color:var(--accent);
+      text-decoration:none;
+      font-weight:700;
+      margin-left:0;
+      margin-right: 12px;
+      /* Added opacity transition for smoother language change */
+      transition: opacity 0.2s ease, transform .18s;
+  }
+  nav.primary a.active{ /* NEW: Active nav link style */
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+  }
+  nav.primary a:hover{opacity:.86;transform:translateY(-1px)}
+  
+  .controls{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    flex: 0 1 auto;
+    /* FIX FOR MOBILE WRAPPING: Allow buttons to wrap within the controls box */
+    flex-wrap: wrap;
+    justify-content: flex-end; /* Keep the buttons aligned to the right */
+  }
+  /* Gaya untuk semua tombol kontrol di header */
+  .theme-toggle,.lang-select,.open-welcome, .report-bug-btn {
+    font-size:0.9rem;
+    padding:6px 8px;
+    border-radius:8px;
+    border:1px solid var(--border-color);
+    background:transparent;
+    color:var(--text);
+    cursor:pointer;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    /* Added opacity transition for smoother language change */
+    transition: background-color .15s, opacity 0.2s ease;
+  }
+  .report-bug-btn:hover, .theme-toggle:hover, .open-welcome:hover {
+    background: rgba(0,0,0,0.05);
+  }
+  [data-theme="dark"] .report-bug-btn:hover, [data-theme="dark"] .theme-toggle:hover, [data-theme="dark"] .open-welcome:hover {
+    background: rgba(255,255,255,0.05);
+  }
+
+  /* -------------------------
+     Banner / Hero
+     ------------------------- */
+  .banner-section{text-align:center;padding:40px 10px;background:linear-gradient(90deg, rgba(0,0,0,0.03), rgba(255,255,255,0.02))}
+  .banner-section img{max-width:200px;border-radius:8px;margin-bottom:14px}
+  .banner-section h2{
+    font-size:1.6rem;
+    color:#ffaa00;
+    margin:8px 0;
+    text-shadow:0 0 10px rgba(255,170,0,0.18);
+    transition: opacity 0.2s ease;
+  }
+  .banner-section p{
+    font-size:0.95rem;
+    opacity:.92;
+    margin:0;
+    transition: opacity 0.2s ease;
+  }
+  .time-display{
+    margin-top:8px;
+    font-size:0.85rem;
+    font-weight:600;
+    opacity:.9;
+    transition: opacity 0.2s ease;
+  }
+
+  /* -------------------------
+     Container (main content)
+     ------------------------- */
+  .container{max-width:1000px;margin:32px auto;text-align:center;padding:0 10px}
+  .container h2{
+    font-size:1.4rem;
+    margin-bottom:24px;
+    transition: opacity 0.2s ease;
+  }
+  
+  /* Platform Buttons: Full width for mobile */
+  .platform-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
+  .platform-buttons a{
+    display:flex;align-items:center;justify-content:center;gap:12px;
+    width:92%; 
+    padding:14px 18px;border-radius:12px;color:#fff;font-weight:700;
+    text-decoration:none;border:1px solid transparent;font-size:1.02rem;
+    transition:transform .18s ease,box-shadow .18s, opacity 0.2s ease;
+  }
+  .platform-buttons a img{width:30px;height:30px;border-radius:6px}
+  .platform-buttons a:hover{transform:translateY(-2px)}
+
+  /* --- Download Buttons (Existing) --- */
+  .btn-android{background:#34c759;--glow:#4cff77;box-shadow:0 4px 16px rgba(76,255,119,0.08)}
+  .btn-windows{background:#0078d7;--glow:#4da3ff;box-shadow:0 4px 16px rgba(77,163,255,0.08)}
+  .btn-ios{background:#007aff;--glow:#7acbff;box-shadow:0 4px 16px rgba(122,203,255,0.08)}
+  .btn-powertunnel{background:#b71c1c;--glow:#ff5a5a;box-shadow:0 4px 16px rgba(255,90,90,0.08)}
+
+  /* --- NEW: Role Button Styles (Futuristic/Neon Colors) --- */
+  .btn-god{background:#ffc107;--glow:#ffeb3b;box-shadow:0 4px 16px rgba(255,193,7,0.4); color: #1a1a1a;} /* Gold */
+  .btn-dev{background:#9c27b0;--glow:#ce93d8;box-shadow:0 4px 16px rgba(156,39,176,0.2)} /* Purple */
+  .btn-mod{background:#e91e63;--glow:#f48fb1;box-shadow:0 4px 16px rgba(233,30,99,0.2)} /* Pink */
+  .btn-vip-plus{background:#ff5722;--glow:#ffccbc;box-shadow:0 4px 16px rgba(255,87,34,0.2)} /* Deep Orange */
+  .btn-vip{background:#00bcd4;--glow:#84ffff;box-shadow:0 4px 16px rgba(0,188,212,0.2)} /* Cyan */
+  .btn-vip-light{background:#8bc34a;--glow:#c5e1a5;box-shadow:0 4px 16px rgba(139,195,74,0.2); color: #1a1a1a;} /* Light Green */
+  /* -------------------------
+     Discord Section
+     ------------------------- */
+  .discord-section{background:var(--discord-color);color:#fff;padding:24px;border-radius:10px;max-width:820px;margin:32px auto 50px;text-align:center;box-shadow:var(--card-shadow)}
+  .discord-section img{width:48px;height:48px;border-radius:8px;margin-bottom:8px}
+  .discord-section h3, .discord-section p, .discord-section a {
+    transition: opacity 0.2s ease;
+  }
+
+  /* -------------------------
+     Footer
+     ------------------------- */
+  footer{
+    text-align:center;
+    margin:30px 0 40px;
+    font-size:.85rem;
+    opacity:.85;
+    transition: opacity 0.2s ease;
+  }
+
+  /* -------------------------
+     Modal & Welcome Popup
+     ------------------------- */
+  .modal-backdrop, .welcome-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:1300}
+  .modal, .welcome{width:92%;max-width:560px;background:var(--card-bg);color:var(--text);border-radius:12px;padding:16px;box-shadow:0 14px 40px rgba(0,0,0,0.2);transform:translateY(0);transition:transform .18s,opacity .18s}
+  
+  /* Added opacity transition to modal/welcome text elements */
+  .modal h3, .modal p, .modal .changelog, .welcome h2, .welcome p, .welcome label, .welcome button, .modal h2, .modal h4 {
+      transition: opacity 0.2s ease;
+  }
+  
+  /* NEW: Input specific styles */
+  #growidInput {
+    /* Ensure they match the theme */
+    border: 1px solid var(--border-color) !important;
+    background: var(--card-bg) !important;
+    color: var(--text) !important;
+  }
+
+  /* -------------------------
+     Floating Discord button
+     ------------------------- */
+  .floating-chat{position:fixed;right:12px;bottom:12px;width:48px;height:48px;border-radius:50%;background:var(--discord-color);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 6px 18px rgba(0,0,0,0.2);cursor:pointer;z-index:1500}
+  .floating-chat img{width:24px;height:24px;border-radius:4px}
+
+  /* -------------------------
+     Toast message
+     ------------------------- */
+  .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:70px;background:var(--toast-bg);color:#fff;padding:8px 12px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;z-index:1600}
+  
+  /* ===========================
+     PC/Desktop Optimizations (Min-width 600px)
+     =========================== */
+  @media (min-width: 600px) {
+    /* Header/Nav kembali ke ukuran besar */
+    .header-content {
+        flex-wrap: nowrap;
+        align-items: center;
+        padding: 14px 20px;
+    }
+    /* Logo size PC */
+    .brand-wrap img{width:46px;height:46px;border-radius:8px}
+    /* H1 size PC */
+    h1{font-size:1.4rem;}
+    .brand-wrap > div > div { font-size: 0.85rem;
+    }
+    nav.primary {
+        flex: 0 1 auto; 
+        margin-top: 0;
+        margin-left: 12px; 
+        text-align: left;
+    }
+    nav.primary a{
+        margin-left:12px;
+        margin-right: 0;
+        font-size: 1rem;
+    }
+    .controls{gap:10px; flex-wrap: nowrap;} /* Reset wrap on PC */
+    /* Ukuran PC untuk semua tombol kontrol */
+    .theme-toggle,.lang-select,.open-welcome, .report-bug-btn {
+        font-size:0.98rem;
+        padding:8px 12px;
+        border-radius: 10px;
+    }
+
+    /* Tombol Unduhan kembali ke layout 300px */
+    .platform-buttons{gap:20px}
+    .platform-buttons a{
+      width:300px;
+    }
+    .platform-buttons a:hover{transform:translateY(-4px)}
+
+    /* Banner/Content padding besar */
+    .banner-section{padding:56px 20px;}
+    .banner-section img{max-width:240px;border-radius:10px;}
+    .banner-section h2{font-size:1.9rem;}
+    .container{margin:48px auto;padding:0 18px}
+    .container h2{font-size:1.6rem;margin-bottom:28px}
+    .discord-section{padding:32px;margin:42px auto 60px;}
+
+    /* Floating button kembali ke posisi normal */
+    .floating-chat{right:18px;bottom:18px;width:56px;height:56px;}
+    .floating-chat img{width:28px;height:28px;}
+    .toast{bottom:86px;}
+  }
+</style>
+</head>
+<body data-theme="light">
+  <header>
+    <div class="header-content">
+      <div class="header-left">
+        <div class="brand-wrap">
+     
+          <img src="Growfax_banner.jpg" alt="Growfax Logo">
+          <div>
+            <h1>Growfax Official</h1>
+            <div style="font-size:0.85rem;color:var(--muted)">Private Growtopia Server</div>
+          </div>
+        </div>
+
+        <nav class="primary" aria-label="Main navigation">
+          <a href="#" id="navDownloads" class="active">📥 Downloads</a> 
+          <a href="#" id="navRoles">👑 Role Purchases</a> 
+        </nav>
+   
+      </div>
+
+      <div class="controls">
+        <a href="#" 
+           id="reportBugLink" 
+           class="report-bug-btn" 
+           title="Report a Bug">🐞 Report Bug</a>
+        
+        <button id="openWelcome" class="open-welcome" title="Welcome & Preferences">⚙️</button>
+        
+      
+      <select id="langSelect" class="lang-select" title="Language" aria-label="Select language">
+          <option value="en">🇬🇧 English</option>
+          <option value="id">🇮🇩 Bahasa</option>
+        </select>
+        <button id="themeToggle" class="theme-toggle" aria-pressed="false" title="Toggle theme">🌞 Light</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="banner-section" role="region" aria-label="Main banner">
+    <img src="Growfax_banner.jpg" alt="Growfax Banner">
+    <h2>Welcome to Growfax</h2>
+    <p>Private Growtopia Server</p>
+    <div id="timeDisplay" class="time-display">Loading time...</div>
+  </section>
+
+ 
+  <main class="container" id="home" role="main">
+    <h2 id="mainTitle">📥 Essential File Downloads</h2> 
+    
+    <div id="downloadContainer" class="main-content-section">
+      <div class="platform-buttons" role="list">
+        <a href="Growfax_VirtualHost.txt" class="btn-android" data-filename="Growfax_VirtualHost.txt" data-filekey="virtualhost" download role="listitem">
+          <img src="virtual-host.png" alt="">Play on Android
+        </a>
+
+        <a href="Growfax_Patched_.bat" class="btn-windows" data-filename="Growfax_Patched_.bat" data-filekey="patched" download role="listitem">
+          <img src="windows.png" alt="">Play on Windows
+        </a>
+
+        <a href="#" class="btn-ios" data-filename="GrowFax_ios_config.txt" data-filekey="ios" role="listitem">
+          <img src="surge5.png" alt="">Play on iOS
+        </a>
+
+        <a href="#" class="btn-powertunnel" data-filename="PowerTunnel_Host.txt" data-filekey="powertunnel" role="listitem">
+          <img src="powertunnel.jpeg" alt="">Play via PowerTunnel
+        </a>
+      </div>
+    </div>
+    
+    <div id="rolePurchaseContainer" class="main-content-section" style="display: none;">
+        <div class="platform-buttons" role="list">
+            <a href="#" class="btn-god" data-role="GOD" data-price="180000" role="listitem">
+              <img src="crown.png" alt="">GOD Role (Rp180.000)
+            </a>
+            <a href="#" class="btn-dev" data-role="Developer" data-price="120000" role="listitem">
+              <img src="code.png" alt="">Developer Role (Rp120.000)
+            </a>
+            <a href="#" class="btn-mod" data-role="Super Moderator" data-price="80000" role="listitem">
+              <img src="badge.png" alt="">Super Moderator Role (Rp80.000)
+            </a>
+            <a href="#" class="btn-vip-plus" data-role="Moderator" data-price="45000" role="listitem">
+              <img src="star.png" alt="">Moderator Role (Rp45.000)
+            </a>
+            <a href="#" class="btn-vip" data-role="VIP+" data-price="25000" role="listitem">
+              <img src="vip.png" alt="">VIP+ Role (Rp25.000)
+            </a>
+            <a href="#" class="btn-vip-light" data-role="VIP" data-price="15000" role="listitem">
+              <img src="vip-light.png" alt="">VIP Role (Rp15.000)
+            </a>
+        </div>
+    </div>
+  </main>
+
+  <section class="discord-section" aria-label="Discord community">
+    <img src="discord.jpeg" alt="Discord Logo">
+    <h3>Join Our Community</h3>
+    <p>Connect with others and get support in our official Discord server.</p>
+    <a id="discordLink" href="https://discord.gg/smgS6sq83y" target="_blank" rel="noopener">Join Growfax Discord</a>
+  </section>
+
+  <footer>© 2025 Growfax.
+  All rights reserved.</footer>
+
+  <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h3 id="modalTitle">File info</h3>
+      <p id="modalDesc">Details before download</p>
+
+      <div id="growidInputGroup" style="margin: 15px 0; display: none; text-align: left;">
+        <h4 id="growidPrompt" style="margin: 0; font-size: 1.05rem;">Masukkan GrowID Anda untuk memproses role:</h4>
+        <input type="text" id="growidInput" placeholder="Contoh: GrowfaxOfficial" 
+          style="width: 100%; padding: 10px; margin-top: 5px; border-radius: 8px; 
+          border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text);
+          box-sizing: border-box;">
+      </div>
+      <div class="meta">
+        <div class="chip" id="modalVersion">v0.0</div>
+        <div class="chip" id="modalUpdated">Updated: —</div>
+      </div>
+
+      <div class="changelog" id="modalChangelog">Changelog: —</div>
+
+      <div style="display:flex;gap:8px;align-items:center;justify-content:space-between">
+        <div style="font-size:.9rem;color:var(--muted)" id="modalFilename">Filename</div>
+        
+        <div class="buttons">
+          <button class="btn secondary" id="modalCancel">Cancel</button>
+          <button class="btn primary" id="modalConfirm">Download</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="welcomeBackdrop" class="welcome-backdrop" aria-hidden="true">
+    <div class="welcome" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+      <h2 id="welcomeTitle">Welcome to Growfax</h2>
+      <p style="margin:6px 0 12px;opacity:.9">Set your preferred language and theme.
+      We'll remember this for next time.</p>
+      <div class="row">
+        <label for="welcomeLang">Language</label>
+        <select id="welcomeLang" class="lang-select">
+          <option value="en">🇬🇧 English</option>
+          <option value="id">🇮🇩 Bahasa</option>
+        </select>
+      </div>
+      <div class="row">
+        <label>Theme</label>
+        <div style="display:flex;gap:10px;align-items:center">
+       
+          <label><input type="radio" name="welcomeTheme" value="light" checked> Light</label>
+          <label><input type="radio" name="welcomeTheme" value="dark"> Dark</label>
+        </div>
+      </div>
+
+      <div class="actions" style="display:flex;justify-content:flex-end;gap:8px;margin-top:14px">
+        <button class="btn secondary" id="welcomeSkip">Skip</button>
+        <button class="btn primary" id="welcomeSave">Save & Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <a id="floatingChat" class="floating-chat" href="https://discord.gg/smgS6sq83y" target="_blank" rel="noopener" title="Open Discord">
+    <img src="discord.jpeg" alt="Discord">
+  </a>
+
+  <div id="toast" class="toast" role="status" aria-live="polite">Saved</div>
+
+<script>
+/* ============================================================
+   Growfax Official — FULL script (MODIFIED for Trakteer Only)
+   ============================================================ */
+
+/* ===========================
+   Analytical Tool Function 
+   =========================== 
+*/
+function trackEvent(eventName, eventParams = {}) {
+    // Fungsi ini menyimulasikan pengiriman data ke alat analitik (e.g., Google Analytics).
+    console.log(`[ANALYTICS] Tracking event: ${eventName}`, eventParams);
+    
+    // Kirim event menggunakan gtag jika skrip GA dimuat
+    if (typeof gtag === 'function') {
+        gtag('event', eventName, eventParams);
+    }
+}
+
+/* ===========================
+   Core refs & state
+   =========================== */
+// --- NEW CONSTANTS (MUST MATCH BACKEND PORT) ---
+// Ganti jika server backend (server.js) berjalan di port atau URL lain
+const BACKEND_URL = 'http://localhost:3000'; 
+
+const langSelect = document.getElementById('langSelect');
+const themeToggle = document.getElementById('themeToggle');
+const openWelcome = document.getElementById('openWelcome');
+const toast = document.getElementById('toast');
+const modalBackdrop = document.getElementById('modalBackdrop');
+const modalTitle = document.getElementById('modalTitle');
+const modalDesc = document.getElementById('modalDesc');
+const modalVersion = document.getElementById('modalVersion');
+const modalUpdated = document.getElementById('modalUpdated');
+const modalChangelog = document.getElementById('modalChangelog');
+const modalFilename = document.getElementById('modalFilename');
+const modalConfirm = document.getElementById('modalConfirm');
+const modalCancel = document.getElementById('modalCancel');
+
+const welcomeBackdrop = document.getElementById('welcomeBackdrop');
+const welcomeLang = document.getElementById('welcomeLang');
+const welcomeSave = document.getElementById('welcomeSave');
+const welcomeSkip = document.getElementById('welcomeSkip');
+const timeDisplay = document.getElementById('timeDisplay');
+const discordLink = document.getElementById('discordLink');
+const reportBugLink = document.getElementById('reportBugLink');
+
+// --- NEW/MODIFIED REFS ---
+const mainTitle = document.getElementById('mainTitle');
+const navDownloads = document.getElementById('navDownloads');
+const navRoles = document.getElementById('navRoles');
+const downloadContainer = document.getElementById('downloadContainer');
+const rolePurchaseContainer = document.getElementById('rolePurchaseContainer');
+const growidInputGroup = document.getElementById('growidInputGroup');
+const growidInput = document.getElementById('growidInput');
+const growidPrompt = document.getElementById('growidPrompt');
+
+
+let pendingDownload = null;
+let pendingRole = null; 
+let isRolePurchase = false; 
+
+/* ===========================
+   File metadata
+   =========================== */
+const FILE_META = {
+  virtualhost: { version: 'v2.1', updated: 'Oct 29, 2025', changelog: '- Fixed host parsing\n- Improved TLS handling', size: '2.3 KB' },
+  patched: { version: 'v1.9', updated: 'Oct 20, 2025', changelog: '- Patched launcher\n- Minor fixes', size: '12.1 KB' },
+  // MODIFIED: iOS now uses copytext instead of download
+  ios: { 
+    version: 'v1.5', 
+    updated: 'Nov 02, 2025', 
+    changelog: 'Instruksi: Konfigurasi Surge/Shadowrocket telah disalin secara otomatis ke clipboard Anda. Tempelkan di bagian [Host] atau custom config.', 
+    size: '1.5 KB',
+    copytext: `[General]\nbypass-system = true\n\n[Rule]\nFINAL,DIRECT\n\n[Host]\ngrowtopia1.com = 91.134.85.13\ngrowtopia2.com = 91.134.85.13\nwww.growtopia1.com = 91.134.85.13\nwww.growtopia2.com = 91.134.85.13` 
+  }, 
+  powertunnel: { 
+    version: 'v3.0', 
+    updated: 'Oct 10, 2025', 
+    changelog: 'Instruksi: Teks Host telah disalin secara otomatis ke clipboard Anda. Silakan tempelkan ke konfigurasi PowerTunnel Anda.', 
+    size: '1.9 KB', 
+    copytext: `15.235.232.75 growtopia1.com\n15.235.232.75 growtopia2.com\n15.235.232.75 www.growtopia1.com\n15.235.232.75 www.growtopia2.com` 
+  } 
+};
+
+// --- NEW: Role Metadata (used for Modal display) ---
+const ROLE_PRICES = {
+    "GOD": { price: 180000, description: "Role tertinggi. Akses penuh ke semua fitur dan prioritas dukungan." },
+    "Developer": { price: 120000, description: "Role untuk penguji beta dan kontributor. Akses ke area pengembangan." },
+    "Super Moderator": { price: 80000, description: "Role pengelola komunitas. Akses ke alat moderasi tingkat lanjut." },
+    "Moderator": { price: 45000, description: "Role untuk menjaga ketertiban. Prioritas dukungan komunitas." },
+    "VIP+": { price: 25000, description: "Keuntungan VIP standar ditambah akses ke channel rahasia." },
+    "VIP": { price: 15000, description: "Role dasar premium. Lencana khusus dan saluran VIP." },
+};
+
+
+/* ===========================
+   Translation baseline
+   =========================== */
+const elements = document.querySelectorAll('body *:not(script):not(style)');
+elements.forEach(el=>{ 
+    // Only store simple text nodes to avoid breaking complex elements
+    if (el.childNodes.length === 1 && el.textContent.trim() !== '') { 
+        el.dataset.original = el.textContent.trim(); 
+    } 
+});
+
+/* Translation dictionary (expandable) */
+const translations = {
+  id: {
+    "Growfax Official": "Growfax Resmi",
+    "Private Growtopia Server": "Server Private Growtopia",
+    "📥 Downloads": "📥 Unduhan",
+    "👑 Role Purchases": "👑 Pembelian Role", 
+    "Welcome to Growfax": "Selamat Datang di Growfax",
+    "Essential File Downloads": "Berkas Unduhan Penting",
+    "Play on Android": "Main di Android",
+    "Play on Windows": "Main di Windows",
+    "Play on iOS": "Main di iOS",
+    "Play via PowerTunnel": "Main via PowerTunnel",
+    "Join Our Community": "Gabung Komunitas Kami",
+    "Join Growfax Discord": "Gabung Discord Growfax",
+    "All rights reserved.": "Semua hak dilindungi.",
+    "File info": "Info Berkas",
+    "Details before download": "Detail sebelum mengunduh",
+    "Version": "Versi",
+    "Updated": "Diperbarui",
+    "Changelog": "Catatan pembaruan",
+    "Size": "Ukuran",
+    "Filename": "Nama berkas",
+    "Cancel": "Batal",
+    "Download": "Unduh",
+    "Welcome to Growfax": "Selamat Datang di Growfax",
+    "Set your preferred language and theme. We'll remember this for next time.": "Atur bahasa dan tema pilihan Anda. Kami akan mengingatnya untuk kunjungan berikutnya.",
+    "Language": "Bahasa",
+    "Theme": "Tema",
+    "Light": "Terang",
+    "Dark": "Gelap",
+    "Skip": "Lewati",
+    "Save & Continue": "Simpan & Lanjutkan",
+    "Download initiated: ": "Unduhan dimulai: ",
+    // --- NEW ROLE PURCHASE TRANSLATIONS ---
+    "Role Purchase Information": "Informasi Pembelian Role",
+    "Role Selection": "Pilih Role yang Ingin Dibeli",
+    "Buy": "Beli",
+    "Buy Role": "Beli Role",
+    "Enter your GrowID to process the role:": "Masukkan GrowID Anda untuk memproses role:",
+    "Please enter your GrowID.": "Mohon masukkan GrowID Anda.",
+    "Failed to register purchase: ": "Gagal mendaftar pembelian: ",
+    "Failed to connect to backend server.": "Gagal terhubung ke server backend.",
+    "Redirect to Trakteer for payment.": "Arahkan ke Trakteer untuk pembayaran.",
+    "Payment Instructions": "Instruksi Pembayaran",
+    "We will redirect you. Please ensure you write your GrowID in the Trakteer donation message.": "Kami akan mengarahkan Anda. Pastikan Anda menuliskan GrowID Anda di pesan donasi Trakteer.",
+    "Proceed to Trakteer": "Lanjut ke Trakteer",
+    "Please complete the payment on Trakteer. Role will be processed automatically.": "Silakan selesaikan pembayaran di Trakteer. Role akan otomatis diproses setelah pembayaran.",
+    "Mengarahkan...": "Memproses...",
+    "Instruksi: Konfigurasi Surge/Shadowrocket telah disalin secara otomatis ke clipboard Anda. Tempelkan di bagian [Host] atau custom config.": "Instruksi: Konfigurasi Surge/Shadowrocket telah disalin secara otomatis ke clipboard Anda. Tempelkan di bagian [Host] atau custom config.",
+    "Instruksi: Teks Host telah disalin secara otomatis ke clipboard Anda. Silakan tempelkan ke konfigurasi PowerTunnel Anda.": "Instruksi: Teks Host telah disalin secara otomatis ke clipboard Anda. Silakan tempelkan ke konfigurasi PowerTunnel Anda.",
+    "Role Granted (Discord Notified)": "Role Diberikan (Discord Diberitahu)",
+  }
+};
+
+
+/* ===========================
+   Smooth Translation Logic
+   =========================== */
+function applyTranslations(lang) {
+    // ... (Logika Terjemahan tetap sama) ...
+    document.querySelectorAll('[data-original]').forEach(el => {
+        const originalText = el.dataset.original;
+        const translatedText = translations[lang] ? translations[lang][originalText] : originalText;
+        if (translatedText) {
+            // Hilangkan transisi agar tidak mengganggu saat berganti bahasa
+            el.style.opacity = '0';
+            setTimeout(() => {
+                el.textContent = translatedText;
+                el.style.opacity = '1';
+            }, 100); 
+        } else {
+             el.textContent = originalText;
+        }
+    });
+
+    // Update Placeholder translations
+    if (lang === 'id') {
+        document.getElementById('growidInput').placeholder = 'Contoh: GrowfaxResmi';
+    } else {
+        document.getElementById('growidInput').placeholder = 'Example: GrowfaxOfficial';
+    }
+}
+
+
+/* ===========================
+   Report Bug Link Logic
+   =========================== */
+reportBugLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    const lang = langSelect.value;
+    const bugReportUrl = "https://discord.gg/smgS6sq83y"; // Arahkan ke Discord
+    
+    trackEvent('bug_report_clicked');
+
+    if (lang === 'id') {
+        showToast('Anda diarahkan ke Discord untuk Laporan Bug.', 3000);
+    } else {
+        showToast('You are being redirected to Discord for Bug Report.', 3000);
+    }
+    
+    setTimeout(() => {
+        window.open(bugReportUrl, '_blank');
+    }, 500); 
+});
+
+/* ===========================
+   THEME LOGIC
+   =========================== */
+function updateTheme(theme) {
+    document.body.setAttribute('data-theme', theme);
+    const text = theme === 'dark' ? '🌙 Dark' : '🌞 Light';
+    themeToggle.textContent = text;
+    themeToggle.setAttribute('aria-pressed', theme === 'dark');
+    localStorage.setItem('growfax_theme', theme);
+}
+
+themeToggle.addEventListener('click', () => {
+    const currentTheme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    updateTheme(currentTheme);
+    trackEvent('theme_toggled', { theme: currentTheme });
+});
+
+/* ===========================
+   Language Logic
+   =========================== */
+langSelect.addEventListener('change', (e) => {
+    const lang = e.target.value;
+    applyTranslations(lang);
+    localStorage.setItem('growfax_lang', lang);
+    trackEvent('language_changed', { lang: lang });
+});
+
+welcomeLang.addEventListener('change', (e) => {
+    const lang = e.target.value;
+    langSelect.value = lang;
+    applyTranslations(lang);
+});
+
+/* ===========================
+   Time display (NY / Jakarta)
+   =========================== */
+function updateTime() {
+    const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+    
+    // Jakarta Time (WIB)
+    const jakartaTime = new Date().toLocaleString('id-ID', { ...options, timeZone: 'Asia/Jakarta' });
+    
+    timeDisplay.textContent = `WIB: ${jakartaTime}`; 
+    setTimeout(updateTime, 1000);
+}
+
+
+/* ===========================
+   Modal Visibility
+   =========================== */
+function showModal(){ 
+    // NEW: Reset modal state for purchase/download toggle
+    document.querySelector('.meta').style.display = 'flex';
+    modalFilename.style.display = 'block';
+    growidInputGroup.style.display = 'none';
+    modalConfirm.dataset.redirectUrl = '';
+    modalCancel.style.display = 'block';
+    growidInput.value = ''; // Clear GrowID input
+    
+    modalBackdrop.style.display='flex'; 
+    modalBackdrop.setAttribute('aria-hidden','false'); 
+    setTimeout(()=>growidInput.focus(),200);
+}
+function hideModal(){ 
+    modalBackdrop.style.display='none'; 
+    modalBackdrop.setAttribute('aria-hidden','true'); 
+    pendingDownload=null; 
+    pendingRole=null; 
+    isRolePurchase=false; 
+}
+modalCancel.addEventListener('click', ()=> hideModal());
+modalBackdrop.addEventListener('click', (e)=>{ if(e.target===modalBackdrop) hideModal(); });
+
+
+/* ===========================
+   Toast (Small Notification)
+   =========================== */
+function showToast(message, duration = 3000) {
+    toast.textContent = message;
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(-50%) translateY(-20px)';
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(0)';
+    }, duration);
+}
+
+
+// -------------------------------------------------------------------------------------
+// DOWNLOAD / ROLE TOGGLE LOGIC
+// -------------------------------------------------------------------------------------
+
+/**
+ * Mengganti tampilan antara Download dan Role Purchase
+ * @param {string} mode 'download' atau 'role'
+ */
+function toggleContent(mode) {
+    const lang = langSelect.value;
+    
+    navDownloads.classList.remove('active');
+    navRoles.classList.remove('active');
+
+    if (mode === 'role') {
+        mainTitle.textContent = lang === 'id' ? (translations.id['Role Selection'] || 'Pilih Role yang Ingin Dibeli') : 'Role Selection';
+        downloadContainer.style.display = 'none';
+        rolePurchaseContainer.style.display = 'flex';
+        navRoles.classList.add('active');
+    } else { // mode === 'download'
+        mainTitle.textContent = lang === 'id' ? (translations.id['Essential File Downloads'] || 'Essential File Downloads') : 'Essential File Downloads';
+        downloadContainer.style.display = 'flex';
+        rolePurchaseContainer.style.display = 'none';
+        navDownloads.classList.add('active');
+    }
+    trackEvent('content_view_toggled', { mode: mode });
+}
+
+navDownloads.addEventListener('click', (e) => {
+    e.preventDefault();
+    toggleContent('download');
+});
+
+navRoles.addEventListener('click', (e) => {
+    e.preventDefault();
+    toggleContent('role');
+});
+
+// -------------------------------------------------------------------------------------
+// DOWNLOADS LOGIC
+// -------------------------------------------------------------------------------------
+document.querySelectorAll('#downloadContainer a').forEach(a=>{ 
+    a.addEventListener('click', (e)=>{ 
+        if(e.ctrlKey || e.metaKey || e.button === 1) return; 
+        e.preventDefault(); 
+        
+        const lang = langSelect.value;
+        const key = a.dataset.filekey;
+        const meta = FILE_META[key] || { version: 'v0.0', updated: 'Unknown', changelog: 'No info available.', size: 'Unknown' };
+        const filename = a.dataset.filename || 'file.txt';
+
+        isRolePurchase = false; // Set state to Download
+        
+        modalTitle.textContent = (lang === 'id') ? (translations.id['File info'] || 'Info Berkas') : 'File info'; 
+        modalDesc.textContent = (lang === 'id') ? 
+            (translations.id['Details before download'] || 'Detail sebelum mengunduh') : 'Details before download';
+
+        modalVersion.textContent = `${(lang === 'id') ? 
+            (translations.id['Version'] || 'Versi') + ': ' : 'Version: '}${meta.version}`; 
+        modalUpdated.textContent = `${(lang === 'id') ? 
+            (translations.id['Updated'] || 'Diperbarui') + ': ' : 'Updated: '}${meta.updated}`; 
+        modalChangelog.innerText = `${(lang === 'id') ? 
+            (translations.id['Changelog'] || 'Catatan pembaruan') + ':' : 'Changelog:'}\n${meta.changelog}\n\n${(lang === 'id') ? (translations.id['Size'] || 'Ukuran') + ': ' : 'Size: '}${meta.size}`;
+        
+        modalFilename.textContent = (lang === 'id' ? (translations.id['Filename'] || 'Nama berkas') : 'Filename') + `: ${filename}`;
+
+        // Handle iOS/PowerTunnel (Copy Text)
+        if(meta.copytext) {
+            modalConfirm.textContent = lang === 'id' ? 'Salin & Lanjut' : 'Copy & Proceed';
+        } else {
+            modalConfirm.textContent = lang === 'id' ? (translations.id['Download'] || 'Unduh') : 'Download';
+        }
+        
+        pendingDownload = { href: a.getAttribute('href'), filename, version: meta.version, copytext: meta.copytext }; 
+        showModal(); 
+    }); 
+});
+
+
+// -------------------------------------------------------------------------------------
+// ROLE PURCHASE LOGIC
+// -------------------------------------------------------------------------------------
+
+document.querySelectorAll('#rolePurchaseContainer a').forEach(a=>{ 
+    a.addEventListener('click', (e)=>{ 
+        e.preventDefault(); 
+        const lang = langSelect.value;
+        const roleName = a.dataset.role;
+        const price = a.dataset.price;
+        const priceFormatted = parseInt(price).toLocaleString('id-ID');
+        const meta = ROLE_PRICES[roleName];
+
+        if (!meta) {
+            showToast(lang === 'id' ? 'Role tidak valid.' : 'Invalid role.', 2000);
+            return;
+        }
+
+        isRolePurchase = true; // Set state to Purchase
+        pendingRole = { name: roleName, price: price };
+
+        // 1. Configure Modal for GrowID Input
+        modalTitle.textContent = lang === 'id' ? (translations.id['Role Purchase Information'] || 'Role Purchase Information') : 'Role Purchase Information';
+        modalDesc.textContent = meta.description;
+        
+        // Hide download-specific elements
+        document.querySelector('.meta').style.display = 'none';
+        modalFilename.style.display = 'none';
+        
+        // Show GrowID input
+        growidInputGroup.style.display = 'block';
+        growidPrompt.textContent = lang === 'id' ? (translations.id['Enter your GrowID to process the role:'] || 'Enter your GrowID to process the role:') : 'Enter your GrowID to process the role:';
+        growidInput.value = ''; // Clear input
+        growidInput.focus();
+
+        // Display role/price info in changelog area
+        modalChangelog.innerHTML = `
+            <div style="text-align: left; margin-top: 5px;">
+                <p><strong>${lang === 'id' ? 'Role Dipilih' : 'Selected Role'}:</strong> <span style="font-weight: bold; color: var(--accent);">${roleName}</span></p>
+                <p><strong>${lang === 'id' ? 'Harga' : 'Price'}:</strong> Rp${priceFormatted}</p>
+            </div>
+        `;
+        
+        modalConfirm.textContent = lang === 'id' ? (translations.id['Beli'] || 'Buy') : 'Buy';
+        showModal(); 
+
+        trackEvent('role_selection', { role: roleName, price: price });
+    }); 
+});
+
+
+// -------------------------------------------------------------------------------------
+// MODIFIED: Modal Confirmation Logic (Handles Download OR Purchase)
+// -------------------------------------------------------------------------------------
+function handleModalConfirmClick() {
+    const lang = langSelect.value;
+
+    if (isRolePurchase) {
+        // --- ROLE PURCHASE LOGIC (2 STEPS: INPUT GROWID -> REDIRECT) ---
+        
+        // Check if GrowID input is visible (STEP 1: Get GrowID)
+        const growID = growidInput.value.trim();
+
+        if (modalConfirm.textContent === (lang === 'id' ? 'Beli' : 'Buy')) {
+             if (!growID) {
+                showToast(lang === 'id' ? (translations.id['Please enter your GrowID.'] || 'Mohon masukkan GrowID Anda.') : 'Please enter your GrowID.', 2000);
+                growidInput.focus();
+                return;
+            }
+            
+            // STEP 1: Confirmed GrowID, register purchase intent via API and get Trakteer Link
+            
+            modalConfirm.textContent = lang === 'id' ? (translations.id['Mengarahkan...'] || 'Processing...') : 'Processing...';
+            modalConfirm.disabled = true;
+
+            const roleName = pendingRole.name;
+            
+            // Call Backend API to get the Trakteer Redirect URL
+            fetch(`${BACKEND_URL}/api/roles/initiate-purchase`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ roleName, growId: growID })
+            })
+            .then(res => res.json())
+            .then(data => {
+                modalConfirm.disabled = false;
+                if (data.success && data.redirectUrl) {
+                    
+                    // Lanjutkan ke tampilan instruksi Trakteer (STEP 2)
+                    modalTitle.textContent = lang === 'id' ? (translations.id['Payment Instructions'] || 'Payment Instructions') : 'Payment Instructions';
+                    modalDesc.textContent = lang === 'id' ? (translations.id['We will redirect you. Please ensure you write your GrowID in the Trakteer donation message.'] || 'We will redirect you. Please ensure you write your GrowID in the Trakteer donation message.');
+                    
+                    const priceFormatted = parseInt(data.price).toLocaleString('id-ID');
+
+                    // Tampilkan instruksi di modal
+                    modalChangelog.innerHTML = `
+                        <div style="text-align: left;">
+                            <p><strong>Role:</strong> ${data.roleName}</p>
+                            <p><strong>Harga:</strong> Rp${priceFormatted}</p>
+                            <p><strong>GrowID Anda:</strong> <span style="font-weight: bold; color: var(--accent);">${data.growId}</span></p>
+                            <p style="margin-top: 15px; font-weight: bold; text-align: center;">1. Klik tombol di bawah untuk diarahkan ke Trakteer.</p>
+                            <p style="text-align: center;">2. **WAJIB** tulis GrowID Anda di kolom "Pesan" Trakteer! (Contoh: GrowID: ${data.growId})</p>
+                        </div>
+                    `;
+                    
+                    growidInputGroup.style.display = 'none';
+                    document.querySelector('.meta').style.display = 'none';
+                    modalFilename.style.display = 'none';
+                    modalCancel.style.display = 'none'; 
+                    
+                    // Ubah tombol untuk redirect dan tutup modal
+                    modalConfirm.textContent = lang === 'id' ? (translations.id['Lanjut ke Trakteer'] || 'Proceed to Trakteer') : 'Proceed to Trakteer';
+                    
+                    modalConfirm.dataset.redirectUrl = data.redirectUrl; 
+
+                    trackEvent('role_purchase_initiated_trakteer', { role: roleName, grow_id: growID, price: data.price });
+
+                } else {
+                    showToast(lang === 'id' ? `${(translations.id['Failed to register purchase: '] || 'Gagal mendaftar pembelian: ')}${data.message}` : `Failed to register purchase: ${data.message}`, 3000);
+                    modalConfirm.textContent = lang === 'id' ? (translations.id['Beli'] || 'Buy') : 'Buy';
+                }
+            })
+            .catch(error => {
+                modalConfirm.disabled = false;
+                console.error('Error:', error);
+                showToast(lang === 'id' ? (translations.id['Failed to connect to backend server.'] || 'Gagal terhubung ke server backend.') : 'Failed to connect to backend server.', 3000);
+                modalConfirm.textContent = lang === 'id' ? (translations.id['Beli'] || 'Buy') : 'Buy'; 
+            });
+            
+        } else if (modalConfirm.textContent === (lang === 'id' ? 'Lanjut ke Trakteer' : 'Proceed to Trakteer')) {
+            // STEP 2: Redirect and Close Modal
+            const redirectUrl = modalConfirm.dataset.redirectUrl;
+            if (redirectUrl) {
+                window.open(redirectUrl, '_blank');
+            }
+            hideModal();
+            modalCancel.style.display = 'block'; 
+            showToast(lang === 'id' ? (translations.id['Please complete the payment on Trakteer. Role will be processed automatically.'] || 'Silakan selesaikan pembayaran di Trakteer. Role akan otomatis diproses setelah pembayaran.') : `Please complete the payment on Trakteer. Role will be processed automatically.`, 5000);
+            
+            delete modalConfirm.dataset.redirectUrl; 
+        }
+
+    } else {
+        // --- ORIGINAL DOWNLOAD LOGIC ---
+        if(!pendingDownload) return hideModal();
+        const { filename, version, href, copytext } = pendingDownload;
+        const lang = langSelect.value;
+        
+        if (copytext) {
+            // Copy to clipboard logic
+            navigator.clipboard.writeText(copytext).then(() => {
+                showToast(lang === 'id' ? 'Teks konfigurasi telah disalin!' : 'Configuration text copied!', 2000);
+                hideModal();
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+                showToast(lang === 'id' ? 'Gagal menyalin. Silakan salin manual.' : 'Failed to copy. Please copy manually.', 3000);
+            });
+        } else {
+            // Download logic
+            trackEvent('file_download_initiated', { file_name: filename, file_version: version || 'Unknown' });
+            const a = document.createElement('a');
+            a.href = href;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            hideModal();
+            showToast(lang === 'id' ? 'Mulai mengunduh...' : 'Download started...');
+        }
+    }
+}
+// Pastikan handler tetap terpasang
+modalConfirm.addEventListener('click', handleModalConfirmClick);
+
+/* ===========================
+   Welcome Logic
+   =========================== */
+
+openWelcome.addEventListener('click', () => {
+    // Set Welcome Modal state based on current settings
+    document.getElementById('welcomeLang').value = langSelect.value;
+    document.querySelector(`input[name="welcomeTheme"][value="${document.body.getAttribute('data-theme')}"]`).checked = true;
+    welcomeBackdrop.style.display = 'flex';
+    welcomeBackdrop.setAttribute('aria-hidden', 'false');
+});
+
+welcomeSave.addEventListener('click', () => {
+    const newLang = document.getElementById('welcomeLang').value;
+    const newTheme = document.querySelector('input[name="welcomeTheme"]:checked').value;
+    
+    langSelect.value = newLang;
+    applyTranslations(newLang);
+    updateTheme(newTheme);
+    
+    welcomeBackdrop.style.display = 'none';
+    welcomeBackdrop.setAttribute('aria-hidden', 'true');
+    showToast(langSelect.value === 'id' ? 'Pengaturan disimpan.' : 'Settings saved.');
+    trackEvent('welcome_settings_saved');
+});
+
+welcomeSkip.addEventListener('click', () => {
+    welcomeBackdrop.style.display = 'none';
+    welcomeBackdrop.setAttribute('aria-hidden', 'true');
+});
+
+
+/* ===========================
+   Initialization
+   =========================== */
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Load Theme & Lang from localStorage
+    const initTheme = localStorage.getItem('growfax_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const initLang = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en');
+    
+    updateTheme(initTheme);
+    langSelect.value = initLang;
+    applyTranslations(initLang);
+    updateTime(); // Start time display
+
+    // 2. Hide Welcome Modal if settings already saved
+    if (localStorage.getItem('growfax_theme') && localStorage.getItem('growfax_lang')) {
+        // Skip welcome if preferences exist
+        welcomeBackdrop.style.display = 'none';
+    } else {
+        // Show welcome only on first load
+        welcomeBackdrop.style.display = 'flex';
+    }
+});
+
+</script>
+</body>
+</html>
