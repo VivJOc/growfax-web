@@ -30,7 +30,6 @@
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
   gtag('config', 'G-XXXXXXXXXX'); // Placeholder ID for Growfax Analytics
 </script>
 <style>
@@ -308,6 +307,16 @@
       font-weight: 400;
       opacity: 0.7;
   }
+  /* NEW: Style for the multiple currency display */
+  .shop-role-card .currency-display {
+      display: block; 
+      font-size: 0.8rem; /* Smaller font for secondary currencies */
+      font-weight: 500; 
+      opacity: 0.8; 
+      margin-top: 6px;
+      line-height: 1.4;
+      white-space: pre-wrap;
+  }
   /* UPDATED: UL style for commands (Added Scroll functionality) */
   .shop-role-card ul {
       list-style-type: none;
@@ -356,7 +365,6 @@
       font-weight: 700;
       text-align: center;
       transition: background 0.15s, transform 0.15s;
-      /* Removed: display: block; from here to accommodate flex layout below */
   }
   .btn-purchase:hover {
       background: #732a9a;
@@ -368,13 +376,15 @@
       gap: 10px;
       margin-top: 15px;
       width: 100%;
+      flex-wrap: wrap; /* NEW: Allow wrapping for many buttons */
   }
   /* Ensure the button links themselves manage the flex sizing */
   .shop-role-card .purchase-buttons .btn-purchase {
       display: flex; 
-      flex: 1;
+      flex: 1 1 calc(50% - 5px); /* Set to max 2 buttons per row on mobile */
       align-items: center;
       justify-content: center;
+      min-width: 120px; /* Ensure a minimum size */
   }
   /* New style for IDR button */
   .btn-idr {
@@ -382,6 +392,42 @@
   }
   .btn-idr:hover {
       background: #1e8449;
+  }
+  /* NEW: EUR Button */
+  .btn-eur {
+      background: #004494; /* Dark Blue for EUR */
+  }
+  .btn-eur:hover {
+      background: #003370;
+  }
+  /* NEW: GBP Button */
+  .btn-gbp {
+      background: #c0392b; /* Reddish Brown for GBP */
+  }
+  .btn-gbp:hover {
+      background: #a93226;
+  }
+  /* NEW: AUD Button */
+  .btn-aud {
+      background: #f1c40f; /* Yellow/Gold for AUD */
+      color: #333; /* Dark text for contrast */
+  }
+  .btn-aud:hover {
+      background: #d4ac0d;
+  }
+  /* NEW: SGD Button */
+  .btn-sgd {
+      background: #3498db; /* Light Blue for SGD */
+  }
+  .btn-sgd:hover {
+      background: #2980b9;
+  }
+  /* NEW: CAD Button */
+  .btn-cad {
+      background: #e74c3c; /* Red for CAD */
+  }
+  .btn-cad:hover {
+      background: #c0392b;
   }
 
 
@@ -480,6 +526,11 @@
     .shop-roles {
         grid-template-columns: repeat(3, minmax(200px, 1fr)); /* 3 columns on desktop */
     }
+    /* On desktop, buttons can take up less space */
+    .shop-role-card .purchase-buttons .btn-purchase {
+        flex: 1 1 calc(33.33% - 7px); /* Allow up to 3 buttons per row on PC */
+        min-width: 90px;
+    }
 
     /* Banner/Content padding besar */
     .banner-section{padding:56px 20px;}
@@ -568,9 +619,14 @@
             <div class="shop-role-card">
                 <div>
                     <h3>✨ VIP Role</h3>
-                    <p class="price" data-usd="0.7" data-idr="10500">
+                    <p class="price" data-usd="0.7" 
+                        data-idr="10500" data-eur="0.64" data-gbp="0.56" 
+                        data-aud="1.05" data-sgd="0.95" data-cad="0.95">
                         $0.7 <small>USD</small>
-                        <span class="idr-price-display" style="display:block; font-size: 1rem; font-weight: 500; opacity: 0.8; margin-top: 4px;">~ Rp 10.500 <small>IDR</small></span>
+                        <span class="currency-display">
+                            ~ €0.64 <small>EUR</small> | ~ £0.56 <small>GBP</small> | ~ A$1.05 <small>AUD</small><br>
+                            ~ S$0.95 <small>SGD</small> | ~ C$0.95 <small>CAD</small> | ~ Rp 10.500 <small>IDR</small>
+                        </span>
                     </p>
                     <ul id="vip_commands">
                         <li><strong>/superbreak</strong> <span>Activate the Super Breaker mode!</span></li>
@@ -579,6 +635,11 @@
                 </div>
                 <div class="purchase-buttons">
                     <a href="https://paypal.me/Growfax/0.7USD" target="_blank" rel="noopener" class="btn-purchase btn-usd" data-role="vip" data-price="0.7">Pay $USD</a>
+                    <a href="https://paypal.me/Growfax/0.64EUR" target="_blank" rel="noopener" class="btn-purchase btn-eur" data-role="vip" data-price-eur="0.64">Pay €EUR</a>
+                    <a href="https://paypal.me/Growfax/0.56GBP" target="_blank" rel="noopener" class="btn-purchase btn-gbp" data-role="vip" data-price-gbp="0.56">Pay £GBP</a>
+                    <a href="https://paypal.me/Growfax/1.05AUD" target="_blank" rel="noopener" class="btn-purchase btn-aud" data-role="vip" data-price-aud="1.05">Pay A$AUD</a>
+                    <a href="https://paypal.me/Growfax/0.95SGD" target="_blank" rel="noopener" class="btn-purchase btn-sgd" data-role="vip" data-price-sgd="0.95">Pay S$SGD</a>
+                    <a href="https://paypal.me/Growfax/0.95CAD" target="_blank" rel="noopener" class="btn-purchase btn-cad" data-role="vip" data-price-cad="0.95">Pay C$CAD</a>
                     <a href="https://paypal.me/Growfax/10500IDR" target="_blank" rel="noopener" class="btn-purchase btn-idr" data-role="vip" data-idr-price="10500">Bayar Rp IDR</a>
                 </div>
             </div>
@@ -586,9 +647,14 @@
             <div class="shop-role-card">
                 <div>
                     <h3>🌟 VIP+ Role</h3>
-                    <p class="price" data-usd="1.2" data-idr="18000">
+                    <p class="price" data-usd="1.2" 
+                        data-idr="18000" data-eur="1.10" data-gbp="0.96" 
+                        data-aud="1.80" data-sgd="1.62" data-cad="1.62">
                         $1.2 <small>USD</small>
-                        <span class="idr-price-display" style="display:block; font-size: 1rem; font-weight: 500; opacity: 0.8; margin-top: 4px;">~ Rp 18.000 <small>IDR</small></span>
+                        <span class="currency-display">
+                            ~ €1.10 <small>EUR</small> | ~ £0.96 <small>GBP</small> | ~ A$1.80 <small>AUD</small><br>
+                            ~ S$1.62 <small>SGD</small> | ~ C$1.62 <small>CAD</small> | ~ Rp 18.000 <small>IDR</small>
+                        </span>
                     </p>
                     <ul id="vip_plus_commands">
                         <li><strong>/gemrain</strong> <span>Activate the Gem Rain & Enjoy 20% more gems!</span></li>
@@ -598,6 +664,11 @@
                 </div>
                 <div class="purchase-buttons">
                     <a href="https://paypal.me/Growfax/1.2USD" target="_blank" rel="noopener" class="btn-purchase btn-usd" data-role="vip+" data-price="1.2">Pay $USD</a>
+                    <a href="https://paypal.me/Growfax/1.10EUR" target="_blank" rel="noopener" class="btn-purchase btn-eur" data-role="vip+" data-price-eur="1.10">Pay €EUR</a>
+                    <a href="https://paypal.me/Growfax/0.96GBP" target="_blank" rel="noopener" class="btn-purchase btn-gbp" data-role="vip+" data-price-gbp="0.96">Pay £GBP</a>
+                    <a href="https://paypal.me/Growfax/1.80AUD" target="_blank" rel="noopener" class="btn-purchase btn-aud" data-role="vip+" data-price-aud="1.80">Pay A$AUD</a>
+                    <a href="https://paypal.me/Growfax/1.62SGD" target="_blank" rel="noopener" class="btn-purchase btn-sgd" data-role="vip+" data-price-sgd="1.62">Pay S$SGD</a>
+                    <a href="https://paypal.me/Growfax/1.62CAD" target="_blank" rel="noopener" class="btn-purchase btn-cad" data-role="vip+" data-price-cad="1.62">Pay C$CAD</a>
                     <a href="https://paypal.me/Growfax/18000IDR" target="_blank" rel="noopener" class="btn-purchase btn-idr" data-role="vip+" data-idr-price="18000">Bayar Rp IDR</a>
                 </div>
             </div>
@@ -605,15 +676,25 @@
             <div class="shop-role-card">
                 <div>
                     <h3>🔨 Moderator Role</h3>
-                    <p class="price" data-usd="2.5" data-idr="37500">
+                    <p class="price" data-usd="2.5" 
+                        data-idr="37500" data-eur="2.30" data-gbp="2.00" 
+                        data-aud="3.75" data-sgd="3.38" data-cad="3.38">
                         $2.5 <small>USD</small>
-                        <span class="idr-price-display" style="display:block; font-size: 1rem; font-weight: 500; opacity: 0.8; margin-top: 4px;">~ Rp 37.500 <small>IDR</small></span>
+                        <span class="currency-display">
+                            ~ €2.30 <small>EUR</small> | ~ £2.00 <small>GBP</small> | ~ A$3.75 <small>AUD</small><br>
+                            ~ S$3.38 <small>SGD</small> | ~ C$3.38 <small>CAD</small> | ~ Rp 37.500 <small>IDR</small>
+                        </span>
                     </p>
                     <ul id="moderator_commands">
                         </ul>
                 </div>
                 <div class="purchase-buttons">
                     <a href="https://paypal.me/Growfax/2.5USD" target="_blank" rel="noopener" class="btn-purchase btn-usd" data-role="moderator" data-price="2.5">Pay $USD</a>
+                    <a href="https://paypal.me/Growfax/2.30EUR" target="_blank" rel="noopener" class="btn-purchase btn-eur" data-role="moderator" data-price-eur="2.30">Pay €EUR</a>
+                    <a href="https://paypal.me/Growfax/2.00GBP" target="_blank" rel="noopener" class="btn-purchase btn-gbp" data-role="moderator" data-price-gbp="2.00">Pay £GBP</a>
+                    <a href="https://paypal.me/Growfax/3.75AUD" target="_blank" rel="noopener" class="btn-purchase btn-aud" data-role="moderator" data-price-aud="3.75">Pay A$AUD</a>
+                    <a href="https://paypal.me/Growfax/3.38SGD" target="_blank" rel="noopener" class="btn-purchase btn-sgd" data-role="moderator" data-price-sgd="3.38">Pay S$SGD</a>
+                    <a href="https://paypal.me/Growfax/3.38CAD" target="_blank" rel="noopener" class="btn-purchase btn-cad" data-role="moderator" data-price-cad="3.38">Pay C$CAD</a>
                     <a href="https://paypal.me/Growfax/37500IDR" target="_blank" rel="noopener" class="btn-purchase btn-idr" data-role="moderator" data-idr-price="37500">Bayar Rp IDR</a>
                 </div>
             </div>
@@ -621,15 +702,25 @@
             <div class="shop-role-card">
                 <div>
                     <h3>🛡️ Super Moderator</h3>
-                    <p class="price" data-usd="3.2" data-idr="48000">
+                    <p class="price" data-usd="3.2" 
+                        data-idr="48000" data-eur="2.94" data-gbp="2.56" 
+                        data-aud="4.80" data-sgd="4.32" data-cad="4.32">
                         $3.2 <small>USD</small>
-                        <span class="idr-price-display" style="display:block; font-size: 1rem; font-weight: 500; opacity: 0.8; margin-top: 4px;">~ Rp 48.000 <small>IDR</small></span>
+                        <span class="currency-display">
+                            ~ €2.94 <small>EUR</small> | ~ £2.56 <small>GBP</small> | ~ A$4.80 <small>AUD</small><br>
+                            ~ S$4.32 <small>SGD</small> | ~ C$4.32 <small>CAD</small> | ~ Rp 48.000 <small>IDR</small>
+                        </span>
                     </p>
                     <ul id="super_moderator_commands">
                         </ul>
                 </div>
                 <div class="purchase-buttons">
                     <a href="https://paypal.me/Growfax/3.2USD" target="_blank" rel="noopener" class="btn-purchase btn-usd" data-role="super_moderator" data-price="3.2">Pay $USD</a>
+                    <a href="https://paypal.me/Growfax/2.94EUR" target="_blank" rel="noopener" class="btn-purchase btn-eur" data-role="super_moderator" data-price-eur="2.94">Pay €EUR</a>
+                    <a href="https://paypal.me/Growfax/2.56GBP" target="_blank" rel="noopener" class="btn-purchase btn-gbp" data-role="super_moderator" data-price-gbp="2.56">Pay £GBP</a>
+                    <a href="https://paypal.me/Growfax/4.80AUD" target="_blank" rel="noopener" class="btn-purchase btn-aud" data-role="super_moderator" data-price-aud="4.80">Pay A$AUD</a>
+                    <a href="https://paypal.me/Growfax/4.32SGD" target="_blank" rel="noopener" class="btn-purchase btn-sgd" data-role="super_moderator" data-price-sgd="4.32">Pay S$SGD</a>
+                    <a href="https://paypal.me/Growfax/4.32CAD" target="_blank" rel="noopener" class="btn-purchase btn-cad" data-role="super_moderator" data-price-cad="4.32">Pay C$CAD</a>
                     <a href="https://paypal.me/Growfax/48000IDR" target="_blank" rel="noopener" class="btn-purchase btn-idr" data-role="super_moderator" data-idr-price="48000">Bayar Rp IDR</a>
                 </div>
             </div>
@@ -637,15 +728,25 @@
             <div class="shop-role-card">
                 <div>
                     <h3>💻 Developer Role</h3>
-                    <p class="price" data-usd="6.5" data-idr="97500">
+                    <p class="price" data-usd="6.5" 
+                        data-idr="97500" data-eur="5.98" data-gbp="5.20" 
+                        data-aud="9.75" data-sgd="8.78" data-cad="8.78">
                         $6.5 <small>USD</small>
-                        <span class="idr-price-display" style="display:block; font-size: 1rem; font-weight: 500; opacity: 0.8; margin-top: 4px;">~ Rp 97.500 <small>IDR</small></span>
+                        <span class="currency-display">
+                            ~ €5.98 <small>EUR</small> | ~ £5.20 <small>GBP</small> | ~ A$9.75 <small>AUD</small><br>
+                            ~ S$8.78 <small>SGD</small> | ~ C$8.78 <small>CAD</small> | ~ Rp 97.500 <small>IDR</small>
+                        </span>
                     </p>
                     <ul id="developer_commands">
                         </ul>
                 </div>
                 <div class="purchase-buttons">
                     <a href="https://paypal.me/Growfax/6.5USD" target="_blank" rel="noopener" class="btn-purchase btn-usd" data-role="developer" data-price="6.5">Pay $USD</a>
+                    <a href="https://paypal.me/Growfax/5.98EUR" target="_blank" rel="noopener" class="btn-purchase btn-eur" data-role="developer" data-price-eur="5.98">Pay €EUR</a>
+                    <a href="https://paypal.me/Growfax/5.20GBP" target="_blank" rel="noopener" class="btn-purchase btn-gbp" data-role="developer" data-price-gbp="5.20">Pay £GBP</a>
+                    <a href="https://paypal.me/Growfax/9.75AUD" target="_blank" rel="noopener" class="btn-purchase btn-aud" data-role="developer" data-price-aud="9.75">Pay A$AUD</a>
+                    <a href="https://paypal.me/Growfax/8.78SGD" target="_blank" rel="noopener" class="btn-purchase btn-sgd" data-role="developer" data-price-sgd="8.78">Pay S$SGD</a>
+                    <a href="https://paypal.me/Growfax/8.78CAD" target="_blank" rel="noopener" class="btn-purchase btn-cad" data-role="developer" data-price-cad="8.78">Pay C$CAD</a>
                     <a href="https://paypal.me/Growfax/97500IDR" target="_blank" rel="noopener" class="btn-purchase btn-idr" data-role="developer" data-idr-price="97500">Bayar Rp IDR</a>
                 </div>
             </div>
@@ -653,15 +754,25 @@
             <div class="shop-role-card">
                 <div>
                     <h3>👑 GOD Role</h3>
-                    <p class="price" data-usd="8.6" data-idr="129000">
+                    <p class="price" data-usd="8.6" 
+                        data-idr="129000" data-eur="7.91" data-gbp="6.88" 
+                        data-aud="12.90" data-sgd="11.61" data-cad="11.61">
                         $8.6 <small>USD</small>
-                        <span class="idr-price-display" style="display:block; font-size: 1rem; font-weight: 500; opacity: 0.8; margin-top: 4px;">~ Rp 129.000 <small>IDR</small></span>
+                        <span class="currency-display">
+                            ~ €7.91 <small>EUR</small> | ~ £6.88 <small>GBP</small> | ~ A$12.90 <small>AUD</small><br>
+                            ~ S$11.61 <small>SGD</small> | ~ C$11.61 <small>CAD</small> | ~ Rp 129.000 <small>IDR</small>
+                        </span>
                     </p>
                     <ul id="god_commands">
                         </ul>
                 </div>
                 <div class="purchase-buttons">
                     <a href="https://paypal.me/Growfax/8.6USD" target="_blank" rel="noopener" class="btn-purchase btn-usd" data-role="god" data-price="8.6">Pay $USD</a>
+                    <a href="https://paypal.me/Growfax/7.91EUR" target="_blank" rel="noopener" class="btn-purchase btn-eur" data-role="god" data-price-eur="7.91">Pay €EUR</a>
+                    <a href="https://paypal.me/Growfax/6.88GBP" target="_blank" rel="noopener" class="btn-purchase btn-gbp" data-role="god" data-price-gbp="6.88">Pay £GBP</a>
+                    <a href="https://paypal.me/Growfax/12.90AUD" target="_blank" rel="noopener" class="btn-purchase btn-aud" data-role="god" data-price-aud="12.90">Pay A$AUD</a>
+                    <a href="https://paypal.me/Growfax/11.61SGD" target="_blank" rel="noopener" class="btn-purchase btn-sgd" data-role="god" data-price-sgd="11.61">Pay S$SGD</a>
+                    <a href="https://paypal.me/Growfax/11.61CAD" target="_blank" rel="noopener" class="btn-purchase btn-cad" data-role="god" data-price-cad="11.61">Pay C$CAD</a>
                     <a href="https://paypal.me/Growfax/129000IDR" target="_blank" rel="noopener" class="btn-purchase btn-idr" data-role="god" data-idr-price="129000">Bayar Rp IDR</a>
                 </div>
             </div>
@@ -858,7 +969,7 @@
 
 
   /* ===========================
-     Translation dictionary (UPDATED with dual payments)
+     Translation dictionary (UPDATED with full currency support)
      =========================== */
   const translations = {
     id: {
@@ -893,11 +1004,21 @@
       "Server Roles": "Peran Server",
       "Growfax Server Roles": "Peran Server Growfax",
       "Support the server and unlock exclusive roles! Direct purchase via PayPal.me.": "Dukung server dan buka peran eksklusif! Beli langsung via PayPal.me.",
-      // UPDATED BUTTON TEXTS
+      // UPDATED BUTTON TEXTS (for all 7 currencies)
       "Pay $USD": "Bayar $USD",
+      "Pay €EUR": "Bayar € EUR",
+      "Pay £GBP": "Bayar £ GBP",
+      "Pay A$AUD": "Bayar A$ AUD",
+      "Pay S$SGD": "Bayar S$ SGD",
+      "Pay C$CAD": "Bayar C$ CAD",
       "Bayar Rp IDR": "Bayar Rp IDR",
       // UPDATED TOAST TEXTS
       "Opening PayPal for USD purchase": "Membuka PayPal untuk pembelian $USD",
+      "Opening PayPal for EUR purchase": "Membuka PayPal untuk pembelian € EUR",
+      "Opening PayPal for GBP purchase": "Membuka PayPal untuk pembelian £ GBP",
+      "Opening PayPal for AUD purchase": "Membuka PayPal untuk pembelian A$ AUD",
+      "Opening PayPal for SGD purchase": "Membuka PayPal untuk pembelian S$ SGD",
+      "Opening PayPal for CAD purchase": "Membuka PayPal untuk pembelian C$ CAD",
       "Opening PayPal for IDR purchase": "Membuka PayPal untuk pembelian Rp IDR",
       "Join Our Community": "Bergabunglah dengan Komunitas Kami",
       "Connect with others and get support in our official Discord server.": "Terhubung dengan orang lain dan dapatkan dukungan di server Discord resmi kami.",
@@ -1208,7 +1329,7 @@
   loadAndApplySeoSettings();
 
 
-  /* =========================== Smooth Translation Logic (UPDATED with dual payments) =========================== */
+  /* =========================== Smooth Translation Logic (UPDATED with full currency support) =========================== */
 
   // Command Texts for translation
   const commandData = {
@@ -1354,10 +1475,30 @@
 
       // NEW: Handle Shop Button Translation
       const usdButtons = document.querySelectorAll('.btn-usd');
+      const eurButtons = document.querySelectorAll('.btn-eur');
+      const gbpButtons = document.querySelectorAll('.btn-gbp');
+      const audButtons = document.querySelectorAll('.btn-aud');
+      const sgdButtons = document.querySelectorAll('.btn-sgd');
+      const cadButtons = document.querySelectorAll('.btn-cad');
       const idrButtons = document.querySelectorAll('.btn-idr');
 
       usdButtons.forEach(btn => {
           btn.textContent = lang === 'en' ? 'Pay $USD' : (translations[lang]?.['Pay $USD'] || 'Bayar $USD');
+      });
+      eurButtons.forEach(btn => {
+          btn.textContent = lang === 'en' ? 'Pay €EUR' : (translations[lang]?.['Pay €EUR'] || 'Bayar € EUR');
+      });
+      gbpButtons.forEach(btn => {
+          btn.textContent = lang === 'en' ? 'Pay £GBP' : (translations[lang]?.['Pay £GBP'] || 'Bayar £ GBP');
+      });
+      audButtons.forEach(btn => {
+          btn.textContent = lang === 'en' ? 'Pay A$AUD' : (translations[lang]?.['Pay A$AUD'] || 'Bayar A$ AUD');
+      });
+      sgdButtons.forEach(btn => {
+          btn.textContent = lang === 'en' ? 'Pay S$SGD' : (translations[lang]?.['Pay S$SGD'] || 'Bayar S$ SGD');
+      });
+      cadButtons.forEach(btn => {
+          btn.textContent = lang === 'en' ? 'Pay C$CAD' : (translations[lang]?.['Pay C$CAD'] || 'Bayar C$ CAD');
       });
       idrButtons.forEach(btn => {
           btn.textContent = lang === 'en' ? 'Pay Rp IDR' : (translations[lang]?.['Bayar Rp IDR'] || 'Bayar Rp IDR');
@@ -1377,7 +1518,7 @@
   }
 
 
-  /* =========================== Toast and Event Tracking (Modified: Webhook/Tracking Disabled) (UPDATED for dual buttons) =========================== */
+  /* =========================== Toast and Event Tracking (Modified: Webhook/Tracking Disabled) (UPDATED for full currency buttons) =========================== */
   const toast = document.getElementById('toast');
   function showToast(message, duration = 2000) {
     toast.textContent = message;
@@ -1579,7 +1720,7 @@
   });
 
 
-  // Shop purchase simulation (UPDATED to handle dual buttons)
+  // Shop purchase simulation (UPDATED for full currency buttons)
   document.querySelectorAll('.btn-purchase').forEach(button => {
     button.addEventListener('click', (e) => {
       // e.preventDefault(); // Don't prevent default, allow PayPal link to open
@@ -1587,15 +1728,39 @@
       const roleName = button.getAttribute('data-role').toLowerCase();
       
       let toastMessage;
+      
       if (button.classList.contains('btn-idr')) {
           const idrPrice = button.getAttribute('data-idr-price');
-          // Update toast message for IDR
           toastMessage = lang === 'en' 
              ? `Opening PayPal for IDR purchase (${roleName} - Rp ${idrPrice})...`
              : (translations.id['Opening PayPal for IDR purchase'] || 'Membuka PayPal untuk pembelian Rp IDR') + ` (${roleName})...`;
+      } else if (button.classList.contains('btn-eur')) {
+          const eurPrice = button.getAttribute('data-price-eur');
+          toastMessage = lang === 'en' 
+             ? `Opening PayPal for EUR purchase (${roleName} - € ${eurPrice})...`
+             : (translations.id['Opening PayPal for EUR purchase'] || 'Membuka PayPal untuk pembelian € EUR') + ` (${roleName})...`;
+      } else if (button.classList.contains('btn-gbp')) {
+          const gbpPrice = button.getAttribute('data-price-gbp');
+          toastMessage = lang === 'en' 
+             ? `Opening PayPal for GBP purchase (${roleName} - £ ${gbpPrice})...`
+             : (translations.id['Opening PayPal for GBP purchase'] || 'Membuka PayPal untuk pembelian £ GBP') + ` (${roleName})...`;
+      } else if (button.classList.contains('btn-aud')) {
+          const audPrice = button.getAttribute('data-price-aud');
+          toastMessage = lang === 'en' 
+             ? `Opening PayPal for AUD purchase (${roleName} - A$ ${audPrice})...`
+             : (translations.id['Opening PayPal for AUD purchase'] || 'Membuka PayPal untuk pembelian A$ AUD') + ` (${roleName})...`;
+      } else if (button.classList.contains('btn-sgd')) {
+          const sgdPrice = button.getAttribute('data-price-sgd');
+          toastMessage = lang === 'en' 
+             ? `Opening PayPal for SGD purchase (${roleName} - S$ ${sgdPrice})...`
+             : (translations.id['Opening PayPal for SGD purchase'] || 'Membuka PayPal untuk pembelian S$ SGD') + ` (${roleName})...`;
+      } else if (button.classList.contains('btn-cad')) {
+          const cadPrice = button.getAttribute('data-price-cad');
+          toastMessage = lang === 'en' 
+             ? `Opening PayPal for CAD purchase (${roleName} - C$ ${cadPrice})...`
+             : (translations.id['Opening PayPal for CAD purchase'] || 'Membuka PayPal untuk pembelian C$ CAD') + ` (${roleName})...`;
       } else {
           const usdPrice = button.getAttribute('data-price');
-          // Update toast message for USD
           toastMessage = lang === 'en' 
              ? `Opening PayPal for USD purchase (${roleName} - $${usdPrice})...` 
              : (translations.id['Opening PayPal for USD purchase'] || 'Membuka PayPal untuk pembelian $USD') + ` (${roleName})...`;
