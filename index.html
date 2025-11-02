@@ -212,9 +212,6 @@
 </style>
 </head>
 <body data-theme="light">
-  <!-- ===========================
-       Header
-       =========================== -->
   <header>
     <div class="header-content">
       <div class="header-left">
@@ -228,8 +225,7 @@
 
         <nav class="primary" aria-label="Main navigation">
           <a href="#downloads" id="navDownloads">📥 Downloads</a>
-          <!-- CPU Mapping nav will be injected by script to avoid duplicate if already present -->
-        </nav>
+          </nav>
       </div>
 
       <div class="controls">
@@ -243,9 +239,6 @@
     </div>
   </header>
 
-  <!-- ===========================
-       Banner / Hero
-       =========================== -->
   <section class="banner-section" role="region" aria-label="Main banner">
     <img src="Growfax_banner.jpg" alt="Growfax Banner">
     <h2>Welcome to Growfax</h2>
@@ -253,9 +246,6 @@
     <div id="timeDisplay" class="time-display">Loading time...</div>
   </section>
 
-  <!-- ===========================
-       Downloads (main)
-       =========================== -->
   <main class="container" id="downloads" role="main">
     <h2>📥 Essential File Downloads</h2>
     <div class="platform-buttons" role="list">
@@ -271,15 +261,12 @@
         <img src="surge5.png" alt="">Play on iOS
       </a>
 
-      <a href="PowerTunnel_Host.txt" class="btn-powertunnel" data-filename="PowerTunnel_Host.txt" data-filekey="powertunnel" download role="listitem">
+      <a href="#" class="btn-powertunnel" data-filename="PowerTunnel_Host.txt" data-filekey="powertunnel" role="listitem">
         <img src="powertunnel.jpeg" alt="">Play via PowerTunnel
       </a>
     </div>
   </main>
 
-  <!-- ===========================
-       Discord community section
-       =========================== -->
   <section class="discord-section" aria-label="Discord community">
     <img src="discord.jpeg" alt="Discord Logo">
     <h3>Join Our Community</h3>
@@ -289,9 +276,6 @@
 
   <footer>© 2025 Growfax. All rights reserved.</footer>
 
-  <!-- ===========================
-       Modal (file info)
-       =========================== -->
   <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <h3 id="modalTitle">File info</h3>
@@ -314,9 +298,6 @@
     </div>
   </div>
 
-  <!-- ===========================
-       Welcome popup (first-visit)
-       =========================== -->
   <div id="welcomeBackdrop" class="welcome-backdrop" aria-hidden="true">
     <div class="welcome" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
       <h2 id="welcomeTitle">Welcome to Growfax</h2>
@@ -343,21 +324,12 @@
     </div>
   </div>
 
-  <!-- ===========================
-       Floating Discord chat
-       =========================== -->
   <a id="floatingChat" class="floating-chat" href="https://discord.gg/smgS6sq83y" target="_blank" rel="noopener" title="Open Discord">
     <img src="discord.jpeg" alt="Discord">
   </a>
 
-  <!-- ===========================
-       Toast (temporary messages)
-       =========================== -->
   <div id="toast" class="toast" role="status" aria-live="polite">Saved</div>
 
-  <!-- ===========================
-       Report Bug button + popup
-       =========================== -->
   <button id="reportBugBtn" class="report-bug-btn">Report Bug</button>
 
   <div id="reportPopup" class="report-popup" role="dialog" aria-modal="true" aria-labelledby="reportTitle">
@@ -391,6 +363,7 @@
    - All logic in one place: translations, theme, time, modal,
      download info, welcome popup, and integration to CPU Mapping.
    - Chatbot removed.
+   - MODIFIED: PowerTunnel now copies host text instead of downloading.
    ============================================================ */
 
 /* ===========================
@@ -422,12 +395,19 @@ let pendingDownload = null;
 
 /* ===========================
    File metadata
+   - PowerTunnel entry updated to include 'copytext' and revised changelog
    =========================== */
 const FILE_META = {
   virtualhost: { version: 'v2.1', updated: 'Oct 29, 2025', changelog: '- Fixed host parsing\\n- Improved TLS handling', size: '2.3 KB' },
   patched: { version: 'v1.9', updated: 'Oct 20, 2025', changelog: '- Patched launcher\\n- Minor fixes', size: '12.1 KB' },
   ios: { version: 'v1.4', updated: 'Sep 30, 2025', changelog: '- iOS config update\\n- Surge tweak', size: '3.7 KB' },
-  powertunnel: { version: 'v3.0', updated: 'Oct 10, 2025', changelog: '- PowerTunnel rules updated\\n- Stability improvements', size: '1.9 KB' }
+  powertunnel: { 
+    version: 'v3.0', 
+    updated: 'Oct 10, 2025', 
+    changelog: 'Instruksi: Teks Host telah disalin secara otomatis ke clipboard Anda. Silakan tempelkan ke konfigurasi PowerTunnel Anda.', 
+    size: '1.9 KB',
+    copytext: `15.235.232.75 growtopia1.com\n15.235.232.75 growtopia2.com\n15.235.232.75 www.growtopia1.com\n15.235.232.75 www.growtopia2.com`
+  }
 };
 
 /* ===========================
@@ -556,8 +536,7 @@ setInterval(updateTime, 1000);
 
 /* ===========================
    File Update Checker (modal)
-   - shows metadata before download
-   - prevents accidental middle-click downloads from being intercepted
+   - MODIFIED: PowerTunnel logic for copy-to-clipboard added
    =========================== */
 document.querySelectorAll('.platform-buttons a').forEach(a=>{
   a.addEventListener('click', (e)=>{
@@ -567,6 +546,23 @@ document.querySelectorAll('.platform-buttons a').forEach(a=>{
     const key = a.dataset.filekey;
     const meta = FILE_META[key] || { version: 'v1.0', updated: 'Unknown', changelog: 'No details', size: '—' };
     const filename = a.dataset.filename || key;
+
+    // --- LOGIKA KHUSUS POWERTUNNEL (COPY TEXT) ---
+    if (key === 'powertunnel' && meta.copytext) {
+        // Teks tersedia, salin ke clipboard
+        navigator.clipboard.writeText(meta.copytext).then(() => {
+            const toastMessage = (langSelect.value === 'id') ? '✅ Teks Host PowerTunnel berhasil disalin!' : '✅ PowerTunnel Host text copied!';
+            showToast(toastMessage, 3000);
+        }).catch(err => {
+            console.error('Copy failed:', err);
+            const toastMessage = (langSelect.value === 'id') ? '❌ Gagal menyalin teks!' : '❌ Failed to copy text!';
+            showToast(toastMessage, 3000);
+        });
+        return; // Hentikan aksi selanjutnya (tidak perlu modal)
+    }
+    // --- AKHIR LOGIKA KHUSUS POWERTUNNEL ---
+
+    // Lanjutkan dengan logika modal/download untuk file lain
     modalTitle.textContent = (langSelect.value === 'id') ? (translations.id['Details before download'] || 'Detail sebelum mengunduh') : 'Details before download';
     modalDesc.textContent = (langSelect.value === 'id') ? `Info untuk ${filename}` : `Info for ${filename}`;
     modalVersion.textContent = `${(langSelect.value === 'id') ? (translations.id['Version'] || 'Versi') + ': ' : 'Version: '}${meta.version}`;
