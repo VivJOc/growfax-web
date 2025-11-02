@@ -20,11 +20,11 @@
 <meta property="og:image" content="https://growfax.web.id/Growfax_banner.jpg" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:url" content="https://growfax.web.id/home" />
-<meta name="twitter:title" content="Growfax Official - Private Growtopia Server & Downloads" />
-<meta name="twitter:description" content="Unduh file host terbaru untuk Growfax Private Server (Android, Windows, iOS) dan bergabunglah dengan komunitas Discord kami."
+<meta property="twitter:url" content="https://growfax.web.id/home" />
+<meta property="twitter:title" content="Growfax Official - Private Growtopia Server & Downloads" />
+<meta property="twitter:description" content="Unduh file host terbaru untuk Growfax Private Server (Android, Windows, iOS) dan bergabunglah dengan komunitas Discord kami."
 />
-<meta name="twitter:image" content="https://growfax.web.id/Growfax_banner.jpg" />
+<meta property="twitter:image" content="https://growfax.web.id/Growfax_banner.jpg" />
 
 <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload" />
 <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" /> 
@@ -304,7 +304,17 @@
   /* -------------------------
      Modal & Welcome Popup
      ------------------------- */
-  .modal-backdrop, .welcome-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:1300}
+  /* FIX: Added pointer-events: none; so clicks pass through when hidden by default */
+  .modal-backdrop, .welcome-backdrop{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.45);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:1300;
+    pointer-events: none; /* FIX INI */
+  }
   .modal, .welcome{width:92%;max-width:560px;background:var(--card-bg);color:var(--text);border-radius:12px;padding:16px;box-shadow:0 14px 40px rgba(0,0,0,0.2);transform:translateY(0);transition:transform .18s,opacity .18s}
   
   /* Added opacity transition to modal/welcome text elements */
@@ -824,7 +834,7 @@ function updateTime() {
 
 
 /* ===========================
-   Modal Visibility
+   Modal Visibility (FIXED)
    =========================== */
 function showModal(){ 
     // NEW: Reset modal state for purchase/download toggle
@@ -836,10 +846,12 @@ function showModal(){
     
     modalBackdrop.style.display='flex'; 
     modalBackdrop.setAttribute('aria-hidden','false'); 
+    modalBackdrop.style.pointerEvents = 'auto'; // FIX: Enable pointer events when visible
 }
 function hideModal(){ 
     modalBackdrop.style.display='none'; 
     modalBackdrop.setAttribute('aria-hidden','true'); 
+    modalBackdrop.style.pointerEvents = 'none'; // FIX: Disable pointer events when hidden
     pendingDownload=null; 
     pendingRole=null; 
     isRolePurchase=false; 
@@ -850,7 +862,9 @@ function hideModal(){
     growidInputGroup.style.display = 'none';
 }
 modalCancel.addEventListener('click', ()=> hideModal());
-modalBackdrop.addEventListener('click', (e)=>{ if(e.target===modalBackdrop) hideModal(); });
+modalBackdrop.addEventListener('click', (e)=>{ 
+    if(e.target===modalBackdrop) hideModal(); 
+});
 
 
 /* ===========================
@@ -1138,7 +1152,7 @@ function handleModalConfirmClick() {
 modalConfirm.addEventListener('click', handleModalConfirmClick);
 
 /* ===========================
-   Welcome Logic
+   Welcome Logic (FIXED)
    =========================== */
 
 openWelcome.addEventListener('click', () => {
@@ -1147,6 +1161,7 @@ openWelcome.addEventListener('click', () => {
     document.querySelector(`input[name="welcomeTheme"][value="${document.body.getAttribute('data-theme')}"]`).checked = true;
     welcomeBackdrop.style.display = 'flex';
     welcomeBackdrop.setAttribute('aria-hidden', 'false');
+    welcomeBackdrop.style.pointerEvents = 'auto'; // FIX: Enable pointer events when visible
 });
 
 welcomeSave.addEventListener('click', () => {
@@ -1159,6 +1174,7 @@ welcomeSave.addEventListener('click', () => {
     
     welcomeBackdrop.style.display = 'none';
     welcomeBackdrop.setAttribute('aria-hidden', 'true');
+    welcomeBackdrop.style.pointerEvents = 'none'; // FIX: Disable pointer events when hidden
     showToast(langSelect.value === 'id' ? 'Pengaturan disimpan.' : 'Settings saved.');
     trackEvent('welcome_settings_saved');
 });
@@ -1166,11 +1182,12 @@ welcomeSave.addEventListener('click', () => {
 welcomeSkip.addEventListener('click', () => {
     welcomeBackdrop.style.display = 'none';
     welcomeBackdrop.setAttribute('aria-hidden', 'true');
+    welcomeBackdrop.style.pointerEvents = 'none'; // FIX: Disable pointer events when hidden
 });
 
 
 /* ===========================
-   Initialization
+   Initialization (FIXED)
    =========================== */
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Load Theme & Lang from localStorage
@@ -1186,9 +1203,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (localStorage.getItem('growfax_theme') && localStorage.getItem('growfax_lang')) {
         // Skip welcome if preferences exist
         welcomeBackdrop.style.display = 'none';
+        welcomeBackdrop.style.pointerEvents = 'none'; // FIX: Ensure hidden on first load if settings exist
     } else {
         // Show welcome only on first load
         welcomeBackdrop.style.display = 'flex';
+        welcomeBackdrop.style.pointerEvents = 'auto'; // FIX: Ensure enabled if shown
     }
     
     // Peringatan jika TRAKTEER_CREATOR_ID belum diubah
