@@ -203,7 +203,7 @@
  justify-content: flex-end; /* Keep the buttons aligned to the right */
   }
   /* Gaya untuk semua tombol kontrol di header */
-  .theme-toggle,.lang-select,.open-welcome, .report-bug-btn, #openAdmin {
+  .theme-toggle,.lang-select,.open-welcome, .report-bug-btn, #openAdmin, #openAuth, #openSettings {
     font-size:0.9rem;
  padding:6px 8px;
     border-radius:8px;
@@ -218,12 +218,22 @@
  /* Added opacity transition for smoother language change */
     transition: background-color .15s, opacity 0.2s ease;
  }
-  .report-bug-btn:hover, .theme-toggle:hover, .open-welcome:hover, #openAdmin:hover {
+  .report-bug-btn:hover, .theme-toggle:hover, .open-welcome:hover, #openAdmin:hover, #openAuth:hover, #openSettings:hover {
     background: rgba(0,0,0,0.05);
  }
-  [data-theme="dark"] .report-bug-btn:hover, [data-theme="dark"] .theme-toggle:hover, [data-theme="dark"] .open-welcome:hover, [data-theme="dark"] .#openAdmin:hover {
+  [data-theme="dark"] .report-bug-btn:hover, [data-theme="dark"] .theme-toggle:hover, [data-theme="dark"] .open-welcome:hover, [data-theme="dark"] .#openAdmin:hover, [data-theme="dark"] #openAuth:hover, [data-theme="dark"] #openSettings:hover {
     background: rgba(255,255,255,0.05);
  }
+  /* NEW: Style for the Logout button specifically */
+  #authLogoutBtn {
+      background: var(--danger) !important;
+      color: white !important;
+      border-color: var(--danger) !important;
+      font-weight: 700;
+  }
+  #authLogoutBtn:hover {
+      background: #c0392b !important;
+  }
 
   /* -------------------------
      Banner / Hero
@@ -493,8 +503,36 @@
   /* -------------------------
      Modal & Welcome/Admin Popup
      ------------------------- */
-  .modal-backdrop, .welcome-backdrop, .admin-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:1300}
+  .modal-backdrop, .welcome-backdrop, .admin-backdrop, #authBackdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:1300}
   .modal, .welcome{width:92%;max-width:560px;background:var(--card-bg);color:var(--text);border-radius:12px;padding:16px;box-shadow:0 14px 40px rgba(0,0,0,0.2);transform:translateY(0);transition:transform .18s,opacity .18s}
+  /* NEW: Auth Modal specific input styling */
+  .auth-view input[type="text"], .auth-view input[type="password"], .auth-view input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background: var(--card-bg);
+      color: var(--text);
+      box-sizing: border-box; /* Crucial for full width inside padding */
+  }
+  /* NEW: Auth Tabs Styling */
+  .small-btn {
+      padding: 6px 12px;
+      font-size: 0.9rem;
+      border-radius: 6px;
+  }
+  .active-tab {
+      background: var(--accent) !important;
+      color: white !important;
+      border-color: var(--accent) !important;
+  }
+  .auth-view .row label {
+      display: block;
+      text-align: left;
+      margin-bottom: 5px;
+      font-size: 0.95rem;
+      font-weight: 600;
+  }
   
   /* Added opacity transition to modal/welcome text elements */
   .modal h3, .modal p, .modal .changelog, .welcome h2, .welcome p, .welcome label, .welcome button, .modal h2, .modal h4 {
@@ -568,6 +606,12 @@
       #cookieConsent button {
           width: 100%;
       }
+      .controls {
+          justify-content: space-between;
+      }
+      .controls button, .controls select {
+          flex: 1 1 auto;
+      }
   }
 
   /* ===========================
@@ -599,7 +643,7 @@
     }
     .controls{gap:10px; flex-wrap: nowrap;} /* Reset wrap on PC */
     /* Ukuran PC untuk semua tombol kontrol */
-    .theme-toggle,.lang-select,.open-welcome, .report-bug-btn, #openAdmin {
+    .theme-toggle,.lang-select,.open-welcome, .report-bug-btn, #openAdmin, #openAuth, #openSettings {
         font-size:0.98rem;
  padding:8px 12px;
         border-radius: 10px;
@@ -665,7 +709,9 @@
            class="report-bug-btn" 
            title="Report a Bug">🐞 Report Bug</a>
         
-        <button id="openAdmin" class="open-welcome" title="Admin Area">🔑 Admin</button> <button id="openWelcome" class="open-welcome" title="Welcome & Preferences">⚙️</button>
+        <button id="openAdmin" class="open-welcome" title="Admin Area">🔑 Admin</button> 
+        <button id="openAuth" class="open-welcome" title="Account">👤 Account</button>
+        <button id="openSettings" class="open-welcome" title="Welcome & Preferences">⚙️</button>
    
  
         <select id="langSelect" class="lang-select" title="Language" aria-label="Select language">
@@ -789,6 +835,65 @@
           <button class="btn secondary" id="modalCancel">Cancel</button>
           <button class="btn primary" id="modalConfirm">Download</button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="authBackdrop" class="modal-backdrop welcome-backdrop" aria-hidden="true">
+    <div class="welcome auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+      <h2 id="authTitle" data-original="Account">Account</h2>
+      
+      <div id="authTabs" style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">
+          <button id="tabLogin" class="btn primary small-btn active-tab" data-original="Login">Login</button>
+          <button id="tabRegister" class="btn secondary small-btn" data-original="Register">Register</button>
+      </div>
+      
+      <div id="loginView" class="auth-view">
+          <p data-original="Welcome back! Please login to continue.">Welcome back! Please login to continue.</p>
+          <div class="row">
+              <label for="loginUsername" data-original="Username or Email">Username or Email</label>
+              <input type="text" id="loginUsername" placeholder="GrowfaxName" required>
+          </div>
+          <div class="row" style="margin-top:10px">
+              <label for="loginPassword" data-original="Password">Password</label>
+              <input type="password" id="loginPassword" required>
+          </div>
+          <a href="#" id="forgotPasswordLink" style="font-size:0.85rem; color:var(--accent); display:block; margin-top:10px; text-align:left;" data-original="Forgot Password?">Forgot Password?</a>
+          <div class="actions" style="display:flex;justify-content:flex-end;gap:8px;margin-top:14px">
+              <button class="btn primary" id="loginSubmit" data-original="Login">Login</button>
+          </div>
+      </div>
+      
+      <div id="registerView" class="auth-view" style="display:none;">
+          <p data-original="Join our community by creating an account.">Join our community by creating an account.</p>
+          <div class="row">
+              <label for="registerUsername" data-original="Username">Username</label>
+              <input type="text" id="registerUsername" placeholder="GrowfaxName" required>
+          </div>
+          <div class="row" style="margin-top:10px">
+              <label for="registerEmail" data-original="Email">Email</label>
+              <input type="email" id="registerEmail" placeholder="you@example.com" required>
+          </div>
+          <div class="row" style="margin-top:10px">
+              <label for="registerPassword" data-original="Password (Min 6 chars)">Password (Min 6 chars)</label>
+              <input type="password" id="registerPassword" required>
+          </div>
+          <div class="actions" style="display:flex;justify-content:flex-end;gap:8px;margin-top:14px">
+              <button class="btn primary" id="registerSubmit" data-original="Create Account">Create Account</button>
+          </div>
+      </div>
+      
+      <div id="forgotView" class="auth-view" style="display:none;">
+          <h3 style="margin-top:0;" data-original="Reset Password">Reset Password</h3>
+          <p data-original="Enter your email address and we will send you a password reset link.">Enter your email address and we will send you a password reset link.</p>
+          <div class="row">
+              <label for="resetEmail" data-original="Email Address">Email Address</label>
+              <input type="email" id="resetEmail" placeholder="you@example.com" required>
+          </div>
+          <div class="actions" style="display:flex;justify-content:space-between;gap:8px;margin-top:14px">
+              <button class="btn secondary" id="backToLogin" data-original="Back to Login">Back to Login</button>
+              <button class="btn primary" id="resetSubmit" data-original="Send Reset Link">Send Reset Link</button>
+          </div>
       </div>
     </div>
   </div>
@@ -927,7 +1032,7 @@ const modalBackdrop = document.getElementById('modalBackdrop');
 const welcomeBackdrop = document.getElementById('welcomeBackdrop');
 const welcomeSkip = document.getElementById('welcomeSkip');
 const welcomeSave = document.getElementById('welcomeSave');
-const openWelcome = document.getElementById('openWelcome');
+const openSettings = document.getElementById('openSettings'); // RENAMED
 const welcomeLang = document.getElementById('welcomeLang');
 const modalConfirm = document.getElementById('modalConfirm');
 const modalCancel = document.getElementById('modalCancel');
@@ -936,11 +1041,32 @@ const iosButton = document.querySelector('.btn-ios');
 const powertunnelButton = document.querySelector('.btn-powertunnel');
 const shopButtons = document.querySelectorAll('.purchase-buttons .btn-purchase');
 
+// --- NEW AUTH ELEMENTS ---
+const authBackdrop = document.getElementById('authBackdrop');
+const openAuth = document.getElementById('openAuth');
+const tabLogin = document.getElementById('tabLogin');
+const tabRegister = document.getElementById('tabRegister');
+const loginView = document.getElementById('loginView');
+const registerView = document.getElementById('registerView');
+const forgotView = document.getElementById('forgotView');
+const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+const backToLogin = document.getElementById('backToLogin');
+const loginUsername = document.getElementById('loginUsername');
+const loginPassword = document.getElementById('loginPassword');
+const loginSubmit = document.getElementById('loginSubmit');
+const registerUsername = document.getElementById('registerUsername');
+const registerEmail = document.getElementById('registerEmail');
+const registerPassword = document.getElementById('registerPassword');
+const registerSubmit = document.getElementById('registerSubmit');
+const resetEmail = document.getElementById('resetEmail');
+const resetSubmit = document.getElementById('resetSubmit');
 
 // --- State Variables ---
 let serverIsOnline = true; // Initial state
 let analyticsInterval = null;
-let isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn') === 'true'; // NEW: Check login state
+let isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn') === 'true'; // NEW: Check admin login state
+let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true'; // NEW: Check user login state
+let currentUsername = localStorage.getItem('currentUsername') || ''; // NEW: Store logged in username
 
 /* =========================== Translations =========================== */
 const translations = {
@@ -995,6 +1121,37 @@ const translations = {
     "Privacy Policy": "Privacy Policy", // NEW translation
     "I Accept": "I Accept", // NEW translation
     "Thank you for accepting cookies.": "Thank you for accepting cookies.", // NEW translation
+    // --- NEW AUTH Translations ---
+    "Account": "Account",
+    "Login": "Login",
+    "Register": "Register",
+    "Welcome back! Please login to continue.": "Welcome back! Please login to continue.",
+    "Username or Email": "Username or Email",
+    "Password": "Password",
+    "Forgot Password?": "Forgot Password?",
+    "Join our community by creating an account.": "Join our community by creating an account.",
+    "Username": "Username",
+    "Email": "Email",
+    "Password (Min 6 chars)": "Password (Min 6 chars)",
+    "Create Account": "Create Account",
+    "Reset Password": "Reset Password",
+    "Enter your email address and we will send you a password reset link.": "Enter your email address and we will send you a password reset link.",
+    "Email Address": "Email Address",
+    "Back to Login": "Back to Login",
+    "Send Reset Link": "Send Reset Link",
+    "👋 Hi, ": "👋 Hi, ",
+    "Logout success.": "Logout success.",
+    "Login successful.": "Login successful.",
+    "Registration successful.": "Registration successful.",
+    "Welcome, ": "Welcome, ",
+    "Username is already taken.": "Username is already taken.",
+    "Email is already registered.": "Email is already registered.",
+    "Invalid username or password.": "Invalid username or password.",
+    "Username and Password are required.": "Username and Password are required.",
+    "Username, Email, and Password (min 6 chars) are required.": "Username, Email, and Password (min 6 chars) are required.",
+    "Password reset link sent to ": "Password reset link sent to ",
+    "Email not registered.": "Email not registered.",
+    "Invalid email address.": "Invalid email address.",
   },
   id: {
     "Pagi": "Pagi",
@@ -1085,22 +1242,57 @@ const translations = {
     "Privacy Policy": "Kebijakan Privasi", // NEW translation
     "I Accept": "Saya Terima", // NEW translation
     "Thank you for accepting cookies.": "Terima kasih telah menerima cookie.", // NEW translation
+    // --- NEW AUTH Translations ---
+    "Account": "Akun",
+    "Login": "Masuk",
+    "Register": "Daftar",
+    "Welcome back! Please login to continue.": "Selamat datang kembali! Silakan masuk untuk melanjutkan.",
+    "Username or Email": "Nama Pengguna atau Email",
+    "Password": "Kata Sandi",
+    "Forgot Password?": "Lupa Kata Sandi?",
+    "Join our community by creating an account.": "Bergabunglah dengan komunitas kami dengan membuat akun.",
+    "Username": "Nama Pengguna",
+    "Email": "Email",
+    "Password (Min 6 chars)": "Kata Sandi (Min 6 karakter)",
+    "Create Account": "Buat Akun",
+    "Reset Password": "Atur Ulang Kata Sandi",
+    "Enter your email address and we will send you a password reset link.": "Masukkan alamat email Anda dan kami akan mengirimkan tautan pengaturan ulang kata sandi.",
+    "Email Address": "Alamat Email",
+    "Back to Login": "Kembali ke Masuk",
+    "Send Reset Link": "Kirim Tautan Reset",
+    "👋 Hi, ": "👋 Hai, ",
+    "Logout success.": "Berhasil Keluar.",
+    "Login successful.": "Login berhasil.",
+    "Registration successful.": "Pendaftaran berhasil.",
+    "Welcome, ": "Selamat datang, ",
+    "Username is already taken.": "Nama pengguna sudah dipakai.",
+    "Email is already registered.": "Email sudah terdaftar.",
+    "Invalid username or password.": "Nama pengguna atau kata sandi tidak valid.",
+    "Username and Password are required.": "Nama Pengguna dan Kata Sandi wajib diisi.",
+    "Username, Email, and Password (min 6 chars) are required.": "Nama Pengguna, Email, dan Kata Sandi (min 6 kar.) wajib diisi.",
+    "Password reset link sent to ": "Tautan reset kata sandi dikirim ke ",
+    "Email not registered.": "Email tidak terdaftar.",
+    "Invalid email address.": "Alamat email tidak valid.",
   }
 };
 /* =========================== Local Storage & SEO Functions =========================== */
 function loadTheme() {
   const savedTheme = localStorage.getItem('growfax_theme');
+  const lang = langSelect.value;
+  const t = translations[lang];
+  const lightText = t['🌞 Light'] || '🌞 Light';
+  const darkText = t['🌙 Dark'] || '🌙 Dark';
+
   if (savedTheme) {
     document.body.setAttribute('data-theme', savedTheme);
-    themeToggle.textContent = savedTheme === 'dark' ? (langSelect.value === 'id' ? (translations.id['🌞 Light'] || '🌞 Light') : '🌞 Light') : (langSelect.value === 'id' ? (translations.id['🌙 Dark'] || '🌙 Dark') : '🌙 Dark');
+    themeToggle.textContent = savedTheme === 'dark' ? lightText : darkText;
   } else {
-    // Check system preference on first load
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       document.body.setAttribute('data-theme', 'dark');
-      themeToggle.textContent = langSelect.value === 'id' ? (translations.id['🌞 Light'] || '🌞 Light') : '🌞 Light';
+      themeToggle.textContent = lightText;
     } else {
       document.body.setAttribute('data-theme', 'light');
-      themeToggle.textContent = langSelect.value === 'id' ? (translations.id['🌙 Dark'] || '🌙 Dark') : '🌙 Dark';
+      themeToggle.textContent = darkText;
     }
   }
 }
@@ -1320,24 +1512,43 @@ function updateAdminDynamicTexts(lang) {
   renderAnalyticsDashboard(); 
 }
 
+// NEW: Update Auth UI dynamic texts (e.g., Hi, [Username])
+function updateAuthUI(lang) {
+    const t = translations[lang] || translations.en;
+    if (isLoggedIn && currentUsername) {
+        openAuth.textContent = `${t['👋 Hi, ']}${currentUsername}`;
+        // Change title to reflect logout option
+        openAuth.title = t['Log out'] || 'Log out';
+        openAuth.onclick = logoutUser; // Set click action to logout
+        openAuth.classList.remove('open-welcome');
+        openAuth.classList.add('report-bug-btn', 'logged-in-user'); // Use similar style but highlight
+    } else {
+        openAuth.textContent = '👤 ' + (t['Account'] || 'Akun');
+        openAuth.title = t['Account'] || 'Akun';
+        openAuth.onclick = () => { showAuthModal('login'); }; // Set click action to open login modal
+        openAuth.classList.add('open-welcome');
+        openAuth.classList.remove('report-bug-btn', 'logged-in-user');
+    }
+}
+
 function applyTranslations(lang) {
   const transitionDuration = 200; // 200 ms
-  const elementsToTranslate = document.querySelectorAll('[data-original], #modalCancel, #modalConfirm, #welcomeSave, #welcomeSkip, #discordLink, #reportBugLink, #adminTokenSubmit, #closeAdmin, #toggleServerStatus, #saveNewsUpdate, #refreshAnalytics, #saveSeoMeta, #acceptCookies'); // Added #acceptCookies
+  const elementsToTranslate = document.querySelectorAll('[data-original], #modalCancel, #modalConfirm, #welcomeSave, #welcomeSkip, #discordLink, #reportBugLink, #adminTokenSubmit, #closeAdmin, #toggleServerStatus, #saveNewsUpdate, #refreshAnalytics, #saveSeoMeta, #acceptCookies');
   
   // 1. Fade out (Opacity 0)
   elementsToTranslate.forEach(el => {
-    // Only target elements currently visible
     if (el.offsetWidth > 0 || el.offsetHeight > 0 || el.getClientRects().length > 0) {
       el.style.opacity = '0';
     }
   });
-  document.body.style.opacity = '0.01'; // Apply to the whole body for elements without data-original
+  document.body.style.opacity = '0.01';
 
   setTimeout(() => {
+    const t = translations[lang] || translations.en;
     // 2. Perform the translation
     document.querySelectorAll('[data-original]').forEach(el => {
       const originalText = el.getAttribute('data-original');
-      el.textContent = translations[lang]?.[originalText] || originalText;
+      el.textContent = t[originalText] || originalText;
     });
 
     // Update commands list
@@ -1347,17 +1558,20 @@ function applyTranslations(lang) {
     updateAdminDynamicTexts(lang); 
     
     // Update theme toggle text
-    const currentTheme = document.body.getAttribute('data-theme');
-    themeToggle.textContent = currentTheme === 'dark' ? (lang === 'id' ? (translations.id['🌞 Light'] || '🌞 Light') : '🌞 Light') : (lang === 'id' ? (translations.id['🌙 Dark'] || '🌙 Dark') : '🌙 Dark');
+    loadTheme(); // Calls itself to update theme toggle text with correct language
+    
+    // Update Auth UI (Hi, [User])
+    updateAuthUI(lang);
     
     // Update non-data-original elements
-    document.getElementById('navDownloads').textContent = lang === 'en' ? '📥 Downloads' : (translations[lang]?.['📥 Downloads'] || '📥 Unduhan');
-    document.getElementById('navShop').textContent = lang === 'en' ? '🛒 Shop' : (translations[lang]?.['🛒 Shop'] || '🛒 Toko');
-    document.getElementById('modalCancel').textContent = lang === 'en' ? 'Cancel' : (translations[lang]?.['Cancel'] || 'Batal');
-    document.getElementById('modalConfirm').textContent = lang === 'en' ? 'Download' : (translations[lang]?.['Download'] || 'Unduh');
-    document.getElementById('welcomeSave').textContent = lang === 'en' ? 'Save & Continue' : (translations[lang]?.['Save & Continue'] || 'Simpan & Lanjutkan');
-    document.getElementById('welcomeSkip').textContent = lang === 'en' ? 'Skip' : (translations[lang]?.['Skip'] || 'Lewati');
-    document.getElementById('discordLink').textContent = lang === 'en' ? 'Join Growfax Discord' : (translations[lang]?.['Join Growfax Discord'] || 'Gabung Discord Growfax');
+    document.getElementById('navDownloads').textContent = t['📥 Downloads'] || '📥 Downloads';
+    document.getElementById('navShop').textContent = t['🛒 Shop'] || '🛒 Shop';
+    document.getElementById('modalCancel').textContent = t['Cancel'] || 'Batal';
+    document.getElementById('modalConfirm').textContent = t['Download'] || 'Unduh';
+    document.getElementById('welcomeSave').textContent = t['Save & Continue'] || 'Simpan & Lanjutkan';
+    document.getElementById('welcomeSkip').textContent = t['Skip'] || 'Lewati';
+    document.getElementById('discordLink').textContent = t['Join Growfax Discord'] || 'Gabung Discord Growfax';
+    document.getElementById('openSettings').title = t['Welcome & Preferences'] || 'Selamat Datang & Preferensi';
 
     // Update Shop button texts
     const usdButtons = document.querySelectorAll('.btn-usd');
@@ -1368,16 +1582,16 @@ function applyTranslations(lang) {
     const cadButtons = document.querySelectorAll('.btn-cad');
     const idrButtons = document.querySelectorAll('.btn-idr');
 
-    usdButtons.forEach(btn => { btn.textContent = lang === 'en' ? 'Pay $USD' : (translations[lang]?.['Bayar $USD'] || 'Bayar $USD'); });
-    eurButtons.forEach(btn => { btn.textContent = lang === 'en' ? 'Pay €EUR' : (translations[lang]?.['Bayar €EUR'] || 'Bayar €EUR'); });
-    gbpButtons.forEach(btn => { btn.textContent = lang === 'en' ? 'Pay £GBP' : (translations[lang]?.['Bayar £GBP'] || 'Bayar £GBP'); });
-    audButtons.forEach(btn => { btn.textContent = lang === 'en' ? 'Pay A$AUD' : (translations[lang]?.['Bayar A$AUD'] || 'Bayar A$AUD'); });
-    sgdButtons.forEach(btn => { btn.textContent = lang === 'en' ? 'Pay S$SGD' : (translations[lang]?.['Bayar S$SGD'] || 'Bayar S$SGD'); });
-    cadButtons.forEach(btn => { btn.textContent = lang === 'en' ? 'Pay C$CAD' : (translations[lang]?.['Bayar C$CAD'] || 'Bayar C$CAD'); });
-    idrButtons.forEach(btn => { btn.textContent = lang === 'en' ? 'Pay Rp IDR' : (translations[lang]?.['Bayar Rp IDR'] || 'Bayar Rp IDR'); });
+    usdButtons.forEach(btn => { btn.textContent = t['Pay $USD'] || 'Pay $USD'; });
+    eurButtons.forEach(btn => { btn.textContent = t['Pay €EUR'] || 'Pay €EUR'; });
+    gbpButtons.forEach(btn => { btn.textContent = t['Pay £GBP'] || 'Pay £GBP'; });
+    audButtons.forEach(btn => { btn.textContent = t['Pay A$AUD'] || 'Pay A$AUD'; });
+    sgdButtons.forEach(btn => { btn.textContent = t['Pay S$SGD'] || 'Pay S$SGD'; });
+    cadButtons.forEach(btn => { btn.textContent = t['Pay C$CAD'] || 'Pay C$CAD'; });
+    idrButtons.forEach(btn => { btn.textContent = t['Bayar Rp IDR'] || 'Bayar Rp IDR'; });
     
     // Update cookie banner button
-    document.getElementById('acceptCookies').textContent = lang === 'en' ? (translations.en['I Accept'] || 'I Accept') : (translations.id['Saya Terima'] || 'Saya Terima');
+    document.getElementById('acceptCookies').textContent = t['I Accept'] || 'Saya Terima';
 
     // 3. Fade back in (Opacity 1)
     elementsToTranslate.forEach(el => { el.style.opacity = '1'; });
@@ -1449,8 +1663,8 @@ function handleUrlHash() {
 
 window.addEventListener('popstate', handleUrlHash);
 
-/* =========================== Welcome Modal Logic =========================== */
-openWelcome.addEventListener('click', () => {
+/* =========================== Settings Modal Logic (was Welcome Modal) =========================== */
+openSettings.addEventListener('click', () => {
   welcomeBackdrop.style.display = 'flex';
   welcomeBackdrop.setAttribute('aria-hidden', 'false');
 });
@@ -1470,7 +1684,7 @@ welcomeSave.addEventListener('click', () => {
   // 1. Save preferences
   localStorage.setItem('growfax_lang', lang);
   localStorage.setItem('growfax_theme', theme);
-  // 2. Apply theme (will call loadTheme which uses the new language)
+  // 2. Apply theme 
   document.body.setAttribute('data-theme', theme);
   // 3. Apply translations (calls loadTheme/updateTime internally if needed)
   langSelect.value = lang;
@@ -1490,10 +1704,12 @@ themeToggle.addEventListener('click', () => {
   localStorage.setItem('growfax_theme', newTheme);
   
   const lang = langSelect.value;
+  const t = translations[lang] || translations.en;
+  
   if (newTheme === 'dark') {
-    themeToggle.textContent = lang === 'id' ? (translations.id['🌞 Light'] || '🌞 Light') : '🌞 Light';
+    themeToggle.textContent = t['🌞 Light'] || '🌞 Light';
   } else {
-    themeToggle.textContent = lang === 'id' ? (translations.id['🌙 Dark'] || '🌙 Dark') : '🌙 Dark';
+    themeToggle.textContent = t['🌙 Dark'] || '🌙 Dark';
   }
 });
 
@@ -1504,7 +1720,6 @@ langSelect.addEventListener('change', (e) => {
   welcomeLang.value = newLang; // Sync welcome modal
   applyTranslations(newLang);
   updateTime();
-  loadTheme(); // Re-apply theme toggle text with correct language
 });
 
 /* =========================== Download/Modal Logic =========================== */
@@ -1531,13 +1746,6 @@ downloadButtons.forEach(button => {
     
     // Set download URL for confirm button
     modalConfirm.onclick = () => {
-        // Since we are using an actual download attribute on the anchor, 
-        // this is mostly for visual confirmation.
-        // For a true download, we'd trigger a click event on the original link or 
-        // redirect to the link if we were not using download attribute.
-        // As a fallback for compatibility, we use the original logic on the anchor itself.
-        
-        // This confirms and then lets the original anchor click event (with download attribute) fire if available.
         // Hide the modal first
         modalBackdrop.style.display = 'none';
         modalBackdrop.setAttribute('aria-hidden', 'true');
@@ -1660,6 +1868,181 @@ shopButtons.forEach(button => {
   });
 });
 
+/* =========================== AUTHENTICATION LOGIC (Login, Register, Reset) =========================== */
+
+function getSimulatedUsers() {
+    const users = localStorage.getItem('growfax_users');
+    return users ? JSON.parse(users) : [];
+}
+
+function saveSimulatedUsers(users) {
+    localStorage.setItem('growfax_users', JSON.stringify(users));
+}
+
+function showAuthModal(view = 'login') {
+    // Reset inputs
+    loginUsername.value = '';
+    loginPassword.value = '';
+    registerUsername.value = '';
+    registerEmail.value = '';
+    registerPassword.value = '';
+    resetEmail.value = '';
+
+    // Hide all views
+    loginView.style.display = 'none';
+    registerView.style.display = 'none';
+    forgotView.style.display = 'none';
+    tabLogin.classList.remove('active-tab');
+    tabRegister.classList.remove('active-tab');
+
+    // Show selected view
+    if (view === 'login') {
+        loginView.style.display = 'block';
+        tabLogin.classList.add('active-tab');
+    } else if (view === 'register') {
+        registerView.style.display = 'block';
+        tabRegister.classList.add('active-tab');
+    } else if (view === 'forgot') {
+        forgotView.style.display = 'block';
+    }
+
+    // Show modal
+    authBackdrop.style.display = 'flex';
+    authBackdrop.setAttribute('aria-hidden', 'false');
+}
+
+function hideAuthModal() {
+    authBackdrop.style.display = 'none';
+    authBackdrop.setAttribute('aria-hidden', 'true');
+}
+
+function logoutUser() {
+    const lang = langSelect.value;
+    const t = translations[lang] || translations.en;
+    
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('currentUsername');
+    isLoggedIn = false;
+    currentUsername = '';
+    
+    updateAuthUI(lang);
+    showToast(t['Logout success.'] || 'Berhasil Keluar.', 2000);
+    openAuth.classList.remove('logged-in-user');
+}
+
+// Event listeners for tabs
+tabLogin.addEventListener('click', () => showAuthModal('login'));
+tabRegister.addEventListener('click', () => showAuthModal('register'));
+forgotPasswordLink.addEventListener('click', (e) => { e.preventDefault(); showAuthModal('forgot'); });
+backToLogin.addEventListener('click', () => showAuthModal('login'));
+[authBackdrop].forEach(el => {
+    el.addEventListener('click', (e) => {
+        if (e.target === authBackdrop) {
+            hideAuthModal();
+        }
+    });
+});
+
+// User Registration Logic
+registerSubmit.addEventListener('click', () => {
+    const lang = langSelect.value;
+    const t = translations[lang] || translations.en;
+    const username = registerUsername.value.trim();
+    const email = registerEmail.value.trim();
+    const password = registerPassword.value;
+    const users = getSimulatedUsers();
+
+    if (!username || !email || !password || password.length < 6) {
+        showToast(t['Username, Email, and Password (min 6 chars) are required.'] || 'Nama Pengguna, Email, dan Kata Sandi (min 6 kar.) wajib diisi.', 3000);
+        return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showToast(t['Invalid email address.'] || 'Alamat email tidak valid.', 3000);
+        return;
+    }
+
+    if (users.some(user => user.username === username)) {
+        showToast(t['Username is already taken.'] || 'Nama pengguna sudah dipakai.', 3000);
+        return;
+    }
+
+    if (users.some(user => user.email === email)) {
+        showToast(t['Email is already registered.'] || 'Email sudah terdaftar.', 3000);
+        return;
+    }
+
+    // Hash simulation (just using btoa for base64 encoding, NOT secure hashing)
+    const newUser = {
+        username,
+        email,
+        password: btoa(password) 
+    };
+    users.push(newUser);
+    saveSimulatedUsers(users);
+    
+    // Auto-login after registration (best practice)
+    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('currentUsername', username);
+    isLoggedIn = true;
+    currentUsername = username;
+
+    hideAuthModal();
+    updateAuthUI(lang);
+    showToast(t['Registration successful.'] + ' ' + t['Welcome, '] + username, 3000);
+});
+
+// User Login Logic
+loginSubmit.addEventListener('click', () => {
+    const lang = langSelect.value;
+    const t = translations[lang] || translations.en;
+    const input = loginUsername.value.trim(); // Can be username or email
+    const password = loginPassword.value;
+    const users = getSimulatedUsers();
+
+    if (!input || !password) {
+        showToast(t['Username and Password are required.'] || 'Nama Pengguna dan Kata Sandi wajib diisi.', 3000);
+        return;
+    }
+
+    const user = users.find(u => 
+        u.username === input || u.email === input
+    );
+
+    if (user && user.password === btoa(password)) {
+        // Login successful
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('currentUsername', user.username);
+        isLoggedIn = true;
+        currentUsername = user.username;
+
+        hideAuthModal();
+        updateAuthUI(lang);
+        showToast(t['Login successful.'] + ' ' + t['Welcome, '] + user.username, 3000);
+    } else {
+        showToast(t['Invalid username or password.'] || 'Nama pengguna atau kata sandi tidak valid.', 3000);
+    }
+});
+
+// Forgot Password Logic
+resetSubmit.addEventListener('click', () => {
+    const lang = langSelect.value;
+    const t = translations[lang] || translations.en;
+    const email = resetEmail.value.trim();
+    const users = getSimulatedUsers();
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showToast(t['Invalid email address.'] || 'Alamat email tidak valid.', 3000);
+        return;
+    }
+    
+    if (users.some(user => user.email === email)) {
+        hideAuthModal();
+        showToast(t['Password reset link sent to '] + email, 4000); // Simulated send
+    } else {
+        showToast(t['Email not registered.'] || 'Email tidak terdaftar.', 3000);
+    }
+});
+
 /* =========================== Admin Dashboard Logic (ENHANCED with Logout) =========================== */
 
 // NEW: Admin Logout Button Logic
@@ -1752,12 +2135,12 @@ document.getElementById('saveSeoMeta').addEventListener('click', () => {
     const lang = langSelect.value;
 
     if (!title || !desc || !keywords) {
-        showToast(lang === 'id' ? (translations.id['⚠️ Semua bidang SEO wajib diisi.'] || '⚠️ Semua bidang SEO wajib diisi.') : (translations.en['⚠️ All SEO fields are required.'] || '⚠️ All SEO fields are required.'), 3000);
+        showToast(lang === 'id' ? (translations.id['⚠️ All SEO fields are required.'] || '⚠️ Semua bidang SEO wajib diisi.') : (translations.en['⚠️ All SEO fields are required.'] || '⚠️ All SEO fields are required.'), 3000);
         return;
     }
 
     if (title.length > 70 || desc.length > 160) {
-        showToast(lang === 'id' ? (translations.id['⚠️ Judul (maks 70 kar.) dan Deskripsi (maks 160 kar.) terlalu panjang.'] || '⚠️ Judul (maks 70 kar.) dan Deskripsi (maks 160 kar.) terlalu panjang.') : (translations.en['⚠️ Title (max 70 chars) and Description (max 160 chars) are too long.'] || '⚠️ Title (max 70 chars) and Description (max 160 chars) are too long.'), 4000);
+        showToast(lang === 'id' ? (translations.id['⚠️ Title (max 70 chars) and Description (max 160 chars) are too long.'] || '⚠️ Judul (maks 70 kar.) dan Deskripsi (maks 160 kar.) terlalu panjang.') : (translations.en['⚠️ Title (max 70 chars) and Description (max 160 chars) are too long.'] || '⚠️ Title (max 70 chars) and Description (max 160 chars) are too long.'), 4000);
         return;
     }
 
@@ -1796,18 +2179,21 @@ function renderAnalyticsDashboard() {
   const lang = langSelect.value;
   totalDownloadsDisplay.textContent = SIMULATED_DATA.totalDownloads.toLocaleString(lang);
   activitiesList.innerHTML = '';
+  const t = translations[lang] || translations.en;
+  
   SIMULATED_DATA.activities.forEach(activity => {
     const li = document.createElement('li');
     const timeAgo = timeSince(activity.time);
-    let activityType = lang === 'en' ? activity.type : (translations[lang]?.[activity.type] || activity.type);
+    let activityType = t[activity.type.trim()] || activity.type;
     let details = activity.details;
-    if (activityType === 'Admin Login success' && lang === 'id') {
-      activityType = translations.id['Login Admin berhasil'] || 'Login Admin berhasil';
-    } else if (activityType === 'Shop purchase: ' && lang === 'id') {
-      activityType = (translations.id['Shop purchase: '] || 'Pembelian toko: ');
-      details = translations.id[details] || details; // Translate role name
-    } else if (activityType === 'Download initiated: ' && lang === 'id') {
-      activityType = (translations.id['Download initiated: '] || 'Unduhan dimulai: ');
+
+    if (activityType.includes(t['Download initiated: ']) && lang === 'id') {
+      activityType = t['Download initiated: '];
+    } else if (activityType.includes(t['Shop purchase: ']) && lang === 'id') {
+      activityType = t['Shop purchase: '];
+      details = t[details] || details; // Translate role name
+    } else if (activityType === t['Admin Login success']) {
+        // No change needed for details (IP)
     }
     
     li.innerHTML = `<strong>${activityType}</strong>${details ? details : ''} <span style="font-size:0.75rem; color:var(--muted); white-space:nowrap;">(${timeAgo})</span>`;
@@ -1827,9 +2213,10 @@ function renderAnalyticsDashboard() {
 toggleServerStatus.addEventListener('click', () => {
   serverIsOnline = !serverIsOnline;
   const lang = langSelect.value;
-  serverStatusDisplay.textContent = serverIsOnline ? (lang === 'id' ? translations.id['Online'] : 'Online') : (lang === 'id' ? translations.id['Offline'] : 'Offline');
+  const t = translations[lang] || translations.en;
+  serverStatusDisplay.textContent = serverIsOnline ? t['Online'] : t['Offline'];
   serverStatusDisplay.style.color = serverIsOnline ? 'var(--success)' : 'var(--danger)';
-  showToast(lang === 'id' ? (translations.id['Server Status changed.'] || 'Status Server diubah.') : 'Server Status changed.', 2000);
+  showToast(t['Server Status changed.'] || 'Status Server diubah.', 2000);
 });
 
 // Admin Refresh Analytics Button
@@ -1842,8 +2229,9 @@ refreshAnalytics.addEventListener('click', () => {
 document.getElementById('reportBugLink').addEventListener('click', (e) => {
   e.preventDefault();
   const lang = langSelect.value;
-  const emailSubject = lang === 'id' ? (translations.id['Report Bug - Growfax'] || 'Laporan Bug - Growfax') : 'Bug Report - Growfax';
-  const emailBody = lang === 'id' ? (translations.id['Halo Admin Growfax,\n\nSaya ingin melaporkan bug berikut:\n\n[Jelaskan bug di sini, termasuk langkah-langkah untuk mereproduksinya, dan perangkat yang Anda gunakan (Android/iOS/Windows).]\n\nTerima kasih.'] || `Halo Admin Growfax,\n\nSaya ingin melaporkan bug berikut:\n\n[Jelaskan bug di sini, termasuk langkah-langkah untuk mereproduksinya, dan perangkat yang Anda gunakan (Android/iOS/Windows).]\n\nTerima kasih.`) : (translations.en['Hello Growfax Admin,\n\nI would like to report the following bug:\n\n[Describe the bug here, including steps to reproduce it, and the device you are using (Android/iOS/Windows).]\n\nThank you.'] || `Hello Growfax Admin,\n\nI would like to report the following bug:\n\n[Describe the bug here, including steps to reproduce it, and the device you are using (Android/iOS/Windows).]\n\nThank you.`);
+  const t = translations[lang] || translations.en;
+  const emailSubject = t['Report Bug - Growfax'] || 'Bug Report - Growfax';
+  const emailBody = t['Hello Growfax Admin,\n\nI would like to report the following bug:\n\n[Describe the bug here, including steps to reproduce it, and the device you are using (Android/iOS/Windows).]\n\nThank you.'] || `Hello Growfax Admin,\n\nI would like to report the following bug:\n\n[Describe the bug here, including steps to reproduce it, and the device you are using (Android/iOS/Windows).]\n\nThank you.`;
   const mailtoLink = `mailto:growfax.dev@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
   window.open(mailtoLink, '_blank');
 });
@@ -1862,10 +2250,12 @@ function checkCookieConsent() {
 }
 
 function setCookieConsent() {
+    const lang = langSelect.value;
+    const t = translations[lang] || translations.en;
     localStorage.setItem(COOKIE_KEY, 'true');
     cookieConsent.classList.add('hidden');
     // Optional: Initialize tracking scripts (like Google Analytics) here if they were deferred
-    showToast(langSelect.value === 'id' ? (translations.id['Thank you for accepting cookies.'] || 'Terima kasih telah menerima cookie.') : (translations.en['Thank you for accepting cookies.'] || 'Thank you for accepting cookies.'), 2000);
+    showToast(t['Thank you for accepting cookies.'] || 'Terima kasih telah menerima cookie.', 2000);
 }
 
 acceptCookies.addEventListener('click', setCookieConsent);
@@ -1881,6 +2271,7 @@ loadNewsUpdate();
 updateTime();
 handleUrlHash(); // NEW: Initial routing/SPA setup
 checkCookieConsent(); // NEW: Initial cookie check
+updateAuthUI(langSelect.value); // NEW: Set initial Auth UI state
 setInterval(updateTime, 1000); // Set a periodic update for time
 
 </script>
