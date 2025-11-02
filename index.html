@@ -7,7 +7,7 @@
 <link rel="icon" href="Growfax_banner.jpg" type="image/jpeg">
 
 <meta name="description" content="Situs resmi Growfax, private server Growtopia. Unduh file host terbaru untuk Android, Windows, dan iOS. Mainkan Growtopia dengan fitur eksklusif dan komunitas aktif!" />
-<meta name="keywords" content="Growfax, Growtopia Private Server, Growtopia PS, Download Growfax, Host Growtopia, Growfax Android, Growfax Windows" />
+<meta name="keywords" content="Growfax, Growtopia Private Server, Growtopia PS, Download Growfax, Host Growfax, Growfax Android, Growfax Windows" />
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="https://growfax.web.id/home" />
 
@@ -347,6 +347,7 @@
       font-size: 0.85rem;
       opacity: 0.8;
   }
+  /* MODIFIED: Changed anchor tag to button for JS click handler */
   .btn-purchase {
       background: var(--shop-bg);
       color: white;
@@ -357,6 +358,9 @@
       text-align: center;
       transition: background 0.15s, transform 0.15s;
       display: block; /* Make the button full width of the card */
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
   }
   .btn-purchase:hover {
       background: #732a9a;
@@ -553,7 +557,10 @@
                         <li><strong>/vsb</strong> <span>Send a VIP-Broadcast to everyone online!</span></li>
                     </ul>
                 </div>
-                <a href="https://paypal.me/Growfax/0.7" target="_blank" rel="noopener" class="btn-purchase" data-role="vip" data-price="0.7">Purchase VIP</a>
+                <button class="btn-purchase" 
+                        data-role="VIP" 
+                        data-price="0.7"
+                        data-paypal-url="https://paypal.me/Growfax/0.7">Purchase VIP</button>
             </div>
 
             <div class="shop-role-card">
@@ -566,7 +573,10 @@
                         <li><span>All VIP commands included!</span></li>
                     </ul>
                 </div>
-                <a href="https://paypal.me/Growfax/1.2" target="_blank" rel="noopener" class="btn-purchase" data-role="vip+" data-price="1.2">Purchase VIP+</a>
+                <button class="btn-purchase" 
+                        data-role="VIP+" 
+                        data-price="1.2"
+                        data-paypal-url="https://paypal.me/Growfax/1.2">Purchase VIP+</button>
             </div>
 
             <div class="shop-role-card">
@@ -576,7 +586,10 @@
                     <ul id="moderator_commands">
                         </ul>
                 </div>
-                <a href="https://paypal.me/Growfax/2.5" target="_blank" rel="noopener" class="btn-purchase" data-role="moderator" data-price="2.5">Purchase Moderator</a>
+                <button class="btn-purchase" 
+                        data-role="MODERATOR" 
+                        data-price="2.5"
+                        data-paypal-url="https://paypal.me/Growfax/2.5">Purchase Moderator</button>
             </div>
 
             <div class="shop-role-card">
@@ -586,7 +599,10 @@
                     <ul id="super_moderator_commands">
                         </ul>
                 </div>
-                <a href="https://paypal.me/Growfax/3.2" target="_blank" rel="noopener" class="btn-purchase" data-role="super_moderator" data-price="3.2">Purchase Super Moderator</a>
+                <button class="btn-purchase" 
+                        data-role="SUPER_MODERATOR" 
+                        data-price="3.2"
+                        data-paypal-url="https://paypal.me/Growfax/3.2">Purchase Super Moderator</button>
             </div>
 
             <div class="shop-role-card">
@@ -596,7 +612,10 @@
                     <ul id="developer_commands">
                         </ul>
                 </div>
-                <a href="https://paypal.me/Growfax/6.5" target="_blank" rel="noopener" class="btn-purchase" data-role="developer" data-price="6.5">Purchase Developer</a>
+                <button class="btn-purchase" 
+                        data-role="DEVELOPER" 
+                        data-price="6.5"
+                        data-paypal-url="https://paypal.me/Growfax/6.5">Purchase Developer</button>
             </div>
 
             <div class="shop-role-card">
@@ -606,7 +625,10 @@
                     <ul id="god_commands">
                         </ul>
                 </div>
-                <a href="https://paypal.me/Growfax/8.6" target="_blank" rel="noopener" class="btn-purchase" data-role="god" data-price="8.6">Purchase GOD</a>
+                <button class="btn-purchase" 
+                        data-role="GOD" 
+                        data-price="8.6"
+                        data-paypal-url="https://paypal.me/Growfax/8.6">Purchase GOD</button>
             </div>
         </div>
     </section>
@@ -733,6 +755,8 @@
 <script>
   // --- File references (from Admin Area) ---
   const ADMIN_TOKEN = '1234'; // Simulated token
+  const ZAPIER_WEBHOOK_URL = 'https://hooks.zapier.com/hooks/catch/25202128/uivzvu9/'; // !!! GANTI DENGAN URL ZAPIER ANDA YANG SEBENARNYA !!!
+
   const adminBackdrop = document.getElementById('adminBackdrop');
   const adminTitle = document.getElementById('adminTitle');
   const adminLogin = document.getElementById('adminLogin');
@@ -943,6 +967,14 @@
       "Meta Description": "Deskripsi Meta",
       "Meta Keywords (Comma-separated)": "Kata Kunci Meta (Dipisahkan Koma)",
       "Update SEO Meta": "Perbarui Meta SEO",
+
+      // NEW Zapier / Purchase Flow
+      "Enter your Growtopia Player Name": "Masukkan Nama Pemain Growtopia Anda",
+      "Please enter a valid Growtopia player name.": "Mohon masukkan nama pemain Growtopia yang valid.",
+      "Opening PayPal for purchase...": "Membuka PayPal untuk pembelian...",
+      "Purchase attempt failed.": "Upaya pembelian gagal.",
+      "Webhoook sent successfully for role": "Webhoook berhasil dikirim untuk role",
+      "Webhoook failed to send for role": "Webhoook gagal dikirim untuk role",
     }
   };
 
@@ -984,7 +1016,7 @@
       totalDownloads: 12450 + Math.floor(Math.random() * 5),
       activities: [
         { time: new Date(Date.now() - 3600000), type: 'Download initiated:', details: 'VirtualHost (v2.1)' },
-        { time: new Date(Date.now() - 500000), type: 'Shop purchase:', details: 'VIP+ ($1.20)' }, // NEW: Shop activity
+        { time: new Date(Date.now() - 500000), type: 'Shop purchase:', details: 'VIP+ ($1.20) for PlayerX' }, // UPDATED: Shop activity format
         { time: new Date(Date.now() - 7200000), type: 'Admin Login success', details: 'Jakarta, ID' },
         { time: new Date(Date.now() - 10800000), type: 'Download initiated:', details: 'Patched (.bat) (v1.9)' },
         { time: new Date(Date.now() - 14400000), type: 'Download initiated:', details: 'iOS config (v1.4)' },
@@ -1061,7 +1093,7 @@
     // Default values from the original HTML head
     const defaultTitle = 'Growfax Official - Private Growtopia Server & Downloads';
     const defaultDesc = 'Situs resmi Growfax, private server Growtopia. Unduh file host terbaru untuk Android, Windows, dan iOS. Mainkan Growtopia dengan fitur eksklusif dan komunitas aktif!';
-    const defaultKeywords = 'Growfax, Growtopia Private Server, Growtopia PS, Download Growfax, Host Growtopia, Growfax Android, Growfax Windows';
+    const defaultKeywords = 'Growfax, Growtopia Private Server, Growtopia PS, Download Growfax, Host Growfax, Growfax Android, Growfax Windows';
 
     // Load from LocalStorage
     const savedTitle = localStorage.getItem('growfax_seo_title') || defaultTitle;
@@ -1180,7 +1212,7 @@
       // News & Updates
       document.querySelector('#adminContent > div:nth-child(3) h4').textContent = lang === 'id' ? (translations.id["News & Updates"] || 'Berita & Pembaruan') : 'News & Updates';
       // SEO Management (using ID)
-      document.getElementById('seoTitle').textContent = lang === 'id' ? (translations.id["SEO Management"] || 'Manajemen SEO') : 'SEO Management';
+      document.querySelector('#adminContent > div:nth-child(4) h4').textContent = lang === 'id' ? (translations.id["SEO Management"] || 'Manajemen SEO') : 'SEO Management';
 
       toggleServerStatus.textContent = lang === 'id' ? (translations.id["Toggle Status (Simulate)"] || 'Ubah Status (Simulasi)') : 'Toggle Status (Simulate)';
       saveNewsUpdate.textContent = lang === 'id' ? (translations.id["Save News"] || 'Simpan Berita') : 'Save News';
@@ -1219,12 +1251,12 @@
           const role = el.getAttribute('data-role');
           const defaultText = `Purchase ${role.charAt(0).toUpperCase() + role.slice(1)}`; // Fallback like "Purchase Vip"
           let translatedText;
-          if (role === 'vip') translatedText = translations[lang]?.['Purchase VIP'] || defaultText;
-          else if (role === 'vip+') translatedText = translations[lang]?.['Purchase VIP+'] || defaultText;
-          else if (role === 'moderator') translatedText = translations[lang]?.['Purchase Moderator'] || defaultText;
-          else if (role === 'super_moderator') translatedText = translations[lang]?.['Purchase Super Moderator'] || defaultText;
-          else if (role === 'developer') translatedText = translations[lang]?.['Purchase Developer'] || defaultText;
-          else if (role === 'god') translatedText = translations[lang]?.['Purchase GOD'] || defaultText;
+          if (role === 'VIP') translatedText = translations[lang]?.['Purchase VIP'] || defaultText;
+          else if (role === 'VIP+') translatedText = translations[lang]?.['Purchase VIP+'] || defaultText;
+          else if (role === 'MODERATOR') translatedText = translations[lang]?.['Purchase Moderator'] || defaultText;
+          else if (role === 'SUPER_MODERATOR') translatedText = translations[lang]?.['Purchase Super Moderator'] || defaultText;
+          else if (role === 'DEVELOPER') translatedText = translations[lang]?.['Purchase Developer'] || defaultText;
+          else if (role === 'GOD') translatedText = translations[lang]?.['Purchase GOD'] || defaultText;
           el.textContent = translatedText || orig;
         }
       });
@@ -1234,7 +1266,9 @@
       modalConfirm.textContent = lang === 'id' ? (translations.id['Download'] || 'Unduh') : 'Download';
       welcomeSave.textContent = lang === 'id' ? (translations.id['Save & Continue'] || 'Simpan & Lanjutkan') : 'Save & Continue';
       welcomeSkip.textContent = lang === 'id' ? (translations.id['Skip'] || 'Lewati') : 'Skip';
-      document.getElementById('discordLink').textContent = lang === 'id' ? (translations.id['Join Growfax Discord'] || 'Join Growfax Discord') : 'Join Growfax Discord';
+      document.getElementById('discordLink').textContent = lang === 'id' ? (translations.id['Join Growfax Discord'] || 'Gabung Discord Growfax') : 'Join Growfax Discord';
+      adminTokenSubmit.textContent = lang === 'id' ? (translations.id['Submit'] || 'Kirim') : 'Submit';
+
 
       // Update dynamic elements (time and commands)
       updateTime();
@@ -1452,18 +1486,101 @@
     }
   });
 
-  // Shop purchase simulation
+
+  /* ===========================
+     NEW: Shop purchase with Player Name Prompt and Zapier Webhook
+     =========================== */
+
+  // Function to send data to Zapier webhook
+  async function sendZapierWebhook(role, price, playerName) {
+      const lang = langSelect.value;
+      const data = {
+          role: role,
+          price: price,
+          player_name: playerName,
+          timestamp: new Date().toISOString(),
+          ip_address: 'SIMULATED_IP_ADDRESS' // Di lingkungan nyata, ini perlu diambil dari server
+      };
+
+      try {
+          // Hanya simulasikan POST jika URL belum diisi
+          if (ZAPIER_WEBHOOK_URL.includes('https://hooks.zapier.com/hooks/catch/25202128/uivzvu9/')) {
+              console.warn('[ZAPIER_SIMULATION] Webhook URL not set. Data simulated and not sent:', data);
+              trackEvent('webhook_simulated', { role: role, player: playerName });
+              showToast(lang === 'id' ? `✅ SIMULASI Webhook ${role} berhasil!` : `✅ SIMULATION Webhook ${role} successful!`, 3000);
+              return true;
+          }
+
+          const response = await fetch(ZAPIER_WEBHOOK_URL, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(data),
+          });
+
+          if (response.ok) {
+              console.log('[ZAPIER] Webhook sent successfully:', data);
+              trackEvent('webhook_sent_success', { role: role, player: playerName });
+              showToast(lang === 'id' ? `${translations.id['Webhoook sent successfully for role']} ${role}!` : `Webhoook sent successfully for role ${role}!`, 3000);
+              return true;
+          } else {
+              console.error('[ZAPIER] Webhook failed with status:', response.status, data);
+              trackEvent('webhook_sent_failed', { role: role, player: playerName, status: response.status });
+              showToast(lang === 'id' ? `${translations.id['Webhoook failed to send for role']} ${role}!` : `Webhoook failed to send for role ${role}!`, 3000);
+              return false;
+          }
+      } catch (error) {
+          console.error('[ZAPIER_ERROR] Webhook failed to fetch:', error, data);
+          trackEvent('webhook_fetch_error', { role: role, player: playerName, error: error.message });
+          showToast(lang === 'id' ? `${translations.id['Webhoook failed to send for role']} ${role}!` : `Webhoook failed to send for role ${role}!`, 3000);
+          return false;
+      }
+  }
+
+  // Master function for purchase flow
+  function requestPlayerName(button) {
+      const role = button.getAttribute('data-role');
+      const price = button.getAttribute('data-price');
+      const paypalURL = button.getAttribute('data-paypal-url');
+      const lang = langSelect.value;
+
+      const promptMessage = lang === 'id' ? translations.id['Enter your Growtopia Player Name'] : 'Enter your Growtopia Player Name';
+      const errorMessage = lang === 'id' ? translations.id['Please enter a valid Growtopia player name.'] : 'Please enter a valid Growtopia player name.';
+
+      // 1. Get player name via prompt
+      const playerName = prompt(promptMessage);
+
+      if (playerName && playerName.trim()) {
+          const cleanName = playerName.trim();
+          
+          // 2. Track purchase attempt
+          trackEvent('purchase_attempt', { role: role, price: price, player_name: cleanName });
+          showToast(lang === 'id' ? translations.id['Opening PayPal for purchase...'] : 'Opening PayPal for purchase...', 2500);
+
+          // 3. Send Webhook (Async/Fire and Forget, should not block PayPal opening)
+          // Note: In a real scenario, this webhook should ideally be triggered *after* a successful payment confirmation
+          // (e.g., via PayPal IPN or a backend server), but for a static page, we trigger it now.
+          sendZapierWebhook(role, price, cleanName);
+
+          // 4. Redirect to PayPal
+          setTimeout(() => {
+              window.open(paypalURL, '_blank');
+          }, 500); // Small delay to allow toast to show
+          
+      } else if (playerName !== null) { // User clicked OK but entered nothing
+          showToast(errorMessage, 3000);
+      } else {
+          // User clicked Cancel in the prompt
+          showToast(lang === 'id' ? translations.id['Purchase attempt failed.'] : 'Purchase attempt failed.', 1500);
+      }
+  }
+
+  // Attach the master function to all purchase buttons
   document.querySelectorAll('.btn-purchase').forEach(button => {
     button.addEventListener('click', (e) => {
-      // e.preventDefault(); // Don't prevent default, allow PayPal link to open
-
-      const lang = langSelect.value;
-      const roleName = button.getAttribute('data-role').toUpperCase();
-      showToast(lang === 'id' ? `Membuka PayPal untuk pembelian ${roleName}...` : `Opening PayPal for ${roleName} purchase...`, 2000);
-
-      // Track Shop Purchase Event
-      trackEvent('shop_purchase_click', { role: roleName, price: button.getAttribute('data-price') });
-      // Actual link is handled by the anchor tag's default behavior
+      e.preventDefault(); 
+      requestPlayerName(button);
     });
   });
 
