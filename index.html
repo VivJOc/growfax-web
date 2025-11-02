@@ -16,6 +16,13 @@
     box-sizing: border-box;
   }
 
+  /* NEW: Keyframes for Logo Animation */
+  @keyframes pulse {
+    0% { transform: scale(1); box-shadow: var(--logo-shadow); }
+    50% { transform: scale(1.02); box-shadow: var(--logo-shadow-hover); }
+    100% { transform: scale(1); box-shadow: var(--logo-shadow); }
+  }
+
   :root{
     --bg:#f8f8f8;
     --card-bg:#fff;
@@ -31,10 +38,11 @@
     --mono: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     --border-color: rgba(0,0,0,0.08);
 
-    /* NEW: Custom properties for glow effect in light mode */
-    --glow-color-light: rgba(0, 120, 215, 0.4); /* soft blue glow */
-    --text-shadow-light: 0 0 8px var(--glow-color-light), 0 2px 4px rgba(0,0,0,0.15);
-    --logo-shadow-light: 0 4px 12px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.08);
+    /* UPDATED: Custom properties for YELLOW glow effect in light mode */
+    --glow-color-light: rgba(255, 193, 7, 0.6); /* soft yellow glow */
+    --text-shadow-light: 0 0 10px var(--glow-color-light), 0 2px 4px rgba(0,0,0,0.2);
+    --logo-shadow: 0 4px 12px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.08);
+    --logo-shadow-hover: 0 8px 20px rgba(255, 193, 7, 0.4);
   }
   [data-theme="dark"]{
     --bg:#0f1720;
@@ -48,10 +56,11 @@
     --glass: rgba(255,255,255,0.03);
     --border-color: rgba(255,255,255,0.06);
 
-    /* NEW: Custom properties for glow effect in dark mode */
-    --glow-color-dark: rgba(77, 163, 255, 0.6); /* brighter blue glow */
-    --text-shadow-dark: 0 0 10px var(--glow-color-dark), 0 2px 6px rgba(0,0,0,0.4);
-    --logo-shadow-dark: 0 6px 18px rgba(0,0,0,0.4), 0 3px 9px rgba(0,0,0,0.25);
+    /* UPDATED: Custom properties for YELLOW glow effect in dark mode */
+    --glow-color-dark: rgba(255, 170, 0, 0.8); /* brighter gold glow */
+    --text-shadow-dark: 0 0 12px var(--glow-color-dark), 0 2px 8px rgba(0,0,0,0.6);
+    --logo-shadow: 0 6px 18px rgba(0,0,0,0.4), 0 3px 9px rgba(0,0,0,0.25);
+    --logo-shadow-hover: 0 10px 25px rgba(255, 170, 0, 0.5);
   }
 
   html,body{
@@ -62,7 +71,7 @@
     color:var(--text);
     line-height:1.6;
     transition:background .25s,color .25s;
-    overflow-x: hidden; /* FIX: Mencegah gulir horizontal */
+    overflow-x: hidden;
   }
   
   /* -------------------------
@@ -87,17 +96,16 @@
   }
   .brand-wrap{display:flex;align-items:center;gap:8px}
   
-  /* NEW: Glow and lift effect for logo image */
+  /* NEW: Glow, lift, and Pulse Animation for logo image */
   .brand-wrap img{
     width:36px;
     height:36px;
     border-radius:6px;
     object-fit:cover;
-    transition: box-shadow .25s;
-    box-shadow: var(--logo-shadow-light); /* Default light mode shadow */
-  }
-  [data-theme="dark"] .brand-wrap img {
-    box-shadow: var(--logo-shadow-dark); /* Dark mode shadow */
+    transition: box-shadow .25s, transform .25s;
+    box-shadow: var(--logo-shadow);
+    /* Apply animation */
+    animation: pulse 3s infinite ease-in-out;
   }
 
   h1{
@@ -105,10 +113,11 @@
     margin:0;
     font-weight:700;
     transition: text-shadow .25s;
-    text-shadow: var(--text-shadow-light); /* Default light mode text shadow */
+    color: var(--text); /* Ensure the base text color is consistent */
+    text-shadow: var(--text-shadow-light); 
   }
   [data-theme="dark"] h1 {
-    text-shadow: var(--text-shadow-dark); /* Dark mode text shadow */
+    text-shadow: var(--text-shadow-dark); 
   }
 
   .brand-wrap > div > div { font-size: 0.75rem; }
@@ -233,9 +242,9 @@
         align-items: center;
         padding: 14px 20px;
     }
-    /* NEW: PC size for logo image glow/lift */
+    /* Logo size PC */
     .brand-wrap img{width:46px;height:46px;border-radius:8px}
-    /* NEW: PC size for H1 glow/lift */
+    /* H1 size PC */
     h1{font-size:1.4rem;}
     .brand-wrap > div > div { font-size: 0.85rem; }
     nav.primary {
