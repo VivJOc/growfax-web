@@ -243,13 +243,20 @@
   /* Platform Buttons: Full width for mobile */
   .platform-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
   .platform-buttons a{
+    /* Use display:flex and gap:12px to space the icon and text */
     display:flex;align-items:center;justify-content:center;gap:12px;
     width:92%; 
     padding:14px 18px;border-radius:12px;color:#fff;font-weight:700;
     text-decoration:none;border:1px solid transparent;font-size:1.02rem;
     transition:transform .18s ease,box-shadow .18s, opacity 0.2s ease;
   }
-  .platform-buttons a img{width:30px;height:30px;border-radius:6px}
+  /* REMOVED: .platform-buttons a img{width:30px;height:30px;border-radius:6px} */
+  /* NEW: Style for Emoji icons to ensure size consistency */
+  .platform-buttons a .platform-icon {
+      font-size: 1.8rem; /* Make the emoji prominent */
+      line-height: 1; /* Prevent extra vertical space */
+  }
+
   .platform-buttons a:hover{transform:translateY(-2px)}
 
   .btn-android{background:#34c759;--glow:#4cff77;box-shadow:0 4px 16px rgba(76,255,119,0.08)}
@@ -313,14 +320,30 @@
   }
   /* NEW: Style for the multiple currency display */
   .shop-role-card .currency-display {
-      display: block; 
+      /* UPDATED: Use flexbox for 2-column layout */
+      display: flex; 
+      flex-wrap: wrap; 
+      justify-content: space-between; /* Space out the columns */
       font-size: 0.8rem; /* Smaller font for secondary currencies */
       font-weight: 500; 
       opacity: 0.8; 
       margin-top: 6px;
+      margin-bottom: 12px; /* Added margin for separation from commands */
       line-height: 1.4;
-      white-space: pre-wrap;
+      white-space: normal; /* Override previous setting */
   }
+  
+  /* NEW: Style for each currency item (the column item) */
+  .shop-role-card .currency-display .currency-group {
+      flex: 1 1 50%; /* Each item takes up half the width (2 columns) */
+      min-width: 130px; 
+      margin-bottom: 4px; /* Small gap between rows */
+      text-align: left; /* Align text within the group to the left */
+  }
+  .shop-role-card .currency-display small {
+      font-size: 80%; /* Ensure the currency label is readable */
+  }
+
   /* UPDATED: UL style for commands (Added Scroll functionality) */
   .shop-role-card ul {
       list-style-type: none;
@@ -598,19 +621,19 @@
         <h2>📥 Essential File Downloads</h2>
         <div class="platform-buttons" role="list">
           <a href="Growfax_VirtualHost.txt" class="btn-android" data-filename="Growfax_VirtualHost.txt" data-filekey="virtualhost" download role="listitem">
-            <img src="virtual-host.png" alt="">Play on Android
+            <span aria-hidden="true" class="platform-icon">🤖</span>Play on Android
           </a>
 
           <a href="Growfax_Patched_.bat" class="btn-windows" data-filename="Growfax_Patched_.bat" data-filekey="patched" download role="listitem">
-            <img src="windows.png" alt="">Play on Windows
+            <span aria-hidden="true" class="platform-icon">🖥️</span>Play on Windows
           </a>
 
           <a href="#" class="btn-ios" data-filename="GrowFax_ios_config.txt" data-filekey="ios" role="listitem">
-            <img src="surge5.png" alt="">Play on iOS
+            <span aria-hidden="true" class="platform-icon">🍎</span>Play on iOS
           </a>
 
           <a href="#" class="btn-powertunnel" data-filename="PowerTunnel_Host.txt" data-filekey="powertunnel" role="listitem">
-            <img src="powertunnel.jpeg" alt="">Play via PowerTunnel
+            <span aria-hidden="true" class="platform-icon">🛡️</span>Play via PowerTunnel
           </a>
         </div>
     </section>
@@ -627,11 +650,15 @@
                         data-idr="675000" data-eur="7.91" data-gbp="36.00" 
                         data-aud="12.90" data-sgd="60.75" data-cad="11.61">
                         $45.00 <small>USD</small>
-                        <span class="currency-display">
-                            ~ £36.00 <small>GBP</small> | ~ Rp 675.000 <small>IDR</small> | ~ S$60.75 <small>SGD</small><br>
-                            ~ €7.91 <small>EUR</small> | ~ A$12.90 <small>AUD</small> | ~ C$11.61 <small>CAD</small>
-                        </span>
-                    </p>
+                        <div class="currency-display">
+                            <div class="currency-group">~ £36.00 <small>GBP</small></div>
+                            <div class="currency-group">~ Rp 675.000 <small>IDR</small></div>
+                            <div class="currency-group">~ S$60.75 <small>SGD</small></div>
+                            <div class="currency-group">~ €7.91 <small>EUR</small></div>
+                            <div class="currency-group">~ A$12.90 <small>AUD</small></div>
+                            <div class="currency-group">~ C$11.61 <small>CAD</small></div>
+                        </div>
+                        </p>
                     <ul id="admin_commands"></ul>
                 </div>
                 <div class="purchase-buttons">
@@ -740,7 +767,7 @@
             </div>
 
             <div style="margin-top: 20px; padding: 15px; border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
-                <h4 style="margin: 0 0 10px; color: var(--accent);" id="seoTitle">SEO Management</h4>
+                <h4 style="margin: 0 0 10px; color: var(--accent);">SEO Management</h4>
                 <p>Page Title (Hanya Title Tag HTML)</p>
                 <input type="text" id="seoTitleInput" placeholder="Page Title" style="width: 100%; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
                 <p>Meta Description</p>
