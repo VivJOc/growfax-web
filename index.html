@@ -280,7 +280,6 @@
       background: var(--card-bg);
       padding: 20px;
       border-radius: 12px;
-      box-shadow: var(--card-shadow);
       border-top: 4px solid var(--shop-bg);
       display: flex;
       flex-direction: column;
@@ -706,6 +705,51 @@
             </div>
 
             <div style="margin-top: 20px; padding: 15px; border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
+                <h4 style="margin: 0 0 10px; color: var(--accent);" id="commandManagementTitle" data-original="Role Command Management">Role Command Management</h4>
+                <p style="font-size: 0.9rem; margin-bottom: 10px;" data-original="Available Commands by Role:">Available Commands by Role:</p>
+                <div id="roleCommandsList" style="text-align: left; font-size: 0.85rem;">
+                    <p><strong><span data-original="Moderator:">Moderator:</span></strong></p>
+                    <ul style="margin: 5px 0 10px 20px; padding: 0; list-style-type: disc;">
+                        <li>/longpunch Enabled Long Punch it allows you to break and build further</li>
+                        <li>/skiptime Activate the Skip Time ability! It makes your trees and providers grow 12 hours instantly!</li>
+                        <li>/mod Moderate a player, apply punishments & more!</li>
+                        <li>/banworld Nuke a world, ban players, or even ban players from game!</li>
+                        <li>/info View player's information!</li>
+                        <li>/track Find player's alt accounts and get their names!</li>
+                        <li>/online View everyone who is online at this moment!</li>
+                        <li>/msb Moderator Broadcast to everyone online!</li>
+                        <li>/ghost Enter ghost mode, you can walk through walls!</li>
+                        <li>/invis Become invisible to everyone! No one will ever know you exist!</li>
+                        <li>/nick Temporarily change your nickname!</li>
+                        <li>/hide Hide your Moderator's status, you'll look like a normal player!</li>
+                        <li>/hideflag Hide your Country flag!</li>
+                        <li>/warpto Magically teleport to your desired player!</li>
+                        <li>/silence Mute a player for specific time!</li>
+                        <li>/unsilence Remove a mute from a player!</li>
+                    </ul>
+                    <p><strong><span data-original="Super Moderator:">Super Moderator:</span></strong></p>
+                    <ul style="margin: 5px 0 10px 20px; padding: 0; list-style-type: disc;">
+                        <li>/rpull Pull a random player in the world</li>
+                        <li>/pullall Pull everyone who is in the world</li>
+                        <li>/freeze Freeze a player, it wont be able to move or do anything!</li>
+                        <li>/unfreeze Unfreeze a player, make it able to move again!</li>
+                        <li>ALL Actions Perform actions like /loveall /omgall to make everyone do it!</li>
+                    </ul>
+                    <p><strong><span data-original="Developer:">Developer:</span></strong></p>
+                    <ul style="margin: 5px 0 10px 20px; padding: 0; list-style-type: disc;">
+                        <li>/find Find any blocks and get them for free! (Limited to under 100 rarity non-farmable blocks)</li>
+                        <li>/banall Ban everyone from world!</li>
+                        <li>/tpclick Teleport where you click! (If ghost is enabled you can teleport everywhere, if not then you can teleport only if there's path)</li>
+                    </ul>
+                    <p><strong><span data-original="God:">God:</span></strong></p>
+                    <ul style="margin: 5px 0 10px 20px; padding: 0; list-style-type: disc;">
+                        <li>/find Find any clothes and get them for free! (Limited to rarity clothes)</li>
+                        <li>/spk Make other people say what you want them to say!</li>
+                    </ul>
+                </div>
+                <button class="btn secondary" id="editCommands" style="margin-top: 10px; padding: 5px 10px;" data-original="Edit Command Text">Edit Command Text</button>
+            </div>
+            <div style="margin-top: 20px; padding: 15px; border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
                 <h4 style="margin: 0 0 10px; color: var(--accent);" id="seoTitle">SEO Management</h4>
                 
                 <label for="seoTitleInput" style="display: block; margin-top: 10px; font-size: 0.9rem;">Page Title (Hanya Title Tag HTML)</label>
@@ -730,265 +774,228 @@
     <img src="discord.jpeg" alt="Discord">
   </a>
 
-  <div id="toast" class="toast" role="status" aria-live="polite">Saved</div>
+  <div id="toast" class="toast" role="alert" aria-live="assertive"></div>
 
 <script>
-/* ============================================================
-   Growfax Official — FULL script
-   ============================================================ */
+  // --- File references (from Admin Area) ---
+  const ADMIN_TOKEN = '1234'; // Simulated token
+  const adminBackdrop = document.getElementById('adminBackdrop');
+  const adminTitle = document.getElementById('adminTitle');
+  const adminLogin = document.getElementById('adminLogin');
+  const adminLoginPrompt = document.getElementById('adminLoginPrompt');
+  const adminTokenInput = document.getElementById('adminTokenInput');
+  const adminTokenSubmit = document.getElementById('adminTokenSubmit');
+  const adminContent = document.getElementById('adminContent');
+  const closeAdmin = document.getElementById('closeAdmin');
+  const serverStatusDisplay = document.getElementById('serverStatusDisplay');
+  const toggleServerStatus = document.getElementById('toggleServerStatus');
+  const newsUpdateTextarea = document.getElementById('newsUpdateTextarea');
+  const saveNewsUpdate = document.getElementById('saveNewsUpdate');
 
-/* ===========================
-   Analytical Tool Function 
-   =========================== */
-function trackEvent(eventName, eventParams = {}) {
-    // Fungsi ini menyimulasikan pengiriman data ke alat analitik (e.g., Google Analytics).
-    console.log(`[ANALYTICS] Tracking event: ${eventName}`, eventParams);
-    
-    // Kirim event menggunakan gtag jika skrip GA dimuat
-    if (typeof gtag === 'function') {
-        gtag('event', eventName, eventParams);
+  // Analytical Dashboard Refs
+  const analyticsTitle = document.getElementById('analyticsTitle');
+  const totalDownloadsContainer = document.getElementById('totalDownloadsContainer');
+  const totalDownloadsElement = document.getElementById('totalDownloads');
+  const recentActivitiesTitle = document.getElementById('recentActivitiesTitle');
+  const recentActivitiesElement = document.getElementById('recentActivities');
+  const refreshAnalytics = document.getElementById('refreshAnalytics');
+
+  // SEO Refs
+  const seoTitle = document.getElementById('seoTitle');
+  const seoTitleInput = document.getElementById('seoTitleInput');
+  const seoDescTextarea = document.getElementById('seoDescTextarea');
+  const seoKeywordsInput = document.getElementById('seoKeywordsInput');
+  const saveSeoMeta = document.getElementById('saveSeoMeta');
+
+  let isServerOnline = true; // Simulated server status
+  let pendingDownload = null;
+  let isAdminLoggedIn = false; // New state tracker
+  let analyticsIntervalId = null; // ID untuk auto-refresh dashboard
+
+
+  /* ===========================
+     File metadata - PowerTunnel & iOS: Copy-text
+     =========================== */
+  const FILE_META = {
+    virtualhost: {
+      version: 'v2.1',
+      updated: 'Oct 29, 2025',
+      changelog: '- Fixed host parsing\n- Improved TLS handling',
+      size: '2.3 KB'
+    },
+    patched: {
+      version: 'v1.9',
+      updated: 'Oct 20, 2025',
+      changelog: '- Patched launcher\n- Minor fixes',
+      size: '12.1 KB'
+    },
+    // MODIFIED: iOS now uses copytext instead of download
+    ios: {
+      version: 'v1.5',
+      updated: 'Nov 02, 2025',
+      changelog: '- New profile format for Surge 5\n- Added support for new regions',
+      size: 'Text Config',
+      copytext: '[Rule]\nHOST,growfax.web.id,REJECT\nHOST-SUFFIX,rt.growfax.com,REJECT\nIP-CIDR,127.0.0.1/32,REJECT' // Dummy iOS Config
+    },
+    powertunnel: {
+      version: 'v1.1',
+      updated: 'Oct 15, 2025',
+      changelog: '- Updated host list\n- Added new block rules',
+      size: 'Text Host',
+      copytext: '127.0.0.1 growfax.web.id\n127.0.0.1 rt.growfax.com' // Dummy PowerTunnel Host
     }
-}
+  };
 
-/* ===========================
-   Core refs & state
-   =========================== */
-const langSelect = document.getElementById('langSelect');
-const themeToggle = document.getElementById('themeToggle');
-const openWelcome = document.getElementById('openWelcome');
-const toast = document.getElementById('toast');
-const modalBackdrop = document.getElementById('modalBackdrop');
-const modalTitle = document.getElementById('modalTitle');
-const modalDesc = document.getElementById('modalDesc');
-const modalVersion = document.getElementById('modalVersion');
-const modalUpdated = document.getElementById('modalUpdated');
-const modalChangelog = document.getElementById('modalChangelog');
-const modalFilename = document.getElementById('modalFilename');
-const modalConfirm = document.getElementById('modalConfirm');
-const modalCancel = document.getElementById('modalCancel');
 
-const welcomeBackdrop = document.getElementById('welcomeBackdrop');
-const welcomeLang = document.getElementById('welcomeLang');
-const welcomeSave = document.getElementById('welcomeSave');
-const welcomeSkip = document.getElementById('welcomeSkip');
+  /* ===========================
+     Translation dictionary (expandable)
+     =========================== */
+  const translations = {
+    id: {
+      "Growfax Official": "Growfax Resmi",
+      "Private Growtopia Server": "Server Growtopia Private",
+      "📥 Downloads": "📥 Unduhan",
+      "🛒 Shop": "🛒 Toko",
+      "🐞 Report Bug": "🐞 Laporkan Bug",
+      "🔑 Admin": "🔑 Admin",
+      "Welcome to Growfax": "Selamat Datang di Growfax",
+      "Private Growtopia Server": "Server Growtopia Private",
+      "Loading time...": "Memuat waktu...",
+      "Essential File Downloads": "Unduhan File Penting",
+      "Play on Android": "Main di Android",
+      "Play on Windows": "Main di Windows",
+      "Play on iOS": "Main di iOS",
+      "Play via PowerTunnel": "Main lewat PowerTunnel",
+      "Join Our Community": "Bergabung dengan Komunitas Kami",
+      "Connect with others and get support in our official Discord server.": "Terhubung dengan anggota lain dan dapatkan dukungan di server Discord resmi kami.",
+      "Join Growfax Discord": "Gabung Discord Growfax",
+      "© 2025 Growfax. All rights reserved.": "© 2025 Growfax. Semua hak dilindungi.",
+      "Are you sure you want to download": "Apakah Anda yakin ingin mengunduh",
+      "Details before download": "Detail sebelum mengunduh",
+      "Cancel": "Batal",
+      "Download": "Unduh",
+      "Filename": "Nama berkas",
+      "Version": "Versi",
+      "Updated": "Diperbarui",
+      "Changelog": "Catatan pembaruan",
+      "Size": "Ukuran",
+      "Set your preferred language and theme. We'll remember this for next time.": "Pilih bahasa dan tema favoritmu. Kami akan menyimpannya untuk kunjungan berikutnya.",
+      "Save & Continue": "Simpan & Lanjutkan",
+      "Skip": "Lewati",
+      "Language": "Bahasa",
+      "Theme": "Tema",
+      "Opening Discord...": "Membuka Discord...",
 
-const timeDisplay = document.getElementById('timeDisplay');
-const discordLink = document.getElementById('discordLink');
-const reportBugLink = document.getElementById('reportBugLink');
+      // Shop Translations (UPDATED for Commands)
+      "🛒 Growfax Server Roles": "🛒 Role Server Growfax",
+      "Support the server and unlock exclusive roles! Direct purchase via PayPal.me.": "Dukung server dan buka role eksklusif! Pembelian langsung via PayPal.me.",
+      "Purchase VIP": "Beli VIP",
+      "Purchase VIP+": "Beli VIP+",
+      "Purchase Moderator": "Beli Moderator",
+      "Purchase Super Moderator": "Beli Super Moderator",
+      "Purchase Developer": "Beli Developer",
+      "Purchase GOD": "Beli GOD",
+      "Activate the Super Breaker mode!": "Aktifkan mode Super Breaker!",
+      "Send a VIP-Broadcast to everyone online!": "Kirim VIP-Broadcast ke semua orang yang online!",
+      "Activate the Gem Rain & Enjoy 20% more gems!": "Aktifkan Gem Rain & Nikmati 20% lebih banyak permata!",
+      "Send a Super-Duper Broadcast to everyone online!": "Kirim Super-Duper Broadcast ke semua orang yang online!",
+      "All VIP commands included!": "Semua perintah VIP termasuk!",
+      "Temporary ban abusive players.": "Ban sementara untuk pemain yang mengganggu.",
+      "Silence disruptive users.": "Membisukan pengguna yang mengganggu.",
+      "All VIP+ commands included!": "Semua perintah VIP+ termasuk!",
+      "Instantly kick players from the server.": "Usir pemain secara instan dari server.",
+      "Issue official warnings.": "Berikan peringatan resmi.",
+      "All Moderator commands included!": "Semua perintah Moderator termasuk!",
+      "Spawn test/beta items.": "Munculkan item uji/beta.",
+      "Access exclusive development logs.": "Akses log pengembangan eksklusif.",
+      "All Super Moderator commands included!": "Semua perintah Super Moderator termasuk!",
+      "Teleport to any world instantly.": "Teleport ke dunia mana pun seketika.",
+      "Activate unique God effects.": "Aktifkan efek God yang unik.",
+      "All Developer commands included!": "Semua perintah Developer termasuk!",
 
-// Admin Area Refs
-const ADMIN_TOKEN = 'GFAx_2025_ADMN'; // Hardcoded token for static page simulation
-const openAdmin = document.getElementById('openAdmin');
-const adminBackdrop = document.getElementById('adminBackdrop');
-const adminTitle = document.getElementById('adminTitle');
-const adminLogin = document.getElementById('adminLogin');
-const adminLoginPrompt = document.getElementById('adminLoginPrompt');
-const adminTokenInput = document.getElementById('adminTokenInput');
-const adminTokenSubmit = document.getElementById('adminTokenSubmit');
-const adminContent = document.getElementById('adminContent');
-const closeAdmin = document.getElementById('closeAdmin');
-const serverStatusDisplay = document.getElementById('serverStatusDisplay');
-const toggleServerStatus = document.getElementById('toggleServerStatus');
-const newsUpdateTextarea = document.getElementById('newsUpdateTextarea');
-const saveNewsUpdate = document.getElementById('saveNewsUpdate');
+      // Admin Translations
+      "🔑 Admin Area": "🔑 Area Admin",
+      "Enter the Admin Token to proceed:": "Masukkan Token Admin untuk melanjutkan:",
+      "Submit": "Kirim",
+      "Server Status": "Status Server",
+      "Online": "Online",
+      "Offline": "Offline",
+      "News & Updates": "Berita & Pembaruan",
+      "Toggle Status (Simulate)": "Ubah Status (Simulasi)",
+      "Save News": "Simpan Berita",
+      "Close Admin Area": "Tutup Area Admin",
 
-// Analytical Dashboard Refs
-const analyticsTitle = document.getElementById('analyticsTitle');
-const totalDownloadsContainer = document.getElementById('totalDownloadsContainer');
-const totalDownloadsElement = document.getElementById('totalDownloads');
-const recentActivitiesTitle = document.getElementById('recentActivitiesTitle');
-const recentActivitiesElement = document.getElementById('recentActivities');
-const refreshAnalytics = document.getElementById('refreshAnalytics');
+      // Analytical Tool Translations
+      "Analytical Dashboard": "Dasbor Analitik",
+      "Total Downloads:": "Total Unduhan:",
+      "Recent Activities:": "Aktivitas Terbaru:",
+      "Refresh Data": "Perbarui Data",
+      "Download initiated:": "Unduhan dimulai: ",
+      "Admin Login success": "Login Admin berhasil",
 
-// SEO Refs
-const seoTitle = document.getElementById('seoTitle');
-const seoTitleInput = document.getElementById('seoTitleInput');
-const seoDescTextarea = document.getElementById('seoDescTextarea');
-const seoKeywordsInput = document.getElementById('seoKeywordsInput');
-const saveSeoMeta = document.getElementById('saveSeoMeta');
+      // SEO Translations
+      "SEO Management": "Manajemen SEO",
+      "Page Title (Hanya Title Tag HTML)": "Judul Halaman (Hanya Tag Title HTML)",
+      "Meta Description": "Deskripsi Meta",
+      "Meta Keywords (Comma-separated)": "Kata Kunci Meta (Dipisahkan Koma)",
+      "Update SEO Meta": "Perbarui Meta SEO",
+      
+      // NEW ROLE COMMAND MANAGEMENT TRANSLATIONS
+      "Role Command Management": "Manajemen Perintah Role",
+      "Available Commands by Role:": "Perintah yang Tersedia berdasarkan Role:",
+      "Edit Command Text": "Edit Teks Perintah",
+      "Moderator:": "Moderator:",
+      "Super Moderator:": "Super Moderator:",
+      "Developer:": "Developer:",
+      "God:": "God:",
+    }
+  };
 
-let isServerOnline = true; // Simulated server status
-let pendingDownload = null;
-let isAdminLoggedIn = false; // New state tracker
-let analyticsIntervalId = null; // ID untuk auto-refresh dashboard
 
-/* ===========================
-   File metadata
-   - PowerTunnel & iOS: Copy-text
-   =========================== */
-const FILE_META = {
-  virtualhost: { version: 'v2.1', updated: 'Oct 29, 2025', changelog: '- Fixed host parsing\\n- Improved TLS handling', size: '2.3 KB' },
-  patched: { version: 'v1.9', updated: 'Oct 20, 2025', changelog: '- Patched launcher\\n- Minor fixes', size: '12.1 KB' },
-  // MODIFIED: iOS now uses copytext instead of download
-  ios: { 
-    version: 'v1.5', 
-    updated: 'Nov 02, 2025', 
-    changelog: 'Instruksi: Konfigurasi Surge/Shadowrocket telah disalin secara otomatis ke clipboard Anda. Tempelkan di bagian [Host] atau custom config.', 
-    size: '1.5 KB',
-    copytext: `[General]\nbypass-system = true\n\n[Rule]\nFINAL,DIRECT\n\n[Host]\ngrowtopia1.com = 91.134.85.13\ngrowtopia2.com = 91.134.85.13\nwww.growtopia1.com = 91.134.85.13\nwww.growtopia2.com = 91.134.85.13`
-  },
-  powertunnel: { 
-    version: 'v3.0', 
-    updated: 'Oct 10, 2025', 
-    changelog: 'Instruksi: Teks Host telah disalin secara otomatis ke clipboard Anda. Silakan tempelkan ke konfigurasi PowerTunnel Anda.', 
-    size: '1.9 KB',
-    copytext: `15.235.232.75 growtopia1.com\n15.235.232.75 growtopia2.com\n15.235.232.75 www.growtopia1.com\n15.235.232.75 www.growtopia2.com`
-  }
-};
-
-/* ===========================
-   Translation baseline
-   =========================== */
-const elements = document.querySelectorAll('body *:not(script):not(style)');
-elements.forEach(el=>{
-  // Only store simple text nodes to avoid breaking complex elements
-  if (el.childNodes.length === 1 && el.textContent.trim() !== '') {
-    el.dataset.original = el.textContent.trim();
-  }
-});
-
-/* Translation dictionary (expandable) */
-const translations = {
-  id: {
-    "Growfax Official": "Growfax Resmi",
-    "📥 Downloads": "📥 Unduhan",
-    "🛒 Shop": "🛒 Toko Role",
-    "Welcome to Growfax": "Selamat Datang di Growfax",
-    "Private Growtopia Server": "Server Growtopia Pribadi",
-    "Local Time (New York):": "Waktu Lokal (New York):",
-    "Waktu Lokal (Jakarta):": "Waktu Lokal (Jakarta):",
-    "📥 Essential File Downloads": "📥 Unduhan File Penting",
-    "Play on Android": "Main di Android",
-    "Play on Windows": "Main di Windows",
-    "Play on iOS": "Main di iOS",
-    "Play via PowerTunnel": "Main lewat PowerTunnel",
-    "Join Our Community": "Bergabung dengan Komunitas Kami",
-    "Connect with others and get support in our official Discord server.": "Terhubung dengan anggota lain dan dapatkan dukungan di server Discord resmi kami.",
-    "Join Growfax Discord": "Gabung Discord Growfax",
-    "© 2025 Growfax. All rights reserved.": "© 2025 Growfax. Semua hak dilindungi.",
-    "Are you sure you want to download": "Apakah Anda yakin ingin mengunduh",
-    "Details before download": "Detail sebelum mengunduh",
-    "Cancel": "Batal",
-    "Download": "Unduh",
-    "Filename": "Nama berkas",
-    "Version": "Versi",
-    "Updated": "Diperbarui",
-    "Changelog": "Catatan pembaruan",
-    "Size": "Ukuran",
-    "Set your preferred language and theme. We'll remember this for next time.": "Pilih bahasa dan tema favoritmu. Kami akan menyimpannya untuk kunjungan berikutnya.",
-    "Save & Continue": "Simpan & Lanjutkan",
-    "Skip": "Lewati",
-    "Language": "Bahasa",
-    "Theme": "Tema",
-    "Opening Discord...": "Membuka Discord...",
-    "🐞 Report Bug": "🐞 Laporkan Bug",
-    
-    // Shop Translations (UPDATED for Commands)
-    "🛒 Growfax Server Roles": "🛒 Role Server Growfax",
-    "Support the server and unlock exclusive roles! Direct purchase via PayPal.me.": "Dukung server dan buka role eksklusif! Pembelian langsung via PayPal.me.",
-    "Purchase VIP": "Beli VIP",
-    "Purchase VIP+": "Beli VIP+",
-    "Purchase Moderator": "Beli Moderator",
-    "Purchase Super Moderator": "Beli Super Moderator",
-    "Purchase Developer": "Beli Developer",
-    "Purchase GOD": "Beli GOD",
-    "✨ VIP Role": "✨ Role VIP",
-    "🌟 VIP+ Role": "🌟 Role VIP+",
-    "🔨 Moderator Role": "🔨 Role Moderator",
-    "🛡️ Super Moderator": "🛡️ Super Moderator",
-    "💻 Developer Role": "💻 Role Developer",
-    "👑 GOD Role": "👑 Role GOD",
-    // Commands & Descriptions (Manfaat) - Only the original parts need translation
-    "Activate the Super Breaker mode!": "Aktifkan mode Super Breaker!",
-    "Send a VIP-Broadcast to everyone online!": "Kirim VIP-Broadcast ke semua yang online!",
-    "Activate the Gem Rain & Enjoy 20% more gems!": "Aktifkan Gem Rain & Nikmati 20% tambahan gems!",
-    "Send a Super-Duper Broadcast to everyone online!": "Kirim Super-Duper Broadcast ke semua yang online!",
-    "All VIP commands included!": "Semua perintah VIP termasuk!",
-    "Temporary ban abusive players.": "Ban sementara pemain yang menyalahgunakan.",
-    "Silence disruptive users.": "Membungkam pengguna yang mengganggu.",
-    "All VIP+ commands included!": "Semua perintah VIP+ termasuk!",
-    "Instantly kick players from the server.": "Langsung keluarkan pemain dari server.",
-    "Issue official warnings.": "Berikan peringatan resmi.",
-    "All Moderator commands included!": "Semua perintah Moderator termasuk!",
-    "Spawn test/beta items.": "Munculkan item uji/beta.",
-    "Access exclusive development logs.": "Akses log pengembangan eksklusif.",
-    "All Super Moderator commands included!": "Semua perintah Super Moderator termasuk!",
-    "Teleport to any world instantly.": "Teleport ke dunia mana pun seketika.",
-    "Activate unique God effects.": "Aktifkan efek God yang unik.",
-    "All Developer commands included!": "Semua perintah Developer termasuk!",
-    
-    // Admin Translations
-    "🔑 Admin Area": "🔑 Area Admin",
-    "Enter the Admin Token to proceed:": "Masukkan Token Admin untuk melanjutkan:",
-    "Submit": "Kirim",
-    "Server Status": "Status Server",
-    "Online": "Online",
-    "Offline": "Offline",
-    "News & Updates": "Berita & Pembaruan",
-    "Toggle Status (Simulate)": "Ubah Status (Simulasi)",
-    "Save News": "Simpan Berita",
-    "Close Admin Area": "Tutup Area Admin",
-
-    // Analytical Tool Translations
-    "Analytical Dashboard": "Dasbor Analitik",
-    "Total Downloads:": "Total Unduhan:",
-    "Recent Activities:": "Aktivitas Terbaru:",
-    "Refresh Data": "Perbarui Data",
-    "Download initiated:": "Unduhan dimulai: ",
-    "Admin Login success": "Login Admin berhasil",
-
-    // SEO Translations
-    "SEO Management": "Manajemen SEO",
-    "Page Title (Hanya Title Tag HTML)": "Judul Halaman (Hanya Tag Title HTML)",
-    "Meta Description": "Deskripsi Meta",
-    "Meta Keywords (Comma-separated)": "Kata Kunci Meta (Dipisahkan Koma)",
-    "Update SEO Meta": "Perbarui Meta SEO",
-  }
-};
-
-/* ===========================
-   Analytical Dashboard Logic
-   =========================== */
-
-// Helper function to format time ago (simulated)
-function getTimeAgo(date, lang) {
+  /* ===========================
+     Analytical Dashboard Logic
+     =========================== */
+  // Helper function to format time ago (simulated)
+  function getTimeAgo(date, lang) {
     const seconds = Math.floor((new Date() - date) / 1000);
     let interval = seconds / 31536000;
     const labels = {
-        'id': { year: 'tahun', month: 'bulan', day: 'hari', hour: 'jam', minute: 'menit', just: 'baru saja' },
-        'en': { year: 'year', month: 'month', day: 'day', hour: 'hour', minute: 'minute', just: 'just now' }
-    }[lang];
-
-    if (interval > 1) return Math.floor(interval) + ` ${labels.year} lalu`;
-    interval = seconds / 2592000;
-    if (interval > 1) return Math.floor(interval) + ` ${labels.month} lalu`;
-    interval = seconds / 86400;
-    if (interval > 1) return Math.floor(interval) + ` ${labels.day} lalu`;
-    interval = seconds / 3600;
-    if (interval > 1) return Math.floor(interval) + ` ${labels.hour} lalu`;
-    interval = seconds / 60;
-    if (interval > 1) return Math.floor(interval) + ` ${labels.minute} lalu`;
-    
-    if (seconds < 5) return labels.just;
-    return `${Math.floor(seconds)} detik lalu`;
-}
-
-function renderAnalyticsDashboard() {
-    const lang = langSelect.value;
-
-    // Simulated Analytics Data
-    const SIMULATED_DATA = {
-        // Tambahkan angka acak kecil untuk simulasi perubahan data saat refresh
-        totalDownloads: 12450 + Math.floor(Math.random() * 5), 
-        activities: [
-            { time: new Date(Date.now() - 3600000), type: 'Download initiated:', details: 'VirtualHost (v2.1)' },
-            { time: new Date(Date.now() - 500000), type: 'Shop purchase:', details: 'VIP+ ($1.20)' }, // NEW: Shop activity
-            { time: new Date(Date.now() - 7200000), type: 'Admin Login success', details: 'Jakarta, ID' },
-            { time: new Date(Date.now() - 10800000), type: 'Download initiated:', details: 'Patched (.bat) (v1.9)' },
-            { time: new Date(Date.now() - 14400000), type: 'Download initiated:', details: 'iOS config (v1.4)' },
-        ]
+      'id': { year: 'tahun', month: 'bulan', day: 'hari', hour: 'jam', minute: 'menit', now: 'baru saja' },
+      'en': { year: 'year', month: 'month', day: 'day', hour: 'hour', minute: 'minute', now: 'just now' }
     };
-    
+    const plural = (num, label) => num > 1 ? label + 's' : label;
+    const l = labels[lang] || labels['en'];
+
+    if (seconds < 60) return l.now;
+    interval = seconds / 60; // minutes
+    if (interval < 60) return Math.floor(interval) + (lang === 'id' ? ' menit yang lalu' : ` ${plural(Math.floor(interval), l.minute)} ago`);
+    interval = seconds / 3600; // hours
+    if (interval < 24) return Math.floor(interval) + (lang === 'id' ? ' jam yang lalu' : ` ${plural(Math.floor(interval), l.hour)} ago`);
+    interval = seconds / 86400; // days
+    if (interval < 30) return Math.floor(interval) + (lang === 'id' ? ' hari yang lalu' : ` ${plural(Math.floor(interval), l.day)} ago`);
+    interval = seconds / 2592000; // months
+    if (interval < 12) return Math.floor(interval) + (lang === 'id' ? ' bulan yang lalu' : ` ${plural(Math.floor(interval), l.month)} ago`);
+    interval = seconds / 31536000; // years
+    return Math.floor(interval) + (lang === 'id' ? ' tahun yang lalu' : ` ${plural(Math.floor(interval), l.year)} ago`);
+  }
+
+  function renderAnalyticsDashboard() {
+    if (!document.getElementById('adminContent') || document.getElementById('adminContent').style.display === 'none') return;
+    const lang = langSelect.value;
+    console.log(`[ANALYTICS] Rendering for language: ${lang}`);
+
+    // Simulated data (refreshes every time render is called)
+    const SIMULATED_DATA = {
+      totalDownloads: 12450 + Math.floor(Math.random() * 5),
+      activities: [
+        { time: new Date(Date.now() - 3600000), type: 'Download initiated:', details: 'VirtualHost (v2.1)' },
+        { time: new Date(Date.now() - 500000), type: 'Shop purchase:', details: 'VIP+ ($1.20)' }, // NEW: Shop activity
+        { time: new Date(Date.now() - 7200000), type: 'Admin Login success', details: 'Jakarta, ID' },
+        { time: new Date(Date.now() - 10800000), type: 'Download initiated:', details: 'Patched (.bat) (v1.9)' },
+        { time: new Date(Date.now() - 14400000), type: 'Download initiated:', details: 'iOS config (v1.4)' },
+      ]
+    };
+
     // Update Translations of Static Elements
     analyticsTitle.textContent = lang === 'id' ? (translations.id['Analytical Dashboard'] || 'Dasbor Analitik') : 'Analytical Dashboard';
     totalDownloadsContainer.innerHTML = (lang === 'id' ? (translations.id['Total Downloads:'] || 'Total Unduhan:') : 'Total Downloads:') + ` <strong id="totalDownloads">${SIMULATED_DATA.totalDownloads.toLocaleString()}</strong>`;
@@ -1000,69 +1007,62 @@ function renderAnalyticsDashboard() {
     // Update Activities
     recentActivitiesElement.innerHTML = '';
     SIMULATED_DATA.activities.forEach(activity => {
-        const li = document.createElement('li');
-        const timeAgo = getTimeAgo(activity.time, lang);
-        
-        let typeText;
-        if (lang === 'id') {
-            if (activity.type.startsWith('Download initiated:')) {
-                typeText = (translations.id['Download initiated:'] || 'Unduhan dimulai: ') + activity.details;
-            } else if (activity.type === 'Admin Login success') {
-                typeText = (translations.id['Admin Login success'] || 'Login Admin berhasil') + ' (' + activity.details + ')';
-            } else if (activity.type.startsWith('Shop purchase:')) { // NEW: Shop activity translation
-                 typeText = 'Pembelian Role: ' + activity.details.replace('VIP+', 'VIP+').replace('Moderator', 'Moderator');
-            }
-            else {
-                typeText = activity.type + ' ' + activity.details;
-            }
-        } else {
-             typeText = activity.type + ' ' + activity.details;
-        }
+      const li = document.createElement('li');
+      const timeAgo = getTimeAgo(activity.time, lang);
+      let typeText;
 
-        li.textContent = `[${timeAgo}] ${typeText}`;
-        recentActivitiesElement.appendChild(li);
+      if (lang === 'id') {
+        if (activity.type.startsWith('Download initiated:')) {
+          typeText = (translations.id['Download initiated:'] || 'Unduhan dimulai: ') + activity.details;
+        } else if (activity.type.startsWith('Shop purchase:')) {
+          typeText = 'Pembelian Toko: ' + activity.details;
+        } else if (activity.type.startsWith('Admin Login success')) {
+          typeText = (translations.id['Admin Login success'] || 'Login Admin berhasil') + `: ${activity.details}`;
+        } else {
+          typeText = activity.type + activity.details;
+        }
+      } else {
+        typeText = activity.type + activity.details;
+      }
+
+      li.textContent = `${typeText} (${timeAgo})`;
+      recentActivitiesElement.appendChild(li);
     });
 
-    // Handle button translation
-    refreshAnalytics.textContent = lang === 'id' ? (translations.id['Refresh Data'] || 'Perbarui Data') : 'Refresh Data';
-    
-    refreshAnalytics.onclick = () => {
-        showToast(lang === 'id' ? 'Memperbarui data analitik...' : 'Refreshing analytics data...', 1000);
-        // Simulate refresh by re-rendering
-        renderAnalyticsDashboard(); 
-        trackEvent('analytics_refresh');
-    };
-}
+    // Setup auto-refresh if not already running
+    if (analyticsIntervalId === null) {
+      analyticsIntervalId = setInterval(() => {
+        renderAnalyticsDashboard();
+      }, 30000); // Refresh every 30 seconds
+      console.log("[ANALYTICS] Auto-refresh started");
+    }
+  }
 
-/* ===========================
-   SEO Management Logic
-   =========================== */
-function updateSeoMetaTags(title, desc, keywords) {
-    // 1. Update <title>
+
+  /* ===========================
+     SEO Meta Tag Control (Simulated persistence)
+     =========================== */
+  function updateSeoMetaTags(title, description, keywords) {
     document.title = title;
-    
-    // 2. Update <meta name="description">
+
     let metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) metaDesc.setAttribute('content', desc);
-    else {
-        metaDesc = document.createElement('meta');
-        metaDesc.setAttribute('name', 'description');
-        metaDesc.setAttribute('content', desc);
-        document.head.appendChild(metaDesc);
+    if (!metaDesc) {
+      metaDesc = document.createElement('meta');
+      metaDesc.setAttribute('name', 'description');
+      document.head.appendChild(metaDesc);
     }
+    metaDesc.setAttribute('content', description);
 
-    // 3. Update <meta name="keywords">
     let metaKeywords = document.querySelector('meta[name="keywords"]');
-    if (metaKeywords) metaKeywords.setAttribute('content', keywords);
-    else {
-        metaKeywords = document.createElement('meta');
-        metaKeywords.setAttribute('name', 'keywords');
-        metaKeywords.setAttribute('content', keywords);
-        document.head.appendChild(metaKeywords);
+    if (!metaKeywords) {
+      metaKeywords = document.createElement('meta');
+      metaKeywords.setAttribute('name', 'keywords');
+      document.head.appendChild(metaKeywords);
     }
-}
+    metaKeywords.setAttribute('content', keywords);
+  }
 
-function loadAndApplySeoSettings() {
+  function loadAndApplySeoSettings() {
     // Default values from the original HTML head
     const defaultTitle = 'Growfax Official - Private Growtopia Server & Downloads';
     const defaultDesc = 'Situs resmi Growfax, private server Growtopia. Unduh file host terbaru untuk Android, Windows, dan iOS. Mainkan Growtopia dengan fitur eksklusif dan komunitas aktif!';
@@ -1072,174 +1072,138 @@ function loadAndApplySeoSettings() {
     const savedTitle = localStorage.getItem('growfax_seo_title') || defaultTitle;
     const savedDesc = localStorage.getItem('growfax_seo_desc') || defaultDesc;
     const savedKeywords = localStorage.getItem('growfax_seo_keywords') || defaultKeywords;
-    
+
     // Update Input Fields (only if refs exist)
     if (seoTitleInput) {
-        seoTitleInput.value = savedTitle;
-        seoDescTextarea.value = savedDesc;
-        seoKeywordsInput.value = savedKeywords;
+      seoTitleInput.value = savedTitle;
+      seoDescTextarea.value = savedDesc;
+      seoKeywordsInput.value = savedKeywords;
     }
 
     // Apply to <head>
     updateSeoMetaTags(savedTitle, savedDesc, savedKeywords);
-}
-// Initial call to apply SEO on page load (takes effect immediately)
-loadAndApplySeoSettings();
+  }
+
+  // Initial call to apply SEO on page load (takes effect immediately)
+  loadAndApplySeoSettings();
 
 
-/* ===========================
-   Smooth Translation Logic
-   =========================== */
+  /* ===========================
+     Smooth Translation Logic
+     =========================== */
 
-// Command Texts for translation (since they are now dynamically structured)
-const commandData = {
+  // Command Texts for translation (since they are now dynamically structured)
+  const commandData = {
     vip_commands: [
-        { strong: "/superbreak", span: "Activate the Super Breaker mode!" },
-        { strong: "/vsb", span: "Send a VIP-Broadcast to everyone online!" }
+      { strong: "/superbreak", span: "Activate the Super Breaker mode!" },
+      { strong: "/vsb", span: "Send a VIP-Broadcast to everyone online!" }
     ],
     vip_plus_commands: [
-        { strong: "/gemrain", span: "Activate the Gem Rain & Enjoy 20% more gems!" },
-        { strong: "/sdb", span: "Send a Super-Duper Broadcast to everyone online!" },
-        { strong: "All VIP commands included!", span: null }
+      { strong: "/gemrain", span: "Activate the Gem Rain & Enjoy 20% more gems!" },
+      { strong: "/sdb", span: "Send a Super-Duper Broadcast to everyone online!" },
+      { strong: "All VIP commands included!", span: null }
     ],
     moderator_commands: [
-        { strong: "/tempban", span: "Temporary ban abusive players." },
-        { strong: "/mute", span: "Silence disruptive users." },
-        { strong: "All VIP+ commands included!", span: null }
+      { strong: "/tempban", span: "Temporary ban abusive players." },
+      { strong: "/mute", span: "Silence disruptive users." },
+      { strong: "All VIP+ commands included!", span: null }
     ],
     super_moderator_commands: [
-        { strong: "/kick", span: "Instantly kick players from the server." },
-        { strong: "/warn", span: "Issue official warnings." },
-        { strong: "All Moderator commands included!", span: null }
+      { strong: "/kick", span: "Instantly kick players from the server." },
+      { strong: "/warn", span: "Issue official warnings." },
+      { strong: "All Moderator commands included!", span: null }
     ],
     developer_commands: [
-        { strong: "/testitem", span: "Spawn test/beta items." },
-        { strong: "/devlogs", span: "Access exclusive development logs." },
-        { strong: "All Super Moderator commands included!", span: null }
+      { strong: "/testitem", span: "Spawn test/beta items." },
+      { strong: "/devlogs", span: "Access exclusive development logs." },
+      { strong: "All Super Moderator commands included!", span: null }
     ],
     god_commands: [
-        { strong: "/worldtp", span: "Teleport to any world instantly." },
-        { strong: "/ultimate", span: "Activate unique God effects." },
-        { strong: "All Developer commands included!", span: null }
+      { strong: "/worldtp", span: "Teleport to any world instantly." },
+      { strong: "/ultimate", span: "Activate unique God effects." },
+      { strong: "All Developer commands included!", span: null }
     ]
-};
+  };
 
-function renderCommands(lang) {
+  // Update command list translations in the Shop section
+  function updateCommandTranslations(lang) {
     for (const id in commandData) {
-        const ul = document.getElementById(id);
-        if (ul) {
-            ul.innerHTML = ''; // Clear existing content
-            commandData[id].forEach(item => {
-                const li = document.createElement('li');
-                
-                // Translate the text content of the strong/span elements
-                const strongText = lang === 'en' ? item.strong : (translations[lang]?.[item.strong] || item.strong);
-                
-                li.innerHTML = `<strong>${strongText}</strong>`;
-                
-                if (item.span) {
-                    const spanText = lang === 'en' ? item.span : (translations[lang]?.[item.span] || item.span);
-                    li.innerHTML += ` <span>${spanText}</span>`;
-                }
-
-                ul.appendChild(li);
-            });
-        }
+      const ul = document.getElementById(id);
+      if (ul) {
+        ul.innerHTML = ''; // Clear existing content
+        commandData[id].forEach(item => {
+          const li = document.createElement('li');
+          // Translate the text content of the strong/span elements
+          const strongText = lang === 'en' ? item.strong : (translations[lang]?.[item.strong] || item.strong);
+          li.innerHTML = `<strong>${strongText}</strong>`;
+          if (item.span) {
+            const spanText = lang === 'en' ? item.span : (translations[lang]?.[item.span] || item.span);
+            li.innerHTML += ` <span>${spanText}</span>`;
+          }
+          ul.appendChild(li);
+        });
+      }
     }
-}
+  }
 
-
-function updateAdminAreaTranslations(lang) {
+  function updateAdminAreaTranslations(lang) {
     if (!adminLoginPrompt) return; // Exit if admin elements not loaded
-    
-    adminLoginPrompt.textContent = lang === 'id' 
-        ? (translations.id["Enter the Admin Token to proceed:"] || 'Masukkan Token Admin untuk melanjutkan:') 
-        : 'Enter the Admin Token to proceed:';
-    
-    adminTitle.textContent = lang === 'id' 
-        ? (translations.id["🔑 Admin Area"] || '🔑 Area Admin') 
-        : '🔑 Admin Area';
 
-    // Update dynamic content
-    updateServerStatusDisplay(); 
-    
+    adminLoginPrompt.textContent = lang === 'id' ? (translations.id["Enter the Admin Token to proceed:"] || 'Masukkan Token Admin untuk melanjutkan:') : 'Enter the Admin Token to proceed:';
+    adminTitle.textContent = lang === 'id' ? (translations.id["🔑 Admin Area"] || '🔑 Area Admin') : '🔑 Admin Area';
+
+    updateServerStatusDisplay(); // Update dynamic content
+
     // Update button/header texts within admin content
     if (adminContent.style.display !== 'none') {
-        // Server Status
-        document.querySelector('#adminContent h4:nth-child(1)').textContent = lang === 'id' 
-            ? (translations.id["Server Status"] || 'Status Server')
-            : 'Server Status';
-        // News & Updates
-        document.querySelector('#adminContent h4:nth-child(3)').textContent = lang === 'id' 
-            ? (translations.id["News & Updates"] || 'Berita & Pembaruan')
-            : 'News & Updates';
-        // SEO Management (NEW)
-        document.querySelector('#adminContent h4:nth-child(4)').textContent = lang === 'id' 
-            ? (translations.id["SEO Management"] || 'Manajemen SEO')
-            : 'SEO Management';
+      // Server Status
+      document.querySelector('#adminContent h4:nth-child(1)').textContent = lang === 'id' ? (translations.id["Server Status"] || 'Status Server') : 'Server Status';
+      // Analytical Dashboard (using ID)
+      document.getElementById('analyticsTitle').textContent = lang === 'id' ? (translations.id["Analytical Dashboard"] || 'Dasbor Analitik') : 'Analytical Dashboard';
+      // News & Updates
+      document.querySelector('#adminContent > div:nth-child(3) h4').textContent = lang === 'id' ? (translations.id["News & Updates"] || 'Berita & Pembaruan') : 'News & Updates';
+      // Role Command Management (NEW)
+      document.getElementById('commandManagementTitle').textContent = lang === 'id' ? (translations.id["Role Command Management"] || 'Manajemen Perintah Role') : 'Role Command Management';
+      // SEO Management (using ID)
+      document.getElementById('seoTitle').textContent = lang === 'id' ? (translations.id["SEO Management"] || 'Manajemen SEO') : 'SEO Management';
 
-        toggleServerStatus.textContent = lang === 'id' 
-            ? (translations.id["Toggle Status (Simulate)"] || 'Ubah Status (Simulasi)') 
-            : 'Toggle Status (Simulate)';
-        saveNewsUpdate.textContent = lang === 'id' 
-            ? (translations.id["Save News"] || 'Simpan Berita')
-            : 'Save News';
-        closeAdmin.textContent = lang === 'id' 
-            ? (translations.id["Close Admin Area"] || 'Tutup Area Admin')
-            : 'Close Admin Area';
+      toggleServerStatus.textContent = lang === 'id' ? (translations.id["Toggle Status (Simulate)"] || 'Ubah Status (Simulasi)') : 'Toggle Status (Simulate)';
+      saveNewsUpdate.textContent = lang === 'id' ? (translations.id["Save News"] || 'Simpan Berita') : 'Save News';
+      saveSeoMeta.textContent = lang === 'id' ? (translations.id["Update SEO Meta"] || 'Perbarui Meta SEO') : 'Update SEO Meta';
+      closeAdmin.textContent = lang === 'id' ? (translations.id["Close Admin Area"] || 'Tutup Area Admin') : 'Close Admin Area';
 
-        // SEO Labels/Button (NEW)
-        document.querySelector('label[for="seoTitleInput"]').textContent = lang === 'id' 
-            ? (translations.id["Page Title (Hanya Title Tag HTML)"] || 'Judul Halaman (Hanya Tag Title HTML)') 
-            : 'Page Title (HTML Title Tag Only)';
-        
-        document.querySelector('label[for="seoDescTextarea"]').textContent = lang === 'id' 
-            ? (translations.id["Meta Description"] || 'Deskripsi Meta') 
-            : 'Meta Description';
-
-        document.querySelector('label[for="seoKeywordsInput"]').textContent = lang === 'id' 
-            ? (translations.id["Meta Keywords (Comma-separated)"] || 'Kata Kunci Meta (Dipisahkan Koma)') 
-            : 'Meta Keywords (Comma-separated)';
-
-        saveSeoMeta.textContent = lang === 'id' 
-            ? (translations.id["Update SEO Meta"] || 'Perbarui Meta SEO')
-            : 'Update SEO Meta';
-
-        // Update Analytics Dashboard content if logged in
-        renderAnalyticsDashboard(); 
+      // Other elements with data-original (like prompts and button 'Edit Command Text') are handled by the main applyTranslations function
+      // Refresh analytics data to update language on dynamic strings
+      renderAnalyticsDashboard(); 
     }
-    // Update token input placeholder
-    adminTokenInput.placeholder = lang === 'id' ? 'Token' : 'Token';
-    adminTokenSubmit.textContent = lang === 'id' ? (translations.id["Submit"] || 'Kirim') : 'Submit';
-}
+  }
 
+  function applyTranslations(lang) {
+    const transitionDuration = 200; // 200 ms
+    const elementsToTranslate = document.querySelectorAll('[data-original], #modalCancel, #modalConfirm, #welcomeSave, #welcomeSkip, #discordLink, #reportBugLink, #adminTokenSubmit, #closeAdmin, #toggleServerStatus, #saveNewsUpdate, #refreshAnalytics, #saveSeoMeta');
 
-function applyTranslations(lang){
-  const transitionDuration = 200; // ms
-  const elementsToTranslate = document.querySelectorAll('[data-original], #modalCancel, #modalConfirm, #welcomeSave, #welcomeSkip, #discordLink, #reportBugLink, #adminTokenSubmit, #closeAdmin, #toggleServerStatus, #saveNewsUpdate, #refreshAnalytics');
+    // 1. Fade out (Opacity 0)
+    elementsToTranslate.forEach(el => {
+      // Only target elements currently visible
+      if (el.offsetWidth > 0 || el.offsetHeight > 0 || el === langSelect) {
+        el.style.transition = `opacity ${transitionDuration}ms ease`;
+        el.style.opacity = '0';
+      }
+    });
 
-  // 1. Fade out (Opacity 0)
-  elementsToTranslate.forEach(el => {
-    // Only target elements currently visible
-    if (el.offsetWidth > 0 || el.offsetHeight > 0 || el === langSelect) {
-      el.style.transition = `opacity ${transitionDuration}ms ease`;
-      el.style.opacity = '0';
-    }
-  });
+    // 2. Wait for fade-out
+    setTimeout(() => {
+      // 3. Apply new content (Opacity is 0, so change is invisible)
+      elementsToTranslate.forEach(el => {
+        const orig = el.dataset.original;
+        if (!orig) return;
 
-  // 2. Wait for fade-out
-  setTimeout(() => {
-    // 3. Apply new content (Opacity is 0, so change is invisible)
-    elements.forEach(el=>{
-      const orig = el.dataset.original;
-      if(!orig) return;
-      el.textContent = lang === 'en' ? orig : (translations[lang]?.[orig] || orig);
-      
-      // NEW: Handle Shop Button Translation
-      if (el.classList.contains('btn-purchase')) {
+        el.textContent = lang === 'en' ? orig : (translations[lang]?.[orig] || orig);
+
+        // NEW: Handle Shop Button Translation
+        if (el.classList.contains('btn-purchase')) {
           const role = el.getAttribute('data-role');
           const defaultText = `Purchase ${role.charAt(0).toUpperCase() + role.slice(1)}`; // Fallback like "Purchase Vip"
-          
           let translatedText;
           if (role === 'vip') translatedText = translations[lang]?.['Purchase VIP'] || defaultText;
           else if (role === 'vip+') translatedText = translations[lang]?.['Purchase VIP+'] || defaultText;
@@ -1247,465 +1211,467 @@ function applyTranslations(lang){
           else if (role === 'super_moderator') translatedText = translations[lang]?.['Purchase Super Moderator'] || defaultText;
           else if (role === 'developer') translatedText = translations[lang]?.['Purchase Developer'] || defaultText;
           else if (role === 'god') translatedText = translations[lang]?.['Purchase GOD'] || defaultText;
-          
           el.textContent = translatedText || orig;
-      }
-      
-    });
+        }
+      });
 
-    // Fix buttons/labels manually
-    modalCancel.textContent = lang === 'id' ? (translations.id['Cancel'] || 'Batal') : 'Cancel';
-    modalConfirm.textContent = lang === 'id' ? (translations.id['Download'] || 'Unduh') : 'Download';
-    welcomeSave.textContent = lang === 'id' ? (translations.id['Save & Continue'] || 'Simpan & Lanjutkan') : 'Save & Continue';
-    welcomeSkip.textContent = lang === 'id' ? (translations.id['Skip'] || 'Lewati') : 'Skip';
-    discordLink.textContent = lang === 'id' ? (translations.id['Join Growfax Discord'] || 'Gabung Discord Growfax') : 'Join Growfax Discord';
-    reportBugLink.textContent = lang === 'id' ? (translations.id['🐞 Report Bug'] || '🐞 Laporkan Bug') : '🐞 Report Bug';
-    
-    // RENDER COMMANDS
-    renderCommands(lang);
-    
-    // Update mailto link and Admin area translations
-    updateReportBugLink(); 
-    updateAdminAreaTranslations(lang); 
+      // Fix buttons/labels manually
+      modalCancel.textContent = lang === 'id' ? (translations.id['Cancel'] || 'Batal') : 'Cancel';
+      modalConfirm.textContent = lang === 'id' ? (translations.id['Download'] || 'Unduh') : 'Download';
+      welcomeSave.textContent = lang === 'id' ? (translations.id['Save & Continue'] || 'Simpan & Lanjutkan') : 'Save & Continue';
+      welcomeSkip.textContent = lang === 'id' ? (translations.id['Skip'] || 'Lewati') : 'Skip';
+      document.getElementById('discordLink').textContent = lang === 'id' ? (translations.id['Join Growfax Discord'] || 'Join Growfax Discord') : 'Join Growfax Discord';
 
-    // 4. Fade back in (Opacity 1)
-    elementsToTranslate.forEach(el => {
-      // Restore opacity on elements that were hidden
-      if (el.style.opacity === '0') {
+      // Update dynamic elements (time and commands)
+      updateTime();
+      updateCommandTranslations(lang);
+      updateReportBugLink();
+      updateAdminAreaTranslations(lang);
+
+      // 4. Fade in
+      elementsToTranslate.forEach(el => {
         el.style.opacity = '1';
-        // Remove inline transition after fade-in to let CSS handle it again
-        setTimeout(() => el.style.transition = '', transitionDuration);
-      }
-    });
-
-  }, transitionDuration); // Delay matches the fade-out duration
-}
-
-
-/* ===========================
-   Report Bug Link Logic
-   =========================== */
-function updateReportBugLink() {
-  const lang = langSelect.value;
-  let subject, body;
-  
-  if (lang === 'id') {
-    subject = 'Laporan Bug - Growfax';
-    body = 'Mohon jelaskan bug yang Anda temukan:\n\n---\nDevice/Platform (Android/iOS/PC):\nWaktu Kejadian:\nLangkah-langkah mereplikasi bug:\n---\n\n(Silakan lampirkan screenshot atau foto di sini. Terima kasih.)';
-  } else { // default to 'en'
-    subject = 'Bug Report - Growfax';
-    body = 'Please describe the bug you encountered:\n\n---\nDevice/Platform (Android/iOS/PC):\nTime of Occurrence:\nSteps to reproduce the bug:\n---\n\n(Please attach screenshots or photos here. Thank you.)';
+      });
+    }, transitionDuration);
   }
 
-  // Encode the subject and body for the URL
-  const mailtoURL = `mailto:growfaxz.gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  
-  reportBugLink.setAttribute('href', mailtoURL);
-}
+  /* ===========================
+     Toast and Event Tracking (Simulated)
+     =========================== */
+  const toast = document.getElementById('toast');
+  function showToast(message, duration = 2000) {
+    toast.textContent = message;
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateX(-50%) translateY(10px)';
+    }, duration);
+  }
+
+  function trackEvent(name, data = {}) {
+    console.log(`[ANALYTICS] Event Tracked: ${name}`, data);
+  }
+
+  function updateReportBugLink() {
+    const reportBugLink = document.getElementById('reportBugLink');
+    const lang = langSelect.value;
+    let subject, body;
+    if (lang === 'id') {
+      subject = 'Laporan Bug - Growfax';
+      body = 'Mohon jelaskan bug yang Anda temukan:\n\n---\nDevice/Platform (Android/iOS/PC):\nWaktu Kejadian:\nLangkah-langkah mereplikasi bug:\n---\n\n(Silakan lampirkan screenshot atau foto di sini. Terima kasih.)';
+    } else { // default to 'en'
+      subject = 'Bug Report - Growfax';
+      body = 'Please describe the bug you encountered:\n\n---\nDevice/Platform (Android/iOS/PC):\nTime of Occurrence:\nSteps to reproduce the bug:\n---\n\n(Please attach screenshots or photos here. Thank you.)';
+    }
+    // Encode the subject and body for the URL
+    const mailtoURL = `mailto:growfaxz.gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    reportBugLink.setAttribute('href', mailtoURL);
+  }
 
 
-/* ===========================
-   Theme control
-   =========================== */
-function setTheme(theme){
-  document.body.setAttribute('data-theme', theme);
-  themeToggle.textContent = theme === 'dark' ? '🌙 Dark' : '🌞 Light';
-  themeToggle.setAttribute('aria-pressed', theme === 'dark');
-  localStorage.setItem('growfax_theme', theme);
-}
-themeToggle.addEventListener('click', ()=> {
-  setTheme(document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-});
-setTheme(localStorage.getItem('growfax_theme') || 'light');
+  /* ===========================
+     Theme control
+     =========================== */
+  const themeToggle = document.getElementById('themeToggle');
+  function setTheme(theme) {
+    document.body.setAttribute('data-theme', theme);
+    themeToggle.textContent = theme === 'dark' ? '🌙 Dark' : '🌞 Light';
+    themeToggle.setAttribute('aria-pressed', theme === 'dark');
+    localStorage.setItem('growfax_theme', theme);
+  }
+  themeToggle.addEventListener('click', () => {
+    setTheme(document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+  setTheme(localStorage.getItem('growfax_theme') || 'light');
 
-/* ===========================
-   Language control (persist)
-   =========================== */
-langSelect.addEventListener('change', ()=> {
-  const lang = langSelect.value;
-  localStorage.setItem('growfax_lang', lang);
-  applyTranslations(lang);
+
+  /* ===========================
+     Language control (persist)
+     =========================== */
+  const langSelect = document.getElementById('langSelect');
+  langSelect.addEventListener('change', () => {
+    const lang = langSelect.value;
+    localStorage.setItem('growfax_lang', lang);
+    applyTranslations(lang);
+    updateTime();
+    showToast(lang === 'id' ? 'Bahasa: Indonesia' : 'Language: English');
+  });
+
+  (function initLang() {
+    const saved = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en');
+    langSelect.value = saved;
+    applyTranslations(saved);
+    updateReportBugLink(); // Initial link setup
+  })();
+
+
+  /* ===========================
+     Time display (NY / Jakarta)
+     =========================== */
+  function getIndoGreeting(hour) {
+    if (hour < 11) return "Selamat Pagi";
+    if (hour < 15) return "Selamat Siang";
+    if (hour < 18) return "Selamat Sore";
+    return "Selamat Malam";
+  }
+
+  function updateTime() {
+    const timeDisplay = document.getElementById('timeDisplay');
+    const now = new Date();
+
+    // Timezone: Jakarta (WIB, UTC+7) - Placeholder for simplicity
+    const jakartaTime = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Jakarta" }));
+    const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true };
+    const formattedTime = jakartaTime.toLocaleString('en-US', options);
+    const currentHour = jakartaTime.getHours();
+    const lang = langSelect.value;
+
+    if (lang === 'id') {
+      const greeting = getIndoGreeting(currentHour);
+      timeDisplay.textContent = `${greeting}, ${jakartaTime.toLocaleString('id-ID', options)} WIB`;
+    } else {
+      timeDisplay.textContent = `Server Time (WIB): ${formattedTime}`;
+    }
+
+    // Update news based on saved local storage content
+    const newsContent = localStorage.getItem('growfax_news_update');
+    if (newsUpdateTextarea) {
+      newsUpdateTextarea.value = newsContent || '';
+    }
+  }
+
+  // Initial and periodic time update
+  setInterval(updateTime, 1000);
   updateTime();
-  showToast(lang === 'id' ? 'Bahasa: Indonesia' : 'Language: English');
-});
-(function initLang(){
-  const saved = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en');
-  langSelect.value = saved;
-  applyTranslations(saved);
-  updateReportBugLink(); // Initial link setup
-})();
 
-/* ===========================
-   Time display (NY / Jakarta)
-   =========================== */
-function getIndoGreeting(hour){
-  if(hour < 11) return 'pagi';
-  if(hour < 15) return 'siang';
-  if(hour < 18) return 'sore';
-  return 'malam';
-}
-function updateTime(){
-  const now = new Date();
-  const lang = langSelect.value || 'en';
-  if(lang === 'id'){
-    const options = { timeZone: 'Asia/Jakarta', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' };
-    const indoTime = new Intl.DateTimeFormat('id-ID', options).format(now);
-    // Get hour separately using the correct timezone
-    const hour = parseInt(now.toLocaleString('en-US', { timeZone: 'Asia/Jakarta', hour: '2-digit', hour12: false }));
-    const greeting = getIndoGreeting(hour);
-    timeDisplay.textContent = `Waktu Lokal (Jakarta): ${indoTime} - ${greeting}`;
-  } else {
-    const options = { timeZone: 'America/New_York', hour12: true, timeStyle: 'medium', dateStyle: 'medium' };
-    const usTime = now.toLocaleString('en-US', options);
-    timeDisplay.textContent = `Local Time (New York): ${usTime}`;
-  }
-}
-updateTime();
-setInterval(updateTime, 1000);
 
-/* ===========================
-   File Update Checker (modal)
-   =========================== */
-document.querySelectorAll('.platform-buttons a').forEach(a=>{
-  a.addEventListener('click', (e)=>{
-    // Allow ctrl/meta click (open in new tab) and middle-click
-    if(e.ctrlKey || e.metaKey || e.button === 1) return;
-    e.preventDefault();
-    const key = a.dataset.filekey;
-    const meta = FILE_META[key] || { version: 'v1.0', updated: 'Unknown', changelog: 'No details', size: '—' };
-    const filename = a.dataset.filename || key;
+  /* ===========================
+     File Download/Info Modal Logic (Copy Text Added)
+     =========================== */
+  const modalBackdrop = document.getElementById('modalBackdrop');
+  const modalCancel = document.getElementById('modalCancel');
+  const modalConfirm = document.getElementById('modalConfirm');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalDesc = document.getElementById('modalDesc');
+  const modalVersion = document.getElementById('modalVersion');
+  const modalUpdated = document.getElementById('modalUpdated');
+  const modalChangelog = document.getElementById('modalChangelog');
+  const modalFilename = document.getElementById('modalFilename');
 
-    // --- MODIFIED LOGIC: COPY TEXT (iOS, PowerTunnel, dll.) ---
-    if (meta.copytext) {
+  // Open modal/Initiate download/copy
+  document.querySelectorAll('.platform-buttons a').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const key = a.dataset.filekey;
+      const meta = FILE_META[key] || { version: 'v1.0', updated: 'Unknown', changelog: 'No details', size: '—' };
+      const filename = a.dataset.filename || key;
+      const lang = langSelect.value;
+
+      // --- MODIFIED LOGIC: COPY TEXT (iOS, PowerTunnel, dll.) ---
+      if (meta.copytext) {
+        e.preventDefault();
         // Teks tersedia, salin ke clipboard
         navigator.clipboard.writeText(meta.copytext).then(() => {
-            let toastMessage;
-            if (key === 'ios') {
-                toastMessage = (langSelect.value === 'id') ? '✅ Konfigurasi iOS berhasil disalin!' : '✅ iOS configuration copied!';
-            } else {
-                toastMessage = (langSelect.value === 'id') ? '✅ Teks Host PowerTunnel berhasil disalin!' : '✅ PowerTunnel Host text copied!';
-            }
-            showToast(toastMessage, 3000);
+          let toastMessage;
+          if (key === 'ios') {
+            toastMessage = (lang === 'id') ? '✅ Konfigurasi iOS berhasil disalin!' : '✅ iOS configuration copied!';
+          } else {
+            toastMessage = (lang === 'id') ? '✅ Teks Host PowerTunnel berhasil disalin!' : '✅ PowerTunnel Host text copied!';
+          }
+          showToast(toastMessage, 3000);
         }).catch(err => {
-            console.error('Copy failed:', err);
-            const toastMessage = (langSelect.value === 'id') ? '❌ Gagal menyalin teks!' : '❌ Failed to copy text!';
-            showToast(toastMessage, 3000);
+          console.error('Copy failed:', err);
+          const toastMessage = (lang === 'id') ? '❌ Gagal menyalin teks!' : '❌ Failed to copy text!';
+          showToast(toastMessage, 3000);
         });
-        
+
         // Track Copy Event (General)
         trackEvent('config_copied', { platform: key });
-        
         return; // Hentikan aksi selanjutnya (tidak perlu modal)
-    }
-    // --- AKHIR LOGIKA COPY TEXT ---
+      }
+      // --- AKHIR LOGIKA COPY TEXT ---
 
-    // Lanjutkan dengan logika modal/download untuk file lain
-    modalTitle.textContent = (langSelect.value === 'id') ? (translations.id['Details before download'] || 'Detail sebelum mengunduh') : 'Details before download';
-    modalDesc.textContent = (langSelect.value === 'id') ? `Info untuk ${filename}` : `Info for ${filename}`;
-    modalVersion.textContent = `${(langSelect.value === 'id') ? (translations.id['Version'] || 'Versi') + ': ' : 'Version: '}${meta.version}`;
-    modalUpdated.textContent = `${(langSelect.value === 'id') ? (translations.id['Updated'] || 'Diperbarui') + ': ' : 'Updated: '}${meta.updated}`;
-    modalChangelog.innerText = `${(langSelect.value === 'id') ? (translations.id['Changelog'] || 'Catatan pembaruan') + ':' : 'Changelog:'}\n${meta.changelog}\n\n${(langSelect.value === 'id') ? (translations.id['Size'] || 'Ukuran') + ': ' : 'Size: '}${meta.size}`;
-    modalFilename.textContent = (langSelect.value === 'id' ? (translations.id['Filename'] || 'Nama berkas') : 'Filename') + `: ${filename}`;
-    pendingDownload = { href: a.getAttribute('href'), filename, version: meta.version };
-    showModal();
-  });
-});
-function showModal(){ modalBackdrop.style.display='flex'; modalBackdrop.setAttribute('aria-hidden','false'); setTimeout(()=>modalConfirm.focus(),200); }
-function hideModal(){ modalBackdrop.style.display='none'; modalBackdrop.setAttribute('aria-hidden','true'); pendingDownload=null; }
-modalCancel.addEventListener('click', ()=> hideModal());
-modalBackdrop.addEventListener('click', (e)=>{ if(e.target===modalBackdrop) hideModal(); });
+      // Lanjutkan dengan logika modal/download untuk file lain
+      e.preventDefault();
+      pendingDownload = a; // Simpan elemen anchor untuk download konfirmasi
 
-// Added Analytical Tracking for Download
-modalConfirm.addEventListener('click', ()=>{
-  if(!pendingDownload) return hideModal();
-  
-  // Track file download initiation
-  trackEvent('file_download_initiated', {
-    file_name: pendingDownload.filename,
-    file_version: pendingDownload.version || 'Unknown'
-  });
-  
-  const a = document.createElement('a'); a.href = pendingDownload.href; a.download = pendingDownload.filename; document.body.appendChild(a); a.click(); a.remove();
-  hideModal(); showToast(langSelect.value === 'id' ? 'Mulai mengunduh...' : 'Download started...');
-});
+      modalTitle.textContent = (lang === 'id') ? (translations.id['Details before download'] || 'Detail sebelum mengunduh') : 'Details before download';
+      modalDesc.textContent = (lang === 'id') ? `Info untuk ${filename}` : `Info for ${filename}`;
+      modalVersion.textContent = `${(lang === 'id') ? (translations.id['Version'] || 'Versi') + ': ' : 'Version: '}${meta.version}`;
+      modalUpdated.textContent = `${(lang === 'id') ? (translations.id['Updated'] || 'Diperbarui') + ': ' : 'Updated: '}${meta.updated}`;
+      modalChangelog.innerText = `${(lang === 'id') ? (translations.id['Changelog'] || 'Catatan pembaruan') + ':' : 'Changelog:'}\n${meta.changelog}\n\n${(lang === 'id') ? (translations.id['Size'] || 'Ukuran') + ': ' : 'Size: '}${meta.size}`;
+      modalFilename.textContent = `${(lang === 'id') ? (translations.id['Filename'] || 'Nama berkas') + ': ' : 'Filename: '}${filename}`;
 
-/* ===========================
-   Shop Purchase Tracking (NEW)
-   =========================== */
-document.querySelectorAll('.btn-purchase').forEach(button => {
-    button.addEventListener('click', (e) => {
-        // Track Shop Purchase Click
-        trackEvent('shop_purchase_click', {
-            role: button.getAttribute('data-role'),
-            price_usd: button.getAttribute('data-price')
-        });
-        
-        // Give toast feedback
-        const lang = langSelect.value;
-        const roleName = button.getAttribute('data-role').toUpperCase();
-        showToast(lang === 'id' ? `Membuka PayPal untuk pembelian ${roleName}...` : `Opening PayPal for ${roleName} purchase...`, 2000);
-        // Actual link is handled by the anchor tag's default behavior
+      modalBackdrop.style.display = 'flex';
+      modalBackdrop.setAttribute('aria-hidden', 'false');
     });
-});
+  });
 
-/* ===========================
-   Admin Area Logic 
-   =========================== */
-function updateServerStatusDisplay() {
+  // Close modal logic
+  modalCancel.addEventListener('click', () => {
+    modalBackdrop.style.display = 'none';
+    modalBackdrop.setAttribute('aria-hidden', 'true');
+    pendingDownload = null;
+  });
+  modalBackdrop.addEventListener('click', (e) => {
+    if (e.target === modalBackdrop) {
+      modalBackdrop.style.display = 'none';
+      modalBackdrop.setAttribute('aria-hidden', 'true');
+      pendingDownload = null;
+    }
+  });
+
+  // Confirm download logic
+  modalConfirm.addEventListener('click', () => {
+    if (pendingDownload) {
+      const key = pendingDownload.dataset.filekey;
+      // Simulate download (by triggering click on original anchor tag)
+      pendingDownload.click();
+
+      // Track Download Event (General)
+      trackEvent('download_initiated', { platform: key, version: FILE_META[key]?.version || 'v?' });
+      modalBackdrop.style.display = 'none';
+      modalBackdrop.setAttribute('aria-hidden', 'true');
+      const lang = langSelect.value;
+      showToast(lang === 'id' ? `Unduhan ${key} dimulai.` : `${key} download started.`, 2000);
+      pendingDownload = null;
+    }
+  });
+
+  // Shop purchase simulation
+  document.querySelectorAll('.btn-purchase').forEach(button => {
+    button.addEventListener('click', (e) => {
+      // e.preventDefault(); // Don't prevent default, allow PayPal link to open
+
+      const lang = langSelect.value;
+      const roleName = button.getAttribute('data-role').toUpperCase();
+      showToast(lang === 'id' ? `Membuka PayPal untuk pembelian ${roleName}...` : `Opening PayPal for ${roleName} purchase...`, 2000);
+
+      // Track Shop Purchase Event
+      trackEvent('shop_purchase_click', { role: roleName, price: button.getAttribute('data-price') });
+      // Actual link is handled by the anchor tag's default behavior
+    });
+  });
+
+
+  /* ===========================
+     Admin Area Logic
+     =========================== */
+  function updateServerStatusDisplay() {
     const lang = langSelect.value;
     const onlineText = lang === 'id' ? (translations.id['Online'] || 'Online') : 'Online';
     const offlineText = lang === 'id' ? (translations.id['Offline'] || 'Offline') : 'Offline';
-
     serverStatusDisplay.textContent = isServerOnline ? onlineText : offlineText;
     serverStatusDisplay.style.color = isServerOnline ? 'var(--success)' : 'var(--danger)';
-}
+  }
 
-function showAdminModal() {
+  function showAdminModal() {
     adminBackdrop.style.display = 'flex';
     adminBackdrop.setAttribute('aria-hidden', 'false');
-    
+
     // Check if already logged in
     if (isAdminLoggedIn) {
-        adminLogin.style.display = 'none';
-        adminContent.style.display = 'block';
-        renderAnalyticsDashboard(); // Load analytics when reopening
-        loadAndApplySeoSettings(); // Load SEO settings when reopening
+      adminLogin.style.display = 'none';
+      adminContent.style.display = 'block';
+      renderAnalyticsDashboard(); // Load analytics when reopening
+      loadAndApplySeoSettings(); // Load SEO settings when reopening
     } else {
-        adminLogin.style.display = 'block';
-        adminContent.style.display = 'none';
-        adminTokenInput.value = '';
-        setTimeout(() => adminTokenInput.focus(), 300);
+      adminLogin.style.display = 'block';
+      adminContent.style.display = 'none';
+      adminTokenInput.value = '';
+      setTimeout(() => adminTokenInput.focus(), 300);
     }
 
     // Re-apply current language settings to modal text
-    updateAdminAreaTranslations(langSelect.value); 
-}
+    updateAdminAreaTranslations(langSelect.value);
+  }
 
-function hideAdminModal() {
+  function hideAdminModal() {
     adminBackdrop.style.display = 'none';
     adminBackdrop.setAttribute('aria-hidden', 'true');
 
     // NEW: Hentikan auto-refresh dashboard saat modal ditutup
     if (analyticsIntervalId !== null) {
-        clearInterval(analyticsIntervalId);
-        analyticsIntervalId = null;
-        console.log("[ANALYTICS] Auto-refresh stopped");
+      clearInterval(analyticsIntervalId);
+      analyticsIntervalId = null;
+      console.log("[ANALYTICS] Auto-refresh stopped");
     }
-}
+  }
 
-openAdmin.addEventListener('click', () => {
+  openAdmin.addEventListener('click', () => {
     showAdminModal();
-});
-
-closeAdmin.addEventListener('click', hideAdminModal);
-adminBackdrop.addEventListener('click', (e) => {
+  });
+  closeAdmin.addEventListener('click', hideAdminModal);
+  adminBackdrop.addEventListener('click', (e) => {
     if (e.target === adminBackdrop) hideAdminModal();
-});
+  });
 
-// Admin Login Logic (Updated with Auto-Refresh)
-adminTokenSubmit.addEventListener('click', () => {
+  // Admin Login Logic (Updated with Auto-Refresh)
+  adminTokenSubmit.addEventListener('click', () => {
     const token = adminTokenInput.value.trim();
     const lang = langSelect.value;
-    
     if (token === ADMIN_TOKEN) {
-        isAdminLoggedIn = true; // Set login state
-        adminLogin.style.display = 'none';
-        adminContent.style.display = 'block';
-        updateServerStatusDisplay();
-        // Load simulated news and SEO settings
-        newsUpdateTextarea.value = localStorage.getItem('growfax_news_update') || ''; 
-        loadAndApplySeoSettings(); // Load SEO settings to inputs
-        
-        // NEW: Render Analytics Dashboard and START AUTO-REFRESH (30 seconds)
-        renderAnalyticsDashboard(); 
-        if (analyticsIntervalId === null) {
-            analyticsIntervalId = setInterval(renderAnalyticsDashboard, 30000); 
-            console.log("[ANALYTICS] Auto-refresh started (30s interval)");
-        }
-
-        // Track Admin Login Success
-        trackEvent('admin_login_success');
-        
-        showToast(lang === 'id' ? '✅ Akses Admin diberikan!' : '✅ Admin Access granted!', 2000);
+      isAdminLoggedIn = true; // Set login state
+      adminLogin.style.display = 'none';
+      adminContent.style.display = 'block';
+      trackEvent('admin_login', { result: 'success' });
+      showToast(lang === 'id' ? '✅ Login Admin Berhasil!' : '✅ Admin Login Successful!', 2000);
+      renderAnalyticsDashboard(); // Start analytics/auto-refresh
+      loadAndApplySeoSettings(); // Load SEO settings
     } else {
-        // Track Admin Login Failure
-        trackEvent('admin_login_failure');
-        
-        showToast(lang === 'id' ? '❌ Token Admin Salah.' : '❌ Incorrect Admin Token.', 2000);
-        adminTokenInput.value = '';
-        adminTokenInput.focus();
+      trackEvent('admin_login', { result: 'failed' });
+      showToast(lang === 'id' ? '❌ Token Admin salah.' : '❌ Invalid Admin Token.', 2000);
     }
-});
+  });
 
-// Toggle Status Logic (Simulated)
-toggleServerStatus.addEventListener('click', () => {
+  // Toggle Server Status Logic (Simulated)
+  toggleServerStatus.addEventListener('click', () => {
     isServerOnline = !isServerOnline;
     updateServerStatusDisplay();
-    
-    // Track Server Status Toggle
-    trackEvent('server_status_toggled', {
-        new_status: isServerOnline ? 'Online' : 'Offline'
-    });
-    
+    trackEvent('server_status_toggle', { status: isServerOnline ? 'online' : 'offline' });
     showToast(langSelect.value === 'id' ? 'Status Server diubah.' : 'Server Status changed.', 1500);
-});
+  });
 
-// Save News Logic (Simulated)
-saveNewsUpdate.addEventListener('click', () => {
+  // Save News Logic (Simulated)
+  saveNewsUpdate.addEventListener('click', () => {
     const news = newsUpdateTextarea.value;
     // Save to local storage for persistence
-    localStorage.setItem('growfax_news_update', news); 
-    
+    localStorage.setItem('growfax_news_update', news);
     // Track News Update
-    trackEvent('news_update_saved', {
-        char_count: news.length
-    });
-    
+    trackEvent('news_update_saved', { char_count: news.length });
     showToast(langSelect.value === 'id' ? 'Pembaruan Berita disimpan.' : 'News Update saved.', 1500);
-});
+  });
 
-// Save SEO Meta Logic (Simulated - NEW)
-saveSeoMeta.addEventListener('click', () => {
+  // Save SEO Meta Logic (Simulated - NEW)
+  saveSeoMeta.addEventListener('click', () => {
     const title = seoTitleInput.value.trim();
     const desc = seoDescTextarea.value.trim();
     const keywords = seoKeywordsInput.value.trim();
     const lang = langSelect.value;
-    
+
     // Save to local storage for persistence
     localStorage.setItem('growfax_seo_title', title);
     localStorage.setItem('growfax_seo_desc', desc);
     localStorage.setItem('growfax_seo_keywords', keywords);
-    
+
     // Apply immediately to the page's <head>
     updateSeoMetaTags(title, desc, keywords);
-    
+
     // Track SEO Update
-    trackEvent('seo_meta_updated', {
-        title_length: title.length,
-        desc_length: desc.length
-    });
-    
+    trackEvent('seo_meta_updated', { title_length: title.length, desc_length: desc.length });
     showToast(lang === 'id' ? '✅ Pengaturan SEO diperbarui dan diterapkan.' : '✅ SEO Settings updated and applied.', 2000);
-});
+  });
 
 
-/* ===========================
-   Welcome popup
-   =========================== */
-function showWelcome(){ welcomeBackdrop.style.display='flex'; welcomeBackdrop.setAttribute('aria-hidden','false'); }
-function hideWelcome(){ welcomeBackdrop.style.display='none'; welcomeBackdrop.setAttribute('aria-hidden','true'); }
-openWelcome.addEventListener('click', ()=> showWelcome());
-welcomeSave.addEventListener('click', ()=>{
-  const chosenLang = document.getElementById('welcomeLang').value;
-  const theme = Array.from(document.querySelectorAll('input[name="welcomeTheme"]')).find(r=>r.checked).value;
-  langSelect.value = chosenLang;
-  localStorage.setItem('growfax_lang', chosenLang);
-  applyTranslations(chosenLang);
+  /* ===========================
+     Welcome popup
+     =========================== */
+  const welcomeBackdrop = document.getElementById('welcomeBackdrop');
+  const openWelcome = document.getElementById('openWelcome');
+  const welcomeLang = document.getElementById('welcomeLang');
+  const welcomeSave = document.getElementById('welcomeSave');
+  const welcomeSkip = document.getElementById('welcomeSkip');
+
+  function showWelcome() {
+    welcomeBackdrop.style.display = 'flex';
+    welcomeBackdrop.setAttribute('aria-hidden', 'false');
+    // Set initial values in popup
+    welcomeLang.value = localStorage.getItem('growfax_lang') || 'en';
+    const currentTheme = localStorage.getItem('growfax_theme') || 'light';
+    document.querySelector(`input[name="welcomeTheme"][value="${currentTheme}"]`).checked = true;
+  }
+
+  function hideWelcome() {
+    welcomeBackdrop.style.display = 'none';
+    welcomeBackdrop.setAttribute('aria-hidden', 'true');
+  }
+
+  openWelcome.addEventListener('click', showWelcome);
+  welcomeBackdrop.addEventListener('click', (e) => {
+    if (e.target === welcomeBackdrop) hideWelcome();
+  });
+  welcomeSkip.addEventListener('click', hideWelcome);
+
+  welcomeSave.addEventListener('click', () => {
+    const lang = welcomeLang.value;
+    const theme = document.querySelector('input[name="welcomeTheme"]:checked').value;
+
+    localStorage.setItem('growfax_lang', lang);
+    localStorage.setItem('growfax_theme', theme);
+
+    // Apply changes immediately
+    langSelect.value = lang;
+    setTheme(theme);
+    applyTranslations(lang);
+    updateTime();
+
+    hideWelcome();
+    showToast(lang === 'id' ? 'Pengaturan disimpan.' : 'Settings saved.', 1500);
+  });
+
+  // Show welcome popup only on first visit
+  if (!localStorage.getItem('growfax_visited')) {
+    // showWelcome();
+    localStorage.setItem('growfax_visited', 'true');
+  }
+
+  /* ===========================
+     Report Bug Link (mailto)
+     =========================== */
+  document.getElementById('reportBugLink').addEventListener('click', () => {
+    const lang = langSelect.value;
+    showToast(lang === 'id' ? 'Membuka aplikasi email...' : 'Opening email application...');
+  });
+
+
+  /* ===========================
+     Initial translations + time
+     =========================== */
+  const initLang = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en');
+  langSelect.value = initLang;
+  applyTranslations(initLang);
   updateTime();
-  setTheme(theme);
-  hideWelcome();
-  
-  // Track Preference Save
-  trackEvent('preferences_saved', {
-      language: chosenLang,
-      theme: theme
+
+  /* ===========================
+     Allow middle click / aux click default behavior on links
+     =========================== */
+  document.querySelectorAll('a').forEach(a => {
+    a.addEventListener('auxclick', (e) => { /* allow default behavior */ });
   });
-  
-  showToast(chosenLang === 'id' ? 'Bahasa disimpan' : 'Preferences saved');
-});
-welcomeSkip.addEventListener('click', ()=> { 
-    hideWelcome(); 
-    
-    // Track Preference Skip
-    trackEvent('preferences_skipped');
-    
-    showToast(langSelect.value === 'id' ? 'Dipilih nanti' : 'Maybe later'); 
-});
-(function firstVisit(){ const seen = localStorage.getItem('growfax_seen'); if(!seen){ welcomeLang.value = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en'); const savedTheme = localStorage.getItem('growfax_theme') || 'light'; document.querySelectorAll('input[name="welcomeTheme"]').forEach(r=> r.checked = (r.value === savedTheme)); showWelcome(); localStorage.setItem('growfax_seen','1'); }})();
 
-/* ===========================
-   Storage helpers & UI helpers
-   =========================== */
-function showToast(text, ms=1500){
-  toast.textContent = text;
-  toast.style.opacity = '1';
-  toast.style.transform = 'translateX(-50%) translateY(0)';
-  toast.style.pointerEvents = 'auto';
-  toast.style.display = 'block';
-  setTimeout(()=> {
-    toast.style.opacity = '0';
-    toast.style.pointerEvents = 'none';
-    setTimeout(()=> toast.style.display = 'none', 200);
-  }, ms);
-}
+  /* ===========================
+     Misc small UI effects
+     =========================== */
 
-/* floating discord click (toast feedback) */
-document.getElementById('floatingChat').addEventListener('click', (e)=>{
-  // Track Discord Click
-  trackEvent('discord_button_click', { placement: 'floating' });
-  
-  showToast(langSelect.value === 'id' ? 'Membuka Discord...' : 'Opening Discord...');
-});
+  // status indicator pulse if present
+  const status = document.querySelector('#status-indicator');
+  if (status) {
+    setInterval(() => {
+      status.style.opacity = status.style.opacity === '1' ? '0.5' : '1';
+    }, 600);
+  }
 
-/* ===========================
-   Report Bug Link Handler (Optional for toast feedback)
-   =========================== */
-reportBugLink.addEventListener('click', () => {
-  // Track Report Bug Click
-  trackEvent('report_bug_click');
-  
-  // Hanya berikan feedback toast karena mailto: link sudah diatur
-  showToast(langSelect.value === 'id' ? 'Membuka aplikasi email...' : 'Opening email application...');
-});
-
-/* ===========================
-   Initial translations + time
-   =========================== */
-const initLang = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en');
-langSelect.value = initLang;
-applyTranslations(initLang);
-updateTime();
-
-/* ===========================
-   Allow middle click / aux click default behavior on links
-   =========================== */
-document.querySelectorAll('a').forEach(a=>{
-  a.addEventListener('auxclick', (e) => {/* allow default behavior */});
-});
-
-/* ===========================
-   Misc small UI effects
-   =========================== */
-
-// status indicator pulse if present
-const status = document.querySelector('#status-indicator');
-if (status) {
-  setInterval(() => {
-    status.style.opacity = status.style.opacity === '1' ? '0.5' : '1';
-  }, 600);
-}
-
-// graceful page link transition for all html links
-document.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', e => {
-    // only internal html
-    try {
-      const href = link.getAttribute('href');
-      if(href && href.endsWith('.html') && !link.hasAttribute('data-no-transition')){
-        e.preventDefault();
-        document.body.style.opacity = '0';
-        setTimeout(() => (window.location.href = href), 300);
-      }
-    } catch(err){ /* ignore */ }
+  // graceful page link transition for all html links
+  document.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', e => {
+      // only internal html
+      try {
+        const href = link.getAttribute('href');
+        if (href && href.endsWith('.html') && !link.hasAttribute('data-no-transition')) {
+          e.preventDefault();
+          document.body.style.opacity = '0';
+          setTimeout(() => (window.location.href = href), 300);
+        }
+      } catch (err) { /* ignore */ }
+    });
   });
-});
 
-/* ===========================
-   Console debug friendly message
-   =========================== */
-console.log('%cGrowfax Engine Ready ✅', 'color: #00ff88; font-weight: bold;');
+  /* ===========================
+     Console debug friendly message
+     =========================== */
+  console.log('%cGrowfax Engine Ready ✅', 'color: #00ff88; font-weight: bold;');
 
-/* END OF SCRIPT */
+  /* END OF SCRIPT */
 </script>
 </body>
 </html>
