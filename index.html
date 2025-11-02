@@ -262,6 +262,45 @@
   .btn-powertunnel{background:#b71c1c;--glow:#ff5a5a;box-shadow:0 4px 16px rgba(255,90,90,0.08)}
 
   /* -------------------------
+     NEW: Role Shop Styles
+     ------------------------- */
+  /* New Shop Button Base Style (Inherits from platform-buttons a but overrides size) */
+  .shop-btn {
+    width: 100% !important; 
+    max-width: 400px;
+    height: auto;
+    padding: 12px 18px !important;
+    justify-content: flex-start !important; /* Align content to the left */
+    gap: 12px !important;
+    background: var(--card-bg); /* Use card background for more premium look */
+    color: var(--text); /* Use text color */
+    border: 2px solid var(--border-color); /* Add visible border */
+    box-shadow: var(--card-shadow);
+    transition: transform .18s ease, box-shadow .18s, background .18s;
+  }
+  .shop-btn:hover {
+    transform: translateY(-4px) !important;
+    background: rgba(0,0,0,0.05); /* Slight hover effect */
+  }
+  [data-theme="dark"] .shop-btn:hover {
+     background: rgba(255,255,255,0.05);
+  }
+  .shop-btn div {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Custom Accent Colors for Roles */
+  .btn-vip { border-color: #ffc107; } /* Yellow */
+  .btn-vipplus { border-color: #007aff; } /* Blue */
+  .btn-moderator { border-color: #2ecc71; } /* Green */
+  .btn-supermod { border-color: #9b59b6; } /* Purple */
+  .btn-developer { border-color: #f39c12; } /* Orange */
+  .btn-prodeveloper { border-color: #e74c3c; } /* Red */
+  .btn-god { border-color: #e91e63; } /* Pink */
+  
+  /* -------------------------
      Discord Section
      ------------------------- */
   .discord-section{background:var(--discord-color);color:#fff;padding:24px;border-radius:10px;max-width:820px;margin:32px auto 50px;text-align:center;box-shadow:var(--card-shadow)}
@@ -351,6 +390,18 @@
       width:300px; 
     }
     .platform-buttons a:hover{transform:translateY(-4px)}
+    
+    /* Tombol Shop menyesuaikan ke max-width 400px (desktop) */
+    .shop-role-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    .shop-btn {
+      width: 100% !important;
+    }
 
     /* Banner/Content padding besar */
     .banner-section{padding:56px 20px;}
@@ -380,7 +431,8 @@
         </div>
 
         <nav class="primary" aria-label="Main navigation">
-          </nav>
+          <a href="https://growfax.web.id/home" id="navDownloads">📥 Downloads</a> 
+        </nav>
       </div>
 
       <div class="controls">
@@ -408,7 +460,7 @@
   </section>
 
   <main class="container" id="home" role="main">
-    <h2>📥 Essential File Downloads</h2>
+    <h2 data-original="📥 Essential File Downloads">📥 Essential File Downloads</h2>
     <div class="platform-buttons" role="list">
       <a href="Growfax_VirtualHost.txt" class="btn-android" data-filename="Growfax_VirtualHost.txt" data-filekey="virtualhost" download role="listitem">
         <img src="virtual-host.png" alt="">Play on Android
@@ -426,7 +478,69 @@
         <img src="powertunnel.jpeg" alt="">Play via PowerTunnel
       </a>
     </div>
-  </main>
+
+    <h2 style="margin-top: 40px;" data-original="💳 Growfax Role Shop">💳 Growfax Role Shop</h2>
+    <p style="margin-bottom: 24px; opacity: 0.9;" data-original="Dapatkan keuntungan eksklusif dan dukung server kami dengan membeli role di bawah ini. Pembayaran diproses melalui PayPal.">Dapatkan keuntungan eksklusif dan dukung server kami dengan membeli role di bawah ini. Pembayaran diproses melalui PayPal.</p>
+    <div class="shop-role-buttons" role="list" style="display:flex; flex-direction:column; gap:12px; max-width:400px; margin: 0 auto;">
+      
+      <a href="https://paypal.me/Growfax/0.903USD" target="_blank" rel="noopener" class="shop-btn btn-vip" role="listitem">
+        <span style="font-size: 1.5rem;">⭐</span>
+        <div>
+          <span style="font-size:1.1rem; font-weight:700;" data-original="VIP Role">VIP Role</span>
+          <span style="font-size:0.9rem; opacity:0.8; display:block;">$0.903 USD — <span data-original="Buy Now">Buy Now</span></span>
+        </div>
+      </a>
+
+      <a href="https://paypal.me/Growfax/1.085USD" target="_blank" rel="noopener" class="shop-btn btn-vipplus" role="listitem">
+        <span style="font-size: 1.5rem;">🌟</span>
+        <div>
+          <span style="font-size:1.1rem; font-weight:700;" data-original="VIP+ Role">VIP+ Role</span>
+          <span style="font-size:0.9rem; opacity:0.8; display:block;">$1.085 USD — <span data-original="Buy Now">Buy Now</span></span>
+        </div>
+      </a>
+
+      <a href="https://paypal.me/Growfax/3.008USD" target="_blank" rel="noopener" class="shop-btn btn-moderator" role="listitem">
+        <span style="font-size: 1.5rem;">🛡️</span>
+        <div>
+          <span style="font-size:1.1rem; font-weight:700;" data-original="Moderator Role">Moderator Role</span>
+          <span style="font-size:0.9rem; opacity:0.8; display:block;">$3.008 USD — <span data-original="Buy Now">Buy Now</span></span>
+        </div>
+      </a>
+
+      <a href="https://paypal.me/Growfax/4.813USD" target="_blank" rel="noopener" class="shop-btn btn-supermod" role="listitem">
+        <span style="font-size: 1.5rem;">👑</span>
+        <div>
+          <span style="font-size:1.1rem; font-weight:700;" data-original="Super Moderator Role">Super Moderator Role</span>
+          <span style="font-size:0.9rem; opacity:0.8; display:block;">$4.813 USD — <span data-original="Buy Now">Buy Now</span></span>
+        </div>
+      </a>
+
+      <a href="https://paypal.me/Growfax/7.22USD" target="_blank" rel="noopener" class="shop-btn btn-developer" role="listitem">
+        <span style="font-size: 1.5rem;">💻</span>
+        <div>
+          <span style="font-size:1.1rem; font-weight:700;" data-original="Developer Role">Developer Role</span>
+          <span style="font-size:0.9rem; opacity:0.8; display:block;">$7.22 USD — <span data-original="Buy Now">Buy Now</span></span>
+        </div>
+      </a>
+      
+      <a href="https://paypal.me/Growfax/9.025USD" target="_blank" rel="noopener" class="shop-btn btn-prodeveloper" role="listitem">
+        <span style="font-size: 1.5rem;">⚙️</span>
+        <div>
+          <span style="font-size:1.1rem; font-weight:700;" data-original="Pro Developer Role">Pro Developer Role</span>
+          <span style="font-size:0.9rem; opacity:0.8; display:block;">$9.025 USD — <span data-original="Buy Now">Buy Now</span></span>
+        </div>
+      </a>
+
+      <a href="https://paypal.me/Growfax/10.83USD" target="_blank" rel="noopener" class="shop-btn btn-god" role="listitem">
+        <span style="font-size: 1.5rem;">✨</span>
+        <div>
+          <span style="font-size:1.1rem; font-weight:700;" data-original="God Role">God Role</span>
+          <span style="font-size:0.9rem; opacity:0.8; display:block;">$10.83 USD — <span data-original="Buy Now">Buy Now</span></span>
+        </div>
+      </a>
+      
+    </div>
+    </main>
 
   <section class="discord-section" aria-label="Discord community">
     <img src="discord.jpeg" alt="Discord Logo">
@@ -696,6 +810,18 @@ const translations = {
     "Opening Discord...": "Membuka Discord...",
     "🐞 Report Bug": "🐞 Laporkan Bug",
     
+    // NEW: Role Shop Translations
+    "💳 Growfax Role Shop": "💳 Toko Role Growfax",
+    "Dapatkan keuntungan eksklusif dan dukung server kami dengan membeli role di bawah ini. Pembayaran diproses melalui PayPal.": "Dapatkan keuntungan eksklusif dan dukung server kami dengan membeli role di bawah ini. Pembayaran diproses melalui PayPal.",
+    "VIP Role": "Role VIP",
+    "VIP+ Role": "Role VIP+",
+    "Moderator Role": "Role Moderator",
+    "Super Moderator Role": "Role Super Moderator",
+    "Developer Role": "Role Developer",
+    "Pro Developer Role": "Role Pro Developer",
+    "God Role": "Role God",
+    "Buy Now": "Beli Sekarang",
+
     // Admin Translations
     "🔑 Admin Area": "🔑 Area Admin",
     "Enter the Admin Token to proceed:": "Masukkan Token Admin untuk melanjutkan:",
@@ -949,6 +1075,13 @@ function applyTranslations(lang){
     elements.forEach(el=>{
       const orig = el.dataset.original;
       if(!orig) return;
+      
+      // Handle Buy Now Span
+      if (el.parentNode && el.parentNode.parentNode && el.parentNode.parentNode.classList.contains('shop-btn') && orig.toLowerCase() === 'buy now') {
+          el.textContent = lang === 'en' ? orig : (translations[lang]?.[orig] || orig);
+          return;
+      }
+      
       el.textContent = lang === 'en' ? orig : (translations[lang]?.[orig] || orig);
     });
 
