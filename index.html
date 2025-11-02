@@ -285,7 +285,7 @@
       flex-direction: column;
       justify-content: space-between;
       transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-      height: auto; /* Allow card height to adjust to full command list */
+      height: auto; /* Allow card height to adjust to content */
   }
   .shop-role-card:hover {
       transform: translateY(-5px);
@@ -308,20 +308,30 @@
       font-weight: 400;
       opacity: 0.7;
   }
-  /* Updated UL style for commands */
+  /* UPDATED: UL style for commands (Added Scroll functionality) */
   .shop-role-card ul {
       list-style-type: none;
       padding: 0;
       margin-bottom: 20px;
       font-size: 0.9rem;
       color: var(--muted);
-      white-space: pre-wrap; /* Ensure commands wrap correctly */
+      white-space: pre-wrap;
+      
+      /* NEW SCROLL STYLES */
+      max-height: 200px; /* Max height before scroll */
+      overflow-y: auto;
+      border: 1px solid var(--border-color); /* Border for visual clarity of scroll area */
+      padding: 8px;
+      border-radius: 6px;
   }
+
+  /* Style adjustment for the list items inside the scrollable area */
   .shop-role-card ul li {
       margin-bottom: 8px;
       border-left: 3px solid var(--shop-bg);
       padding-left: 8px;
       line-height: 1.3;
+      padding-right: 4px; /* Ensure content doesn't touch scrollbar */
   }
   .shop-role-card ul li:before {
       content: none; /* Remove default bullet */
@@ -694,7 +704,7 @@
             </div>
 
             <div style="margin-top: 20px; padding: 15px; border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
-                <h4 style="margin: 0 0 10px; color: var(--accent);" id="seoTitle">SEO Management</h4>
+                <h4 style="margin: 0 0 10px; color: var(--accent);">SEO Management</h4>
                 
                 <label for="seoTitleInput" style="display: block; margin-top: 10px; font-size: 0.9rem;">Page Title (Hanya Title Tag HTML)</label>
                 <input type="text" id="seoTitleInput" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text);" placeholder="Enter Page Title...">
@@ -758,7 +768,7 @@
 
 
   /* ===========================
-     File metadata - PowerTunnel & iOS: Copy-text
+     File metadata (unchanged)
      =========================== */
   const FILE_META = {
     virtualhost: {
@@ -773,7 +783,6 @@
       changelog: '- Patched launcher\n- Minor fixes',
       size: '12.1 KB'
     },
-    // MODIFIED: iOS now uses copytext instead of download
     ios: {
       version: 'v1.5',
       updated: 'Nov 02, 2025',
@@ -792,7 +801,7 @@
 
 
   /* ===========================
-     Translation dictionary (expandable)
+     Translation dictionary (unchanged)
      =========================== */
   const translations = {
     id: {
@@ -869,7 +878,7 @@
       "/nick": "/nick",
       "Temporarily change your nickname!": "Ubah nickname sementara!",
       "/hide": "/hide",
-      "Hide your Moderator's status, you'll look like a normal player!": "Sembunyikan status Moderator Anda, Anda akan terlihat seperti pemain biasa!",
+      "Hide your Moderator's status, you'll look like a normal player!": "Sembunyikan status Moderator Anda, Anda akan terlihat seperti pemain normal!",
       "/hideflag": "/hideflag",
       "Hide your Country flag!": "Sembunyikan bendera Negara Anda!",
       "/warpto": "/warpto",
@@ -939,7 +948,7 @@
 
 
   /* ===========================
-     Analytical Dashboard Logic
+     Analytical Dashboard Logic (unchanged)
      =========================== */
   // Helper function to format time ago (simulated)
   function getTimeAgo(date, lang) {
@@ -1026,7 +1035,7 @@
 
 
   /* ===========================
-     SEO Meta Tag Control (Simulated persistence)
+     SEO Meta Tag Control (Simulated persistence) (unchanged)
      =========================== */
   function updateSeoMetaTags(title, description, keywords) {
     document.title = title;
@@ -1075,10 +1084,10 @@
 
 
   /* ===========================
-     Smooth Translation Logic
+     Smooth Translation Logic (unchanged)
      =========================== */
 
-  // Command Texts for translation (now fully detailed for all high-tier roles)
+  // Command Texts for translation 
   const commandData = {
     vip_commands: [
       { strong: "/superbreak", span: "Activate the Super Breaker mode!" },
@@ -1241,7 +1250,7 @@
   }
 
   /* ===========================
-     Toast and Event Tracking (Simulated)
+     Toast and Event Tracking (Simulated) (unchanged)
      =========================== */
   const toast = document.getElementById('toast');
   function showToast(message, duration = 2000) {
@@ -1276,7 +1285,7 @@
 
 
   /* ===========================
-     Theme control
+     Theme control (unchanged)
      =========================== */
   const themeToggle = document.getElementById('themeToggle');
   function setTheme(theme) {
@@ -1292,7 +1301,7 @@
 
 
   /* ===========================
-     Language control (persist)
+     Language control (persist) (unchanged)
      =========================== */
   const langSelect = document.getElementById('langSelect');
   langSelect.addEventListener('change', () => {
@@ -1312,7 +1321,7 @@
 
 
   /* ===========================
-     Time display (NY / Jakarta)
+     Time display (NY / Jakarta) (unchanged)
      =========================== */
   function getIndoGreeting(hour) {
     if (hour < 11) return "Selamat Pagi";
@@ -1352,7 +1361,7 @@
 
 
   /* ===========================
-     File Download/Info Modal Logic (Copy Text Added)
+     File Download/Info Modal Logic (Copy Text Added) (unchanged)
      =========================== */
   const modalBackdrop = document.getElementById('modalBackdrop');
   const modalCancel = document.getElementById('modalCancel');
@@ -1460,7 +1469,7 @@
 
 
   /* ===========================
-     Admin Area Logic
+     Admin Area Logic (unchanged)
      =========================== */
   function updateServerStatusDisplay() {
     const lang = langSelect.value;
@@ -1569,7 +1578,7 @@
 
 
   /* ===========================
-     Welcome popup
+     Welcome popup (unchanged)
      =========================== */
   const welcomeBackdrop = document.getElementById('welcomeBackdrop');
   const openWelcome = document.getElementById('openWelcome');
@@ -1621,7 +1630,7 @@
   }
 
   /* ===========================
-     Report Bug Link (mailto)
+     Report Bug Link (mailto) (unchanged)
      =========================== */
   document.getElementById('reportBugLink').addEventListener('click', () => {
     const lang = langSelect.value;
@@ -1630,7 +1639,7 @@
 
 
   /* ===========================
-     Initial translations + time
+     Initial translations + time (unchanged)
      =========================== */
   const initLang = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en');
   langSelect.value = initLang;
@@ -1638,14 +1647,14 @@
   updateTime();
 
   /* ===========================
-     Allow middle click / aux click default behavior on links
+     Allow middle click / aux click default behavior on links (unchanged)
      =========================== */
   document.querySelectorAll('a').forEach(a => {
     a.addEventListener('auxclick', (e) => { /* allow default behavior */ });
   });
 
   /* ===========================
-     Misc small UI effects
+     Misc small UI effects (unchanged)
      =========================== */
 
   // status indicator pulse if present
@@ -1672,7 +1681,7 @@
   });
 
   /* ===========================
-     Console debug friendly message
+     Console debug friendly message (unchanged)
      =========================== */
   console.log('%cGrowfax Engine Ready ✅', 'color: #00ff88; font-weight: bold;');
 
