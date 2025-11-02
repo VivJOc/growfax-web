@@ -356,11 +356,32 @@
       font-weight: 700;
       text-align: center;
       transition: background 0.15s, transform 0.15s;
-      display: block; /* Make the button full width of the card */
+      /* Removed: display: block; from here to accommodate flex layout below */
   }
   .btn-purchase:hover {
       background: #732a9a;
       transform: translateY(-1px);
+  }
+  /* ADDED: Style for dual purchase buttons */
+  .shop-role-card .purchase-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+      width: 100%;
+  }
+  /* Ensure the button links themselves manage the flex sizing */
+  .shop-role-card .purchase-buttons .btn-purchase {
+      display: flex; 
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+  }
+  /* New style for IDR button */
+  .btn-idr {
+      background: #27ae60; /* Green color for IDR/Rupiah */
+  }
+  .btn-idr:hover {
+      background: #1e8449;
   }
 
 
@@ -547,66 +568,102 @@
             <div class="shop-role-card">
                 <div>
                     <h3>✨ VIP Role</h3>
-                    <p class="price">$0.7 <small>USD</small></p>
+                    <p class="price" data-usd="0.7" data-idr="10500">
+                        $0.7 <small>USD</small>
+                        <span class="idr-price-display" style="display:block; font-size: 1rem; font-weight: 500; opacity: 0.8; margin-top: 4px;">~ Rp 10.500 <small>IDR</small></span>
+                    </p>
                     <ul id="vip_commands">
                         <li><strong>/superbreak</strong> <span>Activate the Super Breaker mode!</span></li>
                         <li><strong>/vsb</strong> <span>Send a VIP-Broadcast to everyone online!</span></li>
                     </ul>
                 </div>
-                <a href="https://paypal.me/Growfax/0.7USD" target="_blank" rel="noopener" class="btn-purchase" data-role="vip" data-price="0.7">Purchase VIP</a>
+                <div class="purchase-buttons">
+                    <a href="https://paypal.me/Growfax/0.7USD" target="_blank" rel="noopener" class="btn-purchase btn-usd" data-role="vip" data-price="0.7">Pay $USD</a>
+                    <a href="https://paypal.me/Growfax/10500IDR" target="_blank" rel="noopener" class="btn-purchase btn-idr" data-role="vip" data-idr-price="10500">Bayar Rp IDR</a>
+                </div>
             </div>
 
             <div class="shop-role-card">
                 <div>
                     <h3>🌟 VIP+ Role</h3>
-                    <p class="price">$1.2 <small>USD</small></p>
+                    <p class="price" data-usd="1.2" data-idr="18000">
+                        $1.2 <small>USD</small>
+                        <span class="idr-price-display" style="display:block; font-size: 1rem; font-weight: 500; opacity: 0.8; margin-top: 4px;">~ Rp 18.000 <small>IDR</small></span>
+                    </p>
                     <ul id="vip_plus_commands">
                         <li><strong>/gemrain</strong> <span>Activate the Gem Rain & Enjoy 20% more gems!</span></li>
                         <li><strong>/sdb</strong> <span>Send a Super-Duper Broadcast to everyone online!</span></li>
                         <li><span>All VIP commands included!</span></li>
                     </ul>
                 </div>
-                <a href="https://paypal.me/Growfax/1.2USD" target="_blank" rel="noopener" class="btn-purchase" data-role="vip+" data-price="1.2">Purchase VIP+</a>
+                <div class="purchase-buttons">
+                    <a href="https://paypal.me/Growfax/1.2USD" target="_blank" rel="noopener" class="btn-purchase btn-usd" data-role="vip+" data-price="1.2">Pay $USD</a>
+                    <a href="https://paypal.me/Growfax/18000IDR" target="_blank" rel="noopener" class="btn-purchase btn-idr" data-role="vip+" data-idr-price="18000">Bayar Rp IDR</a>
+                </div>
             </div>
 
             <div class="shop-role-card">
                 <div>
                     <h3>🔨 Moderator Role</h3>
-                    <p class="price">$2.5 <small>USD</small></p>
+                    <p class="price" data-usd="2.5" data-idr="37500">
+                        $2.5 <small>USD</small>
+                        <span class="idr-price-display" style="display:block; font-size: 1rem; font-weight: 500; opacity: 0.8; margin-top: 4px;">~ Rp 37.500 <small>IDR</small></span>
+                    </p>
                     <ul id="moderator_commands">
                         </ul>
                 </div>
-                <a href="https://paypal.me/Growfax/2.5USD" target="_blank" rel="noopener" class="btn-purchase" data-role="moderator" data-price="2.5">Purchase Moderator</a>
+                <div class="purchase-buttons">
+                    <a href="https://paypal.me/Growfax/2.5USD" target="_blank" rel="noopener" class="btn-purchase btn-usd" data-role="moderator" data-price="2.5">Pay $USD</a>
+                    <a href="https://paypal.me/Growfax/37500IDR" target="_blank" rel="noopener" class="btn-purchase btn-idr" data-role="moderator" data-idr-price="37500">Bayar Rp IDR</a>
+                </div>
             </div>
 
             <div class="shop-role-card">
                 <div>
                     <h3>🛡️ Super Moderator</h3>
-                    <p class="price">$3.2 <small>USD</small></p>
+                    <p class="price" data-usd="3.2" data-idr="48000">
+                        $3.2 <small>USD</small>
+                        <span class="idr-price-display" style="display:block; font-size: 1rem; font-weight: 500; opacity: 0.8; margin-top: 4px;">~ Rp 48.000 <small>IDR</small></span>
+                    </p>
                     <ul id="super_moderator_commands">
                         </ul>
                 </div>
-                <a href="https://paypal.me/Growfax/3.2USD" target="_blank" rel="noopener" class="btn-purchase" data-role="super_moderator" data-price="3.2">Purchase Super Moderator</a>
+                <div class="purchase-buttons">
+                    <a href="https://paypal.me/Growfax/3.2USD" target="_blank" rel="noopener" class="btn-purchase btn-usd" data-role="super_moderator" data-price="3.2">Pay $USD</a>
+                    <a href="https://paypal.me/Growfax/48000IDR" target="_blank" rel="noopener" class="btn-purchase btn-idr" data-role="super_moderator" data-idr-price="48000">Bayar Rp IDR</a>
+                </div>
             </div>
 
             <div class="shop-role-card">
                 <div>
                     <h3>💻 Developer Role</h3>
-                    <p class="price">$6.5 <small>USD</small></p>
+                    <p class="price" data-usd="6.5" data-idr="97500">
+                        $6.5 <small>USD</small>
+                        <span class="idr-price-display" style="display:block; font-size: 1rem; font-weight: 500; opacity: 0.8; margin-top: 4px;">~ Rp 97.500 <small>IDR</small></span>
+                    </p>
                     <ul id="developer_commands">
                         </ul>
                 </div>
-                <a href="https://paypal.me/Growfax/6.5USD" target="_blank" rel="noopener" class="btn-purchase" data-role="developer" data-price="6.5">Purchase Developer</a>
+                <div class="purchase-buttons">
+                    <a href="https://paypal.me/Growfax/6.5USD" target="_blank" rel="noopener" class="btn-purchase btn-usd" data-role="developer" data-price="6.5">Pay $USD</a>
+                    <a href="https://paypal.me/Growfax/97500IDR" target="_blank" rel="noopener" class="btn-purchase btn-idr" data-role="developer" data-idr-price="97500">Bayar Rp IDR</a>
+                </div>
             </div>
 
             <div class="shop-role-card">
                 <div>
                     <h3>👑 GOD Role</h3>
-                    <p class="price">$8.6 <small>USD</small></p>
+                    <p class="price" data-usd="8.6" data-idr="129000">
+                        $8.6 <small>USD</small>
+                        <span class="idr-price-display" style="display:block; font-size: 1rem; font-weight: 500; opacity: 0.8; margin-top: 4px;">~ Rp 129.000 <small>IDR</small></span>
+                    </p>
                     <ul id="god_commands">
                         </ul>
                 </div>
-                <a href="https://paypal.me/Growfax/8.6USD" target="_blank" rel="noopener" class="btn-purchase" data-role="god" data-price="8.6">Purchase GOD</a>
+                <div class="purchase-buttons">
+                    <a href="https://paypal.me/Growfax/8.6USD" target="_blank" rel="noopener" class="btn-purchase btn-usd" data-role="god" data-price="8.6">Pay $USD</a>
+                    <a href="https://paypal.me/Growfax/129000IDR" target="_blank" rel="noopener" class="btn-purchase btn-idr" data-role="god" data-idr-price="129000">Bayar Rp IDR</a>
+                </div>
             </div>
         </div>
     </section>
@@ -801,7 +858,7 @@
 
 
   /* ===========================
-     Translation dictionary (unchanged)
+     Translation dictionary (UPDATED with dual payments)
      =========================== */
   const translations = {
     id: {
@@ -836,13 +893,12 @@
       "Server Roles": "Peran Server",
       "Growfax Server Roles": "Peran Server Growfax",
       "Support the server and unlock exclusive roles! Direct purchase via PayPal.me.": "Dukung server dan buka peran eksklusif! Beli langsung via PayPal.me.",
-      "Purchase VIP": "Beli VIP",
-      "Purchase VIP+": "Beli VIP+",
-      "Purchase Moderator": "Beli Moderator",
-      "Purchase Super Moderator": "Beli Super Moderator",
-      "Purchase Developer": "Beli Developer",
-      "Purchase GOD": "Beli GOD",
-      "Membuka PayPal untuk pembelian": "Membuka PayPal untuk pembelian",
+      // UPDATED BUTTON TEXTS
+      "Pay $USD": "Bayar $USD",
+      "Bayar Rp IDR": "Bayar Rp IDR",
+      // UPDATED TOAST TEXTS
+      "Opening PayPal for USD purchase": "Membuka PayPal untuk pembelian $USD",
+      "Opening PayPal for IDR purchase": "Membuka PayPal untuk pembelian Rp IDR",
       "Join Our Community": "Bergabunglah dengan Komunitas Kami",
       "Connect with others and get support in our official Discord server.": "Terhubung dengan orang lain dan dapatkan dukungan di server Discord resmi kami.",
       "Join Growfax Discord": "Gabung Discord Growfax",
@@ -928,6 +984,7 @@
       "/pull": "/pull",
       "Pull players to you!": "Tarik pemain ke arah Anda!",
       "/kill": "/kill",
+      "Kill players!": "Bunuh pemain!",
       "/setextra": "/setextra",
       "Set your extra item to 100 in stack!": "Atur item ekstra Anda menjadi 100 dalam tumpukan!",
       "/givediamond": "/givediamond",
@@ -1151,7 +1208,7 @@
   loadAndApplySeoSettings();
 
 
-  /* =========================== Smooth Translation Logic (unchanged) =========================== */
+  /* =========================== Smooth Translation Logic (UPDATED with dual payments) =========================== */
 
   // Command Texts for translation
   const commandData = {
@@ -1285,12 +1342,7 @@
         if (!orig) return;
         el.textContent = lang === 'en' ? orig : (translations[lang]?.[orig] || orig);
 
-        // NEW: Handle Shop Button Translation
-        if (el.classList.contains('btn-purchase')) {
-          const role = el.getAttribute('data-role');
-          const defaultText = `Purchase ${role.charAt(0).toUpperCase() + role.slice(1)}`;
-          el.textContent = lang === 'en' ? defaultText : (translations[lang]?.[defaultText] || defaultText);
-        }
+        // NOTE: Previous logic for .btn-purchase removed as it's now handled separately below
       });
       
       // Manually update other elements
@@ -1299,6 +1351,17 @@
       document.getElementById('welcomeSave').textContent = lang === 'id' ? (translations.id['Save & Continue'] || 'Save & Continue') : 'Save & Continue';
       document.getElementById('welcomeSkip').textContent = lang === 'id' ? (translations.id['Skip'] || 'Lewati') : 'Skip';
       document.getElementById('discordLink').textContent = lang === 'id' ? (translations.id['Join Growfax Discord'] || 'Join Growfax Discord') : 'Join Growfax Discord';
+
+      // NEW: Handle Shop Button Translation
+      const usdButtons = document.querySelectorAll('.btn-usd');
+      const idrButtons = document.querySelectorAll('.btn-idr');
+
+      usdButtons.forEach(btn => {
+          btn.textContent = lang === 'en' ? 'Pay $USD' : (translations[lang]?.['Pay $USD'] || 'Bayar $USD');
+      });
+      idrButtons.forEach(btn => {
+          btn.textContent = lang === 'en' ? 'Pay Rp IDR' : (translations[lang]?.['Bayar Rp IDR'] || 'Bayar Rp IDR');
+      });
 
       // Update dynamic elements (time and commands)
       updateTime();
@@ -1314,7 +1377,7 @@
   }
 
 
-  /* =========================== Toast and Event Tracking (Modified: Webhook/Tracking Disabled) =========================== */
+  /* =========================== Toast and Event Tracking (Modified: Webhook/Tracking Disabled) (UPDATED for dual buttons) =========================== */
   const toast = document.getElementById('toast');
   function showToast(message, duration = 2000) {
     toast.textContent = message;
@@ -1516,17 +1579,29 @@
   });
 
 
-  // Shop purchase simulation
+  // Shop purchase simulation (UPDATED to handle dual buttons)
   document.querySelectorAll('.btn-purchase').forEach(button => {
     button.addEventListener('click', (e) => {
       // e.preventDefault(); // Don't prevent default, allow PayPal link to open
       const lang = langSelect.value;
       const roleName = button.getAttribute('data-role').toLowerCase();
-      const price = button.getAttribute('data-price');
       
-      // Shop Purchase Event Tracking disabled per user request.
+      let toastMessage;
+      if (button.classList.contains('btn-idr')) {
+          const idrPrice = button.getAttribute('data-idr-price');
+          // Update toast message for IDR
+          toastMessage = lang === 'en' 
+             ? `Opening PayPal for IDR purchase (${roleName} - Rp ${idrPrice})...`
+             : (translations.id['Opening PayPal for IDR purchase'] || 'Membuka PayPal untuk pembelian Rp IDR') + ` (${roleName})...`;
+      } else {
+          const usdPrice = button.getAttribute('data-price');
+          // Update toast message for USD
+          toastMessage = lang === 'en' 
+             ? `Opening PayPal for USD purchase (${roleName} - $${usdPrice})...` 
+             : (translations.id['Opening PayPal for USD purchase'] || 'Membuka PayPal untuk pembelian $USD') + ` (${roleName})...`;
+      }
       
-      showToast(lang === 'id' ? `Membuka PayPal untuk pembelian ${roleName}...` : `Opening PayPal for ${roleName} purchase...`, 3000);
+      showToast(toastMessage, 3000);
     });
   });
 
