@@ -1,3 +1,11 @@
+Saya mohon maaf atas kekurangtelitian saya. Anda benar, meskipun modal info file (HTML) sudah dihapus, saya gagal menghapus beberapa element dari JavaScript yang mungkin menyebabkan perilaku "file info" (seperti pop-up konfirmasi atau terjemahan yang tidak terpakai) atau logikanya masih terlalu rumit.
+Saya telah membersihkan kode secara menyeluruh, memastikan:
+ * Semua elemen HTML dan CSS terkait modal info file telah dihapus.
+ * Semua logika JavaScript terkait konfirmasi download atau menampilkan detail file telah dihapus.
+ * Tombol Android/Windows sekarang langsung memicu download (tanpa confirm()).
+ * Tombol iOS/PowerTunnel sekarang langsung menyalin konfigurasi (tanpa konfirmasi tambahan).
+ * Kunci terjemahan yang tidak terpakai telah dihapus untuk kode yang lebih bersih.
+Berikut adalah kode index.html lengkap yang sudah 100% bersih dari "file info" atau konfirmasi:
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -862,17 +870,7 @@
       "Play on iOS": "Main di iOS",
       "Play via PowerTunnel": "Main via PowerTunnel",
       "Server Time (AEDT):": "Waktu Server (AEDT):", // <-- MODIFIED: New Timezone label
-      "Version": "Versi",
-      "Updated": "Diperbarui",
-      "Changelog": "Catatan pembaruan",
-      "Filename": "Nama berkas",
-      "File info": "Info berkas",
-      "Details before download": "Detail sebelum mengunduh",
-      "Cancel": "Batal",
-      "Download": "Unduh",
-      "Download failed: file not found.": "Unduhan gagal: berkas tidak ditemukan.",
       "Config copied!": "Konfigurasi disalin!",
-      "Copy Config": "Salin Konfigurasi",
       "Support the server and unlock exclusive roles! Direct purchase via PayPal.me.": "Dukung server dan buka peran eksklusif! Pembelian langsung via PayPal.me.",
       "Growfax Server Roles": "Peran Server Growfax",
       "Opening PayPal for USD purchase": "Membuka PayPal untuk pembelian USD",
@@ -978,29 +976,18 @@
   }
 
 
-  /* =========================== File Metadata (Version, Update Date, Changelog, Copy Text) - Managed via Admin Area / Local Storage.
-  Default values below. - Note: copytext must use \n for newlines in JS strings.
-  =========================== */
+  /* =========================== File Metadata (Copy Text Only) =========================== */
   const FILE_META = {
     virtualhost: {
-      version: "v4.2.1",
-      updated: "2025-10-31",
-      changelog: "Optimized connection stability.",
       copytext: `103.27.206.183 growtopia1.com
 103.27.206.183 growtopia2.com
 103.27.206.183 www.growtopia1.com
 103.27.206.183 www.growtopia2.com`
     },
     patched: {
-      version: "v4.2.1",
-      updated: "2025-10-31",
-      changelog: "Improved launch efficiency.",
-      copytext: "This file is a .BAT executable and cannot be copied as plain text."
+      copytext: "This file is a .BAT executable and cannot be copied as plain text." // Not used for copy logic, but kept for completeness
     },
     ios: {
-      version: "v4.2.1",
-      updated: "2025-10-31",
-      changelog: "Updated configuration for Surge 5+ and Shadowrocket.",
       // Simplified copy text for host/Surge config (Placeholder)
       copytext: `[Host]
 103.27.206.183 = growtopia1.com
@@ -1009,9 +996,6 @@
 103.27.206.183 = www.growtopia2.com`
     },
     powertunnel: {
-      version: "v4.2.1",
-      updated: "2025-10-31",
-      changelog: "Optimized for the latest PowerTunnel version.",
       copytext: `103.27.206.183 growtopia1.com
 103.27.206.183 growtopia2.com
 103.27.206.183 www.growtopia1.com
@@ -1020,26 +1004,25 @@
   };
 
 
-  /* =========================== Download Button Logic (Modal Removed) =========================== */
-  // NOTE: Using a simplified listener to handle copy/download without the modal.
+  /* =========================== Download Button Logic (No Modal, No Confirmation) =========================== */
   document.querySelectorAll('.platform-buttons a').forEach(link => {
     link.addEventListener('click', (e) => {
       const fileKey = link.dataset.filekey;
-      const href = link.href;
       const filename = link.dataset.filename;
       const lang = langSelect.value;
       const meta = FILE_META[fileKey];
 
-      // Handle iOS/PowerTunnel (Copy to Clipboard)
+      // Handle iOS/PowerTunnel (Direct Copy to Clipboard)
       if (fileKey === 'ios' || fileKey === 'powertunnel') {
         e.preventDefault();
         
         if (meta && meta.copytext) {
           const text = meta.copytext;
-          
+          const copyText = lang === 'id' ? (translations.id['Config copied!'] || 'Konfigurasi disalin!') : 'Config copied!';
+
           if (navigator.clipboard) {
+            // Use modern clipboard API
             navigator.clipboard.writeText(text).then(() => {
-              const copyText = lang === 'id' ? (translations.id['Config copied!'] || 'Konfigurasi disalin!') : 'Config copied!';
               showToast(copyText, 2500);
             }).catch(err => {
               console.error('Could not copy text: ', err);
@@ -1047,16 +1030,16 @@
               showToast(errorText, 3000);
             });
           } else {
-            // Fallback to textarea
+            // Fallback to textarea copy
             const ta = document.createElement('textarea');
             ta.value = text;
             document.body.appendChild(ta);
             ta.select();
             try {
               document.execCommand('copy');
-              const copyText = lang === 'id' ? (translations.id['Config copied!'] || 'Konfigurasi disalin!') : 'Config copied!';
               showToast(copyText, 2500);
             } catch (e) {
+              // Last resort: alert user to manually copy
               alert((lang === 'id' ? 'Salin manual:\n' : 'Manual copy:\n') + text);
             }
             ta.remove();
@@ -1073,7 +1056,7 @@
       // Handle Android/Windows (Direct Download)
       if (fileKey === 'virtualhost' || fileKey === 'patched') {
         // The link has an href and 'download' attribute, let the browser handle it directly.
-        // Just show a toast for feedback, without preventing default or showing a confirm box.
+        // We do NOT call e.preventDefault() and do NOT show a confirm() box.
         const downloadText = lang === 'id' ? (translations.id['Download initiated: '] || 'Unduhan dimulai: ') : 'Download initiated: ';
         showToast(downloadText + filename, 1500);
         return;
@@ -1102,10 +1085,10 @@
         toastMessage = lang === 'en' ? `Opening PayPal for USD purchase (${roleName} - $ ${usdPrice})...` : (translations.id['Opening PayPal for USD purchase'] || 'Membuka PayPal untuk pembelian USD') + ` (${roleName})...`;
       } else if (button.classList.contains('btn-eur')) {
         const eurPrice = button.getAttribute('data-price-eur');
-        toastMessage = lang === 'en' ? `Opening PayPal for EUR purchase (${roleName} - € ${eurPrice})...` : (translations.id['Opening PayPal for EUR purchase'] || 'Membuka PayPal untuk pembelian EUR') + ` (${roleName})...`;
+        toastMessage = lang === 'en' ? `Opening PayPal for EUR purchase (${roleName} - € ${eurPrice})...` : (translations.id['Opening PayPal untuk pembelian EUR'] || 'Membuka PayPal untuk pembelian EUR') + ` (${roleName})...`;
       } else if (button.classList.contains('btn-gbp')) {
         const gbpPrice = button.getAttribute('data-price-gbp');
-        toastMessage = lang === 'en' ? `Opening PayPal for GBP purchase (${roleName} - £ ${gbpPrice})...` : (translations.id['Opening PayPal for GBP purchase'] || 'Membuka PayPal untuk pembelian GBP') + ` (${roleName})...`;
+        toastMessage = lang === 'en' ? `Opening PayPal for GBP purchase (${roleName} - £ ${gbpPrice})...` : (translations.id['Opening PayPal untuk pembelian GBP'] || 'Membuka PayPal untuk pembelian GBP') + ` (${roleName})...`;
       } else if (button.classList.contains('btn-idr')) {
         // Special case for IDR, which might not be PayPal.me but a custom link
         toastMessage = lang === 'en' ? `Opening payment for IDR purchase (${roleName})...` : (translations.id['Bayar Rp IDR'] || 'Bayar Rp IDR') + ` (${roleName})...`;
@@ -1580,7 +1563,7 @@
   document.getElementById('reportBugLink').addEventListener('click', (e) => {
     e.preventDefault();
     const lang = langSelect.value;
-    const emailSubject = lang === 'id' ? (translations.id['Report Bug - Growfax'] || 'Laporan Bug - Growfax') : 'Bug Report - Growfax';
+    const emailSubject = lang === 'id' ? (translations.id['Bug Report - Growfax'] || 'Laporan Bug - Growfax') : 'Bug Report - Growfax';
     const emailBody = lang === 'id' ? `Halo Admin Growfax,\n\nSaya ingin melaporkan bug berikut:\n\n[Jelaskan bug di sini, termasuk langkah-langkah untuk mereproduksinya, dan perangkat yang Anda gunakan (Android/iOS/Windows).]\n\nTerima kasih.` : `Hello Growfax Admin,\n\nI would like to report the following bug:\n\n[Describe the bug here, including steps to reproduce it, and the device you are using (Android/iOS/Windows).]\n\nThank you.`;
     const mailtoLink = `mailto:support@growfax.web.id?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
     
@@ -1619,3 +1602,4 @@
 </script>
 </body>
 </html>
+
