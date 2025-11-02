@@ -50,13 +50,6 @@
     50% { transform: scale(1.02); box-shadow: var(--logo-shadow-hover); }
     100% { transform: scale(1); box-shadow: var(--logo-shadow); }
   }
-  
-  /* NEW: Keyframes for Banner Image Animation */
-  @keyframes floatUpAndDown {
-    0% { transform: translateY(0) }
-    50% { transform: translateY(-5px) }
-    100% { transform: translateY(0) }
-  }
 
   :root{
     --bg:#f8f8f8;
@@ -219,13 +212,7 @@
      Banner / Hero
      ------------------------- */
   .banner-section{text-align:center;padding:40px 10px;background:linear-gradient(90deg, rgba(0,0,0,0.03), rgba(255,255,255,0.02))}
-  .banner-section img{
-    max-width:200px;
-    border-radius:8px;
-    margin-bottom:14px;
-    /* NEW: Apply subtle float animation */
-    animation: floatUpAndDown 4s ease-in-out infinite; 
-  }
+  .banner-section img{max-width:200px;border-radius:8px;margin-bottom:14px}
   .banner-section h2{
     font-size:1.6rem;
     color:#ffaa00;
@@ -367,11 +354,7 @@
 
     /* Banner/Content padding besar */
     .banner-section{padding:56px 20px;}
-    .banner-section img{
-        max-width:240px;
-        border-radius:10px;
-        /* Animation applied above, just size change here */
-    }
+    .banner-section img{max-width:240px;border-radius:10px;}
     .banner-section h2{font-size:1.9rem;}
     .container{margin:48px auto;padding:0 18px}
     .container h2{font-size:1.6rem;margin-bottom:28px}
@@ -396,9 +379,7 @@
           </div>
         </div>
 
-        <nav class="primary" aria-label="Main navigation">
-          <a href="https://growfax.web.id/home" id="navDownloads">📥 Downloads</a> 
-        </nav>
+        
       </div>
 
       <div class="controls">
@@ -437,7 +418,7 @@
       </a>
 
       <a href="#" class="btn-ios" data-filename="GrowFax_ios_config.txt" data-filekey="ios" role="listitem">
-        <img src="surge5.png" alt="">Copy iOS Config
+        <img src="surge5.png" alt="">Play on iOS
       </a>
 
       <a href="#" class="btn-powertunnel" data-filename="PowerTunnel_Host.txt" data-filekey="powertunnel" role="listitem">
@@ -691,9 +672,7 @@ const translations = {
     "📥 Essential File Downloads": "📥 Unduhan File Penting",
     "Play on Android": "Main di Android",
     "Play on Windows": "Main di Windows",
-    // MODIFIED: Added translation for new iOS button text
-    "Copy iOS Config": "Salin Konfigurasi iOS", 
-    "Play on iOS": "Salin Konfigurasi iOS", 
+    "Play on iOS": "Main di iOS",
     "Play via PowerTunnel": "Main lewat PowerTunnel",
     "Join Our Community": "Bergabung dengan Komunitas Kami",
     "Connect with others and get support in our official Discord server.": "Terhubung dengan anggota lain dan dapatkan dukungan di server Discord resmi kami.",
@@ -1116,8 +1095,8 @@ document.querySelectorAll('.platform-buttons a').forEach(a=>{
     // --- AKHIR LOGIKA COPY TEXT ---
 
     // Lanjutkan dengan logika modal/download untuk file lain
-    modalTitle.textContent = (langSelect.value === 'id') ? 'Info Berkas' : 'File Info';
-    modalDesc.textContent = (langSelect.value === 'id') ? (translations.id['Details before download'] || 'Detail sebelum mengunduh') : 'Details before download';
+    modalTitle.textContent = (langSelect.value === 'id') ? (translations.id['Details before download'] || 'Detail sebelum mengunduh') : 'Details before download';
+    modalDesc.textContent = (langSelect.value === 'id') ? `Info untuk ${filename}` : `Info for ${filename}`;
     modalVersion.textContent = `${(langSelect.value === 'id') ? (translations.id['Version'] || 'Versi') + ': ' : 'Version: '}${meta.version}`;
     modalUpdated.textContent = `${(langSelect.value === 'id') ? (translations.id['Updated'] || 'Diperbarui') + ': ' : 'Updated: '}${meta.updated}`;
     modalChangelog.innerText = `${(langSelect.value === 'id') ? (translations.id['Changelog'] || 'Catatan pembaruan') + ':' : 'Changelog:'}\n${meta.changelog}\n\n${(langSelect.value === 'id') ? (translations.id['Size'] || 'Ukuran') + ': ' : 'Size: '}${meta.size}`;
