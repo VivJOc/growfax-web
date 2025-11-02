@@ -3,23 +3,23 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Growfax Official - Private Growtopia Server & Downloads</title>
+<title>Growfax Official - Private Growtopia Server & Role Shop</title>
 <link rel="icon" href="Growfax_banner.jpg" type="image/jpeg">
 
-<meta name="description" content="Situs resmi Growfax, private server Growtopia. Unduh file host terbaru untuk Android, Windows, dan iOS. Mainkan Growtopia dengan fitur eksklusif dan komunitas aktif!" />
-<meta name="keywords" content="Growfax, Growtopia Private Server, Growtopia PS, Download Growfax, Host Growtopia, Growfax Android, Growfax Windows" />
+<meta name="description" content="Situs resmi Growfax, private server Growtopia. Dapatkan Role VIP, Moderator, atau God di Role Shop kami. Unduh file host terbaru untuk Android, Windows, dan iOS. Mainkan Growtopia dengan fitur eksklusif dan komunitas aktif!" />
+<meta name="keywords" content="Growfax, Growtopia Private Server, Growtopia PS, Growfax Role Shop, Growfax VIP, Download Growfax, Host Growtopia, Growfax Android, Growfax Windows" />
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="https://growfax.web.id/home" />
 
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://growfax.web.id/home" />
-<meta property="og:title" content="Growfax Official - Private Growtopia Server & Downloads" />
+<meta property="og:title" content="Growfax Official - Private Growtopia Server & Role Shop" />
 <meta property="og:description" content="Unduh file host terbaru untuk Growfax Private Server (Android, Windows, iOS) dan bergabunglah dengan komunitas Discord kami." />
 <meta property="og:image" content="https://growfax.web.id/Growfax_banner.jpg" />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:url" content="https://growfax.web.id/home" />
-<meta property="twitter:title" content="Growfax Official - Private Growtopia Server & Downloads" />
+<meta property="twitter:title" content="Growfax Official - Private Growtopia Server & Role Shop" />
 <meta property="twitter:description" content="Unduh file host terbaru untuk Growfax Private Server (Android, Windows, iOS) dan bergabunglah dengan komunitas Discord kami." />
 <meta property="twitter:image" content="https://growfax.web.id/Growfax_banner.jpg" />
 
@@ -30,7 +30,6 @@
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
   gtag('config', 'G-XXXXXXXXXX'); // Placeholder ID for Growfax Analytics
 </script>
 <style>
@@ -338,6 +337,75 @@
     box-shadow: 0 6px 15px rgba(255, 170, 0, 0.4);
   }
 
+  /* NEW: Downloads Section Styles */
+  .downloads-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin: 0 auto 32px;
+    text-align: left;
+  }
+  .download-card{
+    background:var(--card-bg);
+    padding:16px;
+    border-radius:10px;
+    box-shadow:var(--card-shadow);
+    border:1px solid var(--border-color);
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    transition:border-color .2s;
+  }
+  .download-card:hover{
+    border-color:var(--accent);
+  }
+  .download-card h3{
+    font-size:1.15rem;
+    margin:0;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:var(--text);
+  }
+  .download-card p{
+    font-size:.9rem;
+    color:var(--muted);
+    margin:0;
+    flex-grow:1;
+  }
+  .meta-info{
+    display:flex;
+    justify-content:space-between;
+    font-size:.8rem;
+    color:var(--muted);
+    border-top:1px dashed var(--border-color);
+    padding-top:8px;
+  }
+  .download-btn{
+    display:block;
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:8px;
+    background:var(--accent);
+    color:#fff;
+    font-weight:700;
+    text-align:center;
+    cursor:pointer;
+    transition:background-color .15s,transform .15s;
+    margin-top:8px;
+  }
+  .download-btn:hover{
+    background:color-mix(in srgb, var(--accent) 90%, black);
+    transform:translateY(-1px);
+  }
+  /* Gaya untuk tombol pada host/config (copy action) */
+  .download-btn.copy-btn {
+    background: var(--success);
+  }
+  .download-btn.copy-btn:hover {
+    background: color-mix(in srgb, var(--success) 90%, black);
+  }
 
   /* -------------------------
      Discord Section
@@ -369,7 +437,47 @@
   .modal h3, .modal p, .modal .changelog, .welcome h2, .welcome p, .welcome label, .welcome button, .modal h2, .modal h4 {
       transition: opacity 0.2s ease;
   }
-  
+  .modal .meta{
+    display:flex;
+    gap:10px;
+    margin:10px 0 15px;
+    flex-wrap: wrap;
+  }
+  .modal .chip{
+    padding:4px 8px;
+    border-radius:6px;
+    background:var(--glass);
+    font-size:.85rem;
+    border:1px solid var(--border-color);
+  }
+  .modal .changelog{
+    white-space:pre-wrap;
+    font-family:monospace;
+    background:var(--glass);
+    padding:10px;
+    border-radius:8px;
+    margin-bottom:15px;
+    font-size:.9rem;
+    border:1px solid var(--border-color);
+  }
+  .modal .buttons button {
+    font-size: 0.95rem;
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .modal .buttons .btn.secondary {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text);
+  }
+  .modal .buttons .btn.primary {
+    background: var(--accent);
+    border: 1px solid var(--accent);
+    color: #fff;
+  }
+
   /* NEW: Admin Modal specific styles (input and buttons) */
   #adminTokenInput, #newsUpdateTextarea, #seoTitleInput, #seoDescTextarea, #seoKeywordsInput {
     /* Ensure they match the theme */
@@ -452,7 +560,7 @@
 
         <nav class="primary" aria-label="Main navigation">
           <a href="#home" id="navShop">🛒 Role Shop</a> 
-        </nav>
+          </nav>
       </div>
 
       <div class="controls">
@@ -480,90 +588,143 @@
   </section>
 
   <main class="container" id="home" role="main">
-    <h2>🛒 Growfax Role Shop</h2>
-    <p style="margin-bottom: 30px;">Choose the role that suits your style and support the server!</p>
-    
-    <div class="role-shop-table">
-      
-      <div class="role-card">
-        <div>
-          <h3>VIP</h3>
-          <div class="price">$0.70 <small>USD</small></div>
-          <ul>
-            <li>✅ Special VIP tag</li>
-            <li>✅ Exclusive world access</li>
-            <li>✅ Bonus items starter kit</li>
-          </ul>
+    <section id="role-shop-section">
+        <h2>🛒 Growfax Role Shop</h2>
+        <p style="margin-bottom: 30px;">Choose the role that suits your style and support the server!</p>
+        
+        <div class="role-shop-table">
+        
+        <div class="role-card">
+            <div>
+            <h3>VIP</h3>
+            <div class="price">$0.70 <small>USD</small></div>
+            <ul>
+                <li>✅ Special VIP tag</li>
+                <li>✅ Exclusive world access</li>
+                <li>✅ Bonus items starter kit</li>
+            </ul>
+            </div>
+            <a href="https://paypal.me/Growfax/0.70" target="_blank" class="purchase-btn" data-role="VIP" data-price="0.70">Purchase</a>
         </div>
-        <a href="https://paypal.me/Growfax/0.70" target="_blank" class="purchase-btn" data-role="VIP" data-price="0.70">Purchase</a>
-      </div>
 
-      <div class="role-card">
-        <div>
-          <h3>VIP+</h3>
-          <div class="price">$1.20 <small>USD</small></div>
-          <ul>
-            <li>✅ All VIP features</li>
-            <li>✅ Custom broadcast chat color</li>
-            <li>✅ Larger inventory space</li>
-          </ul>
+        <div class="role-card">
+            <div>
+            <h3>VIP+</h3>
+            <div class="price">$1.20 <small>USD</small></div>
+            <ul>
+                <li>✅ All VIP features</li>
+                <li>✅ Custom broadcast chat color</li>
+                <li>✅ Larger inventory space</li>
+            </ul>
+            </div>
+            <a href="https://paypal.me/Growfax/1.20" target="_blank" class="purchase-btn" data-role="VIP+" data-price="1.20">Purchase</a>
         </div>
-        <a href="https://paypal.me/Growfax/1.20" target="_blank" class="purchase-btn" data-role="VIP+" data-price="1.20">Purchase</a>
-      </div>
 
-      <div class="role-card">
-        <div>
-          <h3>Moderator</h3>
-          <div class="price">$3.50 <small>USD</small></div>
-          <ul>
-            <li>✅ All VIP+ features</li>
-            <li>✅ Moderator tag and role</li>
-            <li>✅ Basic moderation tools</li>
-          </ul>
+        <div class="role-card">
+            <div>
+            <h3>Moderator</h3>
+            <div class="price">$3.50 <small>USD</small></div>
+            <ul>
+                <li>✅ All VIP+ features</li>
+                <li>✅ Moderator tag and role</li>
+                <li>✅ Basic moderation tools</li>
+            </ul>
+            </div>
+            <a href="https://paypal.me/Growfax/3.50" target="_blank" class="purchase-btn" data-role="Moderator" data-price="3.50">Purchase</a>
         </div>
-        <a href="https://paypal.me/Growfax/3.50" target="_blank" class="purchase-btn" data-role="Moderator" data-price="3.50">Purchase</a>
-      </div>
 
-      <div class="role-card">
-        <div>
-          <h3>Super Moderator</h3>
-          <div class="price">$5.00 <small>USD</small></div>
-          <ul>
-            <li>✅ All Moderator features</li>
-            <li>✅ Advanced moderation tools</li>
-            <li>✅ Priority support</li>
-          </ul>
+        <div class="role-card">
+            <div>
+            <h3>Super Moderator</h3>
+            <div class="price">$5.00 <small>USD</small></div>
+            <ul>
+                <li>✅ All Moderator features</li>
+                <li>✅ Advanced moderation tools</li>
+                <li>✅ Priority support</li>
+            </ul>
+            </div>
+            <a href="https://paypal.me/Growfax/5.00" target="_blank" class="purchase-btn" data-role="Super Moderator" data-price="5.00">Purchase</a>
         </div>
-        <a href="https://paypal.me/Growfax/5.00" target="_blank" class="purchase-btn" data-role="Super Moderator" data-price="5.00">Purchase</a>
-      </div>
 
-      <div class="role-card">
-        <div>
-          <h3>Developer</h3>
-          <div class="price">$0.05 <small>USD</small></div>
-          <ul>
-            <li>✅ Unique Developer tag</li>
-            <li>✅ Access to test server</li>
-            <li>✅ Can suggest new features</li>
-          </ul>
+        <div class="role-card">
+            <div>
+            <h3>Developer</h3>
+            <div class="price">$0.05 <small>USD</small></div>
+            <ul>
+                <li>✅ Unique Developer tag</li>
+                <li>✅ Access to test server</li>
+                <li>✅ Can suggest new features</li>
+            </ul>
+            </div>
+            <a href="https://paypal.me/Growfax/0.05" target="_blank" class="purchase-btn" data-role="Developer" data-price="0.05">Purchase</a>
         </div>
-        <a href="https://paypal.me/Growfax/0.05" target="_blank" class="purchase-btn" data-role="Developer" data-price="0.05">Purchase</a>
-      </div>
 
-      <div class="role-card">
-        <div>
-          <h3>God</h3>
-          <div class="price">$8.50 <small>USD</small></div>
-          <ul>
-            <li>✅ Exclusive God tag and aura</li>
-            <li>✅ Access to all items</li>
-            <li>✅ Custom event hosting ability</li>
-          </ul>
+        <div class="role-card">
+            <div>
+            <h3>God</h3>
+            <div class="price">$8.50 <small>USD</small></div>
+            <ul>
+                <li>✅ Exclusive God tag and aura</li>
+                <li>✅ Access to all items</li>
+                <li>✅ Custom event hosting ability</li>
+            </ul>
+            </div>
+            <a href="https://paypal.me/Growfax/8.50" target="_blank" class="purchase-btn" data-role="God" data-price="8.50">Purchase</a>
         </div>
-        <a href="https://paypal.me/Growfax/8.50" target="_blank" class="purchase-btn" data-role="God" data-price="8.50">Purchase</a>
-      </div>
 
-    </div>
+        </div>
+    </section>
+
+    <section id="downloads-section">
+      <h2 style="margin-top: 50px; margin-bottom: 24px;">📥 Essential File Downloads</h2>
+      <p style="margin-bottom: 30px; font-size: 0.95rem; opacity: 0.9;">Choose the correct file for your device and follow the installation steps!</p>
+
+      <div class="downloads-grid">
+        <div class="download-card" data-file="virtualhost">
+          <h3><span style="font-size:1.5em">📱</span> Virtual Host File</h3>
+          <p>File host terbaru untuk aplikasi Virtual Host di Android atau PC (LDPlayer/BlueStacks).</p>
+          <div class="meta-info">
+            <span data-info="version">v0.0</span>
+            <span data-info="updated">Updated: —</span>
+            <span data-info="size">Size: —</span>
+          </div>
+          <button class="download-btn">Details & Download</button>
+        </div>
+
+        <div class="download-card" data-file="patched">
+          <h3><span style="font-size:1.5em">🤖</span> Patched Client (APK)</h3>
+          <p>APK client Growtopia yang sudah di-patch, khusus untuk Android. Instal dan mainkan!</p>
+          <div class="meta-info">
+            <span data-info="version">v0.0</span>
+            <span data-info="updated">Updated: —</span>
+            <span data-info="size">Size: —</span>
+          </div>
+          <button class="download-btn">Details & Download</button>
+        </div>
+
+        <div class="download-card" data-file="ios">
+          <h3><span style="font-size:1.5em">🍎</span> iOS Config Host</h3>
+          <p>Host config untuk aplikasi iOS seperti Surge atau Shadowrocket. (Copy Host)</p>
+          <div class="meta-info">
+            <span data-info="version">v0.0</span>
+            <span data-info="updated">Updated: —</span>
+            <span data-info="size">Size: —</span>
+          </div>
+          <button class="download-btn copy-btn">Details & Copy Host</button>
+        </div>
+
+        <div class="download-card" data-file="powertunnel">
+          <h3><span style="font-size:1.5em">💻</span> PowerTunnel Host</h3>
+          <p>Konfigurasi host untuk PowerTunnel di Windows/PC. (Copy Host)</p>
+          <div class="meta-info">
+            <span data-info="version">v0.0</span>
+            <span data-info="updated">Updated: —</span>
+            <span data-info="size">Size: —</span>
+          </div>
+          <button class="download-btn copy-btn">Details & Copy Host</button>
+        </div>
+      </div>
+    </section>
   </main>
 
   <section class="discord-section" aria-label="Discord community">
@@ -583,6 +744,7 @@
       <div class="meta">
         <div class="chip" id="modalVersion">v0.0</div>
         <div class="chip" id="modalUpdated">Updated: —</div>
+        <div class="chip" id="modalSize">Size: —</div>
       </div>
 
       <div class="changelog" id="modalChangelog">Changelog: —</div>
@@ -591,12 +753,12 @@
         <div style="font-size:.9rem;color:var(--muted)" id="modalFilename">Filename</div>
         <div class="buttons">
           <button class="btn secondary" id="modalCancel">Cancel</button>
-          <button class="btn primary" id="modalConfirm">Download</button>
+          <button class="btn primary" id="modalConfirm">Download</button> 
         </div>
       </div>
     </div>
   </div>
-
+  
   <div id="welcomeBackdrop" class="welcome-backdrop" aria-hidden="true">
     <div class="welcome" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
       <h2 id="welcomeTitle">Welcome to Growfax</h2>
@@ -643,7 +805,7 @@
             <div style="margin-top: 20px; padding: 15px; border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
                 <h4 style="margin: 0 0 10px; color: var(--accent);" id="analyticsTitle">Analytical Dashboard</h4>
                 <div id="analyticsContent" style="text-align: left; font-size: 0.9rem;">
-                    <p id="totalDownloadsContainer">Total Downloads: <strong id="totalDownloads">—</strong></p>
+                    <p id="totalDownloadsContainer">Total Role Purchases: <strong id="totalDownloads">—</strong></p>
                     <p id="recentActivitiesTitle">Recent Activities:</p>
                     <ul id="recentActivities" style="margin: 5px 0 0 20px; padding: 0; list-style-type: square; font-size: 0.85rem;">
                         <li>Simulating data...</li>
@@ -658,7 +820,7 @@
             </div>
 
             <div style="margin-top: 20px; padding: 15px; border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
-                <h4 style="margin: 0 0 10px; color: var(--accent);" id="seoTitle">SEO Management</h4>
+                <h4 style="margin: 0 0 10px; color: var(--accent);">SEO Management</h4>
                 
                 <label for="seoTitleInput" style="display: block; margin-top: 10px; font-size: 0.9rem;">Page Title (Hanya Title Tag HTML)</label>
                 <input type="text" id="seoTitleInput" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text);" placeholder="Enter Page Title...">
@@ -687,8 +849,7 @@
 <script>
 /* ============================================================
    Growfax Official — FULL script
-   - MODIFIED: Removed Download/File-specific logic
-   - MODIFIED: Added Role Shop logic
+   - MODIFIED: Re-added Download Section and Logic.
    ============================================================ */
 
 /* ===========================
@@ -714,11 +875,18 @@ const toast = document.getElementById('toast');
 const discordLink = document.getElementById('discordLink');
 const reportBugLink = document.getElementById('reportBugLink');
 
-// *** HAPUS REFERENSI MODAL DOWNLOAD YANG SUDAH TIDAK DIGUNAKAN ***
-// const modalBackdrop = document.getElementById('modalBackdrop');
-// const modalTitle = document.getElementById('modalTitle');
-// const modalDesc = document.getElementById('modalDesc');
-// ... dan lainnya
+// DOWNLOAD MODAL REFS (DIKEMBALIKAN)
+const modalBackdrop = document.getElementById('modalBackdrop');
+const modalTitle = document.getElementById('modalTitle');
+const modalDesc = document.getElementById('modalDesc');
+const modalVersion = document.getElementById('modalVersion');
+const modalUpdated = document.getElementById('modalUpdated');
+const modalSize = document.getElementById('modalSize');
+const modalChangelog = document.getElementById('modalChangelog');
+const modalFilename = document.getElementById('modalFilename');
+const modalCancel = document.getElementById('modalCancel');
+const modalConfirm = document.getElementById('modalConfirm');
+
 
 const welcomeBackdrop = document.getElementById('welcomeBackdrop');
 const welcomeLang = document.getElementById('welcomeLang');
@@ -760,31 +928,159 @@ const seoKeywordsInput = document.getElementById('seoKeywordsInput');
 const saveSeoMeta = document.getElementById('saveSeoMeta');
 
 let isServerOnline = true; // Simulated server status
-// let pendingDownload = null; // Dihapus
+let pendingDownload = null; // State for tracking the file info being displayed (DIKEMBALIKAN)
 let isAdminLoggedIn = false; // New state tracker
 let analyticsIntervalId = null; // ID untuk auto-refresh dashboard
 
 /* ===========================
-   File metadata (DIPERTAHANKAN UNTUK LOGIKA ADMIN AREA)
+   File metadata (DIKEMBALIKAN & DIPERLENGKAPI)
    =========================== */
 const FILE_META = {
-  virtualhost: { version: 'v2.1', updated: 'Oct 29, 2025', changelog: '- Fixed host parsing\\n- Improved TLS handling', size: '2.3 KB' },
-  patched: { version: 'v1.9', updated: 'Oct 20, 2025', changelog: '- Patched launcher\\n- Minor fixes', size: '12.1 KB' },
+  virtualhost: { 
+    version: 'v2.1', 
+    updated: 'Oct 29, 2025', 
+    changelog: '- Fixed host parsing\n- Improved TLS handling', 
+    size: '2.3 KB', 
+    name: 'Growfax_VirtualHost.txt', 
+    platform: 'Android/PC',
+    type: 'download', // New property to distinguish download vs copy
+    downloadUrl: 'https://growfax.web.id/download/Growfax_VirtualHost.txt' 
+  },
+  patched: { 
+    version: 'v1.9', 
+    updated: 'Oct 20, 2025', 
+    changelog: '- Patched launcher\n- Minor fixes', 
+    size: '12.1 MB', 
+    name: 'Growfax_Client_Patched.apk', 
+    platform: 'Android',
+    type: 'download',
+    downloadUrl: 'https://growfax.web.id/download/Growfax_Client_Patched.apk'
+  },
   ios: { 
     version: 'v1.5', 
     updated: 'Nov 02, 2025', 
     changelog: 'Instruksi: Konfigurasi Surge/Shadowrocket telah disalin secara otomatis ke clipboard Anda. Tempelkan di bagian [Host] atau custom config.', 
     size: '1.5 KB',
-    copytext: `[General]\nbypass-system = true\n\n[Rule]\nFINAL,DIRECT\n\n[Host]\ngrowtopia1.com = 91.134.85.13\ngrowtopia2.com = 91.134.85.13\nwww.growtopia1.com = 91.134.85.13\nwww.growtopia2.com = 91.134.85.13`
+    copytext: `[General]\nbypass-system = true\n\n[Rule]\nFINAL,DIRECT\n\n[Host]\ngrowtopia1.com = 91.134.85.13\ngrowtopia2.com = 91.134.85.13\nwww.growtopia1.com = 91.134.85.13\nwww.growtopia2.com = 91.134.85.13`,
+    name: 'iOS Host Config',
+    platform: 'iOS',
+    type: 'copy'
   },
   powertunnel: { 
     version: 'v3.0', 
     updated: 'Oct 10, 2025', 
     changelog: 'Instruksi: Teks Host telah disalin secara otomatis ke clipboard Anda. Silakan tempelkan ke konfigurasi PowerTunnel Anda.', 
     size: '1.9 KB',
-    copytext: `15.235.232.75 growtopia1.com\n15.235.232.75 growtopia2.com\n15.235.232.75 www.growtopia1.com\n15.235.232.75 www.growtopia2.com`
+    copytext: `15.235.232.75 growtopia1.com\n15.235.232.75 growtopia2.com\n15.235.232.75 www.growtopia1.com\n15.235.232.75 www.growtopia2.com`,
+    name: 'PowerTunnel Host',
+    platform: 'Windows/PC',
+    type: 'copy'
   }
 };
+
+/* ===========================
+   Initial Download UI Setup
+   =========================== */
+function setupDownloadCards() {
+    document.querySelectorAll('.download-card').forEach(card => {
+        const fileKey = card.dataset.file;
+        const meta = FILE_META[fileKey];
+
+        if (meta) {
+            // Populate initial metadata
+            card.querySelector('[data-info="version"]').textContent = 'v' + meta.version;
+            card.querySelector('[data-info="updated"]').textContent = 'Updated: ' + meta.updated;
+            card.querySelector('[data-info="size"]').textContent = 'Size: ' + meta.size;
+
+            // Attach click handler to the button
+            const btn = card.querySelector('.download-btn');
+            btn.addEventListener('click', () => showDownloadModal(fileKey));
+        }
+    });
+}
+setupDownloadCards(); // Run on load
+
+/* ===========================
+   Download Modal Logic (DIKEMBALIKAN)
+   =========================== */
+function showDownloadModal(fileKey) {
+    const meta = FILE_META[fileKey];
+    pendingDownload = meta; // Set state for confirmation
+    const lang = langSelect.value;
+    
+    // Set Modal Content
+    modalTitle.textContent = meta.name;
+    modalDesc.textContent = meta.platform + (lang === 'id' ? ' | Periksa detail sebelum mengunduh/menyalin.' : ' | Check details before downloading/copying.');
+    modalVersion.textContent = 'v' + meta.version;
+    modalUpdated.textContent = (lang === 'id' ? 'Diperbarui: ' : 'Updated: ') + meta.updated;
+    modalSize.textContent = (lang === 'id' ? 'Ukuran: ' : 'Size: ') + meta.size;
+    modalChangelog.textContent = meta.changelog;
+    modalFilename.textContent = meta.name;
+
+    // Set Confirmation Button Text
+    if (meta.type === 'copy') {
+        modalConfirm.textContent = lang === 'id' ? 'Salin Host' : 'Copy Host';
+        modalConfirm.classList.add('copy-btn');
+        modalConfirm.classList.remove('primary');
+    } else {
+        modalConfirm.textContent = lang === 'id' ? 'Unduh Sekarang' : 'Download Now';
+        modalConfirm.classList.remove('copy-btn');
+        modalConfirm.classList.add('primary');
+    }
+
+    // Show Modal
+    modalBackdrop.style.display = 'flex';
+    modalBackdrop.setAttribute('aria-hidden', 'false');
+}
+
+// Modal closing event (DIKEMBALIKAN)
+function hideDownloadModal() {
+    modalBackdrop.style.display = 'none';
+    modalBackdrop.setAttribute('aria-hidden', 'true');
+    pendingDownload = null;
+}
+modalCancel.addEventListener('click', hideDownloadModal);
+modalBackdrop.addEventListener('click', (e) => {
+    if (e.target === modalBackdrop) hideDownloadModal();
+});
+
+// Modal Confirmation Handler (DIKEMBALIKAN)
+modalConfirm.addEventListener('click', handleDownload);
+function handleDownload() {
+    const meta = pendingDownload;
+    const lang = langSelect.value;
+    
+    if (!meta) return;
+
+    if (meta.type === 'copy' && meta.copytext) {
+        // Handle Copy Host
+        navigator.clipboard.writeText(meta.copytext)
+            .then(() => {
+                showToast(lang === 'id' ? '✅ Host telah disalin ke clipboard!' : '✅ Host copied to clipboard!', 2500);
+            })
+            .catch(err => {
+                console.error('Could not copy text: ', err);
+                showToast(lang === 'id' ? '❌ Gagal menyalin. Silakan salin manual dari detail.' : '❌ Failed to copy. Please copy manually from details.', 3000);
+            });
+            
+        trackEvent('file_copy_host', { file_name: meta.name, version: meta.version });
+    } else if (meta.type === 'download' && meta.downloadUrl) {
+        // Handle direct Download
+        const link = document.createElement('a');
+        link.href = meta.downloadUrl;
+        link.download = meta.name;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        showToast(lang === 'id' ? `📥 Memulai unduhan: ${meta.name}` : `📥 Initiating download: ${meta.name}`, 2000);
+        trackEvent('file_download_initiated', { file_name: meta.name, version: meta.version });
+    } else {
+        showToast(lang === 'id' ? '❌ Link unduhan tidak valid.' : '❌ Invalid download link.', 2000);
+    }
+
+    hideDownloadModal();
+}
 
 
 /* ===========================
@@ -802,25 +1098,29 @@ elements.forEach(el=>{
 const translations = {
   id: {
     "Growfax Official": "Growfax Resmi",
-    // Dihapus: "📥 Downloads": "📥 Unduhan",
+    "Essential File Downloads": "Unduhan File Penting", // DIKEMBALIKAN
     "Welcome to Growfax": "Selamat Datang di Growfax",
     "Private Growtopia Server": "Server Growtopia Pribadi",
     "Local Time (New York):": "Waktu Lokal (New York):",
     "Waktu Lokal (Jakarta):": "Waktu Lokal (Jakarta):",
-    // Dihapus: "📥 Essential File Downloads": "📥 Unduhan File Penting",
+    "Choose the correct file for your device and follow the installation steps!": "Pilih file yang tepat untuk perangkat Anda dan ikuti langkah instalasinya!",
     "Join Our Community": "Bergabung dengan Komunitas Kami",
     "Connect with others and get support in our official Discord server.": "Terhubung dengan anggota lain dan dapatkan dukungan di server Discord resmi kami.",
     "Join Growfax Discord": "Gabung Discord Growfax",
     "© 2025 Growfax. All rights reserved.": "© 2025 Growfax. Semua hak dilindungi.",
-    // Dihapus: "Are you sure you want to download": "Apakah Anda yakin ingin mengunduh",
-    // Dihapus: "Details before download": "Detail sebelum mengunduh",
+    "File info": "Info File", // DIKEMBALIKAN
+    "Details before download": "Detail sebelum mengunduh", // DIKEMBALIKAN
     "Cancel": "Batal",
-    "Download": "Unduh",
-    "Filename": "Nama berkas",
+    "Download Now": "Unduh Sekarang", // DIKEMBALIKAN
+    "Copy Host": "Salin Host", // DIKEMBALIKAN
+    "Filename": "Nama berkas", // DIKEMBALIKAN
     "Version": "Versi",
-    "Updated": "Diperbarui",
+    "Updated: —": "Diperbarui: —",
+    "Updated": "Diperbarui", // DIKEMBALIKAN
+    "Size: —": "Ukuran: —",
+    "Size": "Ukuran", // DIKEMBALIKAN
+    "Changelog: —": "Catatan pembaruan: —",
     "Changelog": "Catatan pembaruan",
-    "Size": "Ukuran",
     "Set your preferred language and theme. We'll remember this for next time.": "Pilih bahasa dan tema favoritmu. Kami akan menyimpannya untuk kunjungan berikutnya.",
     "Save & Continue": "Simpan & Lanjutkan",
     "Skip": "Lewati",
@@ -829,6 +1129,18 @@ const translations = {
     "Opening Discord...": "Membuka Discord...",
     "🐞 Report Bug": "🐞 Laporkan Bug",
     
+    // DOWNLOAD ITEMS (DIKEMBALIKAN)
+    "Virtual Host File": "File Host Virtual",
+    "File host terbaru untuk aplikasi Virtual Host di Android atau PC (LDPlayer/BlueStacks).": "File host terbaru untuk aplikasi Virtual Host di Android atau PC (LDPlayer/BlueStacks).",
+    "Details & Download": "Detail & Unduh",
+    "Patched Client (APK)": "Client Patched (APK)",
+    "APK client Growtopia yang sudah di-patch, khusus untuk Android. Instal dan mainkan!": "APK client Growtopia yang sudah di-patch, khusus untuk Android. Instal dan mainkan!",
+    "iOS Config Host": "Host Config iOS",
+    "Host config untuk aplikasi iOS seperti Surge atau Shadowrocket. (Copy Host)": "Host config untuk aplikasi iOS seperti Surge atau Shadowrocket. (Salin Host)",
+    "Details & Copy Host": "Detail & Salin Host",
+    "PowerTunnel Host": "Host PowerTunnel",
+    "Konfigurasi host untuk PowerTunnel di Windows/PC. (Copy Host)": "Konfigurasi host untuk PowerTunnel di Windows/PC. (Salin Host)",
+
     // NEW: Role Shop Translations
     "🛒 Role Shop": "🛒 Toko Role",
     "Growfax Role Shop": "Toko Role Growfax",
@@ -867,12 +1179,12 @@ const translations = {
 
     // Analytical Tool Translations
     "Analytical Dashboard": "Dasbor Analitik",
-    "Total Downloads:": "Total Unduhan:",
+    "Total Role Purchases:": "Total Pembelian Role:",
     "Recent Activities:": "Aktivitas Terbaru:",
     "Refresh Data": "Perbarui Data",
-    "Download initiated:": "Unduhan dimulai: ",
+    "Download initiated:": "Unduhan dimulai: ", // DIKEMBALIKAN
     "Admin Login success": "Login Admin berhasil",
-    "Purchase initiated:": "Pembelian dimulai: ", // NEW: Role Shop event translation
+    "Purchase initiated:": "Pembelian dimulai: ", 
 
     // SEO Translations
     "SEO Management": "Manajemen SEO",
@@ -880,6 +1192,11 @@ const translations = {
     "Meta Description": "Deskripsi Meta",
     "Meta Keywords (Comma-separated)": "Kata Kunci Meta (Dipisahkan Koma)",
     "Update SEO Meta": "Perbarui Meta SEO",
+    
+    // Toast Messages
+    "✅ Host copied to clipboard!": "✅ Host telah disalin ke clipboard!", // DIKEMBALIKAN
+    "❌ Failed to copy. Please copy manually from details.": "❌ Gagal menyalin. Silakan salin manual dari detail.", // DIKEMBALIKAN
+    "❌ Invalid download link.": "❌ Link unduhan tidak valid.", // DIKEMBALIKAN
   }
 };
 
@@ -918,6 +1235,7 @@ function renderAnalyticsDashboard() {
         totalPurchases: 8520 + Math.floor(Math.random() * 5), 
         activities: [
             { time: new Date(Date.now() - 3600000), type: 'Purchase initiated:', details: 'Role: God ($8.50)' },
+            { time: new Date(Date.now() - 4000000), type: 'Download initiated:', details: 'Growfax_Client_Patched.apk' }, // DIKEMBALIKAN
             { time: new Date(Date.now() - 7200000), type: 'Admin Login success', details: 'Jakarta, ID' },
             { time: new Date(Date.now() - 10800000), type: 'Purchase initiated:', details: 'Role: VIP ($0.70)' },
             { time: new Date(Date.now() - 14400000), type: 'Purchase initiated:', details: 'Role: Super Moderator ($5.00)' },
@@ -927,7 +1245,7 @@ function renderAnalyticsDashboard() {
     // Update Translations of Static Elements
     analyticsTitle.textContent = lang === 'id' ? (translations.id['Analytical Dashboard'] || 'Dasbor Analitik') : 'Analytical Dashboard';
     // Mengganti teks Total Downloads
-    totalDownloadsContainer.innerHTML = (lang === 'id' ? ('Total Pembelian Role:') : 'Total Role Purchases:') + ` <strong id="totalDownloads">${SIMULATED_DATA.totalPurchases.toLocaleString()}</strong>`;
+    totalDownloadsContainer.innerHTML = (lang === 'id' ? (translations.id['Total Role Purchases:'] || 'Total Pembelian Role:') : 'Total Role Purchases:') + ` <strong id="totalDownloads">${SIMULATED_DATA.totalPurchases.toLocaleString()}</strong>`;
     recentActivitiesTitle.textContent = lang === 'id' ? (translations.id['Recent Activities:'] || 'Aktivitas Terbaru:') : 'Recent Activities:';
 
     // Update Totals (Mengganti totalDownloads menjadi totalPurchases)
@@ -943,6 +1261,8 @@ function renderAnalyticsDashboard() {
         if (lang === 'id') {
             if (activity.type.startsWith('Purchase initiated:')) {
                 typeText = (translations.id['Purchase initiated:'] || 'Pembelian dimulai: ') + activity.details;
+            } else if (activity.type.startsWith('Download initiated:')) { // DIKEMBALIKAN
+                typeText = (translations.id['Download initiated:'] || 'Unduhan dimulai: ') + activity.details;
             } else if (activity.type === 'Admin Login success') {
                 typeText = (translations.id['Admin Login success'] || 'Login Admin berhasil') + ' (' + activity.details + ')';
             } else {
@@ -997,9 +1317,9 @@ function updateSeoMetaTags(title, desc, keywords) {
 
 function loadAndApplySeoSettings() {
     // Default values from the original HTML head
-    const defaultTitle = 'Growfax Official - Private Growtopia Server & Role Shop'; // Title Updated
-    const defaultDesc = 'Situs resmi Growfax, private server Growtopia. Dapatkan Role VIP, Moderator, atau God di Role Shop kami. Mainkan Growtopia dengan fitur eksklusif dan komunitas aktif!'; // Desc Updated
-    const defaultKeywords = 'Growfax, Growtopia Private Server, Growtopia PS, Growfax Role Shop, Growfax VIP, Growfax Moderator'; // Keywords Updated
+    const defaultTitle = 'Growfax Official - Private Growtopia Server & Role Shop'; 
+    const defaultDesc = 'Situs resmi Growfax, private server Growtopia. Dapatkan Role VIP, Moderator, atau God di Role Shop kami. Unduh file host terbaru untuk Android, Windows, dan iOS. Mainkan Growtopia dengan fitur eksklusif dan komunitas aktif!'; 
+    const defaultKeywords = 'Growfax, Growtopia Private Server, Growtopia PS, Growfax Role Shop, Growfax VIP, Growfax Moderator, Download Growfax, Host Growtopia, Growfax Android, Growfax Windows';
 
     // Load from LocalStorage
     const savedTitle = localStorage.getItem('growfax_seo_title') || defaultTitle;
@@ -1090,7 +1410,7 @@ function updateAdminAreaTranslations(lang) {
 
 function applyTranslations(lang){
   const transitionDuration = 200; // ms
-  const elementsToTranslate = document.querySelectorAll('[data-original], #modalCancel, #modalConfirm, #welcomeSave, #welcomeSkip, #discordLink, #reportBugLink, #adminTokenSubmit, #closeAdmin, #toggleServerStatus, #saveNewsUpdate, #refreshAnalytics, #navShop, .purchase-btn');
+  const elementsToTranslate = document.querySelectorAll('[data-original], #modalCancel, #modalConfirm, #welcomeSave, #welcomeSkip, #discordLink, #reportBugLink, #adminTokenSubmit, #closeAdmin, #toggleServerStatus, #saveNewsUpdate, #refreshAnalytics, #navShop, .purchase-btn, .download-btn');
 
   // 1. Fade out (Opacity 0)
   elementsToTranslate.forEach(el => {
@@ -1110,9 +1430,9 @@ function applyTranslations(lang){
       el.textContent = lang === 'en' ? orig : (translations[lang]?.[orig] || orig);
     });
 
-    // Fix buttons/labels manually
-    // Dihapus: modalCancel.textContent = lang === 'id' ? (translations.id['Cancel'] || 'Batal') : 'Cancel';
-    // Dihapus: modalConfirm.textContent = lang === 'id' ? (translations.id['Download'] || 'Unduh') : 'Download';
+    // Fix buttons/labels manually (DIKEMBALIKAN)
+    modalCancel.textContent = lang === 'id' ? (translations.id['Cancel'] || 'Batal') : 'Cancel';
+    // modalConfirm is handled dynamically based on pendingDownload.type. It will be fixed inside showDownloadModal
     welcomeSave.textContent = lang === 'id' ? (translations.id['Save & Continue'] || 'Simpan & Lanjutkan') : 'Save & Continue';
     welcomeSkip.textContent = lang === 'id' ? (translations.id['Skip'] || 'Lewati') : 'Skip';
     discordLink.textContent = lang === 'id' ? (translations.id['Join Growfax Discord'] || 'Gabung Discord Growfax') : 'Join Growfax Discord';
@@ -1122,6 +1442,25 @@ function applyTranslations(lang){
     document.getElementById('navShop').textContent = lang === 'id' ? (translations.id['🛒 Role Shop'] || '🛒 Toko Role') : '🛒 Role Shop';
     document.querySelectorAll('.purchase-btn').forEach(btn => {
         btn.textContent = lang === 'id' ? (translations.id['Purchase'] || 'Beli') : 'Purchase';
+    });
+
+    // DOWNLOAD BUTTONS (DIKEMBALIKAN)
+    document.querySelectorAll('.download-card').forEach(card => {
+        const fileKey = card.dataset.file;
+        const meta = FILE_META[fileKey];
+        const btn = card.querySelector('.download-btn');
+
+        if (meta) {
+            // Re-apply correct text based on file type
+            if (meta.type === 'copy') {
+                 btn.textContent = lang === 'id' ? (translations.id['Details & Copy Host'] || 'Detail & Salin Host') : 'Details & Copy Host';
+            } else {
+                 btn.textContent = lang === 'id' ? (translations.id['Details & Download'] || 'Detail & Unduh') : 'Details & Download';
+            }
+            // Re-apply metadata text in card
+            card.querySelector('[data-info="updated"]').textContent = (lang === 'id' ? 'Diperbarui: ' : 'Updated: ') + meta.updated;
+            card.querySelector('[data-info="size"]').textContent = (lang === 'id' ? 'Ukuran: ' : 'Size: ') + meta.size;
+        }
     });
 
 
