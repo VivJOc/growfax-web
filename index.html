@@ -262,7 +262,7 @@
       </div>
 
       <div class="controls">
-        <a href="mailto:growfaxz.gmail.com?subject=Report Bug - Growfax&body=Sertakan detail bug dan lampirkan screenshot di sini. Terima kasih." 
+        <a href="#" 
            id="reportBugLink" 
            class="report-bug-btn" 
            title="Report a Bug">🐞 Report Bug</a>
@@ -398,7 +398,7 @@ const welcomeSkip = document.getElementById('welcomeSkip');
 
 const timeDisplay = document.getElementById('timeDisplay');
 const discordLink = document.getElementById('discordLink');
-const reportBugLink = document.getElementById('reportBugLink'); // NEW REF
+const reportBugLink = document.getElementById('reportBugLink');
 
 let pendingDownload = null;
 
@@ -463,7 +463,7 @@ const translations = {
     "Language": "Bahasa",
     "Theme": "Tema",
     "Opening Discord...": "Membuka Discord...",
-    "🐞 Report Bug": "🐞 Laporkan Bug" // NEW: Report Bug text
+    "🐞 Report Bug": "🐞 Laporkan Bug"
   }
 };
 
@@ -480,7 +480,32 @@ function applyTranslations(lang){
   welcomeSkip.textContent = lang === 'id' ? (translations.id['Skip'] || 'Lewati') : 'Skip';
   discordLink.textContent = lang === 'id' ? (translations.id['Join Growfax Discord'] || 'Gabung Discord Growfax') : 'Join Growfax Discord';
   reportBugLink.textContent = lang === 'id' ? (translations.id['🐞 Report Bug'] || '🐞 Laporkan Bug') : '🐞 Report Bug';
+  
+  // NEW: Update mailto link when translations are applied
+  updateReportBugLink(); 
 }
+
+/* ===========================
+   Report Bug Link Logic
+   =========================== */
+function updateReportBugLink() {
+  const lang = langSelect.value;
+  let subject, body;
+  
+  if (lang === 'id') {
+    subject = 'Laporan Bug - Growfax';
+    body = 'Mohon jelaskan bug yang Anda temukan:\n\n---\nDevice/Platform (Android/iOS/PC):\nWaktu Kejadian:\nLangkah-langkah mereplikasi bug:\n---\n\n(Silakan lampirkan screenshot atau foto di sini. Terima kasih.)';
+  } else { // default to 'en'
+    subject = 'Bug Report - Growfax';
+    body = 'Please describe the bug you encountered:\n\n---\nDevice/Platform (Android/iOS/PC):\nTime of Occurrence:\nSteps to reproduce the bug:\n---\n\n(Please attach screenshots or photos here. Thank you.)';
+  }
+
+  // Encode the subject and body for the URL
+  const mailtoURL = `mailto:growfaxz.gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  
+  reportBugLink.setAttribute('href', mailtoURL);
+}
+
 
 /* ===========================
    Theme control
@@ -510,6 +535,7 @@ langSelect.addEventListener('change', ()=> {
   const saved = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en');
   langSelect.value = saved;
   applyTranslations(saved);
+  updateReportBugLink(); // Initial link setup
 })();
 
 /* ===========================
@@ -633,6 +659,7 @@ document.getElementById('floatingChat').addEventListener('click', (e)=>{
    Report Bug Link Handler (Optional for toast feedback)
    =========================== */
 reportBugLink.addEventListener('click', () => {
+  // Hanya berikan feedback toast karena mailto: link sudah diatur
   showToast(langSelect.value === 'id' ? 'Membuka aplikasi email...' : 'Opening email application...');
 });
 
