@@ -308,17 +308,34 @@
       font-weight: 400;
       opacity: 0.7;
   }
+  /* Updated UL style for commands */
   .shop-role-card ul {
       list-style-type: none;
       padding: 0;
       margin-bottom: 20px;
       font-size: 0.9rem;
       color: var(--muted);
+      white-space: pre-wrap; /* Ensure commands wrap correctly */
+  }
+  .shop-role-card ul li {
+      margin-bottom: 8px;
+      border-left: 3px solid var(--shop-bg);
+      padding-left: 8px;
+      line-height: 1.3;
   }
   .shop-role-card ul li:before {
-      content: '⚡';
-      margin-right: 8px;
-      color: var(--shop-bg);
+      content: none; /* Remove default bullet */
+  }
+  .shop-role-card ul li strong {
+      color: var(--accent);
+      font-weight: 600;
+      display: block;
+      margin-bottom: 2px;
+  }
+  .shop-role-card ul li span {
+      display: block;
+      font-size: 0.85rem;
+      opacity: 0.8;
   }
   .btn-purchase {
       background: var(--shop-bg);
@@ -521,9 +538,9 @@
                 <div>
                     <h3>✨ VIP Role</h3>
                     <p class="price">$0.7 <small>USD</small></p>
-                    <ul>
-                        <li>Private chat access</li>
-                        <li>Custom color name in-game</li>
+                    <ul id="vip_commands">
+                        <li><strong>/superbreak</strong> <span>Activate the Super Breaker mode!</span></li>
+                        <li><strong>/vsb</strong> <span>Send a VIP-Broadcast to everyone online!</span></li>
                     </ul>
                 </div>
                 <a href="https://paypal.me/Growfax/0.7" target="_blank" rel="noopener" class="btn-purchase" data-role="vip" data-price="0.7">Purchase VIP</a>
@@ -533,10 +550,10 @@
                 <div>
                     <h3>🌟 VIP+ Role</h3>
                     <p class="price">$1.2 <small>USD</small></p>
-                    <ul>
-                        <li>All VIP benefits</li>
-                        <li>Exclusive VIP+ world access</li>
-                        <li>Priority support</li>
+                    <ul id="vip_plus_commands">
+                        <li><strong>/gemrain</strong> <span>Activate the Gem Rain & Enjoy 20% more gems!</span></li>
+                        <li><strong>/sdb</strong> <span>Send a Super-Duper Broadcast to everyone online!</span></li>
+                        <li><span>All VIP commands included!</span></li>
                     </ul>
                 </div>
                 <a href="https://paypal.me/Growfax/1.2" target="_blank" rel="noopener" class="btn-purchase" data-role="vip+" data-price="1.2">Purchase VIP+</a>
@@ -546,10 +563,10 @@
                 <div>
                     <h3>🔨 Moderator Role</h3>
                     <p class="price">$2.5 <small>USD</small></p>
-                    <ul>
-                        <li>Moderator tag & abilities</li>
-                        <li>Unique in-game item (cosmetic)</li>
-                        <li>Early access to updates</li>
+                    <ul id="moderator_commands">
+                        <li><strong>/tempban</strong> <span>Temporary ban abusive players.</span></li>
+                        <li><strong>/mute</strong> <span>Silence disruptive users.</span></li>
+                        <li><span>All VIP+ commands included!</span></li>
                     </ul>
                 </div>
                 <a href="https://paypal.me/Growfax/2.5" target="_blank" rel="noopener" class="btn-purchase" data-role="moderator" data-price="2.5">Purchase Moderator</a>
@@ -559,10 +576,10 @@
                 <div>
                     <h3>🛡️ Super Moderator</h3>
                     <p class="price">$3.2 <small>USD</small></p>
-                    <ul>
-                        <li>All Moderator benefits</li>
-                        <li>Advanced moderation tools</li>
-                        <li>Dedicated private channel</li>
+                    <ul id="super_moderator_commands">
+                        <li><strong>/kick</strong> <span>Instantly kick players from the server.</span></li>
+                        <li><strong>/warn</strong> <span>Issue official warnings.</span></li>
+                        <li><span>All Moderator commands included!</span></li>
                     </ul>
                 </div>
                 <a href="https://paypal.me/Growfax/3.2" target="_blank" rel="noopener" class="btn-purchase" data-role="super_moderator" data-price="3.2">Purchase Super Moderator</a>
@@ -572,10 +589,10 @@
                 <div>
                     <h3>💻 Developer Role</h3>
                     <p class="price">$6.5 <small>USD</small></p>
-                    <ul>
-                        <li>Direct line to server developers</li>
-                        <li>Beta access to new features</li>
-                        <li>Exclusive Developer badge</li>
+                    <ul id="developer_commands">
+                        <li><strong>/testitem</strong> <span>Spawn test/beta items.</span></li>
+                        <li><strong>/devlogs</strong> <span>Access exclusive development logs.</span></li>
+                        <li><span>All Super Moderator commands included!</span></li>
                     </ul>
                 </div>
                 <a href="https://paypal.me/Growfax/6.5" target="_blank" rel="noopener" class="btn-purchase" data-role="developer" data-price="6.5">Purchase Developer</a>
@@ -585,10 +602,10 @@
                 <div>
                     <h3>👑 GOD Role</h3>
                     <p class="price">$8.6 <small>USD</small></p>
-                    <ul>
-                        <li>All previous benefits</li>
-                        <li>Highest priority in all aspects</li>
-                        <li>Ultimate in-game title & effects</li>
+                    <ul id="god_commands">
+                        <li><strong>/worldtp</strong> <span>Teleport to any world instantly.</span></li>
+                        <li><strong>/ultimate</strong> <span>Activate unique God effects.</span></li>
+                        <li><span>All Developer commands included!</span></li>
                     </ul>
                 </div>
                 <a href="https://paypal.me/Growfax/8.6" target="_blank" rel="noopener" class="btn-purchase" data-role="god" data-price="8.6">Purchase GOD</a>
@@ -866,7 +883,7 @@ const translations = {
     "Opening Discord...": "Membuka Discord...",
     "🐞 Report Bug": "🐞 Laporkan Bug",
     
-    // Shop Translations (NEW)
+    // Shop Translations (UPDATED for Commands)
     "🛒 Growfax Server Roles": "🛒 Role Server Growfax",
     "Support the server and unlock exclusive roles! Direct purchase via PayPal.me.": "Dukung server dan buka role eksklusif! Pembelian langsung via PayPal.me.",
     "Purchase VIP": "Beli VIP",
@@ -881,23 +898,24 @@ const translations = {
     "🛡️ Super Moderator": "🛡️ Super Moderator",
     "💻 Developer Role": "💻 Role Developer",
     "👑 GOD Role": "👑 Role GOD",
-    "Private chat access": "Akses chat pribadi",
-    "Custom color name in-game": "Nama warna khusus di dalam game",
-    "All VIP benefits": "Semua manfaat VIP",
-    "Exclusive VIP+ world access": "Akses dunia VIP+ eksklusif",
-    "Priority support": "Dukungan prioritas",
-    "Moderator tag & abilities": "Tag & kemampuan Moderator",
-    "Unique in-game item (cosmetic)": "Item unik di dalam game (kosmetik)",
-    "Early access to updates": "Akses awal ke pembaruan",
-    "All Moderator benefits": "Semua manfaat Moderator",
-    "Advanced moderation tools": "Alat moderasi canggih",
-    "Dedicated private channel": "Saluran pribadi khusus",
-    "Direct line to server developers": "Jalur langsung ke pengembang server",
-    "Beta access to new features": "Akses beta ke fitur baru",
-    "Exclusive Developer badge": "Lencana Developer eksklusif",
-    "All previous benefits": "Semua manfaat sebelumnya",
-    "Highest priority in all aspects": "Prioritas tertinggi dalam segala aspek",
-    "Ultimate in-game title & effects": "Gelar & efek terbaik di dalam game",
+    // Commands & Descriptions (Manfaat) - Only the original parts need translation
+    "Activate the Super Breaker mode!": "Aktifkan mode Super Breaker!",
+    "Send a VIP-Broadcast to everyone online!": "Kirim VIP-Broadcast ke semua yang online!",
+    "Activate the Gem Rain & Enjoy 20% more gems!": "Aktifkan Gem Rain & Nikmati 20% tambahan gems!",
+    "Send a Super-Duper Broadcast to everyone online!": "Kirim Super-Duper Broadcast ke semua yang online!",
+    "All VIP commands included!": "Semua perintah VIP termasuk!",
+    "Temporary ban abusive players.": "Ban sementara pemain yang menyalahgunakan.",
+    "Silence disruptive users.": "Membungkam pengguna yang mengganggu.",
+    "All VIP+ commands included!": "Semua perintah VIP+ termasuk!",
+    "Instantly kick players from the server.": "Langsung keluarkan pemain dari server.",
+    "Issue official warnings.": "Berikan peringatan resmi.",
+    "All Moderator commands included!": "Semua perintah Moderator termasuk!",
+    "Spawn test/beta items.": "Munculkan item uji/beta.",
+    "Access exclusive development logs.": "Akses log pengembangan eksklusif.",
+    "All Super Moderator commands included!": "Semua perintah Super Moderator termasuk!",
+    "Teleport to any world instantly.": "Teleport ke dunia mana pun seketika.",
+    "Activate unique God effects.": "Aktifkan efek God yang unik.",
+    "All Developer commands included!": "Semua perintah Developer termasuk!",
     
     // Admin Translations
     "🔑 Admin Area": "🔑 Area Admin",
@@ -1072,6 +1090,65 @@ loadAndApplySeoSettings();
 /* ===========================
    Smooth Translation Logic
    =========================== */
+
+// Command Texts for translation (since they are now dynamically structured)
+const commandData = {
+    vip_commands: [
+        { strong: "/superbreak", span: "Activate the Super Breaker mode!" },
+        { strong: "/vsb", span: "Send a VIP-Broadcast to everyone online!" }
+    ],
+    vip_plus_commands: [
+        { strong: "/gemrain", span: "Activate the Gem Rain & Enjoy 20% more gems!" },
+        { strong: "/sdb", span: "Send a Super-Duper Broadcast to everyone online!" },
+        { strong: "All VIP commands included!", span: null }
+    ],
+    moderator_commands: [
+        { strong: "/tempban", span: "Temporary ban abusive players." },
+        { strong: "/mute", span: "Silence disruptive users." },
+        { strong: "All VIP+ commands included!", span: null }
+    ],
+    super_moderator_commands: [
+        { strong: "/kick", span: "Instantly kick players from the server." },
+        { strong: "/warn", span: "Issue official warnings." },
+        { strong: "All Moderator commands included!", span: null }
+    ],
+    developer_commands: [
+        { strong: "/testitem", span: "Spawn test/beta items." },
+        { strong: "/devlogs", span: "Access exclusive development logs." },
+        { strong: "All Super Moderator commands included!", span: null }
+    ],
+    god_commands: [
+        { strong: "/worldtp", span: "Teleport to any world instantly." },
+        { strong: "/ultimate", span: "Activate unique God effects." },
+        { strong: "All Developer commands included!", span: null }
+    ]
+};
+
+function renderCommands(lang) {
+    for (const id in commandData) {
+        const ul = document.getElementById(id);
+        if (ul) {
+            ul.innerHTML = ''; // Clear existing content
+            commandData[id].forEach(item => {
+                const li = document.createElement('li');
+                
+                // Translate the text content of the strong/span elements
+                const strongText = lang === 'en' ? item.strong : (translations[lang]?.[item.strong] || item.strong);
+                
+                li.innerHTML = `<strong>${strongText}</strong>`;
+                
+                if (item.span) {
+                    const spanText = lang === 'en' ? item.span : (translations[lang]?.[item.span] || item.span);
+                    li.innerHTML += ` <span>${spanText}</span>`;
+                }
+
+                ul.appendChild(li);
+            });
+        }
+    }
+}
+
+
 function updateAdminAreaTranslations(lang) {
     if (!adminLoginPrompt) return; // Exit if admin elements not loaded
     
@@ -1183,6 +1260,9 @@ function applyTranslations(lang){
     welcomeSkip.textContent = lang === 'id' ? (translations.id['Skip'] || 'Lewati') : 'Skip';
     discordLink.textContent = lang === 'id' ? (translations.id['Join Growfax Discord'] || 'Gabung Discord Growfax') : 'Join Growfax Discord';
     reportBugLink.textContent = lang === 'id' ? (translations.id['🐞 Report Bug'] || '🐞 Laporkan Bug') : '🐞 Report Bug';
+    
+    // RENDER COMMANDS
+    renderCommands(lang);
     
     // Update mailto link and Admin area translations
     updateReportBugLink(); 
