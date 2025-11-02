@@ -96,13 +96,12 @@
   }
   .brand-wrap{display:flex;align-items:center;gap:8px}
   
-  /* NEW: Glow, lift, and Pulse Animation for logo image */
+  /* Glow, lift, and Pulse Animation for logo image */
   .brand-wrap img{
     width:36px;
     height:36px;
     border-radius:6px;
     object-fit:cover;
-    /* Added transition for smoother effects, including the JS-driven opacity change */
     transition: box-shadow .25s, transform .25s, opacity 0.2s ease;
     box-shadow: var(--logo-shadow);
     /* Apply animation */
@@ -188,14 +187,12 @@
     color:#ffaa00;
     margin:8px 0;
     text-shadow:0 0 10px rgba(255,170,0,0.18);
-    /* Added opacity transition for smoother language change */
     transition: opacity 0.2s ease;
   }
   .banner-section p{
     font-size:0.95rem;
     opacity:.92;
     margin:0;
-    /* Added opacity transition for smoother language change */
     transition: opacity 0.2s ease;
   }
   .time-display{
@@ -203,8 +200,70 @@
     font-size:0.85rem;
     font-weight:600;
     opacity:.9;
-    /* Added opacity transition for smoother language change */
     transition: opacity 0.2s ease;
+  }
+
+  /* -------------------------
+     Event Section (NEW)
+     ------------------------- */
+  .event-section{
+    max-width:1000px; /* Match main container width */
+    margin:32px auto 0;
+    padding:20px 10px;
+    border-radius:10px;
+    background:var(--card-bg);
+    box-shadow:var(--card-shadow);
+    text-align:left;
+    transition: background .25s, box-shadow .25s, opacity 0.2s ease; 
+  }
+  .event-section h3{
+      margin:0 0 10px 0;
+      font-size:1.2rem;
+      color:var(--accent);
+      /* Added glow effect for event name */
+      text-shadow: 0 0 8px rgba(0, 120, 215, 0.4); 
+      transition: opacity 0.2s ease, text-shadow 0.25s;
+  }
+  [data-theme="dark"] .event-section h3{
+      text-shadow: 0 0 10px rgba(77, 163, 255, 0.6); 
+  }
+
+  .event-details{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      flex-wrap: wrap;
+      gap: 15px;
+      padding: 0 5px;
+  }
+  .event-details > div {
+      flex-basis: 100%; /* Full width on mobile */
+      transition: opacity 0.2s ease;
+  }
+  .event-details strong{
+      font-weight:700;
+      color:var(--text);
+      display:block;
+      margin-bottom: 4px;
+      font-size: 0.9rem;
+      transition: opacity 0.2s ease;
+  }
+  .event-details span{
+      font-size:1.0rem;
+      color:var(--muted);
+      font-weight: 600;
+      transition: opacity 0.2s ease;
+  }
+  #eventCountdown{
+      font-size:1.3rem;
+      font-weight:bold;
+      color:var(--success);
+      text-align: center;
+      flex-basis: 100%;
+      margin-top: 15px;
+      padding: 5px 0;
+      border-top: 1px solid var(--border-color);
+      transition: color 0.5s ease, opacity 0.2s ease;
   }
 
   /* -------------------------
@@ -214,7 +273,6 @@
   .container h2{
     font-size:1.4rem;
     margin-bottom:24px;
-    /* Added opacity transition for smoother language change */
     transition: opacity 0.2s ease;
   }
   
@@ -225,7 +283,6 @@
     width:92%; 
     padding:14px 18px;border-radius:12px;color:#fff;font-weight:700;
     text-decoration:none;border:1px solid transparent;font-size:1.02rem;
-    /* Added opacity transition for smoother language change */
     transition:transform .18s ease,box-shadow .18s, opacity 0.2s ease;
   }
   .platform-buttons a img{width:30px;height:30px;border-radius:6px}
@@ -242,7 +299,6 @@
   .discord-section{background:var(--discord-color);color:#fff;padding:24px;border-radius:10px;max-width:820px;margin:32px auto 50px;text-align:center;box-shadow:var(--card-shadow)}
   .discord-section img{width:48px;height:48px;border-radius:8px;margin-bottom:8px}
   .discord-section h3, .discord-section p, .discord-section a {
-    /* Added opacity transition for smoother language change */
     transition: opacity 0.2s ease;
   }
 
@@ -254,7 +310,6 @@
     margin:30px 0 40px;
     font-size:.85rem;
     opacity:.85;
-    /* Added opacity transition for smoother language change */
     transition: opacity 0.2s ease;
   }
 
@@ -312,6 +367,21 @@
         font-size:0.98rem;
         padding:8px 12px;
         border-radius: 10px;
+    }
+
+    /* Event Section PC */
+    .event-section {
+        padding: 20px 20px;
+    }
+    .event-details {
+        padding: 0 10px;
+    }
+    .event-details > div {
+        flex-basis: 30%; /* Less than half to fit 3 items */
+    }
+    #eventCountdown{
+        font-size: 1.5rem;
+        margin-top: 10px;
     }
 
     /* Tombol Unduhan kembali ke layout 300px */
@@ -375,6 +445,10 @@
     <h2>Welcome to Growfax</h2>
     <p>Private Growtopia Server</p>
     <div id="timeDisplay" class="time-display">Loading time...</div>
+  </section>
+  
+  <section id="event-display" class="event-section" role="region" aria-label="Current Growfax Event">
+    <div style="text-align: center; color: var(--muted);">Loading event schedule...</div>
   </section>
 
   <main class="container" id="downloads" role="main">
@@ -491,6 +565,7 @@ const welcomeSkip = document.getElementById('welcomeSkip');
 const timeDisplay = document.getElementById('timeDisplay');
 const discordLink = document.getElementById('discordLink');
 const reportBugLink = document.getElementById('reportBugLink');
+const eventDisplay = document.getElementById('event-display');
 
 let pendingDownload = null;
 
@@ -510,6 +585,27 @@ const FILE_META = {
     copytext: `15.235.232.75 growtopia1.com\n15.235.232.75 growtopia2.com\n15.235.232.75 www.growtopia1.com\n15.235.232.75 www.growtopia2.com`
   }
 };
+
+/* ===========================
+   Event Schedule Data (NEW)
+   - Start time in 24h format (WIB/GMT+7)
+   - Duration is 2 hours per event
+   =========================== */
+const DAILY_EVENTS = [
+    { start: 0, name: 'Glowfaxt Hunt', world: 'GLOWHUNT', id_name: 'Perburuan Glowfaxt' },
+    { start: 2, name: 'Battle Arena', world: 'ARENA', id_name: 'Arena Pertarungan' },
+    { start: 4, name: 'Parkour Challenge', world: 'PARKOUR', id_name: 'Tantangan Parkour' },
+    { start: 6, name: 'Quiz Mania', world: 'QUIZ', id_name: 'Kuis Mania' },
+    { start: 8, name: 'Fashion Show', world: 'FASHION', id_name: 'Peragaan Busana' },
+    { start: 10, name: 'Glowfaxt Hunt', world: 'GLOWHUNT', id_name: 'Perburuan Glowfaxt' },
+    { start: 12, name: 'Battle Arena', world: 'ARENA', id_name: 'Arena Pertarungan' },
+    { start: 14, name: 'Parkour Challenge', world: 'PARKOUR', id_name: 'Tantangan Parkour' },
+    { start: 16, name: 'Quiz Mania', world: 'QUIZ', id_name: 'Kuis Mania' },
+    { start: 18, name: 'Fashion Show', world: 'FASHION', id_name: 'Peragaan Busana' },
+    { start: 20, name: 'Glowfaxt Hunt', world: 'GLOWHUNT', id_name: 'Perburuan Glowfaxt' },
+    { start: 22, name: 'Battle Arena', world: 'ARENA', id_name: 'Arena Pertarungan' }
+];
+
 
 /* ===========================
    Translation baseline
@@ -555,26 +651,32 @@ const translations = {
     "Language": "Bahasa",
     "Theme": "Tema",
     "Opening Discord...": "Membuka Discord...",
-    "🐞 Report Bug": "🐞 Laporkan Bug"
+    "🐞 Report Bug": "🐞 Laporkan Bug",
+    
+    // NEW Event Translations
+    "Current Event": "Event Saat Ini",
+    "Next Event": "Event Berikutnya",
+    "Event Name": "Nama Event",
+    "World": "Dunia",
+    "Ends in": "Berakhir dalam",
+    "Starts in": "Dimulai dalam",
+    "h": "j", // hours
+    "m": "m", // minutes
+    "s": "d"  // seconds (detik)
   }
 };
 
 /* ===========================
-   Smooth Translation Logic (NEW)
+   Smooth Translation Logic
    =========================== */
 function applyTranslations(lang){
   const transitionDuration = 200; // ms
+  const elementsToTranslate = document.querySelectorAll('[data-original], #modalCancel, #modalConfirm, #welcomeSave, #welcomeSkip, #discordLink, #reportBugLink');
 
   // 1. Fade out (Opacity 0)
-  elements.forEach(el => {
-    const isTranslatable = el.dataset.original || 
-                           el === modalCancel || el === modalConfirm || 
-                           el === welcomeSave || el === welcomeSkip || 
-                           el === discordLink || el === reportBugLink;
-    
-    // Check if the element has translatable content and is currently visible
-    if (isTranslatable && (el.offsetWidth > 0 || el.offsetHeight > 0 || el === langSelect)) {
-      // Temporarily set the transition if not already handled by CSS
+  elementsToTranslate.forEach(el => {
+    // Only target elements currently visible
+    if (el.offsetWidth > 0 || el.offsetHeight > 0 || el === langSelect) {
       el.style.transition = `opacity ${transitionDuration}ms ease`;
       el.style.opacity = '0';
     }
@@ -597,11 +699,13 @@ function applyTranslations(lang){
     discordLink.textContent = lang === 'id' ? (translations.id['Join Growfax Discord'] || 'Gabung Discord Growfax') : 'Join Growfax Discord';
     reportBugLink.textContent = lang === 'id' ? (translations.id['🐞 Report Bug'] || '🐞 Laporkan Bug') : '🐞 Report Bug';
     
-    // Update mailto link
+    // Update mailto link and event schedule immediately after translation
     updateReportBugLink(); 
+    // Re-run the event scheduler to update event text instantly
+    updateEventSchedule(true); 
 
     // 4. Fade back in (Opacity 1)
-    elements.forEach(el => {
+    elementsToTranslate.forEach(el => {
       // Restore opacity on elements that were hidden
       if (el.style.opacity === '0') {
         el.style.opacity = '1';
@@ -682,6 +786,7 @@ function updateTime(){
   if(lang === 'id'){
     const options = { timeZone: 'Asia/Jakarta', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' };
     const indoTime = new Intl.DateTimeFormat('id-ID', options).format(now);
+    // Get hour separately using the correct timezone
     const hour = parseInt(now.toLocaleString('en-US', { timeZone: 'Asia/Jakarta', hour: '2-digit', hour12: false }));
     const greeting = getIndoGreeting(hour);
     timeDisplay.textContent = `Waktu Lokal (Jakarta): ${indoTime} - ${greeting}`;
@@ -695,8 +800,217 @@ updateTime();
 setInterval(updateTime, 1000);
 
 /* ===========================
+   Event Scheduling Logic (NEW)
+   =========================== */
+
+/**
+ * Finds the currently running event and the next starting event based on WIB/GMT+7.
+ * @param {Date} now - The current Date object (in local time).
+ * @returns {{currentEvent: Object|null, nextEvent: Object, endTimestamp: Date, nextStartTimestamp: Date}}
+ */
+function getCurrentEvent(now){
+    // Get current time components in Jakarta time (GMT+7)
+    const nowWIB = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Jakarta' }));
+    const currentHour = nowWIB.getHours();
+    const currentMinutes = nowWIB.getMinutes();
+    const currentSeconds = nowWIB.getSeconds();
+    
+    let currentEvent = null;
+    let nextEvent = null;
+    let endTimestamp = null;
+    let nextStartTimestamp = null;
+    
+    // Convert current time to seconds since midnight (for easier comparison)
+    const nowSecs = (currentHour * 3600) + (currentMinutes * 60) + currentSeconds;
+    
+    // 1. Find the current running event
+    for(let i = 0; i < DAILY_EVENTS.length; i++){
+        const event = DAILY_EVENTS[i];
+        const eventStartSecs = event.start * 3600;
+        const eventEndHour = (event.start + 2) % 24; 
+        let eventEndSecs = eventEndHour * 3600;
+
+        // Handle event crossing midnight (e.g., 22:00 to 00:00)
+        if (eventEndSecs < eventStartSecs) { 
+             if (nowSecs >= eventStartSecs || nowSecs < eventEndSecs) {
+                 currentEvent = event;
+                 break;
+             }
+        } else if (nowSecs >= eventStartSecs && nowSecs < eventEndSecs) {
+            // Event is running and doesn't cross midnight
+            currentEvent = event;
+            break;
+        }
+    }
+    
+    // 2. Determine timestamps (End of current or Start of next)
+    if(currentEvent){
+        // Calculate the end time of the current event
+        endTimestamp = new Date(nowWIB);
+        endTimestamp.setHours(currentEvent.start + 2, 0, 0, 0);
+
+        // If the calculated end time is in the past, it means it's tomorrow (crosses midnight)
+        if (endTimestamp.getTime() <= nowWIB.getTime()) {
+             endTimestamp.setDate(endTimestamp.getDate() + 1);
+        }
+        
+        // Find the next event in the schedule array
+        let currentIndex = DAILY_EVENTS.findIndex(e => e.start === currentEvent.start);
+        let nextIndex = (currentIndex + 1) % DAILY_EVENTS.length;
+        nextEvent = DAILY_EVENTS[nextIndex];
+        
+    } else {
+        // Find the next upcoming event (Inter-event period, should only happen if event duration is less than 24h cycle)
+        for(const event of DAILY_EVENTS){
+            if(currentHour < event.start){
+                nextEvent = event;
+                break;
+            }
+        }
+        // If still null (after 22:00 until 00:00)
+        if (!nextEvent) {
+            nextEvent = DAILY_EVENTS[0];
+        }
+    }
+
+    // Calculate the start time of the determined next event (if currentEvent exists, nextEvent is its successor)
+    nextStartTimestamp = new Date(nowWIB);
+    nextStartTimestamp.setHours(nextEvent.start, 0, 0, 0);
+    
+    // If the next start time is in the past, it's for tomorrow
+    if (nextStartTimestamp.getTime() <= nowWIB.getTime() && currentEvent === null) {
+        nextStartTimestamp.setDate(nextStartTimestamp.getDate() + 1);
+    }
+    // If current event is running, ensure next start time is correct (it might be past if the event just started, but we look forward)
+    else if (currentEvent !== null && nextStartTimestamp.getTime() <= nowWIB.getTime()) {
+        nextStartTimestamp.setDate(nextStartTimestamp.getDate() + 1);
+    }
+    
+    return { currentEvent, nextEvent, endTimestamp: endTimestamp || nextStartTimestamp, nextStartTimestamp };
+}
+
+/**
+ * Formats time difference in milliseconds into human-readable string (e.g., 1j 30m 5d).
+ */
+function formatTimeDifference(diffMs){
+    const lang = langSelect.value || 'en';
+    const totalSeconds = Math.max(0, Math.floor(diffMs / 1000));
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    
+    let parts = [];
+    // Only show hours if > 0
+    if(hours > 0) parts.push(`${hours}${(lang === 'id' ? translations.id['h'] : 'h')}`);
+    // Show minutes unless hours are present and minutes are 0
+    if(minutes > 0 || (hours === 0 && seconds > 0)) parts.push(`${minutes}${(lang === 'id' ? translations.id['m'] : 'm')}`);
+    // Always show seconds, but only if minutes and hours are 0, or if total time is < 1 minute
+    if(hours === 0 && minutes < 1 && seconds >= 0) {
+        parts = []; // Clear previous parts if we only want seconds
+        parts.push(`${seconds}${(lang === 'id' ? translations.id['s'] : 's')}`);
+    }
+    
+    if (totalSeconds >= 3600) {
+        parts = [`${hours}${lang === 'id' ? 'j' : 'h'}`, `${minutes}${lang === 'id' ? 'm' : 'm'}`, `${seconds}${lang === 'id' ? 'd' : 's'}`].filter((p, i) => i < 2 || (i === 2 && hours === 0 && minutes === 0));
+        if (hours === 0) {
+           parts = [`${minutes}${lang === 'id' ? 'm' : 'm'}`, `${seconds}${lang === 'id' ? 'd' : 's'}`];
+        } else {
+           // If hours > 0, show H and M
+           parts = [`${hours}${lang === 'id' ? 'j' : 'h'}`, `${minutes}${lang === 'id' ? 'm' : 'm'}`];
+        }
+    } else if (totalSeconds >= 60) {
+        parts = [`${minutes}${lang === 'id' ? 'm' : 'm'}`, `${seconds}${lang === 'id' ? 'd' : 's'}`];
+    } else {
+        parts = [`${seconds}${lang === 'id' ? 'd' : 's'}`];
+    }
+
+    // Fallback for correct formatting
+    if (totalSeconds === 0) return '0s';
+
+    return parts.join(' ');
+}
+
+
+/**
+ * Updates the Event Schedule display every second.
+ * @param {boolean} [forceUpdate=false] - Forces DOM injection, useful for language changes.
+ */
+let lastEventName = ''; // Global state to track event name changes
+
+function updateEventSchedule(forceUpdate = false){
+    const now = new Date();
+    const { currentEvent, nextEvent, endTimestamp, nextStartTimestamp } = getCurrentEvent(now);
+    const lang = langSelect.value || 'en';
+    
+    let html = '';
+    let countdownMs;
+    let countdownTextPrefix;
+    let eventName;
+    let worldName;
+    let isRunning = !!currentEvent;
+
+    if (isRunning) {
+        countdownMs = endTimestamp.getTime() - now.getTime();
+        countdownTextPrefix = lang === 'id' ? (translations.id['Ends in'] || 'Berakhir dalam') : 'Ends in';
+        eventName = lang === 'id' ? (currentEvent.id_name || currentEvent.name) : currentEvent.name;
+        worldName = currentEvent.world;
+    } else {
+        // Next event starts
+        countdownMs = nextStartTimestamp.getTime() - now.getTime();
+        countdownTextPrefix = lang === 'id' ? (translations.id['Starts in'] || 'Dimulai dalam') : 'Starts in';
+        eventName = lang === 'id' ? (nextEvent.id_name || nextEvent.name) : nextEvent.name;
+        worldName = nextEvent.world;
+    }
+
+    const currentDisplayEventName = `${isRunning ? 'Current' : 'Next'} - ${eventName}`;
+
+    // --- DOM Injection/Update Logic ---
+    if (forceUpdate || currentDisplayEventName !== lastEventName) {
+        // Only inject new HTML if the event itself has changed or language changed
+        html = `
+            <h3>${lang === 'id' ? (isRunning ? translations.id['Current Event'] : translations.id['Next Event']) : (isRunning ? 'Current Event' : 'Next Event')}</h3>
+            <div class="event-details">
+                <div>
+                    <strong>${lang === 'id' ? (translations.id['Event Name'] || 'Nama Event') : 'Event Name'}</strong>
+                    <span style="color: var(--accent); font-weight: 700;">${eventName}</span>
+                </div>
+                <div>
+                    <strong>${lang === 'id' ? (translations.id['World'] || 'Dunia') : 'World'}</strong>
+                    <span style="color: var(--text);">${worldName}</span>
+                </div>
+            </div>
+            <div id="eventCountdown"></div>
+        `;
+        eventDisplay.innerHTML = html;
+        lastEventName = currentDisplayEventName;
+    }
+    
+    // --- Countdown Update Logic ---
+    const countdownEl = document.getElementById('eventCountdown');
+    if (countdownEl) {
+        // Color changes based on remaining time
+        let countdownColor;
+        if (countdownMs <= (60 * 1000) && isRunning) {
+            countdownColor = 'var(--danger)'; // Red (last 1 minute)
+        } else if (countdownMs <= (5 * 60 * 1000) && isRunning) {
+            countdownColor = '#ff6347'; // Tomato (last 5 minutes)
+        } else if (isRunning) {
+            countdownColor = 'var(--success)'; // Green/Success
+        } else {
+            countdownColor = 'var(--accent)'; // Blue for next event
+        }
+        
+        countdownEl.textContent = `${countdownTextPrefix}: ${formatTimeDifference(countdownMs)}`;
+        countdownEl.style.color = countdownColor;
+    }
+
+    // Set a timeout to run again in 1 second
+    setTimeout(() => updateEventSchedule(false), 1000);
+}
+
+
+/* ===========================
    File Update Checker (modal)
-   - PowerTunnel: Copy-to-clipboard logic
    =========================== */
 document.querySelectorAll('.platform-buttons a').forEach(a=>{
   a.addEventListener('click', (e)=>{
@@ -793,32 +1107,19 @@ reportBugLink.addEventListener('click', () => {
 });
 
 /* ===========================
-   Initial translations + time
+   Initializations
    =========================== */
 const initLang = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en');
 langSelect.value = initLang;
-applyTranslations(initLang);
+applyTranslations(initLang); // This will run updateEventSchedule(true) internally
 updateTime();
 
-/* ===========================
-   Allow middle click / aux click default behavior on links
-   =========================== */
-document.querySelectorAll('.platform-buttons a').forEach(a=>{
-  a.addEventListener('auxclick', (e) => {/* allow default behavior */});
-});
+// Start the event schedule update loop
+updateEventSchedule(true); 
 
 /* ===========================
    Misc small UI effects
    =========================== */
-
-// status indicator pulse if present
-const status = document.querySelector('#status-indicator');
-if (status) {
-  setInterval(() => {
-    status.style.opacity = status.style.opacity === '1' ? '0.5' : '1';
-  }, 600);
-}
-
 // graceful page link transition for all html links
 document.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', e => {
