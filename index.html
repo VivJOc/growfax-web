@@ -480,6 +480,23 @@ margin:30px 0 40px;
   .modal h3, .modal p, .modal .changelog, .welcome h2, .welcome p, .welcome label, .welcome button, .modal h2, .modal h4 {
       transition: opacity 0.2s ease;
 }
+
+  /* NEW: Make changelog area in modal scrollable if content is large */
+  .changelog {
+    white-space: pre-wrap; /* Show line breaks */
+    font-size: 0.85rem;
+    max-height: 250px; /* Limit height */
+    overflow-y: auto; /* Add scroll if needed */
+    background: rgba(0,0,0,0.02);
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    border-radius: 8px;
+    margin: 12px 0;
+  }
+  [data-theme="dark"] .changelog {
+    background: rgba(255,255,255,0.02);
+  }
+
   
   /* NEW: Admin Modal specific styles (input and buttons) */
   #adminTokenInput, #newsUpdateTextarea, #seoTitleInput, #seoDescTextarea, #seoKeywordsInput {
@@ -671,7 +688,7 @@ padding-top: 10px;">
 target="_blank" rel="noopener" class="btn-purchase btn-aud" data-role="admin" data-price-aud="12.90">Pay A$AUD</a>
                     <a href="https://paypal.me/BilzXd1/60.75SGD" target="_blank" rel="noopener" class="btn-purchase btn-sgd" data-role="admin" data-price-sgd="60.75">Pay S$SGD</a>
                     <a href="https://paypal.me/BilzXd1/11.61CAD" target="_blank" rel="noopener" class="btn-purchase btn-cad" data-role="admin" data-price-cad="11.61">Pay C$CAD</a>
-                    <a href="https://paypal.me/BilzXd1/675000IDR" target="_blank" rel="noopener" class="btn-purchase btn-idr" data-role="admin" data-idr-price="675000">Bayar Rp IDR</a>
+                    <a href="https->//paypal.me/BilzXd1/675000IDR" target="_blank" rel="noopener" class="btn-purchase btn-idr" data-role="admin" data-idr-price="675000">Bayar Rp IDR</a>
          
 </div>
             </div>
@@ -1312,7 +1329,7 @@ adminTokenSubmit.textContent = lang === 'id' ? (translations.id['Submit'] || 'Ki
       
       // Manually update other elements
       document.getElementById('modalCancel').textContent = lang === 'id' ? (translations.id['Cancel'] || 'Batal') : 'Cancel';
-      document.getElementById('modalConfirm').textContent = lang === 'id' ? (translations.id['Download'] || 'Download') : 'Download';
+      document.getElementById('modalConfirm').textContent = lang === 'id' ? (translations.id['Download'] || 'Download') : 'Download'; // Default text, will be changed by modal logic if needed
       document.getElementById('welcomeSave').textContent = lang === 'id' ? (translations.id['Save & Continue'] || 'Save & Continue') : 'Save & Continue';
       document.getElementById('welcomeSkip').textContent = lang === 'id' ? (translations.id['Skip'] || 'Lewati') : 'Skip';
 document.getElementById('discordLink').textContent = lang === 'id' ? (translations.id['Join Growfax Discord'] || 'Join Growfax Discord') : 'Join Growfax Discord';
@@ -1451,7 +1468,7 @@ if (newsUpdateTextarea) {
   setInterval(updateTime, 1000);
   updateTime();
 /* ===========================
-     File Download/Info Modal Logic (MODIFIED)
+     File Download/Info Modal Logic (MODIFIED FOR NEW FLOW)
      =========================== */
   const modalBackdrop = document.getElementById('modalBackdrop');
 const modalCancel = document.getElementById('modalCancel');
@@ -1462,64 +1479,51 @@ const modalCancel = document.getElementById('modalCancel');
 const modalUpdated = document.getElementById('modalUpdated');
   const modalChangelog = document.getElementById('modalChangelog');
   const modalFilename = document.getElementById('modalFilename');
-// Open modal/Initiate download/copy
+
+  // Open modal/Initiate download/copy
   document.querySelectorAll('.platform-buttons a').forEach(a => {
     const key = a.dataset.filekey;
     const meta = FILE_META[key] || { version: 'v1.0', updated: 'Unknown', changelog: 'No details', size: '—' };
     
     // --- MODIFIED LOGIC ---
-    // ONLY add the 'click' interceptor for files that need to copy text (iOS, PowerTunnel)
-    // The other buttons (Android, Windows) will now download directly without a modal.
     if (meta.copytext) { 
+      // This is for iOS and PowerTunnel
       a.addEventListener('click', (e) => {
-    
-    e.preventDefault(); // Prevent default ONLY for copy text links
+        e.preventDefault(); // Prevent default ONLY for copy text links
         
         const filename = a.dataset.filename || key;
         const lang = langSelect.value;
         
-        // Teks tersedia, salin ke clipboard
-        navigator.clipboard.writeText(meta.copytext).then(() => {
-            const copyText = lang === 'id' ? (translations.id['Config copied!'] || 'Konfigurasi disalin!') : 
-'Config copied!';
-            showToast(copyText, 2500);
-        }).catch(err => {
-            console.error('Could not copy text: ', err);
-// Fallback: show modal with copy button
-            showToast('Failed to copy. Showing modal.', 3000);
-});
-
+        // --- AUTO-COPY LOGIC REMOVED ---
+        
         // Update modal for confirmation/info, change button to 'Copy Config'
-        modalTitle.textContent = lang === 'id' ?
-(translations.id['File info'] || 'Info berkas') : 'File info';
-        modalDesc.textContent = lang === 'id' ?
-(translations.id['Details before download'] || 'Detail sebelum mengunduh') : 'Details before download';
-        modalConfirm.textContent = lang === 'id' ?
-(translations.id['Copy Config'] || 'Copy Config') : 'Copy Config';
+        modalTitle.textContent = lang === 'id' ? (translations.id['File info'] || 'Info berkas') : 'File info';
+        modalDesc.textContent = lang === 'id' ? (translations.id['Details before download'] || 'Detail sebelum mengunduh') : 'Details before download';
+        
+        // Set button text and action
+        modalConfirm.textContent = lang === 'id' ? (translations.id['Copy Config'] || 'Copy Config') : 'Copy Config';
         modalConfirm.dataset.action = 'copy';
-// Custom attribute to check action
+        modalConfirm.dataset.filekey = key; // Store the key on the button
 
         // Populate modal with details
-        modalVersion.textContent = `${(lang === 'id') ?
-(translations.id['Version'] || 'Versi') + ': ' : 'Version: '}${meta.version}`;
-        modalUpdated.textContent = `${(lang === 'id') ?
-(translations.id['Updated'] || 'Diperbarui') + ': ' : 'Updated: '}${meta.updated}`;
-        modalChangelog.innerText = `${(lang === 'id') ?
-(translations.id['Changelog'] || 'Catatan pembaruan') + ':' : 'Changelog:'}\n${meta.changelog}\n\n${(lang === 'id') ? (translations.id['Size'] || 'Ukuran') + ': ' : 'Size: '}${meta.size}`;
-modalFilename.textContent = `${(lang === 'id') ? (translations.id['Filename'] || 'Nama berkas') + ': ' : 'Filename: '}${filename}`;
+        modalVersion.textContent = `${(lang === 'id') ? (translations.id['Version'] || 'Versi') + ': ' : 'Version: '}${meta.version}`;
+        modalUpdated.textContent = `${(lang === 'id') ? (translations.id['Updated'] || 'Diperbarui') + ': ' : 'Updated: '}${meta.updated}`;
+        
+        // *** NEW: Show changelog AND the config text in the modal body ***
+        modalChangelog.innerText = `${(lang === 'id') ? (translations.id['Changelog'] || 'Catatan pembaruan') + ':' : 'Changelog:'}\n${meta.changelog}\n\n${(lang === 'id') ? (translations.id['Size'] || 'Ukuran') + ': ' : 'Size: '}${meta.size}\n\n--- Config to Copy ---\n${meta.copytext}`;
+        
+        modalFilename.textContent = `${(lang === 'id') ? (translations.id['Filename'] || 'Nama berkas') + ': ' : 'Filename: '}${filename}`;
         
         modalBackdrop.style.display = 'flex';
-modalBackdrop.setAttribute('aria-hidden', 'false');
+        modalBackdrop.setAttribute('aria-hidden', 'false');
 
-        // Set pendingDownload to null to be safe
-        pendingDownload = null;
-});
+        pendingDownload = null; // Clear pending download
+      });
     } else {
       // This is a direct download link (Android, Windows)
-      // No event listener needed.
-The browser will handle the 'download' attribute.
-      // We can add a simple listener for tracking if needed, but not one that prevents default.
-a.addEventListener('click', (e) => {
+      // No event listener needed to prevent default.
+      // We just add a listener for tracking/toast.
+      a.addEventListener('click', (e) => {
         // Event Tracking/Webhook function disabled per user request.
         // trackEvent('Download Initiated', { file: key });
         
@@ -1527,7 +1531,7 @@ a.addEventListener('click', (e) => {
         const lang = langSelect.value;
         showToast(lang === 'id' ? `Unduhan ${key} dimulai.` : `${key} download started.`, 2000);
       });
-}
+    }
   });
 
   // Close modal logic
@@ -1535,47 +1539,48 @@ a.addEventListener('click', (e) => {
     modalBackdrop.style.display = 'none';
     modalBackdrop.setAttribute('aria-hidden', 'true');
     pendingDownload = null;
+    modalConfirm.dataset.filekey = ''; // Cleanup
+    modalConfirm.dataset.action = ''; // Cleanup
   });
-modalBackdrop.addEventListener('click', (e) => {
+  modalBackdrop.addEventListener('click', (e) => {
     if (e.target === modalBackdrop) {
       modalBackdrop.style.display = 'none';
       modalBackdrop.setAttribute('aria-hidden', 'true');
       pendingDownload = null;
+      modalConfirm.dataset.filekey = ''; // Cleanup
+      modalConfirm.dataset.action = ''; // Cleanup
     }
   });
-// Confirm download/copy logic (MODIFIED)
+
+  // Confirm download/copy logic (MODIFIED)
   modalConfirm.addEventListener('click', () => {
     const action = modalConfirm.dataset.action;
     const lang = langSelect.value;
+    const key = modalConfirm.dataset.filekey; // Get the key we stored
 
-    // The 'download' action is no longer handled by this modal.
     // This button is now only for 'copy'
     if (action === 'copy') {
-      // Logic is already handled in the anchor click event (auto-copy)
-      // This button in the modal is just a "confirm" / "info" modal
-      // We can add 
-a re-copy action here for robustness if the first one failed
-      
-      const filenameFromModal = modalFilename.textContent.split(': ')[1];
-      const key = document.querySelector(`a[data-filename="${filenameFromModal}"]`)?.dataset.filekey;
       
       if (key && FILE_META[key] && FILE_META[key].copytext) {
          navigator.clipboard.writeText(FILE_META[key].copytext).then(() => {
             const copyText = lang === 'id' ? (translations.id['Config copied!'] || 'Konfigurasi disalin!') : 'Config copied!';
-          
-showToast(copyText, 2500);
+            showToast(copyText, 2500);
          }).catch(err => {
             console.error('Could not copy text: ', err);
             showToast('Failed to copy.', 3000); 
          });
-}
+      }
       
       modalBackdrop.style.display = 'none';
       modalBackdrop.setAttribute('aria-hidden', 'true');
-} else {
-      // Fallback in case something weird happens
+      modalConfirm.dataset.filekey = ''; // Cleanup
+      modalConfirm.dataset.action = ''; // Cleanup
+    } else {
+      // Fallback in case something weird happens (e.g., action isn't set)
       modalBackdrop.style.display = 'none';
-modalBackdrop.setAttribute('aria-hidden', 'true');
+      modalBackdrop.setAttribute('aria-hidden', 'true');
+      modalConfirm.dataset.filekey = ''; // Cleanup
+      modalConfirm.dataset.action = ''; // Cleanup
     }
   });
 
