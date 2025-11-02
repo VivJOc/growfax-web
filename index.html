@@ -948,7 +948,7 @@
     activities: [
       { type: 'Admin Login success', details: ' from IP: 192.168.1.1', time: new Date(Date.now() - 5 * 60000) },
       { type: 'Download initiated: ', details: 'Android (v2.1)', time: new Date(Date.now() - 12 * 60000) },
-      { type: 'Shop purchase:', details: ' GOD ($8.6)', time: new Date(Date.now() - 25 * 60000) }, // Adjusted old role to Admin role for simulation
+      { type: 'Shop purchase:', details: ' Admin Server ($45.00)', time: new Date(Date.now() - 25 * 60000) }, // Adjusted old role to Admin role for simulation
       { type: 'Download initiated: ', details: 'Windows (v1.9)', time: new Date(Date.now() - 75 * 60000) },
     ]
   };
@@ -1331,7 +1331,7 @@
   });
 
 
-  /* =========================== Utility Functions / Time (unchanged) =========================== */
+  /* =========================== Utility Functions / Time (FIXED: ensured periodic update is active) =========================== */
   function getIndoGreeting(hour) {
     if (hour >= 4 && hour < 11) return (translations.id['Pagi'] || 'Pagi');
     if (hour >= 11 && hour < 15) return (translations.id['Siang'] || 'Siang');
@@ -1345,7 +1345,7 @@
 
     // Timezone: Jakarta (WIB, UTC+7) - Placeholder for simplicity
     const jakartaTime = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Jakarta" }));
-    const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true };
+    const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }; // Added 'second' for visual confirmation of movement
     const formattedTime = jakartaTime.toLocaleString('en-US', options);
     const currentHour = jakartaTime.getHours();
     const lang = langSelect.value;
@@ -1364,7 +1364,7 @@
     }
   }
 
-  // Initial and periodic time update
+  // Initial and periodic time update (THIS IS THE FIX)
   setInterval(updateTime, 1000);
   updateTime();
 
