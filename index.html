@@ -285,6 +285,7 @@
       flex-direction: column;
       justify-content: space-between;
       transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+      height: auto; /* Allow card height to adjust to full command list */
   }
   .shop-role-card:hover {
       transform: translateY(-5px);
@@ -563,10 +564,7 @@
                     <h3>🔨 Moderator Role</h3>
                     <p class="price">$2.5 <small>USD</small></p>
                     <ul id="moderator_commands">
-                        <li><strong>/tempban</strong> <span>Temporary ban abusive players.</span></li>
-                        <li><strong>/mute</strong> <span>Silence disruptive users.</span></li>
-                        <li><span>All VIP+ commands included!</span></li>
-                    </ul>
+                        </ul>
                 </div>
                 <a href="https://paypal.me/Growfax/2.5" target="_blank" rel="noopener" class="btn-purchase" data-role="moderator" data-price="2.5">Purchase Moderator</a>
             </div>
@@ -576,10 +574,7 @@
                     <h3>🛡️ Super Moderator</h3>
                     <p class="price">$3.2 <small>USD</small></p>
                     <ul id="super_moderator_commands">
-                        <li><strong>/kick</strong> <span>Instantly kick players from the server.</span></li>
-                        <li><strong>/warn</strong> <span>Issue official warnings.</span></li>
-                        <li><span>All Moderator commands included!</span></li>
-                    </ul>
+                        </ul>
                 </div>
                 <a href="https://paypal.me/Growfax/3.2" target="_blank" rel="noopener" class="btn-purchase" data-role="super_moderator" data-price="3.2">Purchase Super Moderator</a>
             </div>
@@ -589,10 +584,7 @@
                     <h3>💻 Developer Role</h3>
                     <p class="price">$6.5 <small>USD</small></p>
                     <ul id="developer_commands">
-                        <li><strong>/testitem</strong> <span>Spawn test/beta items.</span></li>
-                        <li><strong>/devlogs</strong> <span>Access exclusive development logs.</span></li>
-                        <li><span>All Super Moderator commands included!</span></li>
-                    </ul>
+                        </ul>
                 </div>
                 <a href="https://paypal.me/Growfax/6.5" target="_blank" rel="noopener" class="btn-purchase" data-role="developer" data-price="6.5">Purchase Developer</a>
             </div>
@@ -602,10 +594,7 @@
                     <h3>👑 GOD Role</h3>
                     <p class="price">$8.6 <small>USD</small></p>
                     <ul id="god_commands">
-                        <li><strong>/worldtp</strong> <span>Teleport to any world instantly.</span></li>
-                        <li><strong>/ultimate</strong> <span>Activate unique God effects.</span></li>
-                        <li><span>All Developer commands included!</span></li>
-                    </ul>
+                        </ul>
                 </div>
                 <a href="https://paypal.me/Growfax/8.6" target="_blank" rel="noopener" class="btn-purchase" data-role="god" data-price="8.6">Purchase GOD</a>
             </div>
@@ -704,51 +693,6 @@
                 <button class="btn primary" id="saveNewsUpdate" style="margin-top: 10px;">Save News</button>
             </div>
 
-            <div style="margin-top: 20px; padding: 15px; border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
-                <h4 style="margin: 0 0 10px; color: var(--accent);" id="commandManagementTitle" data-original="Role Command Management">Role Command Management</h4>
-                <p style="font-size: 0.9rem; margin-bottom: 10px;" data-original="Available Commands by Role:">Available Commands by Role:</p>
-                <div id="roleCommandsList" style="text-align: left; font-size: 0.85rem;">
-                    <p><strong><span data-original="Moderator:">Moderator:</span></strong></p>
-                    <ul style="margin: 5px 0 10px 20px; padding: 0; list-style-type: disc;">
-                        <li>/longpunch Enabled Long Punch it allows you to break and build further</li>
-                        <li>/skiptime Activate the Skip Time ability! It makes your trees and providers grow 12 hours instantly!</li>
-                        <li>/mod Moderate a player, apply punishments & more!</li>
-                        <li>/banworld Nuke a world, ban players, or even ban players from game!</li>
-                        <li>/info View player's information!</li>
-                        <li>/track Find player's alt accounts and get their names!</li>
-                        <li>/online View everyone who is online at this moment!</li>
-                        <li>/msb Moderator Broadcast to everyone online!</li>
-                        <li>/ghost Enter ghost mode, you can walk through walls!</li>
-                        <li>/invis Become invisible to everyone! No one will ever know you exist!</li>
-                        <li>/nick Temporarily change your nickname!</li>
-                        <li>/hide Hide your Moderator's status, you'll look like a normal player!</li>
-                        <li>/hideflag Hide your Country flag!</li>
-                        <li>/warpto Magically teleport to your desired player!</li>
-                        <li>/silence Mute a player for specific time!</li>
-                        <li>/unsilence Remove a mute from a player!</li>
-                    </ul>
-                    <p><strong><span data-original="Super Moderator:">Super Moderator:</span></strong></p>
-                    <ul style="margin: 5px 0 10px 20px; padding: 0; list-style-type: disc;">
-                        <li>/rpull Pull a random player in the world</li>
-                        <li>/pullall Pull everyone who is in the world</li>
-                        <li>/freeze Freeze a player, it wont be able to move or do anything!</li>
-                        <li>/unfreeze Unfreeze a player, make it able to move again!</li>
-                        <li>ALL Actions Perform actions like /loveall /omgall to make everyone do it!</li>
-                    </ul>
-                    <p><strong><span data-original="Developer:">Developer:</span></strong></p>
-                    <ul style="margin: 5px 0 10px 20px; padding: 0; list-style-type: disc;">
-                        <li>/find Find any blocks and get them for free! (Limited to under 100 rarity non-farmable blocks)</li>
-                        <li>/banall Ban everyone from world!</li>
-                        <li>/tpclick Teleport where you click! (If ghost is enabled you can teleport everywhere, if not then you can teleport only if there's path)</li>
-                    </ul>
-                    <p><strong><span data-original="God:">God:</span></strong></p>
-                    <ul style="margin: 5px 0 10px 20px; padding: 0; list-style-type: disc;">
-                        <li>/find Find any clothes and get them for free! (Limited to rarity clothes)</li>
-                        <li>/spk Make other people say what you want them to say!</li>
-                    </ul>
-                </div>
-                <button class="btn secondary" id="editCommands" style="margin-top: 10px; padding: 5px 10px;" data-original="Edit Command Text">Edit Command Text</button>
-            </div>
             <div style="margin-top: 20px; padding: 15px; border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
                 <h4 style="margin: 0 0 10px; color: var(--accent);" id="seoTitle">SEO Management</h4>
                 
@@ -900,17 +844,68 @@
       "Activate the Gem Rain & Enjoy 20% more gems!": "Aktifkan Gem Rain & Nikmati 20% lebih banyak permata!",
       "Send a Super-Duper Broadcast to everyone online!": "Kirim Super-Duper Broadcast ke semua orang yang online!",
       "All VIP commands included!": "Semua perintah VIP termasuk!",
-      "Temporary ban abusive players.": "Ban sementara untuk pemain yang mengganggu.",
-      "Silence disruptive users.": "Membisukan pengguna yang mengganggu.",
+      
+      // NEW DETAILED COMMAND TRANSLATIONS
+      "/longpunch": "/longpunch", 
+      "Enabled Long Punch it allows you to break and build further": "Aktifkan Long Punch, memungkinkan Anda merusak dan membangun lebih jauh",
+      "/skiptime": "/skiptime",
+      "Activate the Skip Time ability! It makes your trees and providers grow 12 hours instantly!": "Aktifkan kemampuan Skip Time! Membuat pohon dan provider Anda tumbuh 12 jam seketika!",
+      "/mod": "/mod",
+      "Moderate a player, apply punishments & more!": "Moderasi pemain, terapkan hukuman & lainnya!",
+      "/banworld": "/banworld",
+      "Nuke a world, ban players, or even ban players from game!": "Musnahkan dunia, ban pemain, atau bahkan ban pemain dari game!",
+      "/info": "/info",
+      "View player's information!": "Lihat informasi pemain!",
+      "/track": "/track",
+      "Find player's alt accounts and get their names!": "Temukan akun alt pemain dan dapatkan namanya!",
+      "/online": "/online",
+      "View everyone who is online at this moment!": "Lihat semua orang yang sedang online saat ini!",
+      "/msb": "/msb",
+      "Moderator Broadcast to everyone online!": "Moderator Broadcast ke semua orang yang online!",
+      "/ghost": "/ghost",
+      "Enter ghost mode, you can walk through walls!": "Masuk mode ghost, Anda bisa berjalan menembus dinding!",
+      "/invis": "/invis",
+      "Become invisible to everyone! No one will ever know you exist!": "Menjadi tidak terlihat oleh semua orang! Tidak ada yang akan tahu Anda ada!",
+      "/nick": "/nick",
+      "Temporarily change your nickname!": "Ubah nickname sementara!",
+      "/hide": "/hide",
+      "Hide your Moderator's status, you'll look like a normal player!": "Sembunyikan status Moderator Anda, Anda akan terlihat seperti pemain biasa!",
+      "/hideflag": "/hideflag",
+      "Hide your Country flag!": "Sembunyikan bendera Negara Anda!",
+      "/warpto": "/warpto",
+      "Magically teleport to your desired player!": "Teleportasi secara ajaib ke pemain yang Anda inginkan!",
+      "/silence": "/silence",
+      "Mute a player for specific time!": "Mute pemain untuk waktu tertentu!",
+      "/unsilence": "/unsilence",
+      "Remove a mute from a player!": "Hapus mute dari pemain!",
+
+      "/rpull": "/rpull",
+      "Pull a random player in the world": "Tarik pemain acak di dunia",
+      "/pullall": "/pullall",
+      "Pull everyone who is in the world": "Tarik semua orang yang ada di dunia",
+      "/freeze": "/freeze",
+      "Freeze a player, it wont be able to move or do anything!": "Bekukan pemain, ia tidak akan bisa bergerak atau melakukan apa pun!",
+      "/unfreeze": "/unfreeze",
+      "Unfreeze a player, make it able to move again!": "Mencairkan pemain, membuatnya bisa bergerak lagi!",
+      "ALL Actions": "SEMUA Aksi",
+      "Perform actions like /loveall /omgall to make everyone do it!": "Lakukan aksi seperti /loveall /omgall untuk membuat semua orang melakukannya!",
+
+      "/find Blocks": "/find Blocks",
+      "Find any blocks and get them for free! (Limited to under 100 rarity non-farmable blocks)": "Temukan blok apa pun dan dapatkan secara gratis! (Terbatas pada blok non-farmable di bawah 100 rarity)",
+      "/banall": "/banall",
+      "Ban everyone from world!": "Ban semua orang dari dunia!",
+      "/tpclick": "/tpclick",
+      "Teleport where you click! (If ghost is enabled you can teleport everywhere, if not then you can teleport only if there's path)": "Teleportasi ke tempat Anda mengklik! (Jika ghost diaktifkan Anda dapat teleportasi ke mana saja, jika tidak, Anda hanya dapat teleportasi jika ada jalur)",
+
+      "/find Clothes": "/find Clothes",
+      "Find any clothes and get them for free! (Limited to rarity clothes)": "Temukan pakaian apa pun dan dapatkan secara gratis! (Terbatas pada pakaian rarity)",
+      "/spk": "/spk",
+      "Make other people say what you want them to say!": "Buat orang lain mengatakan apa yang Anda ingin mereka katakan!",
+      
+      // Inheritance lines
       "All VIP+ commands included!": "Semua perintah VIP+ termasuk!",
-      "Instantly kick players from the server.": "Usir pemain secara instan dari server.",
-      "Issue official warnings.": "Berikan peringatan resmi.",
       "All Moderator commands included!": "Semua perintah Moderator termasuk!",
-      "Spawn test/beta items.": "Munculkan item uji/beta.",
-      "Access exclusive development logs.": "Akses log pengembangan eksklusif.",
       "All Super Moderator commands included!": "Semua perintah Super Moderator termasuk!",
-      "Teleport to any world instantly.": "Teleport ke dunia mana pun seketika.",
-      "Activate unique God effects.": "Aktifkan efek God yang unik.",
       "All Developer commands included!": "Semua perintah Developer termasuk!",
 
       // Admin Translations
@@ -939,15 +934,6 @@
       "Meta Description": "Deskripsi Meta",
       "Meta Keywords (Comma-separated)": "Kata Kunci Meta (Dipisahkan Koma)",
       "Update SEO Meta": "Perbarui Meta SEO",
-      
-      // NEW ROLE COMMAND MANAGEMENT TRANSLATIONS
-      "Role Command Management": "Manajemen Perintah Role",
-      "Available Commands by Role:": "Perintah yang Tersedia berdasarkan Role:",
-      "Edit Command Text": "Edit Teks Perintah",
-      "Moderator:": "Moderator:",
-      "Super Moderator:": "Super Moderator:",
-      "Developer:": "Developer:",
-      "God:": "God:",
     }
   };
 
@@ -1092,7 +1078,7 @@
      Smooth Translation Logic
      =========================== */
 
-  // Command Texts for translation (since they are now dynamically structured)
+  // Command Texts for translation (now fully detailed for all high-tier roles)
   const commandData = {
     vip_commands: [
       { strong: "/superbreak", span: "Activate the Super Breaker mode!" },
@@ -1103,25 +1089,47 @@
       { strong: "/sdb", span: "Send a Super-Duper Broadcast to everyone online!" },
       { strong: "All VIP commands included!", span: null }
     ],
+    // MODERATOR (Detailed List)
     moderator_commands: [
-      { strong: "/tempban", span: "Temporary ban abusive players." },
-      { strong: "/mute", span: "Silence disruptive users." },
-      { strong: "All VIP+ commands included!", span: null }
+        { strong: "/longpunch", span: "Enabled Long Punch it allows you to break and build further" },
+        { strong: "/skiptime", span: "Activate the Skip Time ability! It makes your trees and providers grow 12 hours instantly!" },
+        { strong: "/mod", span: "Moderate a player, apply punishments & more!" },
+        { strong: "/banworld", span: "Nuke a world, ban players, or even ban players from game!" },
+        { strong: "/info", span: "View player's information!" },
+        { strong: "/track", span: "Find player's alt accounts and get their names!" },
+        { strong: "/online", span: "View everyone who is online at this moment!" },
+        { strong: "/msb", span: "Moderator Broadcast to everyone online!" },
+        { strong: "/ghost", span: "Enter ghost mode, you can walk through walls!" },
+        { strong: "/invis", span: "Become invisible to everyone! No one will ever know you exist!" },
+        { strong: "/nick", span: "Temporarily change your nickname!" },
+        { strong: "/hide", span: "Hide your Moderator's status, you'll look like a normal player!" },
+        { strong: "/hideflag", span: "Hide your Country flag!" },
+        { strong: "/warpto", span: "Magically teleport to your desired player!" },
+        { strong: "/silence", span: "Mute a player for specific time!" },
+        { strong: "/unsilence", span: "Remove a mute from a player!" },
+        { strong: "All VIP+ commands included!", span: null }
     ],
+    // SUPER MODERATOR (Detailed List)
     super_moderator_commands: [
-      { strong: "/kick", span: "Instantly kick players from the server." },
-      { strong: "/warn", span: "Issue official warnings." },
-      { strong: "All Moderator commands included!", span: null }
+        { strong: "/rpull", span: "Pull a random player in the world" },
+        { strong: "/pullall", span: "Pull everyone who is in the world" },
+        { strong: "/freeze", span: "Freeze a player, it wont be able to move or do anything!" },
+        { strong: "/unfreeze", span: "Unfreeze a player, make it able to move again!" },
+        { strong: "ALL Actions", span: "Perform actions like /loveall /omgall to make everyone do it!" },
+        { strong: "All Moderator commands included!", span: null }
     ],
+    // DEVELOPER (Detailed List)
     developer_commands: [
-      { strong: "/testitem", span: "Spawn test/beta items." },
-      { strong: "/devlogs", span: "Access exclusive development logs." },
-      { strong: "All Super Moderator commands included!", span: null }
+        { strong: "/find Blocks", span: "Find any blocks and get them for free! (Limited to under 100 rarity non-farmable blocks)" },
+        { strong: "/banall", span: "Ban everyone from world!" },
+        { strong: "/tpclick", span: "Teleport where you click! (If ghost is enabled you can teleport everywhere, if not then you can teleport only if there's path)" },
+        { strong: "All Super Moderator commands included!", span: null }
     ],
+    // GOD (Detailed List)
     god_commands: [
-      { strong: "/worldtp", span: "Teleport to any world instantly." },
-      { strong: "/ultimate", span: "Activate unique God effects." },
-      { strong: "All Developer commands included!", span: null }
+        { strong: "/find Clothes", span: "Find any clothes and get them for free! (Limited to rarity clothes)" },
+        { strong: "/spk", span: "Make other people say what you want them to say!" },
+        { strong: "All Developer commands included!", span: null }
     ]
   };
 
@@ -1162,8 +1170,6 @@
       document.getElementById('analyticsTitle').textContent = lang === 'id' ? (translations.id["Analytical Dashboard"] || 'Dasbor Analitik') : 'Analytical Dashboard';
       // News & Updates
       document.querySelector('#adminContent > div:nth-child(3) h4').textContent = lang === 'id' ? (translations.id["News & Updates"] || 'Berita & Pembaruan') : 'News & Updates';
-      // Role Command Management (NEW)
-      document.getElementById('commandManagementTitle').textContent = lang === 'id' ? (translations.id["Role Command Management"] || 'Manajemen Perintah Role') : 'Role Command Management';
       // SEO Management (using ID)
       document.getElementById('seoTitle').textContent = lang === 'id' ? (translations.id["SEO Management"] || 'Manajemen SEO') : 'SEO Management';
 
@@ -1172,7 +1178,6 @@
       saveSeoMeta.textContent = lang === 'id' ? (translations.id["Update SEO Meta"] || 'Perbarui Meta SEO') : 'Update SEO Meta';
       closeAdmin.textContent = lang === 'id' ? (translations.id["Close Admin Area"] || 'Tutup Area Admin') : 'Close Admin Area';
 
-      // Other elements with data-original (like prompts and button 'Edit Command Text') are handled by the main applyTranslations function
       // Refresh analytics data to update language on dynamic strings
       renderAnalyticsDashboard(); 
     }
