@@ -155,6 +155,7 @@
     transition: opacity 0.2s ease;
   }
 
+  /* MODIFIED: Nav to support toggling */
   nav.primary{
     color:var(--accent);
     text-decoration:none;
@@ -162,20 +163,32 @@
     margin-left:auto; 
     font-size: 0.9rem;
     flex: 1 1 100%; 
-    margin-top: 6px; /* ADJUSTED: Reduced margin for tighter fit */
+    margin-top: 6px; 
     text-align: left;
+    display: flex; /* Ensure links are displayed side-by-side */
+    gap: 16px;
   }
   nav.primary a{
-      color:var(--accent);
+      color:var(--muted); /* Muted by default */
       text-decoration:none;
-      font-weight:700;
+      font-weight:600;
       margin-left:0;
-      margin-right: 12px;
+      margin-right: 0;
+      padding-bottom: 2px;
       /* Added opacity transition for smoother language change */
-      transition: opacity 0.2s ease, transform .18s;
+      transition: opacity 0.2s ease, transform .18s, color .2s, border-color .2s;
   }
-  nav.primary a:hover{opacity:.86;transform:translateY(-1px)}
+  nav.primary a:hover{opacity:.86;transform:translateY(-1px); color: var(--accent);}
   
+  /* ADDED: Styling for Active Nav Link */
+  .header-content nav.primary a.nav-toggle.active {
+      color: var(--accent); /* Highlight active link */
+      font-weight: 700;
+      border-bottom: 2px solid var(--accent);
+      transform: translateY(0); /* Remove hover effect when active */
+      opacity: 1;
+  }
+
   .controls{
     display:flex;
     align-items:center;
@@ -271,7 +284,7 @@
   }
 
   /* -------------------------
-     Shop Role Section (NEW)
+     Shop Role Section (NEW) - Now also used for the togglable content
      ------------------------- */
   .shop-section {
     text-align: center;
@@ -406,7 +419,7 @@
         text-align: left;
     }
     nav.primary a{
-        margin-left:12px;
+        margin-left:0;
         margin-right: 0;
         font-size: 1rem;
     }
@@ -462,7 +475,8 @@
         </div>
 
         <nav class="primary" aria-label="Main navigation">
-          <a href="https://growfax.web.id/home" id="navDownloads">📥 Downloads</a> 
+          <a href="#downloads" id="navDownloads" class="nav-toggle active">📥 Downloads</a> 
+          <a href="#shop" id="navShop" class="nav-toggle">🛒 Shop Role</a> 
         </nav>
       </div>
 
@@ -491,25 +505,78 @@
   </section>
 
   <main class="container" id="home" role="main">
-    <h2>📥 Essential File Downloads</h2>
-    <div class="platform-buttons" role="list">
-      <a href="Growfax_VirtualHost.txt" class="btn-android" data-filename="Growfax_VirtualHost.txt" data-filekey="virtualhost" download role="listitem">
-        <img src="virtual-host.png" alt="">Play on Android
-      </a>
+    
+    <div id="downloads-content">
+      <h2>📥 Essential File Downloads</h2>
+      <div class="platform-buttons" role="list">
+        <a href="Growfax_VirtualHost.txt" class="btn-android" data-filename="Growfax_VirtualHost.txt" data-filekey="virtualhost" download role="listitem">
+          <img src="virtual-host.png" alt="">Play on Android
+        </a>
 
-      <a href="Growfax_Patched_.bat" class="btn-windows" data-filename="Growfax_Patched_.bat" data-filekey="patched" download role="listitem">
-        <img src="windows.png" alt="">Play on Windows
-      </a>
+        <a href="Growfax_Patched_.bat" class="btn-windows" data-filename="Growfax_Patched_.bat" data-filekey="patched" download role="listitem">
+          <img src="windows.png" alt="">Play on Windows
+        </a>
 
-      <a href="#" class="btn-ios" data-filename="GrowFax_ios_config.txt" data-filekey="ios" role="listitem">
-        <img src="surge5.png" alt="">Play on iOS
-      </a>
+        <a href="#" class="btn-ios" data-filename="GrowFax_ios_config.txt" data-filekey="ios" role="listitem">
+          <img src="surge5.png" alt="">Play on iOS
+        </a>
 
-      <a href="#" class="btn-powertunnel" data-filename="PowerTunnel_Host.txt" data-filekey="powertunnel" role="listitem">
-        <img src="powertunnel.jpeg" alt="">Play via PowerTunnel
-      </a>
+        <a href="#" class="btn-powertunnel" data-filename="PowerTunnel_Host.txt" data-filekey="powertunnel" role="listitem">
+          <img src="powertunnel.jpeg" alt="">Play via PowerTunnel
+        </a>
+      </div>
     </div>
-  </main>
+    <div id="shop-content" class="shop-section" style="display: none;">
+      <h2 id="shopRoleTitle" data-original="Growfax Role Shop">Growfax Role Shop</h2>
+      <p id="shopRoleSubtitle" data-original="Unlock exclusive features and support the server by purchasing a role.">Unlock exclusive features and support the server by purchasing a role.</p>
+      
+      <div class="role-cards" role="list">
+        
+        <div class="role-card" role="listitem">
+          <h4 data-original="VIP Role">VIP Role</h4>
+          <p data-original="Access to VIP area and chat color.">Access to VIP area and chat color.</p>
+          <span class="price">Rp 15.000</span>
+          <a href="https://wa.me/yournumber?text=Saya%20ingin%20membeli%20Role%20VIP" target="_blank" data-original="Buy Now">Buy Now</a>
+        </div>
+
+        <div class="role-card" role="listitem">
+          <h4 data-original="VIP+ Role">VIP+ Role</h4>
+          <p data-original="All VIP features + exclusive monthly item.">All VIP features + exclusive monthly item.</p>
+          <span class="price">Rp 25.000</span>
+          <a href="https://wa.me/yournumber?text=Saya%20ingin%20membeli%20Role%20VIP%2B" target="_blank" data-original="Buy Now">Buy Now</a>
+        </div>
+
+        <div class="role-card" role="listitem">
+          <h4 data-original="Moderator Role">Moderator Role</h4>
+          <p data-original="Moderator status, basic tools, and special tag.">Moderator status, basic tools, and special tag.</p>
+          <span class="price">Rp 45.000</span>
+          <a href="https://wa.me/yournumber?text=Saya%20ingin%20membeli%20Role%20Moderator" target="_blank" data-original="Buy Now">Buy Now</a>
+        </div>
+        
+        <div class="role-card" role="listitem">
+          <h4 data-original="Super Moderator Role">Super Moderator Role</h4>
+          <p data-original="All Moderator features + advanced moderation tools.">All Moderator features + advanced moderation tools.</p>
+          <span class="price">Rp 70.000</span>
+          <a href="https://wa.me/yournumber?text=Saya%20ingin%20membeli%20Role%20Super%20Moderator" target="_blank" data-original="Buy Now">Buy Now</a>
+        </div>
+
+        <div class="role-card" role="listitem">
+          <h4 data-original="Developer Role">Developer Role</h4>
+          <p data-original="Developer status, access to testing server and private channel.">Developer status, access to testing server and private channel.</p>
+          <span class="price">Rp 130.000</span>
+          <a href="https://wa.me/yournumber?text=Saya%20ingin%20membeli%20Role%20Developer" target="_blank" data-original="Buy Now">Buy Now</a>
+        </div>
+
+        <div class="role-card" role="listitem">
+          <h4 data-original="God Role">God Role</h4>
+          <p data-original="Ultimate status and all exclusive features. Limited slots.">Ultimate status and all exclusive features. Limited slots.</p>
+          <span class="price">Rp 170.000</span>
+          <a href="https://wa.me/yournumber?text=Saya%20ingin%20membeli%20Role%20God" target="_blank" data-original="Buy Now">Buy Now</a>
+        </div>
+
+      </div>
+    </div>
+    </main>
 
   <section class="discord-section" aria-label="Discord community">
     <img src="discord.jpeg" alt="Discord Logo">
@@ -518,56 +585,6 @@
     <a id="discordLink" href="https://discord.gg/smgS6sq83y" target="_blank" rel="noopener">Join Growfax Discord</a>
   </section>
 
-  <section class="shop-section" aria-label="Role Shop">
-    <h2 id="shopRoleTitle" data-original="Growfax Role Shop">Growfax Role Shop</h2>
-    <p id="shopRoleSubtitle" data-original="Unlock exclusive features and support the server by purchasing a role.">Unlock exclusive features and support the server by purchasing a role.</p>
-    
-    <div class="role-cards" role="list">
-      
-      <div class="role-card" role="listitem">
-        <h4 data-original="VIP Role">VIP Role</h4>
-        <p data-original="Access to VIP area and chat color.">Access to VIP area and chat color.</p>
-        <span class="price">Rp 15.000</span>
-        <a href="https://wa.me/yournumber?text=Saya%20ingin%20membeli%20Role%20VIP" target="_blank" data-original="Buy Now">Buy Now</a>
-      </div>
-
-      <div class="role-card" role="listitem">
-        <h4 data-original="VIP+ Role">VIP+ Role</h4>
-        <p data-original="All VIP features + exclusive monthly item.">All VIP features + exclusive monthly item.</p>
-        <span class="price">Rp 25.000</span>
-        <a href="https://wa.me/yournumber?text=Saya%20ingin%20membeli%20Role%20VIP%2B" target="_blank" data-original="Buy Now">Buy Now</a>
-      </div>
-
-      <div class="role-card" role="listitem">
-        <h4 data-original="Moderator Role">Moderator Role</h4>
-        <p data-original="Moderator status, basic tools, and special tag.">Moderator status, basic tools, and special tag.</p>
-        <span class="price">Rp 45.000</span>
-        <a href="https://wa.me/yournumber?text=Saya%20ingin%20membeli%20Role%20Moderator" target="_blank" data-original="Buy Now">Buy Now</a>
-      </div>
-      
-      <div class="role-card" role="listitem">
-        <h4 data-original="Super Moderator Role">Super Moderator Role</h4>
-        <p data-original="All Moderator features + advanced moderation tools.">All Moderator features + advanced moderation tools.</p>
-        <span class="price">Rp 70.000</span>
-        <a href="https://wa.me/yournumber?text=Saya%20ingin%20membeli%20Role%20Super%20Moderator" target="_blank" data-original="Buy Now">Buy Now</a>
-      </div>
-
-      <div class="role-card" role="listitem">
-        <h4 data-original="Developer Role">Developer Role</h4>
-        <p data-original="Developer status, access to testing server and private channel.">Developer status, access to testing server and private channel.</p>
-        <span class="price">Rp 130.000</span>
-        <a href="https://wa.me/yournumber?text=Saya%20ingin%20membeli%20Role%20Developer" target="_blank" data-original="Buy Now">Buy Now</a>
-      </div>
-
-      <div class="role-card" role="listitem">
-        <h4 data-original="God Role">God Role</h4>
-        <p data-original="Ultimate status and all exclusive features. Limited slots.">Ultimate status and all exclusive features. Limited slots.</p>
-        <span class="price">Rp 170.000</span>
-        <a href="https://wa.me/yournumber?text=Saya%20ingin%20membeli%20Role%20God" target="_blank" data-original="Buy Now">Buy Now</a>
-      </div>
-
-    </div>
-  </section>
   <footer>© 2025 Growfax. All rights reserved.</footer>
 
   <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
@@ -723,6 +740,13 @@ const timeDisplay = document.getElementById('timeDisplay');
 const discordLink = document.getElementById('discordLink');
 const reportBugLink = document.getElementById('reportBugLink');
 
+// Content Toggling Refs (NEW)
+const navDownloads = document.getElementById('navDownloads');
+const navShop = document.getElementById('navShop');
+const downloadsContent = document.getElementById('downloads-content');
+const shopContent = document.getElementById('shop-content');
+const navLinks = document.querySelectorAll('.nav-toggle');
+
 // Admin Area Refs
 const ADMIN_TOKEN = 'GFAx_2025_ADMN'; // Hardcoded token for static page simulation
 const openAdmin = document.getElementById('openAdmin');
@@ -799,6 +823,7 @@ const translations = {
   id: {
     "Growfax Official": "Growfax Resmi",
     "📥 Downloads": "📥 Unduhan",
+    "🛒 Shop Role": "🛒 Toko Role", // NEW TRANSLATION
     "Welcome to Growfax": "Selamat Datang di Growfax",
     "Private Growtopia Server": "Server Growtopia Pribadi",
     "Local Time (New York):": "Waktu Lokal (New York):",
@@ -856,7 +881,7 @@ const translations = {
     "Meta Keywords (Comma-separated)": "Kata Kunci Meta (Dipisahkan Koma)",
     "Update SEO Meta": "Perbarui Meta SEO",
 
-    // NEW SHOP ROLE TRANSLATIONS
+    // SHOP ROLE TRANSLATIONS
     "Growfax Role Shop": "Toko Role Growfax",
     "Unlock exclusive features and support the server by purchasing a role.": "Buka fitur eksklusif dan dukung server dengan membeli role.",
     "VIP Role": "Role VIP",
@@ -1082,7 +1107,7 @@ function updateAdminAreaTranslations(lang) {
 
 function applyTranslations(lang){
   const transitionDuration = 200; // ms
-  const elementsToTranslate = document.querySelectorAll('[data-original], #modalCancel, #modalConfirm, #welcomeSave, #welcomeSkip, #discordLink, #reportBugLink, #adminTokenSubmit, #closeAdmin, #toggleServerStatus, #saveNewsUpdate, #refreshAnalytics, .price');
+  const elementsToTranslate = document.querySelectorAll('[data-original], #modalCancel, #modalConfirm, #welcomeSave, #welcomeSkip, #discordLink, #reportBugLink, #adminTokenSubmit, #closeAdmin, #toggleServerStatus, #saveNewsUpdate, #refreshAnalytics, .price, .nav-toggle'); // Added .nav-toggle
 
   // 1. Fade out (Opacity 0)
   elementsToTranslate.forEach(el => {
@@ -1110,16 +1135,13 @@ function applyTranslations(lang){
     discordLink.textContent = lang === 'id' ? (translations.id['Join Growfax Discord'] || 'Gabung Discord Growfax') : 'Join Growfax Discord';
     reportBugLink.textContent = lang === 'id' ? (translations.id['🐞 Report Bug'] || '🐞 Laporkan Bug') : '🐞 Report Bug';
     
+    // NEW NAV LINKS
+    navDownloads.textContent = lang === 'id' ? (translations.id['📥 Downloads'] || '📥 Unduhan') : '📥 Downloads';
+    navShop.textContent = lang === 'id' ? (translations.id['🛒 Shop Role'] || '🛒 Toko Role') : '🛒 Shop Role';
+
     // Update mailto link and Admin area translations
     updateReportBugLink(); 
     updateAdminAreaTranslations(lang); 
-
-    // Re-apply static price text (it does not translate, only uses fade effect)
-    document.querySelectorAll('.role-card .price').forEach(priceEl => {
-        // Find the corresponding original price based on role title/data-original if needed, 
-        // but for now, just restore opacity since the price is static (Rp 15.000, etc.)
-        // This is a placeholder since prices shouldn't change with language.
-    });
 
 
     // 4. Fade back in (Opacity 1)
@@ -1156,6 +1178,45 @@ function updateReportBugLink() {
   
   reportBugLink.setAttribute('href', mailtoURL);
 }
+
+/* ===========================
+   Content Toggling Logic (NEW)
+   =========================== */
+function toggleContent(targetId) {
+    // 1. Hide all content blocks that are meant to be toggled
+    downloadsContent.style.display = 'none';
+    shopContent.style.display = 'none';
+    
+    // 2. Show the target block
+    if (targetId === 'downloads-content') {
+        downloadsContent.style.display = 'block';
+    } else if (targetId === 'shop-content') {
+        // The shop section uses margin for spacing, so 'block' is fine
+        shopContent.style.display = 'block'; 
+    }
+    
+    // 3. Update active link class
+    navLinks.forEach(link => link.classList.remove('active'));
+    
+    const targetLink = document.querySelector(`[href="#${targetId.replace('-content', '')}"]`);
+    if (targetLink) {
+        targetLink.classList.add('active');
+    }
+    
+    // Optional: Track view
+    trackEvent('content_viewed', { content_id: targetId });
+}
+
+// Add event listeners for navigation links
+navDownloads.addEventListener('click', (e) => {
+    e.preventDefault();
+    toggleContent('downloads-content');
+});
+
+navShop.addEventListener('click', (e) => {
+    e.preventDefault();
+    toggleContent('shop-content');
+});
 
 
 /* ===========================
@@ -1522,15 +1583,14 @@ const initLang = localStorage.getItem('growfax_lang') || (navigator.language && 
 langSelect.value = initLang;
 applyTranslations(initLang);
 updateTime();
+// Initial toggle (set default view to Downloads)
+toggleContent('downloads-content');
+
 
 /* ===========================
    Allow middle click / aux click default behavior on links
    =========================== */
-document.querySelectorAll('a').forEach(a=>{
-  a.addEventListener('auxclick', (e) => {/* allow default behavior */});
-});
-
-/* ===========================
+document.querySelectorAll('a').forEach(a=>{\n  a.addEventListener('auxclick', (e) => {/* allow default behavior */});\n});\n\n/* ===========================
    Misc small UI effects
    =========================== */
 
