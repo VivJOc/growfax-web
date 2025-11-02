@@ -1043,19 +1043,22 @@
             version: "v4.2.1",
             updated: "2025-10-31",
             changelog: "Optimized connection stability.",
-            copytext: "103.27.206.183 growtopia1.com\n103.27.206.183 growtopia2.com\n103.27.206.183 www.growtopia1.com\n103.27.206.183 www.growtopia2.com"
+            copytext: `103.27.206.183 growtopia1.com
+103.27.206.183 growtopia2.com
+103.27.206.183 www.growtopia1.com
+103.27.206.183 www.growtopia2.com`
         },
         patched: {
             version: "v4.2.1",
             updated: "2025-10-31",
             changelog: "Improved launch efficiency.",
-            copytext: "This file is a .BAT executable and cannot be copied as plain text." // Not for copy
+            copytext: "This file is a .BAT executable and cannot be copied as plain text."
         },
         ios: {
-        version: "v4.2.1",
-        updated: "2025-10-31",
-        changelog: "Stable configuration for Surge/Quantumult X.",
-        copytext: `[General]
+            version: "v4.2.1",
+            updated: "2025-10-31",
+            changelog: "Stable configuration for Surge/Quantumult X.",
+            copytext: `[General]
 bypass-system = true
 
 [Rule]
@@ -1068,10 +1071,10 @@ www.growtopia1.com = 91.134.85.13
 www.growtopia2.com = 91.134.85.13`
         },
         powertunnel: {
-        version: "v4.2.1",
-        updated: "2025-10-31",
-        changelog: "Optimized for PowerTunnel.",
-        copytext: `91.134.85.13 growtopia1.com
+            version: "v4.2.1",
+            updated: "2025-10-31",
+            changelog: "Optimized for PowerTunnel.",
+            copytext: `91.134.85.13 growtopia1.com
 91.134.85.13 growtopia2.com
 91.134.85.13 www.growtopia1.com
 91.134.85.13 www.growtopia2.com`
@@ -1780,31 +1783,24 @@ www.growtopia2.com = 91.134.85.13`
     console.log('%cGrowfax Engine Ready ✅', 'color: #00ff88; font-weight: bold; font-size: 16px;');
 </script>
 
-<!-- Injected: Modern toast + copy/confirm behavior for platform buttons -->
+<!-- BEGIN: Auto-copy interceptor for iOS/PowerTunnel (no modal) + toast + confirm for downloads -->
 <script>
 (function(){
-  // Ensure toast element exists and showToast function is available
-  const existingToast = document.getElementById('toast');
-  function ensureToast(){
-    if(!existingToast){
-      const t = document.createElement('div');
-      t.id = 'toast';
-      t.className = 'toast';
-      t.setAttribute('role','alert');
-      t.setAttribute('aria-live','assertive');
-      document.body.appendChild(t);
-    }
+  // Ensure toast element exists or reuse existing one
+  let toastEl = document.getElementById('toast');
+  if(!toastEl){
+    toastEl = document.createElement('div');
+    toastEl.id = 'toast';
+    toastEl.className = 'toast';
+    toastEl.setAttribute('role','alert');
+    toastEl.setAttribute('aria-live','assertive');
+    document.body.appendChild(toastEl);
   }
-  ensureToast();
 
-  // Reusable toast display (uses existing .toast styles)
   function showModernToast(msg, duration=2000){
-    const toastEl = document.getElementById('toast');
-    if(!toastEl) return;
     toastEl.textContent = msg;
     toastEl.style.opacity = '1';
     toastEl.style.transform = 'translateX(-50%) translateY(0)';
-    // Position bottom-right modern style
     toastEl.style.left = 'auto';
     toastEl.style.right = '18px';
     toastEl.style.bottom = '18px';
@@ -1813,87 +1809,85 @@ www.growtopia2.com = 91.134.85.13`
     toastEl.style.background = 'rgba(0,0,0,0.75)';
     toastEl.style.color = '#fff';
     toastEl.style.pointerEvents = 'auto';
+    // Force repaint for transition
+    void toastEl.offsetWidth;
     setTimeout(()=>{
       toastEl.style.opacity = '0';
       toastEl.style.transform = 'translateX(-50%) translateY(12px)';
     }, duration);
   }
 
-  // Intercept platform buttons clicks earlier than other listeners
-  document.querySelectorAll('.platform-buttons a').forEach(link => {
-    link.addEventListener('click', (e) => {
-      // Run our logic and prevent default handlers from running
-      e.preventDefault();
-      e.stopImmediatePropagation && e.stopImmediatePropagation();
+  // Capture clicks on platform buttons at capture phase to prevent other listeners (modal) from firing
+  document.addEventListener('click', function(ev){
+    const a = ev.target.closest && ev.target.closest('.platform-buttons a');
+    if(!a) return;
+    // Only handle if inside .platform-buttons
+    const fileKey = a.getAttribute('data-filekey');
+    const filename = a.getAttribute('data-filename') || '';
+    const href = a.getAttribute('href') || '';
+    const meta = (window.FILE_META && window.FILE_META[fileKey]) ? window.FILE_META[fileKey] : null;
 
-      const fileKey = link.getAttribute('data-filekey');
-      const filename = link.getAttribute('data-filename') || '';
-      const meta = (window.FILE_META && window.FILE_META[fileKey]) ? window.FILE_META[fileKey] : null;
+    if(fileKey === 'ios' || fileKey === 'powertunnel'){
+      // prevent other click handlers (modal) from running
+      ev.stopImmediatePropagation && ev.stopImmediatePropagation();
+      ev.preventDefault && ev.preventDefault();
 
-      // If fileKey missing, fallback to default behavior
-      if(!fileKey || !meta){
-        // If href exists, allow download after confirmation
-        const href = link.getAttribute('href');
-        if(href && href !== '#'){
-          const ok = confirm('Apakah Anda yakin ingin mendownload dari website Growfax.web.id?');
-          if(ok){
-            const temp = document.createElement('a');
-            temp.href = href;
-            temp.download = filename || '';
-            document.body.appendChild(temp);
-            temp.click();
-            temp.remove();
-          }
-        }
-        return;
-      }
-
-      if(fileKey === 'ios' || fileKey === 'powertunnel'){
-        // Direct copy to clipboard and show toast (no file info modal)
-        if(meta.copytext){
-          navigator.clipboard.writeText(meta.copytext).then(() => {
+      if(meta && meta.copytext){
+        // copy to clipboard (use navigator.clipboard if available)
+        const text = meta.copytext;
+        if(navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(text).then(()=>{
             showModernToast('✅ Berhasil disalin!', 2000);
-          }).catch(() => {
-            // fallback: show prompt with textarea to copy manually
+          }).catch(()=>{
+            // fallback to textarea copy
             const ta = document.createElement('textarea');
-            ta.value = meta.copytext;
+            ta.value = text;
             document.body.appendChild(ta);
             ta.select();
-            try{ document.execCommand('copy'); showModernToast('✅ Berhasil disalin!', 2000); }catch(err){ alert('Salin manual: \\n' + meta.copytext); }
+            try{ document.execCommand('copy'); showModernToast('✅ Berhasil disalin!', 2000);}catch(e){ alert('Salin manual:\\n'+text); }
             ta.remove();
           });
         } else {
-          showModernToast('⚠️ Tidak ada konfigurasi tersedia.', 2000);
-        }
-      } else if(fileKey === 'virtualhost' || fileKey === 'patched'){
-        // Confirmation then download
-        const ok = confirm('Apakah Anda yakin ingin mendownload dari website Growfax.web.id?');
-        if(ok){
-          const href = link.getAttribute('href');
-          if(href && href !== '#'){
-            const temp = document.createElement('a');
-            temp.href = href;
-            temp.download = filename || '';
-            document.body.appendChild(temp);
-            temp.click();
-            temp.remove();
-            showModernToast('⬇️ Download dimulai', 1500);
-          } else {
-            showModernToast('⚠️ File tidak tersedia.', 2000);
-          }
+          // fallback to textarea copy
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          document.body.appendChild(ta);
+          ta.select();
+          try{ document.execCommand('copy'); showModernToast('✅ Berhasil disalin!', 2000);}catch(e){ alert('Salin manual:\\n'+text); }
+          ta.remove();
         }
       } else {
-        // default behavior for other keys: show modal as before
-        // find and trigger existing modal flow by simulating click without prevention
-        const clickEvent = new MouseEvent('click', {bubbles: true, cancelable: true});
-        // re-dispatch to allow other handlers (if any)
-        // but allow user to proceed normally
-        link.dispatchEvent(clickEvent);
+        showModernToast('⚠️ Tidak ada konfigurasi tersedia.', 2000);
       }
-    }, {capture: true});
-  });
+      return;
+    }
+
+    if(fileKey === 'virtualhost' || fileKey === 'patched'){
+      // prevent other handlers, show confirmation first
+      ev.stopImmediatePropagation && ev.stopImmediatePropagation();
+      ev.preventDefault && ev.preventDefault();
+
+      const ok = confirm('Apakah Anda yakin ingin mendownload dari website Growfax.web.id?');
+      if(ok){
+        if(href && href !== '#'){
+          const temp = document.createElement('a');
+          temp.href = href;
+          temp.download = filename || '';
+          document.body.appendChild(temp);
+          temp.click();
+          temp.remove();
+          showModernToast('⬇️ Download dimulai', 1500);
+        } else {
+          showModernToast('⚠️ File tidak tersedia.', 2000);
+        }
+      }
+      return;
+    }
+
+    // otherwise: let other handlers run (modal behavior, etc.)
+  }, true); // useCapture = true
 })();
 </script>
-<!-- End injected script -->
+<!-- END: Auto-copy interceptor -->
 </body>
 </html>
