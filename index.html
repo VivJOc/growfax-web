@@ -102,7 +102,8 @@
     height:36px;
     border-radius:6px;
     object-fit:cover;
-    transition: box-shadow .25s, transform .25s;
+    /* Added transition for smoother effects, including the JS-driven opacity change */
+    transition: box-shadow .25s, transform .25s, opacity 0.2s ease;
     box-shadow: var(--logo-shadow);
     /* Apply animation */
     animation: pulse 3s infinite ease-in-out;
@@ -112,15 +113,20 @@
     font-size:1.2rem;
     margin:0;
     font-weight:700;
-    transition: text-shadow .25s;
-    color: var(--text); /* Ensure the base text color is consistent */
+    /* Added opacity transition for smoother language change */
+    transition: text-shadow .25s, opacity 0.2s ease;
+    color: var(--text);
     text-shadow: var(--text-shadow-light); 
   }
   [data-theme="dark"] h1 {
     text-shadow: var(--text-shadow-dark); 
   }
 
-  .brand-wrap > div > div { font-size: 0.75rem; }
+  .brand-wrap > div > div { 
+    font-size: 0.75rem; 
+    /* Added opacity transition for smoother language change */
+    transition: opacity 0.2s ease;
+  }
 
   nav.primary{
     color:var(--accent);
@@ -138,6 +144,8 @@
       font-weight:700;
       margin-left:0;
       margin-right: 12px;
+      /* Added opacity transition for smoother language change */
+      transition: opacity 0.2s ease, transform .18s;
   }
   nav.primary a:hover{opacity:.86;transform:translateY(-1px)}
   
@@ -156,11 +164,12 @@
     background:transparent;
     color:var(--text);
     cursor:pointer;
-    text-decoration: none; /* Untuk link 'Report Bug' */
+    text-decoration: none;
     display: flex;
     align-items: center;
     gap: 4px;
-    transition: background-color .15s;
+    /* Added opacity transition for smoother language change */
+    transition: background-color .15s, opacity 0.2s ease;
   }
   .report-bug-btn:hover, .theme-toggle:hover, .open-welcome:hover {
     background: rgba(0,0,0,0.05);
@@ -174,15 +183,40 @@
      ------------------------- */
   .banner-section{text-align:center;padding:40px 10px;background:linear-gradient(90deg, rgba(0,0,0,0.03), rgba(255,255,255,0.02))}
   .banner-section img{max-width:200px;border-radius:8px;margin-bottom:14px}
-  .banner-section h2{font-size:1.6rem;color:#ffaa00;margin:8px 0;text-shadow:0 0 10px rgba(255,170,0,0.18)}
-  .banner-section p{font-size:0.95rem;opacity:.92;margin:0}
-  .time-display{margin-top:8px;font-size:0.85rem;font-weight:600;opacity:.9}
+  .banner-section h2{
+    font-size:1.6rem;
+    color:#ffaa00;
+    margin:8px 0;
+    text-shadow:0 0 10px rgba(255,170,0,0.18);
+    /* Added opacity transition for smoother language change */
+    transition: opacity 0.2s ease;
+  }
+  .banner-section p{
+    font-size:0.95rem;
+    opacity:.92;
+    margin:0;
+    /* Added opacity transition for smoother language change */
+    transition: opacity 0.2s ease;
+  }
+  .time-display{
+    margin-top:8px;
+    font-size:0.85rem;
+    font-weight:600;
+    opacity:.9;
+    /* Added opacity transition for smoother language change */
+    transition: opacity 0.2s ease;
+  }
 
   /* -------------------------
      Container (main content)
      ------------------------- */
   .container{max-width:1000px;margin:32px auto;text-align:center;padding:0 10px}
-  .container h2{font-size:1.4rem;margin-bottom:24px}
+  .container h2{
+    font-size:1.4rem;
+    margin-bottom:24px;
+    /* Added opacity transition for smoother language change */
+    transition: opacity 0.2s ease;
+  }
   
   /* Platform Buttons: Full width for mobile */
   .platform-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
@@ -191,7 +225,8 @@
     width:92%; 
     padding:14px 18px;border-radius:12px;color:#fff;font-weight:700;
     text-decoration:none;border:1px solid transparent;font-size:1.02rem;
-    transition:transform .18s ease,box-shadow .18s;
+    /* Added opacity transition for smoother language change */
+    transition:transform .18s ease,box-shadow .18s, opacity 0.2s ease;
   }
   .platform-buttons a img{width:30px;height:30px;border-radius:6px}
   .platform-buttons a:hover{transform:translateY(-2px)}
@@ -206,20 +241,33 @@
      ------------------------- */
   .discord-section{background:var(--discord-color);color:#fff;padding:24px;border-radius:10px;max-width:820px;margin:32px auto 50px;text-align:center;box-shadow:var(--card-shadow)}
   .discord-section img{width:48px;height:48px;border-radius:8px;margin-bottom:8px}
+  .discord-section h3, .discord-section p, .discord-section a {
+    /* Added opacity transition for smoother language change */
+    transition: opacity 0.2s ease;
+  }
 
   /* -------------------------
      Footer
      ------------------------- */
-  footer{text-align:center;margin:30px 0 40px;font-size:.85rem;opacity:.85}
+  footer{
+    text-align:center;
+    margin:30px 0 40px;
+    font-size:.85rem;
+    opacity:.85;
+    /* Added opacity transition for smoother language change */
+    transition: opacity 0.2s ease;
+  }
 
   /* -------------------------
      Modal & Welcome Popup
      ------------------------- */
   .modal-backdrop, .welcome-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:1300}
   .modal, .welcome{width:92%;max-width:560px;background:var(--card-bg);color:var(--text);border-radius:12px;padding:16px;box-shadow:0 14px 40px rgba(0,0,0,0.2);transform:translateY(0);transition:transform .18s,opacity .18s}
-  .modal h3{margin:0 0 8px;font-size:1.05rem}
-  .modal p{margin:0 0 10px;font-size:0.95rem;opacity:.9}
-  .modal .changelog{font-size:0.9rem;}
+  
+  /* Added opacity transition to modal/welcome text elements */
+  .modal h3, .modal p, .modal .changelog, .welcome h2, .welcome p, .welcome label, .welcome button {
+      transition: opacity 0.2s ease;
+  }
 
   /* -------------------------
      Floating Discord button
@@ -511,23 +559,60 @@ const translations = {
   }
 };
 
+/* ===========================
+   Smooth Translation Logic (NEW)
+   =========================== */
 function applyTranslations(lang){
-  elements.forEach(el=>{
-    const orig = el.dataset.original;
-    if(!orig) return;
-    el.textContent = lang === 'en' ? orig : (translations[lang]?.[orig] || orig);
+  const transitionDuration = 200; // ms
+
+  // 1. Fade out (Opacity 0)
+  elements.forEach(el => {
+    const isTranslatable = el.dataset.original || 
+                           el === modalCancel || el === modalConfirm || 
+                           el === welcomeSave || el === welcomeSkip || 
+                           el === discordLink || el === reportBugLink;
+    
+    // Check if the element has translatable content and is currently visible
+    if (isTranslatable && (el.offsetWidth > 0 || el.offsetHeight > 0 || el === langSelect)) {
+      // Temporarily set the transition if not already handled by CSS
+      el.style.transition = `opacity ${transitionDuration}ms ease`;
+      el.style.opacity = '0';
+    }
   });
-  // fix buttons/labels manually (elements that are not simple text nodes)
-  modalCancel.textContent = lang === 'id' ? (translations.id['Cancel'] || 'Batal') : 'Cancel';
-  modalConfirm.textContent = lang === 'id' ? (translations.id['Download'] || 'Unduh') : 'Download';
-  welcomeSave.textContent = lang === 'id' ? (translations.id['Save & Continue'] || 'Simpan & Lanjutkan') : 'Save & Continue';
-  welcomeSkip.textContent = lang === 'id' ? (translations.id['Skip'] || 'Lewati') : 'Skip';
-  discordLink.textContent = lang === 'id' ? (translations.id['Join Growfax Discord'] || 'Gabung Discord Growfax') : 'Join Growfax Discord';
-  reportBugLink.textContent = lang === 'id' ? (translations.id['🐞 Report Bug'] || '🐞 Laporkan Bug') : '🐞 Report Bug';
-  
-  // NEW: Update mailto link when translations are applied
-  updateReportBugLink(); 
+
+  // 2. Wait for fade-out
+  setTimeout(() => {
+    // 3. Apply new content (Opacity is 0, so change is invisible)
+    elements.forEach(el=>{
+      const orig = el.dataset.original;
+      if(!orig) return;
+      el.textContent = lang === 'en' ? orig : (translations[lang]?.[orig] || orig);
+    });
+
+    // Fix buttons/labels manually
+    modalCancel.textContent = lang === 'id' ? (translations.id['Cancel'] || 'Batal') : 'Cancel';
+    modalConfirm.textContent = lang === 'id' ? (translations.id['Download'] || 'Unduh') : 'Download';
+    welcomeSave.textContent = lang === 'id' ? (translations.id['Save & Continue'] || 'Simpan & Lanjutkan') : 'Save & Continue';
+    welcomeSkip.textContent = lang === 'id' ? (translations.id['Skip'] || 'Lewati') : 'Skip';
+    discordLink.textContent = lang === 'id' ? (translations.id['Join Growfax Discord'] || 'Gabung Discord Growfax') : 'Join Growfax Discord';
+    reportBugLink.textContent = lang === 'id' ? (translations.id['🐞 Report Bug'] || '🐞 Laporkan Bug') : '🐞 Report Bug';
+    
+    // Update mailto link
+    updateReportBugLink(); 
+
+    // 4. Fade back in (Opacity 1)
+    elements.forEach(el => {
+      // Restore opacity on elements that were hidden
+      if (el.style.opacity === '0') {
+        el.style.opacity = '1';
+        // Remove inline transition after fade-in to let CSS handle it again
+        setTimeout(() => el.style.transition = '', transitionDuration);
+      }
+    });
+
+  }, transitionDuration); // Delay matches the fade-out duration
 }
+
 
 /* ===========================
    Report Bug Link Logic
