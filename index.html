@@ -399,7 +399,7 @@
         <img src="windows.png" alt="">Play on Windows
       </a>
 
-      <a href="GrowFax_ios.txt" class="btn-ios" data-filename="GrowFax_ios.txt" data-filekey="ios" download role="listitem">
+      <a href="#" class="btn-ios" data-filename="GrowFax_ios_config.txt" data-filekey="ios" role="listitem">
         <img src="surge5.png" alt="">Play on iOS
       </a>
 
@@ -588,12 +588,19 @@ let isAdminLoggedIn = false; // New state tracker
 
 /* ===========================
    File metadata
-   - PowerTunnel: Copy-text
+   - PowerTunnel & iOS: Copy-text
    =========================== */
 const FILE_META = {
   virtualhost: { version: 'v2.1', updated: 'Oct 29, 2025', changelog: '- Fixed host parsing\\n- Improved TLS handling', size: '2.3 KB' },
   patched: { version: 'v1.9', updated: 'Oct 20, 2025', changelog: '- Patched launcher\\n- Minor fixes', size: '12.1 KB' },
-  ios: { version: 'v1.4', updated: 'Sep 30, 2025', changelog: '- iOS config update\\n- Surge tweak', size: '3.7 KB' },
+  // MODIFIED: iOS now uses copytext instead of download
+  ios: { 
+    version: 'v1.5', 
+    updated: 'Nov 02, 2025', 
+    changelog: 'Instruksi: Konfigurasi Surge/Shadowrocket telah disalin secara otomatis ke clipboard Anda. Tempelkan di bagian [Host] atau custom config.', 
+    size: '1.5 KB',
+    copytext: `[General]\nbypass-system = true\n\n[Rule]\nFINAL,DIRECT\n\n[Host]\ngrowtopia1.com = 91.134.85.13\ngrowtopia2.com = 91.134.85.13\nwww.growtopia1.com = 91.134.85.13\nwww.growtopia2.com = 91.134.85.13`
+  },
   powertunnel: { 
     version: 'v3.0', 
     updated: 'Oct 10, 2025', 
@@ -661,7 +668,7 @@ const translations = {
     "Save News": "Simpan Berita",
     "Close Admin Area": "Tutup Area Admin",
 
-    // Analytical Tool Translations (NEW)
+    // Analytical Tool Translations
     "Analytical Dashboard": "Dasbor Analitik",
     "Total Downloads:": "Total Unduhan:",
     "Recent Activities:": "Aktivitas Terbaru:",
@@ -672,7 +679,7 @@ const translations = {
 };
 
 /* ===========================
-   Analytical Dashboard Logic (NEW)
+   Analytical Dashboard Logic
    =========================== */
 
 // Helper function to format time ago (simulated)
@@ -941,11 +948,16 @@ document.querySelectorAll('.platform-buttons a').forEach(a=>{
     const meta = FILE_META[key] || { version: 'v1.0', updated: 'Unknown', changelog: 'No details', size: '—' };
     const filename = a.dataset.filename || key;
 
-    // --- LOGIKA KHUSUS POWERTUNNEL (COPY TEXT) ---
-    if (key === 'powertunnel' && meta.copytext) {
+    // --- MODIFIED LOGIC: COPY TEXT (iOS, PowerTunnel, dll.) ---
+    if (meta.copytext) {
         // Teks tersedia, salin ke clipboard
         navigator.clipboard.writeText(meta.copytext).then(() => {
-            const toastMessage = (langSelect.value === 'id') ? '✅ Teks Host PowerTunnel berhasil disalin!' : '✅ PowerTunnel Host text copied!';
+            let toastMessage;
+            if (key === 'ios') {
+                toastMessage = (langSelect.value === 'id') ? '✅ Konfigurasi iOS berhasil disalin!' : '✅ iOS configuration copied!';
+            } else {
+                toastMessage = (langSelect.value === 'id') ? '✅ Teks Host PowerTunnel berhasil disalin!' : '✅ PowerTunnel Host text copied!';
+            }
             showToast(toastMessage, 3000);
         }).catch(err => {
             console.error('Copy failed:', err);
@@ -953,12 +965,12 @@ document.querySelectorAll('.platform-buttons a').forEach(a=>{
             showToast(toastMessage, 3000);
         });
         
-        // Track PowerTunnel Copy Event
-        trackEvent('powertunnel_host_copied');
+        // Track Copy Event (General)
+        trackEvent('config_copied', { platform: key });
         
         return; // Hentikan aksi selanjutnya (tidak perlu modal)
     }
-    // --- AKHIR LOGIKA KHUSUS POWERTUNNEL ---
+    // --- AKHIR LOGIKA COPY TEXT ---
 
     // Lanjutkan dengan logika modal/download untuk file lain
     modalTitle.textContent = (langSelect.value === 'id') ? (translations.id['Details before download'] || 'Detail sebelum mengunduh') : 'Details before download';
@@ -976,7 +988,7 @@ function hideModal(){ modalBackdrop.style.display='none'; modalBackdrop.setAttri
 modalCancel.addEventListener('click', ()=> hideModal());
 modalBackdrop.addEventListener('click', (e)=>{ if(e.target===modalBackdrop) hideModal(); });
 
-// MODIFIED: Added Analytical Tracking for Download
+// Added Analytical Tracking for Download
 modalConfirm.addEventListener('click', ()=>{
   if(!pendingDownload) return hideModal();
   
@@ -1036,7 +1048,7 @@ adminBackdrop.addEventListener('click', (e) => {
     if (e.target === adminBackdrop) hideAdminModal();
 });
 
-// MODIFIED: Added Analytical Tracking and Analytics Dashboard Render
+// Added Analytical Tracking and Analytics Dashboard Render
 adminTokenSubmit.addEventListener('click', () => {
     const token = adminTokenInput.value.trim();
     const lang = langSelect.value;
