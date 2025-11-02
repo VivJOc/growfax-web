@@ -271,6 +271,79 @@
   }
 
   /* -------------------------
+     Shop Role Section (NEW)
+     ------------------------- */
+  .shop-section {
+    text-align: center;
+    padding: 30px 10px;
+    background: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    margin: 32px auto; /* Ensure margin top/bottom matches container flow */
+    max-width: 1000px;
+  }
+  .shop-section h2 {
+    margin-bottom: 8px; /* Reduce gap before subtitle */
+  }
+  .role-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .role-card {
+    width: 90%; /* Default mobile size */
+    max-width: 250px;
+    padding: 16px;
+    border-radius: 10px;
+    background: var(--bg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--logo-shadow);
+    transition: transform .2s, box-shadow .2s;
+    text-align: left;
+  }
+  .role-card h4 {
+    margin: 0 0 8px;
+    font-size: 1.1rem;
+    color: var(--accent);
+  }
+  .role-card p {
+    margin: 0 0 12px;
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+  .role-card .price {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #ffaa00; /* Yellow accent for price */
+    margin-bottom: 12px;
+    text-shadow: 0 0 6px rgba(255,170,0,0.2);
+    transition: opacity 0.2s ease;
+  }
+  .role-card a {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    background: #2ecc71; /* Success button for purchase */
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color .15s;
+    text-align: center;
+  }
+  .role-card a:hover {
+    background: #27ae60;
+    transform: translateY(0); /* Override platform button hover */
+  }
+  .role-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  }
+
+  /* -------------------------
      Footer
      ------------------------- */
   footer{
@@ -359,6 +432,15 @@
     .container{margin:48px auto;padding:0 18px}
     .container h2{font-size:1.6rem;margin-bottom:28px}
     .discord-section{padding:32px;margin:42px auto 60px;}
+    
+    /* Shop Role PC Optimization */
+    .shop-section {
+        padding: 40px 20px;
+        margin: 42px auto 60px;
+    }
+    .role-card {
+        width: calc(33% - 16px); /* 3 cards per row */
+    }
 
     /* Floating button kembali ke posisi normal */
     .floating-chat{right:18px;bottom:18px;width:56px;height:56px;}
@@ -436,6 +518,56 @@
     <a id="discordLink" href="https://discord.gg/smgS6sq83y" target="_blank" rel="noopener">Join Growfax Discord</a>
   </section>
 
+  <section class="shop-section" aria-label="Role Shop">
+    <h2 id="shopRoleTitle" data-original="Growfax Role Shop">Growfax Role Shop</h2>
+    <p id="shopRoleSubtitle" data-original="Unlock exclusive features and support the server by purchasing a role.">Unlock exclusive features and support the server by purchasing a role.</p>
+    
+    <div class="role-cards" role="list">
+      
+      <div class="role-card" role="listitem">
+        <h4 data-original="VIP Role">VIP Role</h4>
+        <p data-original="Access to VIP area and chat color.">Access to VIP area and chat color.</p>
+        <span class="price">Rp 15.000</span>
+        <a href="https://wa.me/yournumber?text=Saya%20ingin%20membeli%20Role%20VIP" target="_blank" data-original="Buy Now">Buy Now</a>
+      </div>
+
+      <div class="role-card" role="listitem">
+        <h4 data-original="VIP+ Role">VIP+ Role</h4>
+        <p data-original="All VIP features + exclusive monthly item.">All VIP features + exclusive monthly item.</p>
+        <span class="price">Rp 25.000</span>
+        <a href="https://wa.me/yournumber?text=Saya%20ingin%20membeli%20Role%20VIP%2B" target="_blank" data-original="Buy Now">Buy Now</a>
+      </div>
+
+      <div class="role-card" role="listitem">
+        <h4 data-original="Moderator Role">Moderator Role</h4>
+        <p data-original="Moderator status, basic tools, and special tag.">Moderator status, basic tools, and special tag.</p>
+        <span class="price">Rp 45.000</span>
+        <a href="https://wa.me/yournumber?text=Saya%20ingin%20membeli%20Role%20Moderator" target="_blank" data-original="Buy Now">Buy Now</a>
+      </div>
+      
+      <div class="role-card" role="listitem">
+        <h4 data-original="Super Moderator Role">Super Moderator Role</h4>
+        <p data-original="All Moderator features + advanced moderation tools.">All Moderator features + advanced moderation tools.</p>
+        <span class="price">Rp 70.000</span>
+        <a href="https://wa.me/yournumber?text=Saya%20ingin%20membeli%20Role%20Super%20Moderator" target="_blank" data-original="Buy Now">Buy Now</a>
+      </div>
+
+      <div class="role-card" role="listitem">
+        <h4 data-original="Developer Role">Developer Role</h4>
+        <p data-original="Developer status, access to testing server and private channel.">Developer status, access to testing server and private channel.</p>
+        <span class="price">Rp 130.000</span>
+        <a href="https://wa.me/yournumber?text=Saya%20ingin%20membeli%20Role%20Developer" target="_blank" data-original="Buy Now">Buy Now</a>
+      </div>
+
+      <div class="role-card" role="listitem">
+        <h4 data-original="God Role">God Role</h4>
+        <p data-original="Ultimate status and all exclusive features. Limited slots.">Ultimate status and all exclusive features. Limited slots.</p>
+        <span class="price">Rp 170.000</span>
+        <a href="https://wa.me/yournumber?text=Saya%20ingin%20membeli%20Role%20God" target="_blank" data-original="Buy Now">Buy Now</a>
+      </div>
+
+    </div>
+  </section>
   <footer>© 2025 Growfax. All rights reserved.</footer>
 
   <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
@@ -723,6 +855,23 @@ const translations = {
     "Meta Description": "Deskripsi Meta",
     "Meta Keywords (Comma-separated)": "Kata Kunci Meta (Dipisahkan Koma)",
     "Update SEO Meta": "Perbarui Meta SEO",
+
+    // NEW SHOP ROLE TRANSLATIONS
+    "Growfax Role Shop": "Toko Role Growfax",
+    "Unlock exclusive features and support the server by purchasing a role.": "Buka fitur eksklusif dan dukung server dengan membeli role.",
+    "VIP Role": "Role VIP",
+    "Access to VIP area and chat color.": "Akses ke area VIP dan warna chat.",
+    "VIP+ Role": "Role VIP+",
+    "All VIP features + exclusive monthly item.": "Semua fitur VIP + item bulanan eksklusif.",
+    "Moderator Role": "Role Moderator",
+    "Moderator status, basic tools, and special tag.": "Status Moderator, alat dasar, dan tag spesial.",
+    "Super Moderator Role": "Role Super Moderator",
+    "All Moderator features + advanced moderation tools.": "Semua fitur Moderator + alat moderasi canggih.",
+    "Developer Role": "Role Developer",
+    "Developer status, access to testing server and private channel.": "Status Developer, akses ke server testing dan channel pribadi.",
+    "God Role": "Role God",
+    "Ultimate status and all exclusive features. Limited slots.": "Status tertinggi dan semua fitur eksklusif. Slot terbatas.",
+    "Buy Now": "Beli Sekarang",
   }
 };
 
@@ -886,7 +1035,7 @@ function updateAdminAreaTranslations(lang) {
         document.querySelector('#adminContent h4:nth-child(1)').textContent = lang === 'id' 
             ? (translations.id["Server Status"] || 'Status Server')
             : 'Server Status';
-        // Analytical Dashboard
+        // News & Updates
         document.querySelector('#adminContent h4:nth-child(3)').textContent = lang === 'id' 
             ? (translations.id["News & Updates"] || 'Berita & Pembaruan')
             : 'News & Updates';
@@ -933,7 +1082,7 @@ function updateAdminAreaTranslations(lang) {
 
 function applyTranslations(lang){
   const transitionDuration = 200; // ms
-  const elementsToTranslate = document.querySelectorAll('[data-original], #modalCancel, #modalConfirm, #welcomeSave, #welcomeSkip, #discordLink, #reportBugLink, #adminTokenSubmit, #closeAdmin, #toggleServerStatus, #saveNewsUpdate, #refreshAnalytics');
+  const elementsToTranslate = document.querySelectorAll('[data-original], #modalCancel, #modalConfirm, #welcomeSave, #welcomeSkip, #discordLink, #reportBugLink, #adminTokenSubmit, #closeAdmin, #toggleServerStatus, #saveNewsUpdate, #refreshAnalytics, .price');
 
   // 1. Fade out (Opacity 0)
   elementsToTranslate.forEach(el => {
@@ -964,6 +1113,14 @@ function applyTranslations(lang){
     // Update mailto link and Admin area translations
     updateReportBugLink(); 
     updateAdminAreaTranslations(lang); 
+
+    // Re-apply static price text (it does not translate, only uses fade effect)
+    document.querySelectorAll('.role-card .price').forEach(priceEl => {
+        // Find the corresponding original price based on role title/data-original if needed, 
+        // but for now, just restore opacity since the price is static (Rp 15.000, etc.)
+        // This is a placeholder since prices shouldn't change with language.
+    });
+
 
     // 4. Fade back in (Opacity 1)
     elementsToTranslate.forEach(el => {
@@ -1335,6 +1492,28 @@ reportBugLink.addEventListener('click', () => {
   // Hanya berikan feedback toast karena mailto: link sudah diatur
   showToast(langSelect.value === 'id' ? 'Membuka aplikasi email...' : 'Opening email application...');
 });
+
+/* ===========================
+   Shop Role Tracking (NEW)
+   =========================== */
+document.querySelectorAll('.role-card a').forEach(a => {
+    a.addEventListener('click', () => {
+        // Mendapatkan nama role dari elemen <h4> sebelumnya
+        const roleName = a.closest('.role-card').querySelector('h4').textContent.trim();
+        const price = a.closest('.role-card').querySelector('.price').textContent.trim();
+
+        // Track Shop Purchase Click
+        trackEvent('shop_purchase_click', {
+            role: roleName,
+            price: price,
+            // Asumsi: Ini akan membuka WA
+            method: 'whatsapp' 
+        });
+        
+        showToast(langSelect.value === 'id' ? `Mengarahkan ke WhatsApp untuk pembelian ${roleName}...` : `Redirecting to WhatsApp for ${roleName} purchase...`, 3000);
+    });
+});
+
 
 /* ===========================
    Initial translations + time
