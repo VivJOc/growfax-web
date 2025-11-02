@@ -260,125 +260,6 @@
   .btn-windows{background:#0078d7;--glow:#4da3ff;box-shadow:0 4px 16px rgba(77,163,255,0.08)}
   .btn-ios{background:#007aff;--glow:#7acbff;box-shadow:0 4px 16px rgba(122,203,255,0.08)}
   .btn-powertunnel{background:#b71c1c;--glow:#ff5a5a;box-shadow:0 4px 16px rgba(255,90,90,0.08)}
-  
-  /* -------------------------
-     Shop/Role Section (New)
-     ------------------------- */
-  .shop-section{
-      max-width:1000px;
-      margin:40px auto;
-      text-align:center;
-      padding:0 10px;
-  }
-  .shop-section h2{
-      font-size:1.4rem;
-      margin-bottom:24px;
-      color: var(--accent);
-      text-shadow: var(--text-shadow-light);
-      transition: opacity 0.2s ease, color .25s, text-shadow .25s;
-  }
-  [data-theme="dark"] .shop-section h2 {
-      text-shadow: var(--text-shadow-dark);
-      color: var(--glow-color-dark);
-  }
-
-  .role-cards{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
-      padding: 10px 0;
-  }
-
-  .role-card{
-      background: var(--card-bg);
-      border-radius: 12px;
-      padding: 20px 15px;
-      box-shadow: var(--card-shadow);
-      border: 1px solid var(--border-color);
-      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-  }
-
-  .role-card:hover{
-      transform: translateY(-5px) scale(1.02);
-      /* Neon glow effect on hover */
-      box-shadow: 0 0 20px var(--glow-color-light), 0 8px 20px rgba(0,0,0,0.1);
-  }
-  [data-theme="dark"] .role-card:hover{
-      box-shadow: 0 0 25px var(--glow-color-dark), 0 8px 30px rgba(0,0,0,0.8);
-  }
-
-  .role-card h3{
-      font-size: 1.5rem;
-      margin: 0 0 5px;
-      font-weight: 800;
-      color: var(--accent);
-      /* Text glow */
-      text-shadow: 0 0 8px rgba(0, 110, 255, 0.4); 
-      transition: color 0.3s, text-shadow 0.3s;
-  }
-  .role-card:nth-child(2) h3 { color: #f39c12; text-shadow: 0 0 8px rgba(243, 156, 18, 0.4); } /* VIP+ Gold */
-  .role-card:nth-child(4) h3 { color: #e74c3c; text-shadow: 0 0 8px rgba(231, 76, 60, 0.4); } /* SMod Red */
-  .role-card:nth-child(5) h3 { color: #9b59b6; text-shadow: 0 0 8px rgba(155, 89, 182, 0.4); } /* Dev Purple */
-  .role-card:nth-child(6) h3 { color: #f1c40f; text-shadow: 0 0 10px #f1c40f, 0 0 20px #f1c40f; } /* God Yellow-Brightest */
-
-
-  .role-card p.price{
-      font-size: 1.8rem;
-      font-weight: 900;
-      color: var(--text);
-      margin: 8px 0 15px;
-      line-height: 1.2;
-      transition: color 0.3s;
-  }
-
-  .role-card button{
-      width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 8px;
-      background: var(--accent);
-      color: white;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background-color 0.2s, transform 0.1s;
-  }
-
-  .role-card button:hover{
-      background: #005bb5;
-      transform: translateY(-1px);
-  }
-  [data-theme="dark"] .role-card button:hover{
-      background: #5faeff;
-  }
-
-  /* Moving/Animated Text Effect (simulating text in a moving image) */
-  @keyframes text-shine {
-      0% { background-position: -200% 0; }
-      100% { background-position: 200% 0; }
-  }
-
-  .shine-text {
-      /* Base for the "moving" text effect */
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7) 50%, transparent) no-repeat;
-      background-size: 200% 100%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: text-shine 5s infinite linear;
-      display: inline-block; /* Essential for text clip to work */
-  }
-  [data-theme="dark"] .shine-text {
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4) 50%, transparent) no-repeat;
-      background-size: 200% 100%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-  }
-
-  .role-card:nth-child(6) .price {
-      font-size: 2.2rem; /* Bigger price for GOD */
-  }
 
   /* -------------------------
      Discord Section
@@ -477,16 +358,6 @@
     .banner-section h2{font-size:1.9rem;}
     .container{margin:48px auto;padding:0 18px}
     .container h2{font-size:1.6rem;margin-bottom:28px}
-    
-    /* Shop section desktop optimization */
-    .shop-section {
-        padding: 0 18px;
-        margin: 60px auto;
-    }
-    .role-cards{
-        grid-template-columns: repeat(3, 1fr); /* 3 columns on desktop */
-    }
-    
     .discord-section{padding:32px;margin:42px auto 60px;}
 
     /* Floating button kembali ke posisi normal */
@@ -510,6 +381,7 @@
 
         <nav class="primary" aria-label="Main navigation">
           <a href="https://growfax.web.id/home" id="navDownloads">📥 Downloads</a> 
+          <a href="https://paypal.me/Growfax" target="_blank" rel="noopener" id="navRoleShop">👑 Role Shop</a>
         </nav>
       </div>
 
@@ -557,55 +429,6 @@
       </a>
     </div>
   </main>
-
-  <section class="shop-section" role="region" aria-label="Role Shop">
-    <h2 id="shopTitle">⭐ Growfax Role Shop</h2>
-    
-    <div class="role-cards">
-      <div class="role-card" data-role="vip">
-        <h3 class="shine-text">VIP</h3>
-        <p class="price">$0.903</p>
-        <p style="font-size:.9rem;color:var(--muted);margin-bottom:15px;" data-original="Unlock basic exclusive features.">Unlock basic exclusive features.</p>
-        <button data-price="0.903" data-original="Purchase">Purchase</button>
-      </div>
-
-      <div class="role-card" data-role="vip-plus">
-        <h3>VIP+</h3>
-        <p class="price">$1.504</p>
-        <p style="font-size:.9rem;color:var(--muted);margin-bottom:15px;" data-original="Advanced features and chat badge.">Advanced features and chat badge.</p>
-        <button data-price="1.504" data-original="Purchase">Purchase</button>
-      </div>
-
-      <div class="role-card" data-role="moderator">
-        <h3 class="shine-text">MODERATOR</h3>
-        <p class="price">$3.008</p>
-        <p style="font-size:.9rem;color:var(--muted);margin-bottom:15px;" data-original="Help manage the server & community.">Help manage the server & community.</p>
-        <button data-price="3.008" data-original="Apply/Buy">Apply/Buy</button>
-      </div>
-
-      <div class="role-card" data-role="super-moderator">
-        <h3>SUPER MODERATOR</h3>
-        <p class="price">$4.813</p>
-        <p style="font-size:.9rem;color:var(--muted);margin-bottom:15px;" data-original="High-level moderation access.">High-level moderation access.</p>
-        <button data-price="4.813" data-original="Apply/Buy">Apply/Buy</button>
-      </div>
-
-      <div class="role-card" data-role="developer">
-        <h3>DEVELOPER</h3>
-        <p class="price">$9.025</p>
-        <p style="font-size:.9rem;color:var(--muted);margin-bottom:15px;" data-original="Early access to new features & testing.">Early access to new features & testing.</p>
-        <button data-price="9.025" data-original="Purchase">Purchase</button>
-      </div>
-
-      <div class="role-card" data-role="god">
-        <h3 class="shine-text">GOD</h3>
-        <p class="price">$11.432</p>
-        <p style="font-size:.9rem;color:var(--muted);margin-bottom:15px;" data-original="Ultimate in-game privileges.">Ultimate in-game privileges.</p>
-        <button data-price="11.432" data-original="Purchase">Purchase</button>
-      </div>
-
-    </div>
-  </section>
 
   <section class="discord-section" aria-label="Discord community">
     <img src="discord.jpeg" alt="Discord Logo">
@@ -804,6 +627,7 @@ let isServerOnline = true; // Simulated server status
 let pendingDownload = null;
 let isAdminLoggedIn = false; // New state tracker
 let analyticsIntervalId = null; // ID untuk auto-refresh dashboard
+let currentToastTimeout = null; // [FIX BUG 1] Tambahkan untuk mengelola timeout toast
 
 /* ===========================
    File metadata
@@ -845,6 +669,7 @@ const translations = {
   id: {
     "Growfax Official": "Growfax Resmi",
     "📥 Downloads": "📥 Unduhan",
+    "👑 Role Shop": "👑 Toko Role", // [CHANGE 2] Tambahkan terjemahan untuk Tombol Role Shop
     "Welcome to Growfax": "Selamat Datang di Growfax",
     "Private Growtopia Server": "Server Growtopia Pribadi",
     "Local Time (New York):": "Waktu Lokal (New York):",
@@ -901,17 +726,6 @@ const translations = {
     "Meta Description": "Deskripsi Meta",
     "Meta Keywords (Comma-separated)": "Kata Kunci Meta (Dipisahkan Koma)",
     "Update SEO Meta": "Perbarui Meta SEO",
-    
-    // NEW Shop Translations
-    "⭐ Growfax Role Shop": "⭐ Toko Role Growfax",
-    "Unlock basic exclusive features.": "Buka fitur eksklusif dasar.",
-    "Advanced features and chat badge.": "Fitur canggih dan lencana chat.",
-    "Help manage the server & community.": "Bantu kelola server & komunitas.",
-    "High-level moderation access.": "Akses moderasi tingkat tinggi.",
-    "Early access to new features & testing.": "Akses awal ke fitur baru & pengujian.",
-    "Ultimate in-game privileges.": "Hak istimewa in-game tertinggi.",
-    "Purchase": "Beli",
-    "Apply/Buy": "Daftar/Beli",
   }
 };
 
@@ -1122,7 +936,7 @@ function updateAdminAreaTranslations(lang) {
 
 function applyTranslations(lang){
   const transitionDuration = 200; // ms
-  const elementsToTranslate = document.querySelectorAll('[data-original], #modalCancel, #modalConfirm, #welcomeSave, #welcomeSkip, #discordLink, #reportBugLink, #adminTokenSubmit, #closeAdmin, #toggleServerStatus, #saveNewsUpdate, #refreshAnalytics, #shopTitle, .role-card p:nth-child(3), .role-card button');
+  const elementsToTranslate = document.querySelectorAll('[data-original], #modalCancel, #modalConfirm, #welcomeSave, #welcomeSkip, #discordLink, #reportBugLink, #adminTokenSubmit, #closeAdmin, #toggleServerStatus, #saveNewsUpdate, #refreshAnalytics');
 
   // 1. Fade out (Opacity 0)
   elementsToTranslate.forEach(el => {
@@ -1494,15 +1308,27 @@ welcomeSkip.addEventListener('click', ()=> {
    Storage helpers & UI helpers
    =========================== */
 function showToast(text, ms=1500){
+  // [FIX BUG 1] Clear existing timeout
+  if (currentToastTimeout !== null) {
+    clearTimeout(currentToastTimeout);
+  }
+  
   toast.textContent = text;
   toast.style.opacity = '1';
   toast.style.transform = 'translateX(-50%) translateY(0)';
   toast.style.pointerEvents = 'auto';
   toast.style.display = 'block';
-  setTimeout(()=> {
+  
+  // [FIX BUG 1] Use currentToastTimeout for the main hide timer
+  currentToastTimeout = setTimeout(()=> {
     toast.style.opacity = '0';
     toast.style.pointerEvents = 'none';
-    setTimeout(()=> toast.style.display = 'none', 200);
+    
+    // Set display: none after CSS transition completes (200ms for safety)
+    setTimeout(()=> {
+        toast.style.display = 'none';
+        currentToastTimeout = null; // Mark as complete
+    }, 200);
   }, ms);
 }
 
