@@ -289,7 +289,7 @@
   }
   
   /* NEW: Admin Modal specific styles (input and buttons) */
-  #adminTokenInput, #newsUpdateTextarea {
+  #adminTokenInput, #newsUpdateTextarea, #seoTitleInput, #seoDescTextarea, #seoKeywordsInput {
     /* Ensure they match the theme */
     border: 1px solid var(--border-color) !important;
     background: var(--card-bg) !important;
@@ -516,7 +516,21 @@
                 <button class="btn primary" id="saveNewsUpdate" style="margin-top: 10px;">Save News</button>
             </div>
 
-             <div style="margin-top: 20px; text-align: right; border-top: 1px solid var(--border-color); padding-top: 10px;">
+            <div style="margin-top: 20px; padding: 15px; border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
+                <h4 style="margin: 0 0 10px; color: var(--accent);" id="seoTitle">SEO Management</h4>
+                
+                <label for="seoTitleInput" style="display: block; margin-top: 10px; font-size: 0.9rem;">Page Title (Hanya Title Tag HTML)</label>
+                <input type="text" id="seoTitleInput" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text);" placeholder="Enter Page Title...">
+
+                <label for="seoDescTextarea" style="display: block; margin-top: 10px; font-size: 0.9rem;">Meta Description</label>
+                <textarea id="seoDescTextarea" style="width: 100%; height: 80px; padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text); resize: vertical;" placeholder="Enter Meta Description..."></textarea>
+                
+                <label for="seoKeywordsInput" style="display: block; margin-top: 10px; font-size: 0.9rem;">Meta Keywords (Comma-separated)</label>
+                <input type="text" id="seoKeywordsInput" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text);" placeholder="Keyword1, Keyword2, ...">
+
+                <button class="btn primary" id="saveSeoMeta" style="margin-top: 10px;">Update SEO Meta</button>
+            </div>
+            <div style="margin-top: 20px; text-align: right; border-top: 1px solid var(--border-color); padding-top: 10px;">
                 <button class="btn secondary" id="closeAdmin">Close Admin Area</button>
             </div>
         </div>
@@ -539,7 +553,6 @@
    =========================== */
 function trackEvent(eventName, eventParams = {}) {
     // Fungsi ini menyimulasikan pengiriman data ke alat analitik (e.g., Google Analytics).
-    // Periksa konsol browser (F12) untuk melihat data analitik yang dikirim.
     console.log(`[ANALYTICS] Tracking event: ${eventName}`, eventParams);
     
     // Kirim event menggunakan gtag jika skrip GA dimuat
@@ -598,9 +611,17 @@ const recentActivitiesTitle = document.getElementById('recentActivitiesTitle');
 const recentActivitiesElement = document.getElementById('recentActivities');
 const refreshAnalytics = document.getElementById('refreshAnalytics');
 
+// NEW SEO Refs
+const seoTitle = document.getElementById('seoTitle');
+const seoTitleInput = document.getElementById('seoTitleInput');
+const seoDescTextarea = document.getElementById('seoDescTextarea');
+const seoKeywordsInput = document.getElementById('seoKeywordsInput');
+const saveSeoMeta = document.getElementById('saveSeoMeta');
+
 let isServerOnline = true; // Simulated server status
 let pendingDownload = null;
 let isAdminLoggedIn = false; // New state tracker
+let analyticsIntervalId = null; // NEW: ID untuk auto-refresh dashboard
 
 /* ===========================
    File metadata
@@ -691,6 +712,13 @@ const translations = {
     "Refresh Data": "Perbarui Data",
     "Download initiated:": "Unduhan dimulai: ",
     "Admin Login success": "Login Admin berhasil",
+
+    // NEW SEO Translations
+    "SEO Management": "Manajemen SEO",
+    "Page Title (Hanya Title Tag HTML)": "Judul Halaman (Hanya Tag Title HTML)",
+    "Meta Description": "Deskripsi Meta",
+    "Meta Keywords (Comma-separated)": "Kata Kunci Meta (Dipisahkan Koma)",
+    "Update SEO Meta": "Perbarui Meta SEO",
   }
 };
 
@@ -726,7 +754,8 @@ function renderAnalyticsDashboard() {
 
     // Simulated Analytics Data
     const SIMULATED_DATA = {
-        totalDownloads: 12450,
+        // Tambahkan angka acak kecil untuk simulasi perubahan data saat refresh
+        totalDownloads: 12450 + Math.floor(Math.random() * 5), 
         activities: [
             { time: new Date(Date.now() - 3600000), type: 'Download initiated:', details: 'VirtualHost (v2.1)' },
             { time: new Date(Date.now() - 7200000), type: 'Admin Login success', details: 'Jakarta, ID' },
@@ -777,6 +806,58 @@ function renderAnalyticsDashboard() {
     };
 }
 
+/* ===========================
+   SEO Management Logic
+   =========================== */
+function updateSeoMetaTags(title, desc, keywords) {
+    // 1. Update <title>
+    document.title = title;
+    
+    // 2. Update <meta name="description">
+    let metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.setAttribute('content', desc);
+    else {
+        metaDesc = document.createElement('meta');
+        metaDesc.setAttribute('name', 'description');
+        metaDesc.setAttribute('content', desc);
+        document.head.appendChild(metaDesc);
+    }
+
+    // 3. Update <meta name="keywords">
+    let metaKeywords = document.querySelector('meta[name="keywords"]');
+    if (metaKeywords) metaKeywords.setAttribute('content', keywords);
+    else {
+        metaKeywords = document.createElement('meta');
+        metaKeywords.setAttribute('name', 'keywords');
+        metaKeywords.setAttribute('content', keywords);
+        document.head.appendChild(metaKeywords);
+    }
+}
+
+function loadAndApplySeoSettings() {
+    // Default values from the original HTML head
+    const defaultTitle = 'Growfax Official - Private Growtopia Server & Downloads';
+    const defaultDesc = 'Situs resmi Growfax, private server Growtopia. Unduh file host terbaru untuk Android, Windows, dan iOS. Mainkan Growtopia dengan fitur eksklusif dan komunitas aktif!';
+    const defaultKeywords = 'Growfax, Growtopia Private Server, Growtopia PS, Download Growfax, Host Growtopia, Growfax Android, Growfax Windows';
+
+    // Load from LocalStorage
+    const savedTitle = localStorage.getItem('growfax_seo_title') || defaultTitle;
+    const savedDesc = localStorage.getItem('growfax_seo_desc') || defaultDesc;
+    const savedKeywords = localStorage.getItem('growfax_seo_keywords') || defaultKeywords;
+    
+    // Update Input Fields (only if refs exist)
+    if (seoTitleInput) {
+        seoTitleInput.value = savedTitle;
+        seoDescTextarea.value = savedDesc;
+        seoKeywordsInput.value = savedKeywords;
+    }
+
+    // Apply to <head>
+    updateSeoMetaTags(savedTitle, savedDesc, savedKeywords);
+}
+// Initial call to apply SEO on page load (takes effect immediately)
+loadAndApplySeoSettings();
+
 
 /* ===========================
    Smooth Translation Logic
@@ -797,13 +878,19 @@ function updateAdminAreaTranslations(lang) {
     
     // Update button/header texts within admin content
     if (adminContent.style.display !== 'none') {
+        // Server Status
         document.querySelector('#adminContent h4:nth-child(1)').textContent = lang === 'id' 
             ? (translations.id["Server Status"] || 'Status Server')
             : 'Server Status';
+        // Analytical Dashboard
         document.querySelector('#adminContent h4:nth-child(3)').textContent = lang === 'id' 
             ? (translations.id["News & Updates"] || 'Berita & Pembaruan')
             : 'News & Updates';
-        
+        // SEO Management (NEW)
+        document.querySelector('#adminContent h4:nth-child(4)').textContent = lang === 'id' 
+            ? (translations.id["SEO Management"] || 'Manajemen SEO')
+            : 'SEO Management';
+
         toggleServerStatus.textContent = lang === 'id' 
             ? (translations.id["Toggle Status (Simulate)"] || 'Ubah Status (Simulasi)') 
             : 'Toggle Status (Simulate)';
@@ -813,6 +900,23 @@ function updateAdminAreaTranslations(lang) {
         closeAdmin.textContent = lang === 'id' 
             ? (translations.id["Close Admin Area"] || 'Tutup Area Admin')
             : 'Close Admin Area';
+
+        // SEO Labels/Button (NEW)
+        document.querySelector('label[for="seoTitleInput"]').textContent = lang === 'id' 
+            ? (translations.id["Page Title (Hanya Title Tag HTML)"] || 'Judul Halaman (Hanya Tag Title HTML)') 
+            : 'Page Title (HTML Title Tag Only)';
+        
+        document.querySelector('label[for="seoDescTextarea"]').textContent = lang === 'id' 
+            ? (translations.id["Meta Description"] || 'Deskripsi Meta') 
+            : 'Meta Description';
+
+        document.querySelector('label[for="seoKeywordsInput"]').textContent = lang === 'id' 
+            ? (translations.id["Meta Keywords (Comma-separated)"] || 'Kata Kunci Meta (Dipisahkan Koma)') 
+            : 'Meta Keywords (Comma-separated)';
+
+        saveSeoMeta.textContent = lang === 'id' 
+            ? (translations.id["Update SEO Meta"] || 'Perbarui Meta SEO')
+            : 'Update SEO Meta';
 
         // Update Analytics Dashboard content if logged in
         renderAnalyticsDashboard(); 
@@ -1039,6 +1143,7 @@ function showAdminModal() {
         adminLogin.style.display = 'none';
         adminContent.style.display = 'block';
         renderAnalyticsDashboard(); // Load analytics when reopening
+        loadAndApplySeoSettings(); // Load SEO settings when reopening
     } else {
         adminLogin.style.display = 'block';
         adminContent.style.display = 'none';
@@ -1053,6 +1158,13 @@ function showAdminModal() {
 function hideAdminModal() {
     adminBackdrop.style.display = 'none';
     adminBackdrop.setAttribute('aria-hidden', 'true');
+
+    // NEW: Hentikan auto-refresh dashboard saat modal ditutup
+    if (analyticsIntervalId !== null) {
+        clearInterval(analyticsIntervalId);
+        analyticsIntervalId = null;
+        console.log("[ANALYTICS] Auto-refresh stopped");
+    }
 }
 
 openAdmin.addEventListener('click', () => {
@@ -1064,7 +1176,7 @@ adminBackdrop.addEventListener('click', (e) => {
     if (e.target === adminBackdrop) hideAdminModal();
 });
 
-// Added Analytical Tracking and Analytics Dashboard Render
+// Admin Login Logic (Updated with Auto-Refresh)
 adminTokenSubmit.addEventListener('click', () => {
     const token = adminTokenInput.value.trim();
     const lang = langSelect.value;
@@ -1074,11 +1186,16 @@ adminTokenSubmit.addEventListener('click', () => {
         adminLogin.style.display = 'none';
         adminContent.style.display = 'block';
         updateServerStatusDisplay();
-        // Load simulated news from local storage
+        // Load simulated news and SEO settings
         newsUpdateTextarea.value = localStorage.getItem('growfax_news_update') || ''; 
+        loadAndApplySeoSettings(); // Load SEO settings to inputs
         
-        // NEW: Render Analytics Dashboard on successful login
-        renderAnalyticsDashboard();
+        // NEW: Render Analytics Dashboard and START AUTO-REFRESH (30 seconds)
+        renderAnalyticsDashboard(); 
+        if (analyticsIntervalId === null) {
+            analyticsIntervalId = setInterval(renderAnalyticsDashboard, 30000); 
+            console.log("[ANALYTICS] Auto-refresh started (30s interval)");
+        }
 
         // Track Admin Login Success
         trackEvent('admin_login_success');
@@ -1119,6 +1236,30 @@ saveNewsUpdate.addEventListener('click', () => {
     });
     
     showToast(langSelect.value === 'id' ? 'Pembaruan Berita disimpan.' : 'News Update saved.', 1500);
+});
+
+// Save SEO Meta Logic (Simulated - NEW)
+saveSeoMeta.addEventListener('click', () => {
+    const title = seoTitleInput.value.trim();
+    const desc = seoDescTextarea.value.trim();
+    const keywords = seoKeywordsInput.value.trim();
+    const lang = langSelect.value;
+    
+    // Save to local storage for persistence
+    localStorage.setItem('growfax_seo_title', title);
+    localStorage.setItem('growfax_seo_desc', desc);
+    localStorage.setItem('growfax_seo_keywords', keywords);
+    
+    // Apply immediately to the page's <head>
+    updateSeoMetaTags(title, desc, keywords);
+    
+    // Track SEO Update
+    trackEvent('seo_meta_updated', {
+        title_length: title.length,
+        desc_length: desc.length
+    });
+    
+    showToast(lang === 'id' ? '✅ Pengaturan SEO diperbarui dan diterapkan.' : '✅ SEO Settings updated and applied.', 2000);
 });
 
 
