@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Growfax Official</title>
 <link rel="icon" href="Growfax_banner.jpg" type="image/jpeg">
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX'); // Placeholder ID for Growfax Analytics
+</script>
 <style>
   /* ============================================================
      Growfax Official — FULL UI stylesheet (futuristic neon/fax)
@@ -500,6 +508,20 @@
    ============================================================ */
 
 /* ===========================
+   Analytical Tool Function (NEW)
+   =========================== */
+function trackEvent(eventName, eventParams = {}) {
+    // Fungsi ini menyimulasikan pengiriman data ke alat analitik (e.g., Google Analytics).
+    // Periksa konsol browser (F12) untuk melihat data analitik yang dikirim.
+    console.log(`[ANALYTICS] Tracking event: ${eventName}`, eventParams);
+    
+    // Kirim event menggunakan gtag jika skrip GA dimuat
+    if (typeof gtag === 'function') {
+        gtag('event', eventName, eventParams);
+    }
+}
+
+/* ===========================
    Core refs & state
    =========================== */
 const langSelect = document.getElementById('langSelect');
@@ -816,6 +838,10 @@ document.querySelectorAll('.platform-buttons a').forEach(a=>{
             const toastMessage = (langSelect.value === 'id') ? '❌ Gagal menyalin teks!' : '❌ Failed to copy text!';
             showToast(toastMessage, 3000);
         });
+        
+        // NEW: Track PowerTunnel Copy Event
+        trackEvent('powertunnel_host_copied');
+        
         return; // Hentikan aksi selanjutnya (tidak perlu modal)
     }
     // --- AKHIR LOGIKA KHUSUS POWERTUNNEL ---
@@ -827,7 +853,7 @@ document.querySelectorAll('.platform-buttons a').forEach(a=>{
     modalUpdated.textContent = `${(langSelect.value === 'id') ? (translations.id['Updated'] || 'Diperbarui') + ': ' : 'Updated: '}${meta.updated}`;
     modalChangelog.innerText = `${(langSelect.value === 'id') ? (translations.id['Changelog'] || 'Catatan pembaruan') + ':' : 'Changelog:'}\n${meta.changelog}\n\n${(langSelect.value === 'id') ? (translations.id['Size'] || 'Ukuran') + ': ' : 'Size: '}${meta.size}`;
     modalFilename.textContent = (langSelect.value === 'id' ? (translations.id['Filename'] || 'Nama berkas') : 'Filename') + `: ${filename}`;
-    pendingDownload = { href: a.getAttribute('href'), filename };
+    pendingDownload = { href: a.getAttribute('href'), filename, version: meta.version };
     showModal();
   });
 });
@@ -835,8 +861,17 @@ function showModal(){ modalBackdrop.style.display='flex'; modalBackdrop.setAttri
 function hideModal(){ modalBackdrop.style.display='none'; modalBackdrop.setAttribute('aria-hidden','true'); pendingDownload=null; }
 modalCancel.addEventListener('click', ()=> hideModal());
 modalBackdrop.addEventListener('click', (e)=>{ if(e.target===modalBackdrop) hideModal(); });
+
+// MODIFIED: Added Analytical Tracking for Download
 modalConfirm.addEventListener('click', ()=>{
   if(!pendingDownload) return hideModal();
+  
+  // NEW: Track file download initiation
+  trackEvent('file_download_initiated', {
+    file_name: pendingDownload.filename,
+    file_version: pendingDownload.version || 'Unknown'
+  });
+  
   const a = document.createElement('a'); a.href = pendingDownload.href; a.download = pendingDownload.filename; document.body.appendChild(a); a.click(); a.remove();
   hideModal(); showToast(langSelect.value === 'id' ? 'Mulai mengunduh...' : 'Download started...');
 });
@@ -879,6 +914,7 @@ adminBackdrop.addEventListener('click', (e) => {
     if (e.target === adminBackdrop) hideAdminModal();
 });
 
+// MODIFIED: Added Analytical Tracking for Login Success/Failure
 adminTokenSubmit.addEventListener('click', () => {
     const token = adminTokenInput.value.trim();
     const lang = langSelect.value;
@@ -889,8 +925,15 @@ adminTokenSubmit.addEventListener('click', () => {
         updateServerStatusDisplay();
         // Load simulated news from local storage
         newsUpdateTextarea.value = localStorage.getItem('growfax_news_update') || ''; 
+        
+        // NEW: Track Admin Login Success
+        trackEvent('admin_login_success');
+        
         showToast(lang === 'id' ? '✅ Akses Admin diberikan!' : '✅ Admin Access granted!', 2000);
     } else {
+        // NEW: Track Admin Login Failure
+        trackEvent('admin_login_failure');
+        
         showToast(lang === 'id' ? '❌ Token Admin Salah.' : '❌ Incorrect Admin Token.', 2000);
         adminTokenInput.value = '';
         adminTokenInput.focus();
@@ -901,6 +944,12 @@ adminTokenSubmit.addEventListener('click', () => {
 toggleServerStatus.addEventListener('click', () => {
     isServerOnline = !isServerOnline;
     updateServerStatusDisplay();
+    
+    // NEW: Track Server Status Toggle
+    trackEvent('server_status_toggled', {
+        new_status: isServerOnline ? 'Online' : 'Offline'
+    });
+    
     showToast(langSelect.value === 'id' ? 'Status Server diubah.' : 'Server Status changed.', 1500);
 });
 
@@ -909,6 +958,12 @@ saveNewsUpdate.addEventListener('click', () => {
     const news = newsUpdateTextarea.value;
     // Save to local storage for persistence
     localStorage.setItem('growfax_news_update', news); 
+    
+    // NEW: Track News Update
+    trackEvent('news_update_saved', {
+        char_count: news.length
+    });
+    
     showToast(langSelect.value === 'id' ? 'Pembaruan Berita disimpan.' : 'News Update saved.', 1500);
 });
 
@@ -928,9 +983,23 @@ welcomeSave.addEventListener('click', ()=>{
   updateTime();
   setTheme(theme);
   hideWelcome();
+  
+  // NEW: Track Preference Save
+  trackEvent('preferences_saved', {
+      language: chosenLang,
+      theme: theme
+  });
+  
   showToast(chosenLang === 'id' ? 'Bahasa disimpan' : 'Preferences saved');
 });
-welcomeSkip.addEventListener('click', ()=> { hideWelcome(); showToast(langSelect.value === 'id' ? 'Dipilih nanti' : 'Maybe later'); });
+welcomeSkip.addEventListener('click', ()=> { 
+    hideWelcome(); 
+    
+    // NEW: Track Preference Skip
+    trackEvent('preferences_skipped');
+    
+    showToast(langSelect.value === 'id' ? 'Dipilih nanti' : 'Maybe later'); 
+});
 (function firstVisit(){ const seen = localStorage.getItem('growfax_seen'); if(!seen){ welcomeLang.value = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en'); const savedTheme = localStorage.getItem('growfax_theme') || 'light'; document.querySelectorAll('input[name="welcomeTheme"]').forEach(r=> r.checked = (r.value === savedTheme)); showWelcome(); localStorage.setItem('growfax_seen','1'); }})();
 
 /* ===========================
@@ -951,6 +1020,9 @@ function showToast(text, ms=1500){
 
 /* floating discord click (toast feedback) */
 document.getElementById('floatingChat').addEventListener('click', (e)=>{
+  // NEW: Track Discord Click
+  trackEvent('discord_button_click', { placement: 'floating' });
+  
   showToast(langSelect.value === 'id' ? 'Membuka Discord...' : 'Opening Discord...');
 });
 
@@ -958,6 +1030,9 @@ document.getElementById('floatingChat').addEventListener('click', (e)=>{
    Report Bug Link Handler (Optional for toast feedback)
    =========================== */
 reportBugLink.addEventListener('click', () => {
+  // NEW: Track Report Bug Click
+  trackEvent('report_bug_click');
+  
   // Hanya berikan feedback toast karena mailto: link sudah diatur
   showToast(langSelect.value === 'id' ? 'Membuka aplikasi email...' : 'Opening email application...');
 });
