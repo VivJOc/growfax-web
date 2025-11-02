@@ -30,6 +30,11 @@
     --danger:#e74c3c;
     --mono: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     --border-color: rgba(0,0,0,0.08);
+
+    /* NEW: Custom properties for glow effect in light mode */
+    --glow-color-light: rgba(0, 120, 215, 0.4); /* soft blue glow */
+    --text-shadow-light: 0 0 8px var(--glow-color-light), 0 2px 4px rgba(0,0,0,0.15);
+    --logo-shadow-light: 0 4px 12px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.08);
   }
   [data-theme="dark"]{
     --bg:#0f1720;
@@ -42,6 +47,11 @@
     --toast-bg:rgba(255,255,255,0.08);
     --glass: rgba(255,255,255,0.03);
     --border-color: rgba(255,255,255,0.06);
+
+    /* NEW: Custom properties for glow effect in dark mode */
+    --glow-color-dark: rgba(77, 163, 255, 0.6); /* brighter blue glow */
+    --text-shadow-dark: 0 0 10px var(--glow-color-dark), 0 2px 6px rgba(0,0,0,0.4);
+    --logo-shadow-dark: 0 6px 18px rgba(0,0,0,0.4), 0 3px 9px rgba(0,0,0,0.25);
   }
 
   html,body{
@@ -76,8 +86,31 @@
     flex: 1 1 50%;
   }
   .brand-wrap{display:flex;align-items:center;gap:8px}
-  .brand-wrap img{width:36px;height:36px;border-radius:6px;object-fit:cover}
-  h1{font-size:1.2rem;margin:0;font-weight:700}
+  
+  /* NEW: Glow and lift effect for logo image */
+  .brand-wrap img{
+    width:36px;
+    height:36px;
+    border-radius:6px;
+    object-fit:cover;
+    transition: box-shadow .25s;
+    box-shadow: var(--logo-shadow-light); /* Default light mode shadow */
+  }
+  [data-theme="dark"] .brand-wrap img {
+    box-shadow: var(--logo-shadow-dark); /* Dark mode shadow */
+  }
+
+  h1{
+    font-size:1.2rem;
+    margin:0;
+    font-weight:700;
+    transition: text-shadow .25s;
+    text-shadow: var(--text-shadow-light); /* Default light mode text shadow */
+  }
+  [data-theme="dark"] h1 {
+    text-shadow: var(--text-shadow-dark); /* Dark mode text shadow */
+  }
+
   .brand-wrap > div > div { font-size: 0.75rem; }
 
   nav.primary{
@@ -200,7 +233,9 @@
         align-items: center;
         padding: 14px 20px;
     }
+    /* NEW: PC size for logo image glow/lift */
     .brand-wrap img{width:46px;height:46px;border-radius:8px}
+    /* NEW: PC size for H1 glow/lift */
     h1{font-size:1.4rem;}
     .brand-wrap > div > div { font-size: 0.85rem; }
     nav.primary {
