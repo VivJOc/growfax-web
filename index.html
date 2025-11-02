@@ -66,14 +66,14 @@
     display:flex;
     justify-content:space-between;
     align-items:center;
-    gap:8px; /* Kurangi gap */
-    flex-wrap: wrap; /* FIX: Memungkinkan elemen di header membungkus ke baris baru */
+    gap:8px;
+    flex-wrap: wrap; 
   }
   .header-left{
     display:flex;
     align-items:center;
     gap:8px; 
-    flex: 1 1 50%; /* Mengizinkan header kiri menyusut */
+    flex: 1 1 50%;
   }
   .brand-wrap{display:flex;align-items:center;gap:8px}
   .brand-wrap img{width:36px;height:36px;border-radius:6px;object-fit:cover}
@@ -84,10 +84,10 @@
     color:var(--accent);
     text-decoration:none;
     font-weight:700;
-    margin-left:auto; /* Pindahkan ke kanan jika ada ruang */
+    margin-left:auto; 
     font-size: 0.9rem;
-    flex: 1 1 100%; /* FIX: Memaksa navigasi ke baris baru di mobile */
-    margin-top: 8px; /* Jarak dari baris atas */
+    flex: 1 1 100%; 
+    margin-top: 8px; 
     text-align: left;
   }
   nav.primary a{
@@ -95,7 +95,7 @@
       text-decoration:none;
       font-weight:700;
       margin-left:0;
-      margin-right: 12px; /* Jarak antar link di baris baru */
+      margin-right: 12px;
   }
   nav.primary a:hover{opacity:.86;transform:translateY(-1px)}
   
@@ -103,10 +103,30 @@
     display:flex;
     align-items:center;
     gap:6px;
-    flex: 0 1 auto; /* Memastikan kontrol tidak menyusut terlalu banyak */
+    flex: 0 1 auto;
   }
-  .theme-toggle,.lang-select,.open-welcome{font-size:0.9rem;padding:6px 8px;border-radius:8px;border:1px solid var(--border-color);background:transparent;color:var(--text);cursor:pointer}
-  
+  /* Gaya untuk semua tombol kontrol di header */
+  .theme-toggle,.lang-select,.open-welcome, .report-bug-btn {
+    font-size:0.9rem;
+    padding:6px 8px;
+    border-radius:8px;
+    border:1px solid var(--border-color);
+    background:transparent;
+    color:var(--text);
+    cursor:pointer;
+    text-decoration: none; /* Untuk link 'Report Bug' */
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: background-color .15s;
+  }
+  .report-bug-btn:hover, .theme-toggle:hover, .open-welcome:hover {
+    background: rgba(0,0,0,0.05);
+  }
+  [data-theme="dark"] .report-bug-btn:hover, [data-theme="dark"] .theme-toggle:hover, [data-theme="dark"] .open-welcome:hover {
+    background: rgba(255,255,255,0.05);
+  }
+
   /* -------------------------
      Banner / Hero
      ------------------------- */
@@ -184,9 +204,9 @@
     h1{font-size:1.4rem;}
     .brand-wrap > div > div { font-size: 0.85rem; }
     nav.primary {
-        flex: 0 1 auto; /* Revert flex */
+        flex: 0 1 auto; 
         margin-top: 0;
-        margin-left: 12px; /* Revert margin */
+        margin-left: 12px; 
         text-align: left;
     }
     nav.primary a{
@@ -195,7 +215,12 @@
         font-size: 1rem;
     }
     .controls{gap:10px}
-    .theme-toggle,.lang-select,.open-welcome{font-size:0.98rem;padding:8px 12px;}
+    /* Ukuran PC untuk semua tombol kontrol */
+    .theme-toggle,.lang-select,.open-welcome, .report-bug-btn {
+        font-size:0.98rem;
+        padding:8px 12px;
+        border-radius: 10px;
+    }
 
     /* Tombol Unduhan kembali ke layout 300px */
     .platform-buttons{gap:20px}
@@ -237,7 +262,13 @@
       </div>
 
       <div class="controls">
+        <a href="mailto:growfaxz.gmail.com?subject=Report Bug - Growfax&body=Sertakan detail bug dan lampirkan screenshot di sini. Terima kasih." 
+           id="reportBugLink" 
+           class="report-bug-btn" 
+           title="Report a Bug">🐞 Report Bug</a>
+        
         <button id="openWelcome" class="open-welcome" title="Welcome & Preferences">⚙️</button>
+        
         <select id="langSelect" class="lang-select" title="Language" aria-label="Select language">
           <option value="en">🇬🇧 English</option>
           <option value="id">🇮🇩 Bahasa</option>
@@ -367,6 +398,7 @@ const welcomeSkip = document.getElementById('welcomeSkip');
 
 const timeDisplay = document.getElementById('timeDisplay');
 const discordLink = document.getElementById('discordLink');
+const reportBugLink = document.getElementById('reportBugLink'); // NEW REF
 
 let pendingDownload = null;
 
@@ -430,7 +462,8 @@ const translations = {
     "Skip": "Lewati",
     "Language": "Bahasa",
     "Theme": "Tema",
-    "Opening Discord...": "Membuka Discord..."
+    "Opening Discord...": "Membuka Discord...",
+    "🐞 Report Bug": "🐞 Laporkan Bug" // NEW: Report Bug text
   }
 };
 
@@ -446,6 +479,7 @@ function applyTranslations(lang){
   welcomeSave.textContent = lang === 'id' ? (translations.id['Save & Continue'] || 'Simpan & Lanjutkan') : 'Save & Continue';
   welcomeSkip.textContent = lang === 'id' ? (translations.id['Skip'] || 'Lewati') : 'Skip';
   discordLink.textContent = lang === 'id' ? (translations.id['Join Growfax Discord'] || 'Gabung Discord Growfax') : 'Join Growfax Discord';
+  reportBugLink.textContent = lang === 'id' ? (translations.id['🐞 Report Bug'] || '🐞 Laporkan Bug') : '🐞 Report Bug';
 }
 
 /* ===========================
@@ -593,6 +627,13 @@ function showToast(text, ms=1500){
 /* floating discord click (toast feedback) */
 document.getElementById('floatingChat').addEventListener('click', (e)=>{
   showToast(langSelect.value === 'id' ? 'Membuka Discord...' : 'Opening Discord...');
+});
+
+/* ===========================
+   Report Bug Link Handler (Optional for toast feedback)
+   =========================== */
+reportBugLink.addEventListener('click', () => {
+  showToast(langSelect.value === 'id' ? 'Membuka aplikasi email...' : 'Opening email application...');
 });
 
 /* ===========================
