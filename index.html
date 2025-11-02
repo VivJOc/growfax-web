@@ -1779,5 +1779,121 @@ www.growtopia2.com = 91.134.85.13`
        =========================== */
     console.log('%cGrowfax Engine Ready ✅', 'color: #00ff88; font-weight: bold; font-size: 16px;');
 </script>
+
+<!-- Injected: Modern toast + copy/confirm behavior for platform buttons -->
+<script>
+(function(){
+  // Ensure toast element exists and showToast function is available
+  const existingToast = document.getElementById('toast');
+  function ensureToast(){
+    if(!existingToast){
+      const t = document.createElement('div');
+      t.id = 'toast';
+      t.className = 'toast';
+      t.setAttribute('role','alert');
+      t.setAttribute('aria-live','assertive');
+      document.body.appendChild(t);
+    }
+  }
+  ensureToast();
+
+  // Reusable toast display (uses existing .toast styles)
+  function showModernToast(msg, duration=2000){
+    const toastEl = document.getElementById('toast');
+    if(!toastEl) return;
+    toastEl.textContent = msg;
+    toastEl.style.opacity = '1';
+    toastEl.style.transform = 'translateX(-50%) translateY(0)';
+    // Position bottom-right modern style
+    toastEl.style.left = 'auto';
+    toastEl.style.right = '18px';
+    toastEl.style.bottom = '18px';
+    toastEl.style.padding = '10px 14px';
+    toastEl.style.borderRadius = '10px';
+    toastEl.style.background = 'rgba(0,0,0,0.75)';
+    toastEl.style.color = '#fff';
+    toastEl.style.pointerEvents = 'auto';
+    setTimeout(()=>{
+      toastEl.style.opacity = '0';
+      toastEl.style.transform = 'translateX(-50%) translateY(12px)';
+    }, duration);
+  }
+
+  // Intercept platform buttons clicks earlier than other listeners
+  document.querySelectorAll('.platform-buttons a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      // Run our logic and prevent default handlers from running
+      e.preventDefault();
+      e.stopImmediatePropagation && e.stopImmediatePropagation();
+
+      const fileKey = link.getAttribute('data-filekey');
+      const filename = link.getAttribute('data-filename') || '';
+      const meta = (window.FILE_META && window.FILE_META[fileKey]) ? window.FILE_META[fileKey] : null;
+
+      // If fileKey missing, fallback to default behavior
+      if(!fileKey || !meta){
+        // If href exists, allow download after confirmation
+        const href = link.getAttribute('href');
+        if(href && href !== '#'){
+          const ok = confirm('Apakah Anda yakin ingin mendownload dari website Growfax.web.id?');
+          if(ok){
+            const temp = document.createElement('a');
+            temp.href = href;
+            temp.download = filename || '';
+            document.body.appendChild(temp);
+            temp.click();
+            temp.remove();
+          }
+        }
+        return;
+      }
+
+      if(fileKey === 'ios' || fileKey === 'powertunnel'){
+        // Direct copy to clipboard and show toast (no file info modal)
+        if(meta.copytext){
+          navigator.clipboard.writeText(meta.copytext).then(() => {
+            showModernToast('✅ Berhasil disalin!', 2000);
+          }).catch(() => {
+            // fallback: show prompt with textarea to copy manually
+            const ta = document.createElement('textarea');
+            ta.value = meta.copytext;
+            document.body.appendChild(ta);
+            ta.select();
+            try{ document.execCommand('copy'); showModernToast('✅ Berhasil disalin!', 2000); }catch(err){ alert('Salin manual: \\n' + meta.copytext); }
+            ta.remove();
+          });
+        } else {
+          showModernToast('⚠️ Tidak ada konfigurasi tersedia.', 2000);
+        }
+      } else if(fileKey === 'virtualhost' || fileKey === 'patched'){
+        // Confirmation then download
+        const ok = confirm('Apakah Anda yakin ingin mendownload dari website Growfax.web.id?');
+        if(ok){
+          const href = link.getAttribute('href');
+          if(href && href !== '#'){
+            const temp = document.createElement('a');
+            temp.href = href;
+            temp.download = filename || '';
+            document.body.appendChild(temp);
+            temp.click();
+            temp.remove();
+            showModernToast('⬇️ Download dimulai', 1500);
+          } else {
+            showModernToast('⚠️ File tidak tersedia.', 2000);
+          }
+        }
+      } else {
+        // default behavior for other keys: show modal as before
+        // find and trigger existing modal flow by simulating click without prevention
+        const clickEvent = new MouseEvent('click', {bubbles: true, cancelable: true});
+        // re-dispatch to allow other handlers (if any)
+        // but allow user to proceed normally
+        link.dispatchEvent(clickEvent);
+      }
+    }, {capture: true});
+  });
+})();
+</script>
+<!-- End injected script -->
 </body>
 </html>
