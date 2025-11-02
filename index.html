@@ -50,6 +50,14 @@
     50% { transform: scale(1.02); box-shadow: var(--logo-shadow-hover); }
     100% { transform: scale(1); box-shadow: var(--logo-shadow); }
   }
+  
+  /* NEW: Keyframes for subtle moving image effect on banner */
+  @keyframes subtle-pan-zoom {
+      0% { transform: scale(1) translate(0, 0); }
+      50% { transform: scale(1.03) translate(1%, -1%); }
+      100% { transform: scale(1) translate(0, 0); }
+  }
+
 
   :root{
     --bg:#f8f8f8;
@@ -211,8 +219,21 @@
   /* -------------------------
      Banner / Hero
      ------------------------- */
-  .banner-section{text-align:center;padding:40px 10px;background:linear-gradient(90deg, rgba(0,0,0,0.03), rgba(255,255,255,0.02))}
-  .banner-section img{max-width:200px;border-radius:8px;margin-bottom:14px}
+  .banner-section{
+    text-align:center;
+    padding:40px 10px;
+    background:linear-gradient(90deg, rgba(0,0,0,0.03), rgba(255,255,255,0.02));
+    overflow: hidden; /* Added to contain the moving image */
+  }
+  .banner-section img{
+    max-width:200px;
+    border-radius:8px;
+    margin-bottom:14px;
+    
+    /* NEW: Moving image animation */
+    transition: box-shadow .25s, transform .25s, opacity 0.2s ease;
+    animation: subtle-pan-zoom 15s infinite ease-in-out;
+  }
   .banner-section h2{
     font-size:1.6rem;
     color:#ffaa00;
@@ -297,7 +318,6 @@
   .btn-moderator { border-color: #2ecc71; } /* Green */
   .btn-supermod { border-color: #9b59b6; } /* Purple */
   .btn-developer { border-color: #f39c12; } /* Orange */
-  .btn-prodeveloper { border-color: #e74c3c; } /* Red */
   .btn-god { border-color: #e91e63; } /* Pink */
   
   /* -------------------------
@@ -321,13 +341,13 @@
   }
 
   /* -------------------------
-     Modal & Welcome/Admin Popup
+     Welcome/Admin Popup (Modal was removed)
      ------------------------- */
-  .modal-backdrop, .welcome-backdrop, .admin-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:1300}
-  .modal, .welcome{width:92%;max-width:560px;background:var(--card-bg);color:var(--text);border-radius:12px;padding:16px;box-shadow:0 14px 40px rgba(0,0,0,0.2);transform:translateY(0);transition:transform .18s,opacity .18s}
+  .welcome-backdrop, .admin-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:1300}
+  .welcome, .modal{width:92%;max-width:560px;background:var(--card-bg);color:var(--text);border-radius:12px;padding:16px;box-shadow:0 14px 40px rgba(0,0,0,0.2);transform:translateY(0);transition:transform .18s,opacity .18s}
   
   /* Added opacity transition to modal/welcome text elements */
-  .modal h3, .modal p, .modal .changelog, .welcome h2, .welcome p, .welcome label, .welcome button, .modal h2, .modal h4 {
+  .welcome h2, .welcome p, .welcome label, .welcome button, .modal h2, .modal h4 {
       transition: opacity 0.2s ease;
   }
   
@@ -523,14 +543,6 @@
         </div>
       </a>
       
-      <a href="https://paypal.me/Growfax/9.025USD" target="_blank" rel="noopener" class="shop-btn btn-prodeveloper" role="listitem">
-        <span style="font-size: 1.5rem;">⚙️</span>
-        <div>
-          <span style="font-size:1.1rem; font-weight:700;" data-original="Pro Developer Role">Pro Developer Role</span>
-          <span style="font-size:0.9rem; opacity:0.8; display:block;">$9.025 USD — <span data-original="Buy Now">Buy Now</span></span>
-        </div>
-      </a>
-
       <a href="https://paypal.me/Growfax/10.83USD" target="_blank" rel="noopener" class="shop-btn btn-god" role="listitem">
         <span style="font-size: 1.5rem;">✨</span>
         <div>
@@ -550,28 +562,6 @@
   </section>
 
   <footer>© 2025 Growfax. All rights reserved.</footer>
-
-  <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <h3 id="modalTitle">File info</h3>
-      <p id="modalDesc">Details before download</p>
-
-      <div class="meta">
-        <div class="chip" id="modalVersion">v0.0</div>
-        <div class="chip" id="modalUpdated">Updated: —</div>
-      </div>
-
-      <div class="changelog" id="modalChangelog">Changelog: —</div>
-
-      <div style="display:flex;gap:8px;align-items:center;justify-content:space-between">
-        <div style="font-size:.9rem;color:var(--muted)" id="modalFilename">Filename</div>
-        <div class="buttons">
-          <button class="btn secondary" id="modalCancel">Cancel</button>
-          <button class="btn primary" id="modalConfirm">Download</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <div id="welcomeBackdrop" class="welcome-backdrop" aria-hidden="true">
     <div class="welcome" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
@@ -685,15 +675,7 @@ const langSelect = document.getElementById('langSelect');
 const themeToggle = document.getElementById('themeToggle');
 const openWelcome = document.getElementById('openWelcome');
 const toast = document.getElementById('toast');
-const modalBackdrop = document.getElementById('modalBackdrop');
-const modalTitle = document.getElementById('modalTitle');
-const modalDesc = document.getElementById('modalDesc');
-const modalVersion = document.getElementById('modalVersion');
-const modalUpdated = document.getElementById('modalUpdated');
-const modalChangelog = document.getElementById('modalChangelog');
-const modalFilename = document.getElementById('modalFilename');
-const modalConfirm = document.getElementById('modalConfirm');
-const modalCancel = document.getElementById('modalCancel');
+// REMOVED: modalBackdrop, modalTitle, modalDesc, modalVersion, modalUpdated, modalChangelog, modalFilename, modalConfirm, modalCancel
 
 const welcomeBackdrop = document.getElementById('welcomeBackdrop');
 const welcomeLang = document.getElementById('welcomeLang');
@@ -736,30 +718,17 @@ const seoKeywordsInput = document.getElementById('seoKeywordsInput');
 const saveSeoMeta = document.getElementById('saveSeoMeta');
 
 let isServerOnline = true; // Simulated server status
-let pendingDownload = null;
 let isAdminLoggedIn = false; // New state tracker
 let analyticsIntervalId = null; // ID untuk auto-refresh dashboard
 
 /* ===========================
-   File metadata
-   - PowerTunnel & iOS: Copy-text
+   File metadata (Simplified for Copy Text)
    =========================== */
-const FILE_META = {
-  virtualhost: { version: 'v2.1', updated: 'Oct 29, 2025', changelog: '- Fixed host parsing\\n- Improved TLS handling', size: '2.3 KB' },
-  patched: { version: 'v1.9', updated: 'Oct 20, 2025', changelog: '- Patched launcher\\n- Minor fixes', size: '12.1 KB' },
-  // MODIFIED: iOS now uses copytext instead of download
+const FILE_META_COPY = {
   ios: { 
-    version: 'v1.5', 
-    updated: 'Nov 02, 2025', 
-    changelog: 'Instruksi: Konfigurasi Surge/Shadowrocket telah disalin secara otomatis ke clipboard Anda. Tempelkan di bagian [Host] atau custom config.', 
-    size: '1.5 KB',
     copytext: `[General]\nbypass-system = true\n\n[Rule]\nFINAL,DIRECT\n\n[Host]\ngrowtopia1.com = 91.134.85.13\ngrowtopia2.com = 91.134.85.13\nwww.growtopia1.com = 91.134.85.13\nwww.growtopia2.com = 91.134.85.13`
   },
   powertunnel: { 
-    version: 'v3.0', 
-    updated: 'Oct 10, 2025', 
-    changelog: 'Instruksi: Teks Host telah disalin secara otomatis ke clipboard Anda. Silakan tempelkan ke konfigurasi PowerTunnel Anda.', 
-    size: '1.9 KB',
     copytext: `15.235.232.75 growtopia1.com\n15.235.232.75 growtopia2.com\n15.235.232.75 www.growtopia1.com\n15.235.232.75 www.growtopia2.com`
   }
 };
@@ -793,8 +762,7 @@ const translations = {
     "Connect with others and get support in our official Discord server.": "Terhubung dengan anggota lain dan dapatkan dukungan di server Discord resmi kami.",
     "Join Growfax Discord": "Gabung Discord Growfax",
     "© 2025 Growfax. All rights reserved.": "© 2025 Growfax. Semua hak dilindungi.",
-    "Are you sure you want to download": "Apakah Anda yakin ingin mengunduh",
-    "Details before download": "Detail sebelum mengunduh",
+    // REMOVED: modal translations
     "Cancel": "Batal",
     "Download": "Unduh",
     "Filename": "Nama berkas",
@@ -818,7 +786,6 @@ const translations = {
     "Moderator Role": "Role Moderator",
     "Super Moderator Role": "Role Super Moderator",
     "Developer Role": "Role Developer",
-    "Pro Developer Role": "Role Pro Developer",
     "God Role": "Role God",
     "Buy Now": "Beli Sekarang",
 
@@ -1058,7 +1025,7 @@ function updateAdminAreaTranslations(lang) {
 
 function applyTranslations(lang){
   const transitionDuration = 200; // ms
-  const elementsToTranslate = document.querySelectorAll('[data-original], #modalCancel, #modalConfirm, #welcomeSave, #welcomeSkip, #discordLink, #reportBugLink, #adminTokenSubmit, #closeAdmin, #toggleServerStatus, #saveNewsUpdate, #refreshAnalytics');
+  const elementsToTranslate = document.querySelectorAll('[data-original], #welcomeSave, #welcomeSkip, #discordLink, #reportBugLink, #adminTokenSubmit, #closeAdmin, #toggleServerStatus, #saveNewsUpdate, #refreshAnalytics');
 
   // 1. Fade out (Opacity 0)
   elementsToTranslate.forEach(el => {
@@ -1086,8 +1053,7 @@ function applyTranslations(lang){
     });
 
     // Fix buttons/labels manually
-    modalCancel.textContent = lang === 'id' ? (translations.id['Cancel'] || 'Batal') : 'Cancel';
-    modalConfirm.textContent = lang === 'id' ? (translations.id['Download'] || 'Unduh') : 'Download';
+    // REMOVED: modalCancel, modalConfirm translations
     welcomeSave.textContent = lang === 'id' ? (translations.id['Save & Continue'] || 'Simpan & Lanjutkan') : 'Save & Continue';
     welcomeSkip.textContent = lang === 'id' ? (translations.id['Skip'] || 'Lewati') : 'Skip';
     discordLink.textContent = lang === 'id' ? (translations.id['Join Growfax Discord'] || 'Gabung Discord Growfax') : 'Join Growfax Discord';
@@ -1193,21 +1159,24 @@ updateTime();
 setInterval(updateTime, 1000);
 
 /* ===========================
-   File Update Checker (modal)
+   File Download Logic (Direct Action - Modal Removed)
    =========================== */
 document.querySelectorAll('.platform-buttons a').forEach(a=>{
   a.addEventListener('click', (e)=>{
     // Allow ctrl/meta click (open in new tab) and middle-click
-    if(e.ctrlKey || e.metaKey || e.button === 1) return;
-    e.preventDefault();
+    if (e.ctrlKey || e.metaKey || e.button === 1) return;
+    
     const key = a.dataset.filekey;
-    const meta = FILE_META[key] || { version: 'v1.0', updated: 'Unknown', changelog: 'No details', size: '—' };
     const filename = a.dataset.filename || key;
+    const href = a.getAttribute('href');
 
-    // --- MODIFIED LOGIC: COPY TEXT (iOS, PowerTunnel, dll.) ---
-    if (meta.copytext) {
-        // Teks tersedia, salin ke clipboard
-        navigator.clipboard.writeText(meta.copytext).then(() => {
+    const isCopyText = (key === 'ios' || key === 'powertunnel'); 
+    
+    if (isCopyText) {
+        e.preventDefault(); // Stop default navigation
+        const copyMeta = FILE_META_COPY[key];
+        
+        navigator.clipboard.writeText(copyMeta.copytext).then(() => {
             let toastMessage;
             if (key === 'ios') {
                 toastMessage = (langSelect.value === 'id') ? '✅ Konfigurasi iOS berhasil disalin!' : '✅ iOS configuration copied!';
@@ -1221,41 +1190,15 @@ document.querySelectorAll('.platform-buttons a').forEach(a=>{
             showToast(toastMessage, 3000);
         });
         
-        // Track Copy Event (General)
+        // Track Copy Event
         trackEvent('config_copied', { platform: key });
-        
-        return; // Hentikan aksi selanjutnya (tidak perlu modal)
+    } else {
+        // Direct Download (Android/Windows) - Allow default behavior
+        // Track download initiation
+        trackEvent('file_download_initiated', { file_name: filename });
+        showToast(langSelect.value === 'id' ? 'Mulai mengunduh...' : 'Download started...');
     }
-    // --- AKHIR LOGIKA COPY TEXT ---
-
-    // Lanjutkan dengan logika modal/download untuk file lain
-    modalTitle.textContent = (langSelect.value === 'id') ? (translations.id['Details before download'] || 'Detail sebelum mengunduh') : 'Details before download';
-    modalDesc.textContent = (langSelect.value === 'id') ? `Info untuk ${filename}` : `Info for ${filename}`;
-    modalVersion.textContent = `${(langSelect.value === 'id') ? (translations.id['Version'] || 'Versi') + ': ' : 'Version: '}${meta.version}`;
-    modalUpdated.textContent = `${(langSelect.value === 'id') ? (translations.id['Updated'] || 'Diperbarui') + ': ' : 'Updated: '}${meta.updated}`;
-    modalChangelog.innerText = `${(langSelect.value === 'id') ? (translations.id['Changelog'] || 'Catatan pembaruan') + ':' : 'Changelog:'}\n${meta.changelog}\n\n${(langSelect.value === 'id') ? (translations.id['Size'] || 'Ukuran') + ': ' : 'Size: '}${meta.size}`;
-    modalFilename.textContent = (langSelect.value === 'id' ? (translations.id['Filename'] || 'Nama berkas') : 'Filename') + `: ${filename}`;
-    pendingDownload = { href: a.getAttribute('href'), filename, version: meta.version };
-    showModal();
   });
-});
-function showModal(){ modalBackdrop.style.display='flex'; modalBackdrop.setAttribute('aria-hidden','false'); setTimeout(()=>modalConfirm.focus(),200); }
-function hideModal(){ modalBackdrop.style.display='none'; modalBackdrop.setAttribute('aria-hidden','true'); pendingDownload=null; }
-modalCancel.addEventListener('click', ()=> hideModal());
-modalBackdrop.addEventListener('click', (e)=>{ if(e.target===modalBackdrop) hideModal(); });
-
-// Added Analytical Tracking for Download
-modalConfirm.addEventListener('click', ()=>{
-  if(!pendingDownload) return hideModal();
-  
-  // Track file download initiation
-  trackEvent('file_download_initiated', {
-    file_name: pendingDownload.filename,
-    file_version: pendingDownload.version || 'Unknown'
-  });
-  
-  const a = document.createElement('a'); a.href = pendingDownload.href; a.download = pendingDownload.filename; document.body.appendChild(a); a.click(); a.remove();
-  hideModal(); showToast(langSelect.value === 'id' ? 'Mulai mengunduh...' : 'Download started...');
 });
 
 /* ===========================
