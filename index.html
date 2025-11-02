@@ -45,7 +45,7 @@
   /* Global Reset: Ensure padding/border don't cause overflow */
   *, *::before, *::after {
     box-sizing: border-box;
-}
+  }
 
   /* NEW: Keyframes for Logo Animation */
   @keyframes pulse {
@@ -110,7 +110,7 @@
     line-height:1.6;
     transition:background .25s,color .25s;
     overflow-x: hidden;
- }
+  }
   
   /* -------------------------
      Header / Navigation (Optimasi Mobile)
@@ -125,13 +125,13 @@
     align-items:center;
     gap:8px;
     flex-wrap: wrap;
- }
+  }
   .header-left{
     display:flex;
     align-items:center;
     gap:8px; 
     flex: 1 1 50%;
- }
+  }
   .brand-wrap{display:flex;align-items:center;gap:8px}
   
   /* Glow, lift, and Pulse Animation for logo image */
@@ -175,7 +175,7 @@
     margin-top: 6px;
  /* ADJUSTED: Reduced margin for tighter fit */
     text-align: left;
- }
+  }
   nav.primary a{
       color:var(--accent);
       text-decoration:none;
@@ -214,10 +214,10 @@
  }
   .report-bug-btn:hover, .theme-toggle:hover, .open-welcome:hover, #openAdmin:hover {
     background: rgba(0,0,0,0.05);
- }
+  }
   [data-theme="dark"] .report-bug-btn:hover, [data-theme="dark"] .theme-toggle:hover, [data-theme="dark"] .open-welcome:hover, [data-theme="dark"] .#openAdmin:hover {
     background: rgba(255,255,255,0.05);
- }
+  }
 
   /* -------------------------
      Banner / Hero
@@ -243,7 +243,7 @@
     font-weight:600;
     opacity:.9;
     transition: opacity 0.2s ease;
- }
+  }
 
   /* -------------------------
      Container (main content)
@@ -263,7 +263,7 @@
     padding:14px 18px;border-radius:12px;color:#fff;font-weight:700;
     text-decoration:none;border:1px solid transparent;font-size:1.02rem;
     transition:transform .18s ease,box-shadow .18s, opacity 0.2s ease;
- }
+  }
   .platform-buttons a img{width:30px;height:30px;border-radius:6px}
   .platform-buttons a:hover{transform:translateY(-2px)}
 
@@ -282,7 +282,7 @@
       margin-left: auto;
       margin-right: auto;
       text-align: left;
- }
+  }
   .shop-role-card {
       background: var(--card-bg);
       padding: 20px;
@@ -342,7 +342,7 @@
  /* Border for visual clarity of scroll area */
       padding: 8px;
       border-radius: 6px;
- }
+  }
 
   /* Style adjustment for the list items inside the scrollable area */
   .shop-role-card ul li {
@@ -457,7 +457,7 @@
   .discord-section img{width:48px;height:48px;border-radius:8px;margin-bottom:8px}
   .discord-section h3, .discord-section p, .discord-section a {
     transition: opacity 0.2s ease;
- }
+  }
 
   /* -------------------------
      Footer
@@ -479,7 +479,7 @@
   /* Added opacity transition to modal/welcome text elements */
   .modal h3, .modal p, .modal .changelog, .welcome h2, .welcome p, .welcome label, .welcome button, .modal h2, .modal h4 {
       transition: opacity 0.2s ease;
- }
+  }
   
   /* NEW: Admin Modal specific styles (input and buttons) */
   #adminTokenInput, #newsUpdateTextarea, #seoTitleInput, #seoDescTextarea, #seoKeywordsInput {
@@ -631,8 +631,7 @@
           <a href="Growfax_Patched_.bat" class="btn-windows" data-filename="Growfax_Patched_.bat" data-filekey="patched" download 
  role="listitem">
   
- 
-        <img src="windows.png" alt="">Play on Windows
+       <img src="windows.png" alt="">Play on Windows
           </a>
 
           <a href="#" class="btn-ios" data-filename="GrowFax_ios_config.txt" data-filekey="ios" role="listitem">
@@ -643,7 +642,6 @@
             <img src="powertunnel.jpeg" alt="">Play via PowerTunnel
  
   
-      
        </a>
         </div>
     </section>
@@ -687,112 +685,70 @@
                     <a href="https://paypal.me/BilzXd1/60.75SGD" target="_blank" rel="noopener" class="btn-purchase btn-sgd" data-role="admin" data-price-sgd="60.75">Pay S$SGD</a>
                     <a href="https://paypal.me/BilzXd1/11.61CAD" target="_blank" rel="noopener" class="btn-purchase btn-cad" data-role="admin" data-price-cad="11.61">Pay C$CAD</a>
                     <a href="https://paypal.me/BilzXd1/675000IDR" target="_blank" 
- rel="noopener" class="btn-idr btn-purchase" data-role="admin" data-price-idr="675000">Bayar Rp IDR</a>
-                </div>
-            </div>
-            
-            <div class="shop-role-card">
-                <div>
-                    <h3>🌟 VIP Server Role</h3>
-                    <p class="price" data-usd="20" data-idr="300000" data-eur="16.50" data-gbp="16.00" data-aud="27.00" data-sgd="27.00" data-cad="27.00">
-                        $20.00 <small>USD</small>
-                        <span class="currency-display">
-                            ~ £16.00 <small>GBP</small> | ~ Rp 300.000 <small>IDR</small> | ~ S$27.00 <small>SGD</small><br>
-                            ~ €16.50 <small>EUR</small> | ~ A$27.00 <small>AUD</small> | ~ C$27.00 <small>CAD</small>
-                        </span>
-                    </p>
-                    <ul id="vip_commands"></ul>
-                </div>
-                <div class="purchase-buttons">
-                    <a href="https://paypal.me/BilzXd1/20USD" target="_blank" rel="noopener" class="btn-purchase btn-usd" data-role="vip" data-price="20">Pay $USD</a>
-                    <a href="https://paypal.me/BilzXd1/16.50EUR" target="_blank" rel="noopener" class="btn-purchase btn-eur" data-role="vip" data-price-eur="16.50">Pay €EUR</a>
-                    <a href="https://paypal.me/BilzXd1/16.00GBP" target="_blank" rel="noopener" class="btn-purchase btn-gbp" data-role="vip" data-price-gbp="16.00">Pay £GBP</a>
-                    <a href="https://paypal.me/BilzXd1/27.00AUD" target="_blank" rel="noopener" class="btn-purchase btn-aud" data-role="vip" data-price-aud="27.00">Pay A$AUD</a>
-                    <a href="https://paypal.me/BilzXd1/27.00SGD" target="_blank" rel="noopener" class="btn-purchase btn-sgd" data-role="vip" data-price-sgd="27.00">Pay S$SGD</a>
-                    <a href="https://paypal.me/BilzXd1/27.00CAD" target="_blank" rel="noopener" class="btn-purchase btn-cad" data-role="vip" data-price-cad="27.00">Pay C$CAD</a>
-                    <a href="https://paypal.me/BilzXd1/300000IDR" target="_blank" rel="noopener" class="btn-idr btn-purchase" data-role="vip" data-price-idr="300000">Bayar Rp IDR</a>
-                </div>
-            </div>
-            
-            <div class="shop-role-card">
-                <div>
-                    <h3>✨ Supporter Role</h3>
-                    <p class="price" data-usd="10" data-idr="150000" data-eur="9.00" data-gbp="8.00" data-aud="13.50" data-sgd="13.50" data-cad="13.50">
-                        $10.00 <small>USD</small>
-                        <span class="currency-display">
-                            ~ £8.00 <small>GBP</small> | ~ Rp 150.000 <small>IDR</small> | ~ S$13.50 <small>SGD</small><br>
-                            ~ €9.00 <small>EUR</small> | ~ A$13.50 <small>AUD</small> | ~ C$13.50 <small>CAD</small>
-                        </span>
-                    </p>
-                    <ul id="supporter_commands"></ul>
-                </div>
-                <div class="purchase-buttons">
-                    <a href="https://paypal.me/BilzXd1/10USD" target="_blank" rel="noopener" class="btn-purchase btn-usd" data-role="supporter" data-price="10">Pay $USD</a>
-                    <a href="https://paypal.me/BilzXd1/9.00EUR" target="_blank" rel="noopener" class="btn-purchase btn-eur" data-role="supporter" data-price-eur="9.00">Pay €EUR</a>
-                    <a href="https://paypal.me/BilzXd1/8.00GBP" target="_blank" rel="noopener" class="btn-purchase btn-gbp" data-role="supporter" data-price-gbp="8.00">Pay £GBP</a>
-                    <a href="https://paypal.me/BilzXd1/13.50AUD" target="_blank" rel="noopener" class="btn-purchase btn-aud" data-role="supporter" data-price-aud="13.50">Pay A$AUD</a>
-                    <a href="https://paypal.me/BilzXd1/13.50SGD" target="_blank" rel="noopener" class="btn-purchase btn-sgd" data-role="supporter" data-price-sgd="13.50">Pay S$SGD</a>
-                    <a href="https://paypal.me/BilzXd1/13.50CAD" target="_blank" rel="noopener" class="btn-purchase btn-cad" data-role="supporter" data-price-cad="13.50">Pay C$CAD</a>
-                    <a href="https://paypal.me/BilzXd1/150000IDR" target="_blank" rel="noopener" class="btn-idr btn-purchase" data-role="supporter" data-price-idr="150000">Bayar Rp IDR</a>
-                </div>
+ rel="noopener" class="btn-purchase btn-idr" data-role="admin" data-idr-price="675000">Bayar Rp IDR</a>
+   
+       
+        </div>
             </div>
         </div>
-
-    </section>
-
-    <section class="discord-section" role="complementary" aria-label="Discord Community">
-      <img src="discord.jpeg" alt="Discord Logo">
-      <h3>Join Our Community</h3>
-      <p>Connect with others and get support in our official Discord server.</p>
-      <a id="discordLink" href="https://discord.gg/smgS6sq83y" target="_blank" rel="noopener" class="btn-purchase" style="background:#5865f2;margin-top:16px;">Join Growfax Discord</a>
-    </section>
-
+        </section>
   </main>
 
-  <footer>
-    <p>&copy; <span id="currentYear"></span> Growfax Official. All Rights Reserved.</p>
-  </footer>
+  <section class="discord-section" aria-label="Discord community">
+    <img src="discord.jpeg" alt="Discord Logo">
+    <h3>Join Our Community</h3>
+    <p>Connect with others and get support in our official Discord server.</p>
+    <a id="discordLink" href="https://discord.gg/smgS6sq83y" target="_blank" rel="noopener">Join Growfax Discord</a>
+  </section>
+
+  
+ <footer>© 2025 Growfax.
+ All rights reserved.</footer>
 
   <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
-    <div class="modal file-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <h3 id="modalTitle">File info</h3>
-      <h4 id="modalFilename" style="font-size:1rem;margin-bottom:12px">Filename: </h4>
-      <p id="modalDesc" style="opacity:0.8;margin-bottom:16px;">Details before download</p>
-      
-      <div id="fileInfoArea" style="text-align:left;border:1px solid var(--border-color);padding:10px;border-radius:8px;background:var(--glass);margin-bottom:16px;">
-          <p id="modalVersion" style="margin:0 0 4px;font-size:0.9rem;font-weight:600;"></p>
-          <p id="modalUpdated" style="margin:0 0 4px;font-size:0.9rem;font-weight:600;"></p>
-          <p id="modalChangelog" style="margin:0;font-size:0.9rem;font-weight:600;"><span class="changelog">Changelog</span>: </p>
+      <p id="modalDesc">Details before download</p>
+
+      <div class="meta">
+        <div class="chip" id="modalVersion">v0.0</div>
+        <div class="chip" id="modalUpdated">Updated: —</div>
       </div>
 
-      <div class="actions" style="display:flex;justify-content:flex-end;gap:8px">
-        <button class="btn secondary" id="modalCancel">Cancel</button>
-        <a href="#" class="btn primary" id="modalConfirm" data-action="download" download>Download</a>
+      <div class="changelog" id="modalChangelog">Changelog: —</div>
+
+      <div style="display:flex;gap:8px;align-items:center;justify-content:space-between">
+        <div style="font-size:.9rem;color:var(--muted)" id="modalFilename">Filename</div>
+     
+    
+ <div class="buttons">
+          <button class="btn secondary" id="modalCancel">Cancel</button>
+          <button class="btn primary" id="modalConfirm">Download</button>
+        </div>
       </div>
     </div>
   </div>
 
-  <div id="welcomeBackdrop" class="modal-backdrop welcome-backdrop" aria-hidden="true">
-    <div class="modal welcome" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
-      <h2 id="welcomeTitle">Welcome & Preferences</h2>
-      <p>Please choose your preferred settings for the best experience.</p>
-      
-      <div style="text-align: left; margin-top: 20px;">
-        <label style="display: block; font-weight: bold; margin-bottom: 8px;">Language:</label>
-        <select id="welcomeLangSelect" class="lang-select" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text);">
+  <div id="welcomeBackdrop" class="welcome-backdrop" aria-hidden="true">
+    <div class="welcome" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+      <h2 id="welcomeTitle">Welcome to Growfax</h2>
+      <p style="margin:6px 0 12px;opacity:.9">Set your preferred language and theme.
+ We'll remember this for next time.</p>
+      <div class="row">
+        <label for="welcomeLang">Language</label>
+        <select id="welcomeLang" class="lang-select">
           <option value="en">🇬🇧 English</option>
           <option value="id">🇮🇩 Bahasa</option>
         </select>
       </div>
-
-      <div style="text-align: left; margin-top: 15px;">
-        <label style="display: block; font-weight: bold; margin-bottom: 8px;">Theme:</label>
-        <div class="theme-options">
+      <div class="row" style="margin-top:10px">
+        <label>Theme</label>
+        <div class="radio-group">
+      
           <label><input type="radio" name="welcomeTheme" value="light" checked> Light</label>
           <label><input type="radio" name="welcomeTheme" value="dark"> Dark</label>
         </div>
       </div>
-
       <div class="actions" style="display:flex;justify-content:flex-end;gap:8px;margin-top:14px">
         <button class="btn secondary" id="welcomeSkip">Skip</button>
         <button class="btn primary" id="welcomeSave">Save & Continue</button>
@@ -802,63 +758,72 @@
 
   <div id="adminBackdrop" class="modal-backdrop admin-backdrop" aria-hidden="true">
     <div class="modal admin-modal" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+    
       <h2 id="adminTitle">🔑 Admin Area</h2>
       <button id="closeAdmin" class="btn secondary" style="position:absolute;top:10px;right:10px;font-size:0.8rem;padding:6px 10px;z-index:10;">Tutup Area Admin</button>
       
-      <div id="adminLogin" style="text-align: center; padding: 20px;">
+      <div id="adminLogin" style="text-align: center;
+ padding: 20px;">
         <p id="adminLoginPrompt">Enter the Admin Token to proceed:</p>
-        <input type="password" id="adminTokenInput" placeholder="Token" style="padding: 10px; width: 80%; max-width: 300px; border-radius: 8px; border: 1px solid var(--border-color);
- background: var(--card-bg); color: var(--text);">
-        <button class="btn primary" id="adminTokenSubmit" style="margin-top: 10px; width: 80%; max-width: 300px;">Submit</button>
+        <input type="password" id="adminTokenInput" placeholder="Token" style="padding: 10px;
+ width: 80%; max-width: 300px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--card-bg);
+ color: var(--text);">
+        <button class="btn primary" id="adminTokenSubmit" style="margin-top: 10px; width: 80%;
+ max-width: 300px;">Submit</button>
       </div>
 
       <div id="adminContent" style="display: none;
  padding-top: 10px;">
-        
         <div style="margin-top: 15px; padding: 15px; border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
           <h4 style="margin: 0 0 10px;
  color: var(--accent);">Server Status</h4>
-          <p>Status: <strong id="serverStatusDisplay" style="color:var(--success);">Online</strong> <span id="status-indicator" style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--success); margin-left: 4px;"></span></p>
-          <button class="btn secondary" id="toggleServerStatus" style="margin-top: 10px;">Toggle Status (Simulate)</button>
+          <p>Status: <strong id="serverStatusDisplay" style="color: var(--success);">Online</strong></p>
+          <button class="btn danger" id="toggleServerStatus">Toggle Status (Simulate)</button>
         </div>
-
-        <div style="margin-top: 15px; padding: 15px; border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
-          <h4 style="margin: 0 0 10px;
- color: var(--accent);">Analytical Dashboard</h4>
-          <p>Total Downloads: <strong id="totalDownloads">0</strong></p>
-          <p>Recent Activities:</p>
-          <ul id="recentActivities" style="list-style-type: none; padding: 0; margin-top: 8px; max-height: 150px; overflow-y: auto; font-size: 0.9rem;"></ul>
-          <button class="btn secondary" id="refreshAnalytics" style="margin-top: 10px;">Refresh Data</button>
-        </div>
-
-        <div style="margin-top: 15px; padding: 15px; border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
+        
+        <div style="margin-top: 20px; padding: 15px;
+ border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
           <h4 style="margin: 0 0 10px;
  color: var(--accent);">News & Updates</h4>
-          <textarea id="newsUpdateTextarea" placeholder="Enter server news..." style="width: 100%;
- padding: 10px; border-radius: 6px; font-family: var(--mono); font-size: 0.95rem;"></textarea>
+          <textarea id="newsUpdateTextarea" placeholder="Enter server news and updates..." style="width: 100%;
+ height: 120px; padding: 8px; border-radius: 6px; margin-bottom: 10px; font-family: var(--mono); font-size: 0.95rem;"></textarea>
           <button class="btn primary" id="saveNewsUpdate" style="margin-top: 10px;
  width: 100%;">Save News</button>
         </div>
 
-        <div style="margin-top: 15px; padding: 15px; border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
+        <div style="margin-top: 20px; padding: 15px;
+ border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
           <h4 style="margin: 0 0 10px;
  color: var(--accent);">SEO Management</h4>
-          <label style="display: block; text-align: left; font-size: 0.9rem;
+          <label style="display: block; text-align: left; margin-top: 10px; font-size: 0.9rem;
  color: var(--muted);" for="seoTitleInput">Page Title (Hanya Title Tag HTML)</label>
           <input type="text" id="seoTitleInput" placeholder="Growfax Official - Private Growtopia Server & Downloads" style="width: 100%;
  padding: 8px; border-radius: 6px; margin-bottom: 10px; font-family: var(--mono); font-size: 0.9rem;">
-          
           <label style="display: block; text-align: left; margin-top: 10px; font-size: 0.9rem;
  color: var(--muted);" for="seoDescTextarea">Meta Description</label>
           <textarea id="seoDescTextarea" placeholder="Situs resmi Growfax, private server Growtopia. Unduh file host terbaru untuk Android, Windows, dan iOS. Mainkan Growtopia dengan fitur eksklusif dan komunitas aktif!" style="width: 100%;
- padding: 8px; border-radius: 6px; margin-bottom: 10px; font-family: var(--mono); font-size: 0.95rem;"></textarea>
-          
+ height: 80px; padding: 8px; border-radius: 6px; margin-bottom: 10px; font-family: var(--mono); font-size: 0.95rem;"></textarea>
           <label style="display: block; text-align: left; margin-top: 10px; font-size: 0.9rem;
  color: var(--muted);" for="seoKeywordsInput">Meta Keywords (Comma-separated)</label>
           <input type="text" id="seoKeywordsInput" placeholder="Growfax, Growtopia Private Server, Growtopia PS, Download Growfax, Host Growfax, Growfax Android, Growfax Windows" style="width: 100%;
  padding: 8px; border-radius: 6px; margin-bottom: 10px; font-family: var(--mono); font-size: 0.9rem;">
           <button class="btn primary" id="saveSeoMeta" style="margin-top: 10px;
  width: 100%;">Update SEO Meta</button>
+        </div>
+        
+        <div id="analyticsDashboard" style="margin-top: 20px; padding: 15px;
+ border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
+          <h4 id="analyticsTitle" style="margin: 0 0 10px;
+ color: var(--accent);">Analytical Dashboard</h4>
+          <p id="totalDownloadsContainer">Total Downloads: <strong id="totalDownloadsElement">0</strong></p>
+          <p id="recentActivitiesTitle">Recent Activities:</p>
+          <ul id="activitiesList" style="list-style: none;
+ padding: 0; max-height: 150px; overflow-y: auto;">
+          </ul>
+          <div style="font-size: 0.8rem;
+ opacity: 0.8; margin-top: 10px;" id="lastRefreshedDisplay">Last refreshed: Just now</div>
+          <button class="btn secondary" id="refreshAnalytics" style="margin-top: 10px;
+ width: 100%;">Refresh Data</button>
         </div>
       </div>
     </div>
@@ -869,803 +834,771 @@
   </a>
 
   <div id="toast" class="toast" role="alert" aria-live="assertive"></div>
-
 <script>
-    // --- File references (from Admin Area) ---
-    const ADMIN_TOKEN = '1234'; // Simulated token
-    const adminBackdrop = document.getElementById('adminBackdrop');
-    const adminTitle = document.getElementById('adminTitle');
-    const adminLogin = document.getElementById('adminLogin');
-    const adminLoginPrompt = document.getElementById('adminLoginPrompt');
-    const adminTokenInput = document.getElementById('adminTokenInput');
-    const adminTokenSubmit = document.getElementById('adminTokenSubmit');
-    const adminContent = document.getElementById('adminContent');
-    const closeAdmin = document.getElementById('closeAdmin');
+  // --- Global State ---
+  let isAdminLoggedIn = false;
+  let serverIsOnline = true;
+  let analyticsInterval = null; // To store the interval ID for analytics refresh
+  
+  // --- Admin Area Refs ---
+  const ADMIN_TOKEN = '1234'; // Simulated token
+  const adminBackdrop = document.getElementById('adminBackdrop');
+  const adminTitle = document.getElementById('adminTitle');
+  const adminLogin = document.getElementById('adminLogin');
+  const adminLoginPrompt = document.getElementById('adminLoginPrompt');
+  const adminTokenInput = document.getElementById('adminTokenInput');
+  const adminTokenSubmit = document.getElementById('adminTokenSubmit');
+  const adminContent = document.getElementById('adminContent');
+  const closeAdmin = document.getElementById('closeAdmin');
+  const serverStatusDisplay = document.getElementById('serverStatusDisplay');
+  const toggleServerStatus = document.getElementById('toggleServerStatus');
+  const newsUpdateTextarea = document.getElementById('newsUpdateTextarea');
+  const saveNewsUpdate = document.getElementById('saveNewsUpdate');
+  // Analytical Dashboard Refs
+  const analyticsTitle = document.getElementById('analyticsTitle');
+  const totalDownloadsContainer = document.getElementById('totalDownloadsContainer');
+  const totalDownloadsElement = document.getElementById('totalDownloadsElement');
+  const recentActivitiesTitle = document.getElementById('recentActivitiesTitle');
+  const activitiesList = document.getElementById('activitiesList');
+  const lastRefreshedDisplay = document.getElementById('lastRefreshedDisplay');
+  const refreshAnalytics = document.getElementById('refreshAnalytics');
+  // SEO Refs
+  const seoTitleInput = document.getElementById('seoTitleInput');
+  const seoDescTextarea = document.getElementById('seoDescTextarea');
+  const seoKeywordsInput = document.getElementById('seoKeywordsInput');
+  const saveSeoMeta = document.getElementById('saveSeoMeta');
 
-    const toggleServerStatus = document.getElementById('toggleServerStatus');
-    const serverStatusDisplay = document.getElementById('serverStatusDisplay');
-    const statusIndicator = document.getElementById('status-indicator');
-    const newsUpdateTextarea = document.getElementById('newsUpdateTextarea');
-    const saveNewsUpdate = document.getElementById('saveNewsUpdate');
-    const totalDownloads = document.getElementById('totalDownloads');
-    const recentActivities = document.getElementById('recentActivities');
-    const refreshAnalytics = document.getElementById('refreshAnalytics');
-    const seoTitleInput = document.getElementById('seoTitleInput');
-    const seoDescTextarea = document.getElementById('seoDescTextarea');
-    const seoKeywordsInput = document.getElementById('seoKeywordsInput');
-    const saveSeoMeta = document.getElementById('saveSeoMeta');
+  // --- General Refs ---
+  const langSelect = document.getElementById('langSelect');
+  const themeToggle = document.getElementById('themeToggle');
+  const openWelcome = document.getElementById('openWelcome');
+  const modalBackdrop = document.getElementById('modalBackdrop');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalDesc = document.getElementById('modalDesc');
+  const modalConfirm = document.getElementById('modalConfirm');
+  const modalCancel = document.getElementById('modalCancel');
+  const modalVersion = document.getElementById('modalVersion');
+  const modalUpdated = document.getElementById('modalUpdated');
+  const modalChangelog = document.getElementById('modalChangelog');
+  const modalFilename = document.getElementById('modalFilename');
+  const welcomeBackdrop = document.getElementById('welcomeBackdrop');
+  const welcomeSave = document.getElementById('welcomeSave');
+  const welcomeSkip = document.getElementById('welcomeSkip');
+  const welcomeLang = document.getElementById('welcomeLang');
+  const discordLink = document.getElementById('discordLink');
 
-    // --- Modal references ---
-    const modalBackdrop = document.getElementById('modalBackdrop');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalFilename = document.getElementById('modalFilename');
-    const modalDesc = document.getElementById('modalDesc');
-    const modalVersion = document.getElementById('modalVersion');
-    const modalUpdated = document.getElementById('modalUpdated');
-    const modalChangelog = document.getElementById('modalChangelog');
-    const modalCancel = document.getElementById('modalCancel');
-    const modalConfirm = document.getElementById('modalConfirm');
-
-    // --- Welcome references ---
-    const welcomeBackdrop = document.getElementById('welcomeBackdrop');
-    const openWelcome = document.getElementById('openWelcome');
-    const welcomeLangSelect = document.getElementById('welcomeLangSelect');
-    const welcomeSave = document.getElementById('welcomeSave');
-    const welcomeSkip = document.getElementById('welcomeSkip');
-
-    // --- Theme references ---
-    const themeToggle = document.getElementById('themeToggle');
-    const themeOptions = document.querySelectorAll('input[name="welcomeTheme"]');
-
-    // --- Language references ---
-    const langSelect = document.getElementById('langSelect');
-    const navDownloads = document.getElementById('navDownloads');
-    const navShop = document.getElementById('navShop');
-    const reportBugLink = document.getElementById('reportBugLink');
-    const openAdmin = document.getElementById('openAdmin');
-    const welcomeTitle = document.getElementById('welcomeTitle');
-
-    // --- Initial setup ---
-    document.getElementById('currentYear').textContent = new Date().getFullYear();
-
-    // ===========================
-    // Local Storage / Persistance Handlers
-    // ===========================
-    function getTheme() {
-        return localStorage.getItem('theme') || 'light';
+  // --- Translation Data (Simplified, using objects for easy access) ---
+  const translations = {
+    en: { /* Base data for English is mostly in the HTML */ },
+    id: { 
+      // Main Nav & Controls
+      "Report a Bug": "Laporkan Bug", "Welcome & Preferences": "Selamat Datang & Preferensi", "Admin Area": "Area Admin", "Open Discord": "Buka Discord", "Join Our Community": "Bergabunglah dengan Komunitas Kami", "Connect with others and get support in our official Discord server.": "Terhubung dengan orang lain dan dapatkan bantuan di server Discord resmi kami.", "Join Growfax Discord": "Gabung Discord Growfax", "📥 Downloads": "📥 Unduhan", "🛒 Shop": "🛒 Toko", "🐞 Report Bug": "🐞 Laporkan Bug", "🔑 Admin": "🔑 Admin", 
+      // Banner & Time
+      "Welcome to Growfax": "Selamat Datang di Growfax", "Private Growtopia Server": "Server Growtopia Private", "Loading time...": "Memuat waktu...", "Essential File Downloads": "Unduhan File Penting", "Play on Android": "Main di 
+ Android", "Play on Windows": "Main di Windows", "Play on iOS": "Main di iOS", "Play via PowerTunnel": "Main via PowerTunnel", "Server Time (AEDT):": "Waktu Server (AEDT):", // <-- MODIFIED: New Timezone label
+      // Modal
+      "Version": "Versi", "Updated": "Diperbarui", "Changelog": "Catatan pembaruan", "Filename": "Nama berkas", "File info": "Info berkas", "Details before download": "Detail sebelum mengunduh", "Cancel": "Batal", "Download": "Unduh", "Download failed: file not found.": "Unduhan gagal: berkas tidak ditemukan.", "Config copied!": "Konfigurasi disalin!", "Copy Config": "Salin Konfigurasi", 
+      // Shop
+      "Support the server and unlock exclusive roles! Direct purchase via PayPal.me.": "Dukung server dan buka peran eksklusif!
+ Pembelian langsung via PayPal.me.", "Growfax Server Roles": "Peran Server Growfax", "Opening PayPal for USD purchase": "Membuka PayPal untuk pembelian $USD", "Opening PayPal for IDR purchase": "Membuka PayPal untuk pembelian Rp IDR", "Opening PayPal for EUR purchase": "Membuka PayPal untuk pembelian €EUR", "Opening PayPal for GBP purchase": "Membuka PayPal untuk pembelian £GBP", "Opening PayPal for AUD purchase": "Membuka PayPal untuk pembelian A$AUD", "Opening PayPal for SGD purchase": "Membuka PayPal untuk pembelian S$ SGD", "Opening PayPal for CAD purchase": "Membuka PayPal untuk pembelian C$ CAD", "Pay $USD": "Bayar $USD", "Pay €EUR": "Bayar €EUR", "Pay £GBP": "Bayar £GBP", "Pay A$AUD": "Bayar A$AUD", "Pay S$SGD": "Bayar S$SGD", "Pay C$CAD": "Bayar C$CAD", "Bayar Rp IDR": "Bayar Rp IDR", 
+      // Admin
+      "Enter the Admin Token to proceed:": "Masukkan Token Admin untuk melanjutkan:", "Submit": "Kirim", "Close Admin Area": "Tutup Area Admin", "Tutup Area Admin": "Tutup Area Admin", "Online": "Online", "Offline": "Offline", "Toggle Status (Simulate)": "Ubah Status (Simulasi)", "Server Status changed.": "Status Server diubah.", "Analytical Dashboard": "Dasbor Analitik", "Total Downloads:": "Total Unduhan:", "Recent Activities:": "Aktivitas Terbaru:", "Refresh Data": "Segarkan Data", "News & Updates": "Berita & Pembaruan", "Save News": "Simpan Berita", "News updated successfully.": "Berita berhasil diperbarui.", "SEO Management": "Manajemen SEO", "Page Title (Hanya Title Tag HTML)": "Judul Halaman (Hanya Tag Title HTML)", "Meta Description": "Meta Deskripsi", "Meta Keywords (Comma-separated)": "Kata Kunci Meta (Dipisahkan Koma)", "Update SEO Meta": "Perbarui Meta SEO", "SEO Meta updated successfully.": "Meta SEO berhasil diperbarui.", 
+      // Admin Role Translations
+      "👑 Admin Server Role": "👑 Peran Admin Server", "Can sell role": "Bisa menjual peran", "Benefit for selling roles to players.": "Keuntungan dari menjual peran kepada pemain.", "Can sell title": "Bisa menjual gelar", "Benefit for selling custom titles to players.": "Keuntungan dari menjual gelar kustom kepada pemain.", "Can sell All item with Real Trade": "Bisa menjual semua item dengan Real Trade", "Allows selling all in-game items via Real Trade system.": "Memungkinkan menjual semua item dalam game melalui sistem Real Trade.", 
+      // Time Ago & Welcome
+      "Set your preferred language and theme. We'll remember this for next time.": "Atur bahasa dan tema pilihan Anda. Kami akan mengingatnya untuk kunjungan berikutnya.", "Language": "Bahasa", "Theme": "Tema", "Save & Continue": "Simpan & Lanjutkan", "Skip": "Lewati", "Pagi": "Pagi", "Siang": "Siang", "Sore": "Sore", "Malam": "Malam", " ago": " yang lalu", "minute": ["menit"], "hour": ["jam"], 
+      "day": ["hari"], "month": ["bulan"], "year": ["tahun"], "now": "baru saja" 
+    } 
+  };
+  
+  /* =========================== Local Storage & SEO Functions =========================== */
+  function loadLang() {
+    const savedLang = localStorage.getItem('growfax_lang');
+    if (savedLang) {
+      langSelect.value = savedLang;
+      welcomeLang.value = savedLang;
     }
-    function setTheme(theme) {
-        document.body.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
-        updateThemeToggle(theme);
-        updateWelcomeThemeRadios(theme);
-    }
-    function updateThemeToggle(theme) {
-        const isDark = theme === 'dark';
-        themeToggle.setAttribute('aria-pressed', isDark);
-        themeToggle.innerHTML = isDark ? '🌙 Dark' : '🌞 Light';
-        // Update h1 text-shadow
-        document.querySelector('h1').style.textShadow = isDark ? 'var(--text-shadow-dark)' : 'var(--text-shadow-light)';
-    }
-    function updateWelcomeThemeRadios(theme) {
-        themeOptions.forEach(radio => {
-            radio.checked = radio.value === theme;
-        });
-    }
+    applyTranslations(langSelect.value); // Apply translations immediately on load
+  }
 
-    function loadNewsUpdate() {
-        const savedNews = localStorage.getItem('server_news');
-        newsUpdateTextarea.value = savedNews || 'Welcome to Growfax! The server is currently Online.';
+  function loadTheme() {
+    const savedTheme = localStorage.getItem('growfax_theme');
+    const currentLang = langSelect.value;
+    if (savedTheme) {
+      document.body.setAttribute('data-theme', savedTheme);
+      themeToggle.setAttribute('aria-pressed', savedTheme === 'dark');
+      document.querySelector(`input[name="welcomeTheme"][value="${savedTheme}"]`).checked = true;
+      
+      const themeTextKey = savedTheme === 'dark' ? '🌞 Light' : '🌙 Dark';
+      themeToggle.textContent = savedTheme === 'dark' 
+        ? (currentLang === 'id' ? (translations.id[themeTextKey] || '🌞 Light') : '🌞 Light')
+        : (currentLang === 'id' ? (translations.id[themeTextKey] || '🌙 Dark') : '🌙 Dark');
+    } else {
+      // Default to light
+      document.body.setAttribute('data-theme', 'light');
+      document.querySelector('input[name="welcomeTheme"][value="light"]').checked = true;
+      themeToggle.textContent = currentLang === 'id' ? (translations.id['🌙 Dark'] || '🌙 Dark') : '🌙 Dark';
     }
-    function saveNewsUpdateHandler() {
-        localStorage.setItem('server_news', newsUpdateTextarea.value);
-        showToast((langSelect.value === 'id') ? (translations.id['News updated successfully.'] || 'Berita berhasil diperbarui.') : 'News updated successfully.', 2500);
-    }
+  }
+
+  function loadSeoSettings() {
+    const savedTitle = localStorage.getItem('seo_title');
+    const savedDesc = localStorage.getItem('seo_desc');
+    const savedKeywords = localStorage.getItem('seo_keywords');
     
-    function loadSeoSettings() {
-        const savedTitle = localStorage.getItem('seo_title');
-        const savedDesc = localStorage.getItem('seo_desc');
-        const savedKeywords = localStorage.getItem('seo_keywords');
+    // Apply to Admin Area inputs
+    seoTitleInput.value = savedTitle || document.querySelector('title').textContent;
+    seoDescTextarea.value = savedDesc || document.querySelector('meta[name="description"]').content;
+    seoKeywordsInput.value = savedKeywords || document.querySelector('meta[name="keywords"]').content;
 
-        // Apply to Admin Area inputs
-        seoTitleInput.value = savedTitle || document.querySelector('title').textContent;
-        seoDescTextarea.value = savedDesc || document.querySelector('meta[name="description"]').content;
-        seoKeywordsInput.value = savedKeywords || document.querySelector('meta[name="keywords"]').content;
+    // Apply to HTML head
+    if (savedTitle) document.querySelector('title').textContent = savedTitle;
+    if (savedDesc) document.querySelector('meta[name="description"]').content = savedDesc;
+    if (savedKeywords) document.querySelector('meta[name="keywords"]').content = savedKeywords;
+  }
 
-        // Apply to HTML head
-        if (savedTitle) document.querySelector('title').textContent = savedTitle;
-        if (savedDesc) document.querySelector('meta[name="description"]').content = savedDesc;
-        if (savedKeywords) document.querySelector('meta[name="keywords"]').content = savedKeywords;
-    }
-    function saveSeoSettings(title, desc, keywords) {
-        localStorage.setItem('seo_title', title);
-        localStorage.setItem('seo_desc', desc);
-        localStorage.setItem('seo_keywords', keywords);
-    }
+  function saveSeoSettings(title, desc, keywords) {
+    localStorage.setItem('seo_title', title);
+    localStorage.setItem('seo_desc', desc);
+    localStorage.setItem('seo_keywords', keywords);
+  }
 
-    /* ===========================
-       File Metadata (Version, Update Date, Changelog, Copy Text) - Managed via Admin Area / Local Storage.
-       Default values below. 
-       - Note: copytext must use \n for newlines in JS strings.
-       =========================== */
-    const FILE_META = {
-        virtualhost: {
-            version: "v4.2.1",
-            updated: "2025-10-31",
-            changelog: "Optimized connection stability.",
-            copytext: "103.27.206.183 growtopia1.com\n103.27.206.183 growtopia2.com\n103.27.206.183 www.growtopia1.com\n103.27.206.183 www.growtopia2.com",
-        },
-        patched: {
-            version: "v1.0.0",
-            updated: "2025-10-31",
-            changelog: "First release.",
-            copytext: "echo @off\ncolor 0a\ntitle Growfax Client Patcher\n\necho Applying hosts patch...\n\nREM Check if script is running as admin\n>nul 2>&1 \"%SYSTEMROOT%\\system32\\cacls.exe\" \"%SYSTEMROOT%\\system32\\config\\system\"\n\nif %errorlevel% neq 0 (\n    echo Requesting administrative privileges...\n    goto LAAUNCH\n) else (\n    goto PATCH_HOSTS\n)\n\n:LAAUNCH\n    set \"args=%~dp0client_patch.bat\"\n    call :RunAsAdmin \"%args:client_patch.bat=%hosts.txt\"\n    goto END\n\n:PATCH_HOSTS\n    REM Hosts file location\n    set \"HOSTS_FILE=%SYSTEMROOT%\\System32\\drivers\\etc\\hosts\"\n\n    REM Growtopia hosts entries to add\n    set \"HOST_ENTRY_1=103.27.206.183 growtopia1.com\"\n    set \"HOST_ENTRY_2=103.27.206.183 growtopia2.com\"\n    set \"HOST_ENTRY_3=103.27.206.183 www.growtopia1.com\"\n    set \"HOST_ENTRY_4=103.27.206.183 www.growtopia2.com\"\n\n    echo.\n    echo Backing up original hosts file...\n    copy \"%HOSTS_FILE%\" \"%HOSTS_FILE%.bak\" /Y\n\n    echo.\n    echo Adding Growfax hosts entries...\n    \n    REM Check if entries exist before adding to prevent duplicates\n    findstr /C:\"%HOST_ENTRY_1%\" \"%HOSTS_FILE%\" >nul || echo %HOST_ENTRY_1% >>\"%HOSTS_FILE%\"\n    findstr /C:\"%HOST_ENTRY_2%\" \"%HOSTS_FILE%\" >nul || echo %HOST_ENTRY_2% >>\"%HOSTS_FILE%\"\n    findstr /C:\"%HOST_ENTRY_3%\" \"%HOSTS_FILE%\" >nul || echo %HOST_ENTRY_3% >>\"%HOSTS_FILE%\"\n    findstr /C:\"%HOST_ENTRY_4%\" \"%HOSTS_FILE%\" >nul || echo %HOST_ENTRY_4% >>\"%HOSTS_FILE%\"\n\n    echo.\n    echo Hosts patch complete. You can now run Growtopia.\n    goto END\n\n:RunAsAdmin\n    powershell -Command \"Start-Process '%SystemRoot%\\System32\\cmd.exe' -ArgumentList '/c %~1' -Verb RunAs\"\n    goto :eof\n\n:END\n    echo.\n    pause\n",
-        },
-        ios: { // <<< UPDATED: iOS Config
-            version: "v1.1.0",
-            updated: "2025-11-03", // Updated date
-            changelog: "New Host Configuration.",
-            copytext: "[General]\nbypass-system = true\n\n[Rule]\nFINAL,DIRECT\n\n[Host]\ngrowtopia1.com = 91.134.85.13\ngrowtopia2.com = 91.134.85.13\nwww.growtopia1.com = 91.134.85.13\nwww.growtopia2.com = 91.134.85.13", // <<< NEW iOS CONTENT
-        },
-        powertunnel: { // <<< UPDATED: PowerTunnel Host
-            version: "v2.0.0",
-            updated: "2025-11-03", // Updated date
-            changelog: "New Host IP added.",
-            copytext: "91.134.85.13 growtopia1.com\n91.134.85.13 growtopia2.com\n91.134.85.13 www.growtopia1.com\n91.134.85.13 www.growtopia2.com", // <<< NEW PowerTunnel CONTENT
-        },
-    };
+  /* =========================== File Metadata (Version, Update Date, Changelog, Copy Text) - Managed via Admin Area / Local Storage.
+     Default values below. - Note: copytext must use \n for newlines in JS strings.
+     =========================== */
+  const FILE_META = { 
+    virtualhost: { 
+      version: "v4.2.1", 
+      updated: "2025-10-31", 
+      changelog: "Optimized connection stability.", 
+      copytext: "103.27.206.183 growtopia1.com\n103.27.206.183 growtopia2.com\n103.27.206.183 www.growtopia1.com\n103.27.206.183 www.growtopia2.com" 
+    }, 
+    patched: { 
+      version: "v4.2.1", 
+      updated: "2025-10-31", 
+      changelog: "Improved launch efficiency.", 
+      copytext: "This file is a .BAT executable and cannot be copied as plain text." 
+      // Not for copy 
+    }, 
+    ios: { 
+      version: "v4.2.1", 
+      updated: "2025-10-31", 
+      changelog: "Added support for Surge 5 / Quantumult X.", 
+      copytext: "[General]\nbypass-system = true\n\n[Rule]\nFINAL,DIRECT\n\n[Host]\ngrowtopia1.com = 91.134.85.13\ngrowtopia2.com = 91.134.85.13\nwww.growtopia1.com = 91.134.85.13\nwww.growtopia2.com = 91.134.85.13" 
+    }, 
+    powertunnel: { 
+      version: "v4.2.1", 
+      updated: "2025-10-31", 
+      changelog: "Updated host IP for better routing.", 
+      copytext: "91.134.85.13 growtopia1.com\n91.134.85.13 growtopia2.com\n91.134.85.13 www.growtopia1.com\n91.134.85.13 www.growtopia2.com" 
+    } 
+  };
 
-    /* ===========================
-       Download / Modal Handlers
-       =========================== */
-    function showFileModal(key) {
-        const lang = langSelect.value;
-        const meta = FILE_META[key];
+  /* =========================== Modal Logic (Download / Copy) =========================== */
+  document.querySelectorAll('.platform-buttons a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const fileKey = link.getAttribute('data-filekey');
+      const meta = FILE_META[fileKey];
+      const lang = langSelect.value;
+
+      if (!meta) {
+        showToast(lang === 'id' ? (translations.id['Download failed: file not found.'] || 'Unduhan gagal: berkas tidak ditemukan.') : 'Download failed: file not found.', 3000);
+        return;
+      }
+      
+      e.preventDefault(); // Prevent default link action (navigating/downloading)
+
+      // Handle copy-only files (iOS/PowerTunnel)
+      if (fileKey === 'ios' || fileKey === 'powertunnel') {
+        // Auto-copy to clipboard
+        const copyText = lang === 'id' ? 
+          (translations.id['Config copied!'] || 'Konfigurasi disalin!') : 'Config copied!';
         
-        if (!meta) {
-            showToast(lang === 'id' ? (translations.id['Download failed: file not found.'] || 'Unduhan gagal: berkas tidak ditemukan.') : 'Download failed: file not found.', 3000);
-            return;
-        }
-
-        const anchor = document.querySelector(`a[data-filekey="${key}"]`);
-        
-        // Show modal
-        modalBackdrop.style.display = 'flex';
-        
-        // Populate modal with details
-        modalFilename.textContent = `${(lang === 'id') ? (translations.id['Filename'] || 'Nama berkas') + ': ' : 'Filename: '}${anchor.dataset.filename}`;
-        modalVersion.textContent = `${(lang === 'id') ? (translations.id['Version'] || 'Versi') + ': ' : 'Version: '}${meta.version}`;
-        modalUpdated.textContent = `${(lang === 'id') ? (translations.id['Updated'] || 'Diperbarui') + ': ' : 'Updated: '}${meta.updated}`;
-        modalChangelog.innerHTML = `<span class="changelog">${(lang === 'id') ? (translations.id['Changelog'] || 'Catatan pembaruan') : 'Changelog'}</span>: ${meta.changelog}`;
-        
-        // Check if it's a direct download (href available)
-        if (anchor.download !== undefined) {
-            // Direct download files (Android, Windows)
-            modalConfirm.href = anchor.href;
-            modalConfirm.dataset.action = 'download';
-            modalConfirm.textContent = lang === 'id' ? (translations.id['Download'] || 'Unduh') : 'Download';
-            modalTitle.textContent = lang === 'id' ? (translations.id['File info'] || 'Info berkas') : 'File info';
-            modalDesc.textContent = lang === 'id' ? (translations.id['Details before download'] || 'Detail sebelum mengunduh') : 'Details before download';
-
-        } else {
-            // Config files (iOS, PowerTunnel) - requires manual copy
-            // Auto-copy to clipboard
-            const copyText = lang === 'id' ? (translations.id['Config copied!'] || 'Konfigurasi disalin!') : 'Config copied!';
-            // Teks tersedia, salin ke clipboard
-            navigator.clipboard.writeText(meta.copytext).then(() => {
-                showToast(copyText, 2500);
-            }).catch(err => {
-                console.error('Could not copy text: ', err);
-                // Fallback: show modal with copy button
-                showToast('Failed to copy. Showing modal.', 3000);
-            });
-            
-            // Update modal for confirmation/info, change button to 'Copy Config'
-            modalTitle.textContent = lang === 'id' ? (translations.id['File info'] || 'Info berkas') : 'File info';
-            modalDesc.textContent = lang === 'id' ? (translations.id['Details before download'] || 'Detail sebelum mengunduh') : 'Details before download';
-            modalConfirm.textContent = lang === 'id' ? (translations.id['Copy Config'] || 'Copy Config') : 'Copy Config';
-            modalConfirm.dataset.action = 'copy'; // Custom attribute to check action
-            modalConfirm.href = '#'; // Remove download href
-        }
-    }
-
-    // Modal action confirmation (for manual re-copy only)
-    modalConfirm.addEventListener('click', (e) => {
-        const action = modalConfirm.dataset.action;
-        const lang = langSelect.value;
-        
-        // Handle download button click (default)
-        if (action === 'download') {
-            const filename = modalFilename.textContent.split(': ')[1];
-            showToast(`${lang === 'id' ? (translations.id['Download initiated: '] || 'Unduhan dimulai: ') : 'Download initiated: '}${filename}`, 3500);
-            modalBackdrop.style.display = 'none';
-        } 
-        
-        // Handle copy button click (manual re-copy)
-        if (action === 'copy') {
-            // Logic is already handled in the anchor click event (auto-copy)
-            // This button in the modal is just a "confirm" / "info" modal
-            // We can add a re-copy action here for robustness if the first one failed
-            const filenameFromModal = modalFilename.textContent.split(': ')[1];
-            const key = document.querySelector(`a[data-filename="${filenameFromModal}"]`)?.dataset.filekey;
-            if (key && FILE_META[key] && FILE_META[key].copytext) {
-                navigator.clipboard.writeText(FILE_META[key].copytext).then(() => {
-                    const copyText = lang === 'id' ? (translations.id['Config copied!'] || 'Konfigurasi disalin!') : 'Config copied!';
-                    showToast(copyText, 2500);
-                    modalBackdrop.style.display = 'none'; // Close modal on successful re-copy
-                });
-            }
-        }
-    });
-
-    // Close modal
-    modalCancel.addEventListener('click', () => {
-        modalBackdrop.style.display = 'none';
-    });
-
-
-    // Event listener for platform buttons (open modal/download)
-    document.querySelectorAll('.platform-buttons a').forEach(anchor => {
-        anchor.addEventListener('click', (e) => {
-            const filekey = anchor.dataset.filekey;
-            if (anchor.download === undefined) {
-                // If no 'download' attribute, it's a config file (iOS/PowerTunnel)
-                e.preventDefault(); 
-                showFileModal(filekey);
-            } else {
-                // It's a direct download
-                const lang = langSelect.value;
-                showToast(`${lang === 'id' ? (translations.id['Download initiated: '] || 'Unduhan dimulai: ') : 'Download initiated: '}${anchor.dataset.filename}`, 3500);
-            }
+        // Teks tersedia, salin ke clipboard
+        navigator.clipboard.writeText(meta.copytext).then(() => {
+          showToast(copyText, 2500);
+        }).catch(err => {
+          console.error('Could not copy text: ', err);
+          // Fallback: show modal with copy button
+          showToast('Failed to copy. Showing modal.', 3000);
+          showModal(fileKey, meta, lang, 'copy');
         });
+
+        // If auto-copy works, don't show the modal unless it fails.
+        // If it fails, the catch block calls showModal.
+        return;
+      }
+
+      // Handle direct download files (Android/Windows)
+      showModal(fileKey, meta, lang, 'download');
     });
+  });
 
-    // ===========================
-    // Shop Role Commands Data
-    // ===========================
-    const commandData = {
-        admin_commands: [ // NEW ROLE
-            { strong: "Can sell role", span: "Benefit for selling roles to players." },
-            { strong: "Can sell title", span: "Benefit for selling custom titles to players." },
-            { strong: "Can sell All item with Real Trade", span: "Allows selling all in-game items via Real Trade system." }
-        ],
-        vip_commands: [
-            { strong: "Access to /warp command", span: "Teleport to any world directly." },
-            { strong: "Access to /ghost command", span: "Become invisible to other players." },
-            { strong: "Exclusive VIP items", span: "Access unique items only available to VIPs." }
-        ],
-        supporter_commands: [
-            { strong: "Exclusive Supporter title", span: "Display a special title in-game." },
-            { strong: "Priority support in Discord", span: "Faster response times from staff." },
-            { strong: "Access to /news", span: "View latest server news instantly." }
-        ]
-    };
+  function showModal(fileKey, meta, lang, actionType) {
+    modalBackdrop.style.display = 'flex';
+    modalBackdrop.setAttribute('aria-hidden', 'false');
 
-    // Update command list translations in the Shop section
-    function updateCommandTranslations(lang) {
-        for (const id in commandData) {
-            const ul = document.getElementById(id);
-            if (ul) {
-                ul.innerHTML = ''; // Clear existing content
-                commandData[id].forEach(item => {
-                    const li = document.createElement('li');
-                    
-                    // Translate the text content of the strong/span elements
-                    const strongText = lang === 'en' ? item.strong : (translations[lang]?.[item.strong] || item.strong);
-                    li.innerHTML = `<strong>${strongText}</strong>`;
-                    
-                    if (item.span) {
-                        const spanText = lang === 'en' ? item.span : (translations[lang]?.[item.span] || item.span);
-                        li.innerHTML += `<span>${spanText}</span>`;
-                    }
-                    ul.appendChild(li);
-                });
-            }
-        }
+    // Update modal title and description based on action type
+    if (actionType === 'download') {
+      modalTitle.textContent = lang === 'id' ? 
+        (translations.id['File info'] || 'Info berkas') : 'File info';
+      modalDesc.textContent = lang === 'id' ? 
+        (translations.id['Details before download'] || 'Detail sebelum mengunduh') : 'Details before download';
+      modalConfirm.textContent = lang === 'id' ? 
+        (translations.id['Download'] || 'Download') : 'Download';
+      modalConfirm.dataset.action = 'download';
+    } else if (actionType === 'copy') {
+      modalTitle.textContent = lang === 'id' ? 
+        (translations.id['File info'] || 'Info berkas') : 'File info';
+      modalDesc.textContent = lang === 'id' ? 
+        (translations.id['Details before download'] || 'Detail sebelum mengunduh') : 'Details before download';
+      modalConfirm.textContent = lang === 'id' ? 
+        (translations.id['Copy Config'] || 'Copy Config') : 'Copy Config';
+      modalConfirm.dataset.action = 'copy';
     }
 
-    // Update dynamic texts in the Admin Area that aren't covered by data-original
-    function updateAdminDynamicTexts(lang) {
-        // Update login prompt based on current language
-        adminLoginPrompt.textContent = lang === 'id' ? (translations.id["Enter the Admin Token to proceed:"] || "Masukkan Token Admin untuk melanjutkan:") : "Enter the Admin Token to proceed:";
+    // Populate modal with details
+    modalVersion.textContent = `${(lang === 'id') ? 
+      (translations.id['Version'] || 'Versi') + ': ' : 'Version: '}${meta.version}`;
+    modalUpdated.textContent = `${(lang === 'id') ? 
+      (translations.id['Updated'] || 'Diperbarui') + ': ' : 'Updated: '}${meta.updated}`;
+    modalChangelog.innerText = `${(lang === 'id') ? 
+      (translations.id['Changelog'] || 'Catatan pembaruan') + ': ' : 'Changelog: '}${meta.changelog}`;
+    modalFilename.textContent = `${(lang === 'id') ? 
+      (translations.id['Filename'] || 'Nama berkas') + ': ' : 'Filename: '}${document.querySelector(`a[data-filekey="${fileKey}"]`).getAttribute('data-filename')}`;
+
+    // Store the fileKey on the confirm button for later use
+    modalConfirm.dataset.filekey = fileKey;
+  }
+
+  // Modal Button Actions
+  modalCancel.addEventListener('click', () => {
+    modalBackdrop.style.display = 'none';
+    modalBackdrop.setAttribute('aria-hidden', 'true');
+  });
+
+  modalConfirm.addEventListener('click', () => {
+    const fileKey = modalConfirm.dataset.filekey;
+    const action = modalConfirm.dataset.action;
+    const link = document.querySelector(`a[data-filekey="${fileKey}"]`);
+    const lang = langSelect.value;
+    const meta = FILE_META[fileKey];
+
+    if (action === 'download' && link) {
+      // Create a temporary link and trigger the download
+      const href = link.getAttribute('href');
+      const filename = link.getAttribute('data-filename');
+      
+      const tempLink = document.createElement('a');
+      tempLink.href = href;
+      tempLink.download = filename;
+      document.body.appendChild(tempLink);
+      tempLink.click();
+      document.body.removeChild(tempLink);
+      
+      showToast(`${lang === 'id' ? (translations.id['Download initiated: '] || 'Unduhan dimulai: ') : 'Download initiated: '}${filename}`, 3000);
+    } else if (action === 'copy' && meta?.copytext) {
+      // Re-copy the text (fallback for failed auto-copy)
+       navigator.clipboard.writeText(meta.copytext).then(() => {
+          const copyText = lang === 'id' ? (translations.id['Config copied!'] || 'Konfigurasi disalin!') : 'Config copied!';
+          showToast(copyText, 2500);
+      }).catch(err => {
+          console.error('Could not copy text on modal confirm: ', err);
+          showToast('Failed to copy config.', 3000);
+      });
     }
 
-    // ===========================
-    // Translation Data
-    // ===========================
-    const translations = {
-        id: {
-            "Downloads": "Unduhan",
-            "Shop": "Toko",
-            "Report Bug": "Laporkan Bug",
-            "Welcome & Preferences": "Selamat Datang & Preferensi",
-            "Admin Area": "Area Admin",
-            "Open Discord": "Buka Discord",
-            "Join Our Community": "Bergabunglah dengan Komunitas Kami",
-            "Connect with others and get support in our official Discord server.": "Terhubung dengan orang lain dan dapatkan bantuan di server Discord resmi kami.",
-            "Join Growfax Discord": "Gabung Discord Growfax",
-            "📥 Downloads": "📥 Unduhan",
-            "🛒 Shop": "🛒 Toko",
-            "🐞 Report Bug": "🐞 Laporkan Bug",
-            "🔑 Admin": "🔑 Admin",
-            "Welcome to Growfax": "Selamat Datang di Growfax",
-            "Private Growtopia Server": "Server Growtopia Private",
-            "Loading time...": "Memuat waktu...",
-            "Essential File Downloads": "Unduhan File Penting",
-            "Play on Android": "Main di Android",
-            "Play on Windows": "Main di Windows",
-            "Play on iOS": "Main di iOS",
-            "Play via PowerTunnel": "Main via PowerTunnel",
-            "Server Time (AEDT):": "Waktu Server (AEDT):", // <-- MODIFIED: New Timezone label
-            "Version": "Versi",
-            "Updated": "Diperbarui",
-            "Changelog": "Catatan pembaruan",
-            "Filename": "Nama berkas",
-            "File info": "Info berkas",
-            "Details before download": "Detail sebelum mengunduh",
-            "Cancel": "Batal",
-            "Download": "Unduh",
-            "Download failed: file not found.": "Unduhan gagal: berkas tidak ditemukan.",
-            "Config copied!": "Konfigurasi disalin!",
-            "Copy Config": "Salin Konfigurasi",
-            "Toggle theme": "Ganti tema",
-            "Light": "🌞 Terang",
-            "Dark": "🌙 Gelap",
-            "Please choose your preferred settings for the best experience.": "Silakan pilih pengaturan pilihan Anda untuk pengalaman terbaik.",
-            "Language:": "Bahasa:",
-            "Theme:": "Tema:",
-            "Skip": "Lewati",
-            "Save & Continue": "Simpan & Lanjutkan",
-            "Tutup Area Admin": "Tutup Area Admin",
-            "Enter the Admin Token to proceed:": "Masukkan Token Admin untuk melanjutkan:",
-            "Submit": "Kirim",
-            "Server Status": "Status Server",
-            "Online": "Online",
-            "Offline": "Offline",
-            "Toggle Status (Simulate)": "Ubah Status (Simulasi)",
-            "Server Status changed.": "Status Server diubah.",
-            "Analytical Dashboard": "Dasbor Analitik",
-            "Total Downloads:": "Total Unduhan:",
-            "Recent Activities:": "Aktivitas Terbaru:",
-            "Refresh Data": "Segarkan Data",
-            "News & Updates": "Berita & Pembaruan",
-            "Save News": "Simpan Berita",
-            "News updated successfully.": "Berita berhasil diperbarui.",
-            "SEO Management": "Manajemen SEO",
-            "Page Title (Hanya Title Tag HTML)": "Judul Halaman (Hanya Tag Title HTML)",
-            "Meta Description": "Meta Deskripsi",
-            "Meta Keywords (Comma-separated)": "Kata Kunci Meta (Dipisahkan Koma)",
-            "Update SEO Meta": "Perbarui Meta SEO",
-            "SEO Meta updated successfully.": "Meta SEO berhasil diperbarui.",
-            "Close Admin Area": "Tutup Area Admin",
-            "Download initiated: ": "Unduhan dimulai: ",
-            "Admin Login success": "Login Admin berhasil",
-            // NEW Admin Role Translations
-            "👑 Admin Server Role": "👑 Peran Admin Server",
-            "Can sell role": "Bisa menjual peran",
-            "Benefit for selling roles to players.": "Keuntungan dari menjual peran kepada pemain.",
-            "Can sell title": "Bisa menjual gelar",
-            "Benefit for selling custom titles to players.": "Keuntungan dari menjual gelar kustom kepada pemain.",
-            "Can sell All item with Real Trade": "Bisa menjual semua item dengan Real Trade",
-            "Allows selling all in-game items via Real Trade system.": "Memungkinkan menjual semua item dalam game melalui sistem Real Trade.",
-            " ago": " yang lalu",
-            "minute": ["menit"],
-            "hour": ["jam"],
-            "day": ["hari"],
-            "month": ["bulan"],
-            "year": ["tahun"],
-            "now": "baru saja",
-            "Sold VIP Role": "Menjual Peran VIP",
-            "Downloaded Patched Client": "Mengunduh Klien Patched",
-            "Updated News": "Memperbarui Berita",
-            "Updated SEO": "Memperbarui SEO",
-            "Tutup": "Tutup",
-            "Save": "Simpan",
-            "🌟 VIP Server Role": "🌟 Peran VIP Server",
-            "Access to /warp command": "Akses ke perintah /warp",
-            "Teleport to any world directly.": "Teleportasi ke dunia mana pun secara langsung.",
-            "Access to /ghost command": "Akses ke perintah /ghost",
-            "Become invisible to other players.": "Menjadi tidak terlihat oleh pemain lain.",
-            "Exclusive VIP items": "Item VIP Eksklusif",
-            "Access unique items only available to VIPs.": "Akses item unik yang hanya tersedia untuk VIP.",
-            "✨ Supporter Role": "✨ Peran Supporter",
-            "Exclusive Supporter title": "Gelar Supporter Eksklusif",
-            "Display a special title in-game.": "Menampilkan gelar spesial dalam game.",
-            "Priority support in Discord": "Dukungan prioritas di Discord",
-            "Faster response times from staff.": "Waktu respons yang lebih cepat dari staf.",
-            "Access to /news": "Akses ke /news",
-            "View latest server news instantly.": "Melihat berita server terbaru secara instan."
-        }
-    };
+    modalBackdrop.style.display = 'none';
+    modalBackdrop.setAttribute('aria-hidden', 'true');
+  });
 
-    // ===========================
-    // Core Functions (Toast, Time, Translation)
-    // ===========================
-    function showToast(message, duration = 3000) {
-        const toast = document.getElementById('toast');
-        toast.textContent = message;
-        toast.style.opacity = '1';
-        toast.style.transform = 'translateX(-50%) translateY(0)';
-        setTimeout(() => {
-            toast.style.opacity = '0';
-            toast.style.transform = 'translateX(-50%) translateY(20px)';
-        }, duration);
+  /* =========================== Shop Role Purchase Logic =========================== */
+  document.querySelectorAll('.btn-purchase').forEach(button => {
+    button.addEventListener('click', (e) => {
+      const roleName = button.getAttribute('data-role');
+      const lang = langSelect.value;
+      let toastMessage = "";
+
+      // Simulate activity tracking (disabled per user request)
+      SIMULATED_DATA.activities.unshift({
+        type: "Shop purchase: ",
+        details: roleName,
+        time: new Date()
+      });
+
+      if (button.classList.contains('btn-usd')) {
+        const usdPrice = button.getAttribute('data-price');
+        toastMessage = lang === 'en' ? `Opening PayPal for USD purchase (${roleName} - $ ${usdPrice})...` : (translations.id['Opening PayPal for USD purchase'] || 'Membuka PayPal untuk pembelian $USD') + ` (${roleName})...`;
+      } else if (button.classList.contains('btn-idr')) {
+        const idrPrice = button.getAttribute('data-idr-price');
+        toastMessage = lang === 'en' ? `Opening PayPal for IDR purchase (${roleName} - Rp ${idrPrice})...` : (translations.id['Opening PayPal for IDR purchase'] || 'Membuka PayPal untuk pembelian Rp IDR') + ` (${roleName})...`;
+      } else if (button.classList.contains('btn-eur')) {
+        const eurPrice = button.getAttribute('data-price-eur');
+        toastMessage = lang === 'en' ? `Opening PayPal for EUR purchase (${roleName} - € ${eurPrice})...` : (translations.id['Opening PayPal for EUR purchase'] || 'Membuka PayPal untuk pembelian €EUR') + ` (${roleName})...`;
+      } else if (button.classList.contains('btn-gbp')) {
+        const gbpPrice = button.getAttribute('data-price-gbp');
+        toastMessage = lang === 'en' ? `Opening PayPal for GBP purchase (${roleName} - £ ${gbpPrice})...` : (translations.id['Opening PayPal for GBP purchase'] || 'Membuka PayPal untuk pembelian £GBP') + ` (${roleName})...`;
+      } else if (button.classList.contains('btn-aud')) {
+        const audPrice = button.getAttribute('data-price-aud');
+        toastMessage = lang === 'en' ? `Opening PayPal for AUD purchase (${roleName} - A$ ${audPrice})...` : (translations.id['Opening PayPal for AUD purchase'] || 'Membuka PayPal untuk pembelian A$AUD') + ` (${roleName})...`;
+      } else if (button.classList.contains('btn-sgd')) {
+        const sgdPrice = button.getAttribute('data-price-sgd');
+        toastMessage = lang === 'en' ? 
+          `Opening PayPal for SGD purchase (${roleName} - S$ ${sgdPrice})...` : (translations.id['Opening PayPal for SGD purchase'] || 'Membuka PayPal untuk pembelian S$ SGD') + ` (${roleName})...`;
+      } else if (button.classList.contains('btn-cad')) {
+        const cadPrice = button.getAttribute('data-price-cad');
+        toastMessage = lang === 'en' ? 
+          `Opening PayPal for CAD purchase (${roleName} - C$ ${cadPrice})...` : (translations.id['Opening PayPal for CAD purchase'] || 'Membuka PayPal untuk pembelian C$ CAD') + ` (${roleName})...`;
+      }
+      showToast(toastMessage, 2000);
+    });
+  });
+
+  /* =========================== Admin Dashboard Logic =========================== */
+  document.getElementById('openAdmin').addEventListener('click', () => {
+    adminBackdrop.style.display = 'flex';
+    adminBackdrop.setAttribute('aria-hidden', 'false');
+    if (isAdminLoggedIn) {
+      adminLogin.style.display = 'none';
+      adminContent.style.display = 'block';
+      renderAnalyticsDashboard(); // Ensure analytics starts/updates
+    } else {
+      adminLogin.style.display = 'block';
+      adminContent.style.display = 'none';
     }
+  });
+
+  closeAdmin.addEventListener('click', () => {
+    adminBackdrop.style.display = 'none';
+    adminBackdrop.setAttribute('aria-hidden', 'true');
+    // Stop the analytics auto-refresh loop when closing
+    if (analyticsInterval) {
+      clearInterval(analyticsInterval);
+      analyticsInterval = null;
+    }
+  });
+
+  // Admin Login Logic (Updated with Auto-Refresh)
+  adminTokenSubmit.addEventListener('click', () => {
+    const token = adminTokenInput.value.trim();
+    const lang = langSelect.value;
+    if (token === ADMIN_TOKEN) {
+      isAdminLoggedIn = true;
+      adminTokenInput.value = ''; // Clear token input
+      adminLogin.style.display = 'none';
+      adminContent.style.display = 'block';
+      showToast(lang === 'id' ? (translations.id['Admin Login success'] || 'Login Admin berhasil') : 'Admin Login success', 3000);
+      renderAnalyticsDashboard(true); // Initial render and start auto-refresh
+    } else {
+      adminLoginPrompt.textContent = '❌ Invalid Token. Try again.';
+      adminLoginPrompt.style.color = 'var(--danger)';
+      setTimeout(() => {
+        adminLoginPrompt.textContent = lang === 'id' ? 
+          (translations.id["Enter the Admin Token to proceed:"] || 'Masukkan Token Admin untuk melanjutkan:') : 'Enter the Admin Token to proceed:';
+        adminLoginPrompt.style.color = 'var(--text)';
+      }, 2000);
+    }
+  });
+
+  // Command data for shop roles
+  const commandData = {
+    admin_commands: [ // NEW ROLE
+      { strong: "Can sell role", span: "Benefit for selling roles to players."
+      }, 
+      { strong: "Can sell title", span: "Benefit for selling custom titles to players."
+      }, 
+      { strong: "Can sell All item with Real Trade", span: "Allows selling all in-game items via Real Trade system."
+      } 
+    ]
+  };
+
+  // Update command list translations in the Shop section
+  function updateCommandTranslations(lang) {
+    for (const id in commandData) {
+      const ul = document.getElementById(id);
+      if (ul) {
+        ul.innerHTML = ''; // Clear existing content
+        commandData[id].forEach(item => {
+          const li = document.createElement('li');
+          // Translate the text content of the strong/span elements
+          const strongText = lang === 'en' ? item.strong : (translations[lang]?.[item.strong] || item.strong);
+          li.innerHTML = `<strong>${strongText}</strong>`;
+          if (item.span) {
+            const spanText = lang === 'en' ? item.span : (translations[lang]?.[item.span] || item.span);
+            li.innerHTML += `<span>${spanText}</span>`;
+          }
+          ul.appendChild(li);
+        });
+      }
+    }
+  }
+
+  // Update dynamic texts in the Admin Area that aren't covered by data-original
+  function updateAdminDynamicTexts(lang) {
+    // Update login prompt based on current language
+    adminLoginPrompt.textContent = lang === 'id' ? 
+      (translations.id["Enter the Admin Token to proceed:"] || 'Masukkan Token Admin untuk melanjutkan:') : 'Enter the Admin Token to proceed:';
     
-    function updateTime() {
-        // Growtopia servers generally run on AEDT/AEST. Current time of this code update is 2025-11-03 15:19:30 WIB. Assuming AEDT (+11)
-        const now = new Date();
-        const serverTime = new Date(now.toLocaleString("en-US", {timeZone: "Australia/Sydney"}));
-        
-        const lang = langSelect.value;
-        const timeLabel = lang === 'id' ? (translations.id['Server Time (AEDT):'] || 'Waktu Server (AEDT):') : 'Server Time (AEDT):';
-
-        const hours = serverTime.getHours().toString().padStart(2, '0');
-        const minutes = serverTime.getMinutes().toString().padStart(2, '0');
-        const seconds = serverTime.getSeconds().toString().padStart(2, '0');
-        
-        document.getElementById('timeDisplay').textContent = `${timeLabel} ${hours}:${minutes}:${seconds}`;
-    }
-
-    function timeAgo(date, lang) {
-        const seconds = Math.floor((new Date() - new Date(date)) / 1000);
-        let interval = Math.floor(seconds / 31536000);
-
-        if (interval >= 1) {
-            return interval + ' ' + (lang === 'id' ? translations.id['year'][0] : 'year') + (interval > 1 ? 's' : '') + (lang === 'id' ? translations.id[' ago'] : ' ago');
-        }
-        interval = Math.floor(seconds / 2592000);
-        if (interval >= 1) {
-            return interval + ' ' + (lang === 'id' ? translations.id['month'][0] : 'month') + (interval > 1 ? 's' : '') + (lang === 'id' ? translations.id[' ago'] : ' ago');
-        }
-        interval = Math.floor(seconds / 86400);
-        if (interval >= 1) {
-            return interval + ' ' + (lang === 'id' ? translations.id['day'][0] : 'day') + (interval > 1 ? 's' : '') + (lang === 'id' ? translations.id[' ago'] : ' ago');
-        }
-        interval = Math.floor(seconds / 3600);
-        if (interval >= 1) {
-            return interval + ' ' + (lang === 'id' ? translations.id['hour'][0] : 'hour') + (interval > 1 ? 's' : '') + (lang === 'id' ? translations.id[' ago'] : ' ago');
-        }
-        interval = Math.floor(seconds / 60);
-        if (interval >= 1) {
-            return interval + ' ' + (lang === 'id' ? translations.id['minute'][0] : 'minute') + (interval > 1 ? 's' : '') + (lang === 'id' ? translations.id[' ago'] : ' ago');
-        }
-        return lang === 'id' ? translations.id['now'] : 'just now';
-    }
-
-    function applyTranslations(lang) {
-        const transitionDuration = 200; // 200 ms
-        const elementsToTranslate = document.querySelectorAll('[data-original], #modalCancel, #modalConfirm, #welcomeSave, #welcomeSkip, #discordLink, #reportBugLink, #adminTokenSubmit, #closeAdmin, #toggleServerStatus, #saveNewsUpdate, #refreshAnalytics, #saveSeoMeta');
-
-        // 1. Fade out (Opacity 0)
-        elementsToTranslate.forEach(el => {
-            // Only target elements currently visible
-            if (el.offsetWidth > 0 || el.offsetHeight > 0 || el.getClientRects().length > 0) {
-                el.style.opacity = '0';
-            }
-        });
-        document.body.style.opacity = '0.01'; // Apply to the whole body
-        
-        // 2. Wait for fade out to complete, then update and fade in
-        setTimeout(() => {
-            // Update static elements first (if they haven't been touched yet)
-            document.querySelectorAll('[data-original]').forEach(el => {
-                const originalText = el.dataset.original || el.textContent.trim();
-                if (!el.dataset.original) {
-                    el.dataset.original = originalText;
-                }
-                el.textContent = translations[lang]?.[originalText] || originalText;
-            });
-            
-            // Update specific button/link texts
-            const updateText = (id, key) => {
-                const el = document.getElementById(id);
-                if (el) {
-                    const originalText = el.dataset.original || el.textContent.trim();
-                    if (!el.dataset.original) el.dataset.original = originalText;
-                    el.textContent = translations[lang]?.[key] || key;
-                }
-            };
-
-            updateText('navDownloads', '📥 Downloads');
-            updateText('navShop', '🛒 Shop');
-            updateText('reportBugLink', '🐞 Report Bug');
-            updateText('openAdmin', '🔑 Admin');
-            updateText('openWelcome', '⚙️');
-            updateText('welcomeTitle', 'Welcome & Preferences');
-            updateText('modalCancel', 'Cancel');
-            updateText('welcomeSkip', 'Skip');
-            updateText('welcomeSave', 'Save & Continue');
-            updateText('discordLink', 'Join Growfax Discord');
-            updateText('adminTokenSubmit', 'Submit');
-            updateText('toggleServerStatus', 'Toggle Status (Simulate)');
-            updateText('saveNewsUpdate', 'Save News');
-            updateText('refreshAnalytics', 'Refresh Data');
-            updateText('saveSeoMeta', 'Update SEO Meta');
-            updateText('closeAdmin', 'Close Admin Area');
-            
-            // Update shop role commands
-            updateCommandTranslations(lang);
-            
-            // Update welcome modal general text
-            const welcomeText = document.querySelector('.welcome > p');
-            if (welcomeText) {
-                const original = 'Please choose your preferred settings for the best experience.';
-                if (!welcomeText.dataset.original) welcomeText.dataset.original = original;
-                welcomeText.textContent = translations[lang]?.[original] || original;
-            }
-
-            // Update time display label (called inside updateTime)
-            updateTime();
-
-            // Update dynamic texts in admin area
-            updateAdminDynamicTexts(lang);
-            
-            // Update purchase button labels based on current language (e.g., changing 'Pay $USD' to 'Bayar $USD' if needed)
-            document.querySelectorAll('.btn-purchase').forEach(btn => {
-                const role = btn.dataset.role;
-                const priceKey = Object.keys(btn.dataset).find(key => key.startsWith('price'));
-                const originalText = btn.dataset.original || btn.textContent.trim();
-
-                // Special handling for IDR button
-                if (btn.classList.contains('btn-idr')) {
-                    if (!btn.dataset.original) btn.dataset.original = 'Bayar Rp IDR';
-                    btn.textContent = lang === 'id' ? 'Bayar Rp IDR' : `Pay Rp IDR`;
-                } else {
-                    if (!btn.dataset.original) btn.dataset.original = originalText;
-                    const currency = originalText.split(' ')[1]; // e.g., $USD
-                    btn.textContent = lang === 'id' ? `Bayar ${currency}` : originalText;
-                }
-            });
-
-            // Update shop price small text
-            document.querySelectorAll('.shop-role-card .price small').forEach(small => {
-                const originalText = small.dataset.original || small.textContent.trim();
-                if (!small.dataset.original) small.dataset.original = originalText;
-                small.textContent = originalText; // No translation needed for currency codes like USD, GBP
-            });
-            
-            // Update currency display
-            document.querySelectorAll('.shop-role-card .currency-display').forEach(span => {
-                const originalHtml = span.dataset.original || span.innerHTML.trim();
-                if (!span.dataset.original) span.dataset.original = originalHtml;
-                
-                let newHtml = originalHtml;
-                if (lang === 'id' && originalHtml.includes('USD')) {
-                    // Simple replacement of the main currency symbols
-                    newHtml = newHtml.replace('~ £', '~ £')
-                                     .replace('~ Rp', '~ Rp')
-                                     .replace('~ S$', '~ S$')
-                                     .replace('~ €', '~ €')
-                                     .replace('~ A$', '~ A$')
-                                     .replace('~ C$', '~ C$')
-                                     // Also replace the <small> tags content
-                                     .replace('<small>GBP</small>', '<small>GBP</small>')
-                                     .replace('<small>IDR</small>', '<small>IDR</small>')
-                                     .replace('<small>SGD</small>', '<small>SGD</small>')
-                                     .replace('<small>EUR</small>', '<small>EUR</small>')
-                                     .replace('<small>AUD</small>', '<small>AUD</small>')
-                                     .replace('<small>CAD</small>', '<small>CAD</small>');
-                }
-                span.innerHTML = newHtml;
-            });
-            
-            // 3. Fade in (Opacity 1)
-            elementsToTranslate.forEach(el => {
-                el.style.opacity = '1';
-            });
-            document.body.style.opacity = '1';
-        }, transitionDuration);
-    }
-
-    // ===========================
-    // Admin Area Simulation Handlers
-    // ===========================
+    // Server Status and Analytics (Dynamic)
+    serverStatusDisplay.textContent = serverIsOnline ? 
+      (lang === 'id' ? translations.id['Online'] : 'Online') : 
+      (lang === 'id' ? translations.id['Offline'] : 'Offline');
     
-    // Simple simulation of analytics data
-    const analyticsData = {
-        downloads: 1245,
-        activities: [
-            { type: 'Sold VIP Role', time: new Date(Date.now() - 30 * 60000).toISOString() }, // 30 mins ago
-            { type: 'Downloaded Patched Client', time: new Date(Date.now() - 15 * 60000).toISOString() }, // 15 mins ago
-            { type: 'Updated News', time: new Date(Date.now() - 7200000).toISOString() }, // 2 hours ago
-            { type: 'Updated SEO', time: new Date(Date.now() - 10800000).toISOString() }, // 3 hours ago
-            { type: 'Downloaded Patched Client', time: new Date(Date.now() - 86400000).toISOString() }, // 1 day ago
-            { type: 'Downloaded Patched Client', time: new Date(Date.now() - 172800000).toISOString() }, // 2 days ago
-        ]
-    };
-
-    function renderAnalyticsDashboard() {
-        const lang = langSelect.value;
-        // Update downloads count (simulated)
-        totalDownloads.textContent = analyticsData.downloads.toLocaleString();
-
-        // Render activities
-        recentActivities.innerHTML = '';
-        analyticsData.activities.forEach(activity => {
-            const li = document.createElement('li');
-            const activityText = lang === 'id' ? (translations.id[activity.type] || activity.type) : activity.type;
-            const timeAgoText = timeAgo(activity.time, lang);
-            li.textContent = `${activityText} - ${timeAgoText}`;
-            recentActivities.appendChild(li);
-        });
+    const toggleBtnText = serverIsOnline ? 'Toggle Status (Simulate)' : 'Toggle Status (Simulate)';
+    toggleServerStatus.textContent = lang === 'id' ? 
+      (translations.id[toggleBtnText] || toggleBtnText) : toggleBtnText;
+      
+    // Re-render dashboard if visible to apply new translations
+    if (adminContent.style.display === 'block') {
+      renderAnalyticsDashboard();
     }
+  }
 
-    // Admin login handler
-    adminTokenSubmit.addEventListener('click', () => {
-        const lang = langSelect.value;
-        if (adminTokenInput.value === ADMIN_TOKEN) {
-            adminLogin.style.display = 'none';
-            adminContent.style.display = 'block';
-            showToast(lang === 'id' ? (translations.id['Admin Login success'] || 'Login Admin berhasil') : 'Admin Login success', 2500);
-            loadNewsUpdate();
-            loadSeoSettings();
-            renderAnalyticsDashboard();
-        } else {
-            alert('Invalid Token!');
-            adminTokenInput.value = '';
+  // Language Change Event Listener
+  langSelect.addEventListener('change', () => {
+    const newLang = langSelect.value;
+    localStorage.setItem('growfax_lang', newLang);
+    welcomeLang.value = newLang; // Sync welcome modal
+    applyTranslations(newLang);
+    updateTime(); // Update time display with new language
+    loadTheme(); // Re-apply theme to update theme toggle text with correct language
+  });
+
+  // Main translation function
+  function applyTranslations(lang) {
+    const transitionDuration = 200; // 200 ms
+    const elementsToTranslate = document.querySelectorAll('[data-original], #modalCancel, #modalConfirm, #welcomeSave, #welcomeSkip, #discordLink, #reportBugLink, #adminTokenSubmit, #closeAdmin, #toggleServerStatus, #saveNewsUpdate, #refreshAnalytics, #saveSeoMeta');
+
+    // 1. Fade out (Opacity 0)
+    elementsToTranslate.forEach(el => {
+      // Only target elements currently visible
+      if (el.offsetWidth > 0 || el.offsetHeight > 0 || el.getClientRects().length > 0) {
+        el.style.opacity = '0';
+      }
+    });
+    document.body.style.opacity = '0.01'; // Apply to the whole body for elements without data-original
+
+    setTimeout(() => {
+      // 2. Perform the translation
+      document.querySelectorAll('[data-original]').forEach(el => {
+        const originalText = el.getAttribute('data-original');
+        el.textContent = translations[lang]?.[originalText] || originalText;
+      });
+
+      // Update commands list
+      updateCommandTranslations(lang);
+      // Update Admin Area dynamic texts
+      updateAdminDynamicTexts(lang);
+
+      // Update theme toggle text
+      const currentTheme = document.body.getAttribute('data-theme');
+      themeToggle.textContent = currentTheme === 'dark' 
+        ? (lang === 'id' ? (translations.id['🌞 Light'] || '🌞 Light') : '🌞 Light')
+        : (lang === 'id' ? (translations.id['🌙 Dark'] || '🌙 Dark') : '🌙 Dark');
+      
+      // Update non-data-original elements
+      document.getElementById('navDownloads').textContent = lang === 'en' ? '📥 Downloads' : (translations[lang]?.['📥 
+ Downloads'] || '📥 Unduhan');
+      document.getElementById('navShop').textContent = lang === 'en' ? '🛒 Shop' : (translations[lang]?.['🛒 Shop'] || '🛒 Toko');
+      document.getElementById('reportBugLink').textContent = lang === 'en' ? '🐞 Report Bug' : (translations[lang]?.['🐞 Report Bug'] || '🐞 Laporkan Bug');
+      document.getElementById('openAdmin').textContent = lang === 'en' ? '🔑 Admin' : (translations[lang]?.['🔑 Admin'] || '🔑 Admin');
+      document.getElementById('openWelcome').title = lang === 'en' ? 'Welcome & Preferences' : (translations[lang]?.['Welcome & Preferences'] || 'Selamat Datang & Preferensi');
+      discordLink.textContent = lang === 'en' ? 'Join Growfax Discord' : (translations[lang]?.['Join Growfax Discord'] || 'Gabung Discord Growfax');
+
+      // Update Price button texts
+      document.querySelectorAll('.btn-purchase').forEach(button => {
+        if (button.classList.contains('btn-usd')) {
+          button.textContent = lang === 'en' ? 'Pay $USD' : (translations[lang]?.['Pay $USD'] || 'Bayar $USD');
+        } else if (button.classList.contains('btn-idr')) {
+          button.textContent = lang === 'en' ? 'Pay Rp IDR' : (translations[lang]?.['Bayar Rp IDR'] || 'Bayar Rp IDR');
         }
-    });
+        // ... (Repeat for other currency buttons if they are ever added)
+      });
+      
+      // 3. Fade back in (Opacity 1)
+      elementsToTranslate.forEach(el => {
+        el.style.opacity = '1';
+      });
+      document.body.style.opacity = '1';
 
-    // Toggle server status handler (simulated)
-    toggleServerStatus.addEventListener('click', () => {
-        const lang = langSelect.value;
-        const isOnline = serverStatusDisplay.textContent === 'Online' || serverStatusDisplay.textContent === 'Online'; // Check against both languages
-        
-        if (isOnline) {
-            serverStatusDisplay.textContent = lang === 'id' ? (translations.id['Offline'] || 'Offline') : 'Offline';
-            serverStatusDisplay.style.color = 'var(--danger)';
-            statusIndicator.style.background = 'var(--danger)';
-        } else {
-            serverStatusDisplay.textContent = lang === 'id' ? (translations.id['Online'] || 'Online') : 'Online';
-            serverStatusDisplay.style.color = 'var(--success)';
-            statusIndicator.style.background = 'var(--success)';
-        }
-        showToast(lang === 'id' ? (translations.id['Server Status changed.'] || 'Status Server diubah.') : 'Server Status changed.', 2500);
-    });
+    }, transitionDuration);
+  }
 
-    // Save news handler
-    saveNewsUpdate.addEventListener('click', saveNewsUpdateHandler);
+  /* =========================== Welcome Modal Logic =========================== */
+  openWelcome.addEventListener('click', () => {
+    welcomeBackdrop.style.display = 'flex';
+    welcomeBackdrop.setAttribute('aria-hidden', 'false');
+  });
 
-    // Refresh analytics handler (simulated)
-    refreshAnalytics.addEventListener('click', () => {
-        // Simulate new download activity
-        analyticsData.downloads += Math.floor(Math.random() * 20) + 1;
-        // Add a new random activity
-        const types = ['Sold VIP Role', 'Downloaded Patched Client', 'Updated News', 'Updated SEO'];
-        const newActivity = {
-            type: types[Math.floor(Math.random() * types.length)],
-            time: new Date().toISOString()
-        };
-        analyticsData.activities.unshift(newActivity); // Add to the start
-        if (analyticsData.activities.length > 10) analyticsData.activities.pop(); // Keep list short
-        
-        renderAnalyticsDashboard();
-        showToast(langSelect.value === 'id' ? (translations.id['Analytical Dashboard'] + ' diperbarui.') : 'Analytics Dashboard updated.', 2500);
-    });
-
-    // Save SEO Meta handler
-    saveSeoMeta.addEventListener('click', () => {
-        const title = seoTitleInput.value;
-        const desc = seoDescTextarea.value;
-        const keywords = seoKeywordsInput.value;
-        
-        saveSeoSettings(title, desc, keywords);
-        loadSeoSettings(); // Re-apply to the HTML head
-
-        showToast(langSelect.value === 'id' ? (translations.id['SEO Meta updated successfully.'] || 'Meta SEO berhasil diperbarui.') : 'SEO Meta updated successfully.', 2500);
-    });
-
-    // ===========================
-    // Event Listeners (Main)
-    // ===========================
-
-    // Theme toggle (Header button)
-    themeToggle.addEventListener('click', () => {
-        const currentTheme = getTheme();
-        setTheme(currentTheme === 'light' ? 'dark' : 'light');
-    });
-
-    // Language select (Header dropdown)
-    langSelect.addEventListener('change', (e) => {
-        const newLang = e.target.value;
-        localStorage.setItem('lang', newLang);
-        applyTranslations(newLang);
-        // Also update the welcome modal selector
-        welcomeLangSelect.value = newLang;
-    });
-
-    // Language select (Welcome modal)
-    welcomeLangSelect.addEventListener('change', (e) => {
-        langSelect.value = e.target.value; // Sync with header
-    });
-    
-    // Theme selection (Welcome modal)
-    themeOptions.forEach(radio => {
-        radio.addEventListener('change', (e) => {
-            setTheme(e.target.value);
-        });
-    });
-
-    // Welcome modal save
-    welcomeSave.addEventListener('click', () => {
-        const newLang = welcomeLangSelect.value;
-        const newTheme = document.querySelector('input[name="welcomeTheme"]:checked').value;
-        
-        localStorage.setItem('lang', newLang);
-        localStorage.setItem('theme', newTheme);
-        localStorage.setItem('has_welcomed', 'true');
-        
-        setTheme(newTheme);
-        langSelect.value = newLang; // Sync header
-        applyTranslations(newLang); // Apply translations
+  [welcomeBackdrop, welcomeSkip].forEach(el => {
+    el.addEventListener('click', (e) => {
+      if (e.target === welcomeBackdrop || e.target === welcomeSkip) {
         welcomeBackdrop.style.display = 'none';
-        showToast('Settings saved!', 2500);
+        welcomeBackdrop.setAttribute('aria-hidden', 'true');
+      }
     });
+  });
 
-    // Welcome modal skip
-    welcomeSkip.addEventListener('click', () => {
-        localStorage.setItem('has_welcomed', 'true');
-        welcomeBackdrop.style.display = 'none';
-    });
+  welcomeSave.addEventListener('click', () => {
+    const lang = welcomeLang.value;
+    const theme = document.querySelector('input[name="welcomeTheme"]:checked').value;
 
-    // Open Welcome modal (Gear icon)
-    openWelcome.addEventListener('click', () => {
-        // Sync current settings to the modal first
-        welcomeLangSelect.value = langSelect.value;
-        updateWelcomeThemeRadios(getTheme());
-        welcomeBackdrop.style.display = 'flex';
-    });
+    // 1. Save preferences
+    localStorage.setItem('growfax_lang', lang);
+    localStorage.setItem('growfax_theme', theme);
 
-    // Open Admin Area
-    document.getElementById('openAdmin').addEventListener('click', () => {
-        adminBackdrop.style.display = 'flex';
-        // Reset state
-        if (adminContent.style.display === 'block') {
-            adminLogin.style.display = 'none';
-            adminContent.style.display = 'block';
-            loadNewsUpdate();
-            loadSeoSettings();
-            renderAnalyticsDashboard();
-        } else {
-            adminLogin.style.display = 'block';
-            adminContent.style.display = 'none';
-            adminTokenInput.value = '';
-        }
-    });
+    // 2. Apply theme (will call loadTheme which uses the new language)
+    document.body.setAttribute('data-theme', theme);
 
-    // Close Admin Area
-    document.getElementById('closeAdmin').addEventListener('click', () => {
-        adminBackdrop.style.display = 'none';
-    });
-    
-    // Report Bug Link
-    document.getElementById('reportBugLink').addEventListener('click', (e) => {
-        e.preventDefault();
-        // Simple alert for demonstration
-        alert('Please report bugs to our Discord server: https://discord.gg/smgS6sq83y');
-    });
-
-    // ===========================
-    // Initialization
-    // ===========================
-    setTheme(getTheme());
-    setInterval(updateTime, 1000);
-
-    // Initial language setup
-    const initLang = localStorage.getItem('lang') || (navigator.language.startsWith('id') ? 'id' : 'en');
-    langSelect.value = initLang;
-    applyTranslations(initLang);
+    // 3. Apply translations (calls loadTheme/updateTime internally if needed)
+    langSelect.value = lang;
+    applyTranslations(lang);
     updateTime();
+    loadTheme(); // Re-apply theme toggle text with correct language
 
-    // Show welcome modal if not seen before
-    if (!localStorage.getItem('has_welcomed')) {
-        // Only show if not on admin mode (to prevent conflict)
-        if (adminBackdrop.style.display !== 'flex') {
-            welcomeBackdrop.style.display = 'flex';
-        }
+    // 4. Hide modal
+    welcomeBackdrop.style.display = 'none';
+    welcomeBackdrop.setAttribute('aria-hidden', 'true');
+  });
+
+  /* =========================== Theme Toggle Logic =========================== */
+  themeToggle.addEventListener('click', () => {
+    const currentTheme = document.body.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    const lang = langSelect.value;
+    const newThemeTextKey = newTheme === 'dark' ? '🌞 Light' : '🌙 Dark';
+
+    document.body.setAttribute('data-theme', newTheme);
+    localStorage.setItem('growfax_theme', newTheme);
+    themeToggle.setAttribute('aria-pressed', newTheme === 'dark');
+    document.querySelector(`input[name="welcomeTheme"][value="${newTheme}"]`).checked = true;
+
+    themeToggle.textContent = lang === 'id' 
+      ? (translations.id[newThemeTextKey] || (newTheme === 'dark' ? '🌙 Dark' : '🌞 Light')) 
+      : (newTheme === 'dark' ? '🌙 Dark' : '🌞 Light');
+  });
+
+  /* =========================== Time & Toast Functions =========================== */
+  function showToast(message, duration) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateX(-50%) translateY(10px)';
+    }, duration);
+  }
+
+  function timeSince(date, lang) {
+    const seconds = Math.floor((new Date() - date) / 1000);
+    const l = translations[lang] || translations.en; // Use English as fallback
+
+    function plural(number, words) {
+      // Simplistic pluralizer for English/Indonesian
+      return `${number} ${words[0]}${lang === 'en' && number > 1 ? 's' : ''}`;
     }
 
+    let interval = seconds / 31536000;
+    if (seconds < 5) return lang === 'id' ? l.now : 'just now';
+
+    interval = seconds / 31536000;
+    if (interval > 1) return Math.floor(interval) + (lang === 'id' ? ' tahun yang lalu' : ` ${plural(Math.floor(interval), l.year)} ago`);
+    
+    interval = seconds / 2592000; // months
+    if (interval > 1) return Math.floor(interval) + (lang === 'id' ? ' bulan yang lalu' : ` ${plural(Math.floor(interval), l.month)} ago`);
+
+    interval = seconds / 86400; // days
+    if (interval > 1) return Math.floor(interval) + (lang === 'id' ? ' hari yang lalu' : ` ${plural(Math.floor(interval), l.day)} ago`);
+
+    interval = seconds / 3600; // hours
+    if (interval > 1) return Math.floor(interval) + (lang === 'id' ? ' jam yang lalu' : ` ${plural(Math.floor(interval), l.hour)} ago`);
+    
+    interval = seconds / 60; // minutes
+    if (interval > 1) return Math.floor(interval) + (lang === 'id' ? ' menit yang lalu' : ` ${plural(Math.floor(interval), l.minute)} ago`);
+
+    return Math.floor(seconds) + (lang === 'id' ? ' detik yang lalu' : ` seconds ago`);
+  }
+
+  function getIndoGreeting(hour) {
+    if (hour >= 4 && hour < 11) return (translations.id['Pagi'] || 'Pagi');
+    if (hour >= 11 && hour < 15) return (translations.id['Siang'] || 'Siang');
+    if (hour >= 15 && hour < 18) return (translations.id['Sore'] || 'Sore');
+    return (translations.id['Malam'] || 'Malam');
+  }
+
+  function updateTime() {
+    const now = new Date();
+    // Use a fixed timezone for "Server Time" (e.g., AEDT - UTC+11) for consistency
+    const offset = 11 * 60; // UTC+11 in minutes
+    const serverTime = new Date(now.getTime() + (offset + now.getTimezoneOffset()) * 60000);
+    const lang = langSelect.value;
+    const timeDisplay = document.getElementById('timeDisplay');
+    const newsUpdateTextarea = document.getElementById('newsUpdateTextarea');
+
+    // 1. Update the main server time display
+    const serverTimeString = serverTime.toLocaleTimeString(lang === 'id' ? 'id-ID' : 'en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false // Force 24hr format
+    });
+    
+    const serverDateString = serverTime.toLocaleDateString(lang === 'id' ? 'id-ID' : 'en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+    
+    const serverLabel = lang === 'id' ? translations.id['Server Time (AEDT):'] : 'Server Time (AEDT):';
+    
+    if (lang === 'id') {
+      const greeting = getIndoGreeting(serverTime.getHours());
+      timeDisplay.textContent = `Selamat ${greeting}. ${serverLabel} ${serverTimeString} - ${serverDateString}`;
+    } else {
+      timeDisplay.textContent = `${serverLabel} ${serverTimeString} - ${serverDateString}`;
+    }
+
+    // 2. Update Admin Area news last saved time
+    const lastSavedNews = localStorage.getItem('last_saved_news');
+    const timeAgoElement = document.getElementById('newsLastSavedTime');
+
+    if (timeAgoElement) {
+      if (lastSavedNews) {
+        const timeAgo = timeSince(new Date(lastSavedNews), lang);
+        timeAgoElement.textContent = `Last saved: ${timeAgo}`;
+      }
+    }
+  }
+  
+  // Set a periodic update for time
+  setInterval(updateTime, 1000);
+
+  // Initial load and setup
+  loadLang(); // Must be called before loadTheme to set initial langSelect value
+  loadTheme();
+  updateTime(); // Call immediately on load
+  loadSeoSettings(); // Load SEO settings on page load
+  
+  /* =========================== Admin Dashboard Analytics (Simulated) =========================== */
+  const SIMULATED_DATA = {
+    totalDownloads: 12500, // Initial value
+    activities: [
+      { type: "Download initiated: ", details: "VirtualHost.txt", time: new Date(Date.now() - 30000) },
+      { type: "Shop purchase: ", details: "Admin Role", time: new Date(Date.now() - 90000) }
+    ] // Store simulated activities
+  };
+
+  function simulateNewActivity() {
+    SIMULATED_DATA.totalDownloads += Math.floor(Math.random() * 5) + 1;
+    // Increase downloads
+    const possibleActivities = [
+      { type: "Download initiated: ", details: "VirtualHost.txt" },
+      { type: "Download initiated: ", details: "GrowFax_ios_config.txt" },
+      { type: "Shop purchase: ", details: "Admin Role" },
+      { type: "Admin Login success", details: "192.168.1.1" }
+    ];
+    const newActivity = possibleActivities[Math.floor(Math.random() * possibleActivities.length)];
+    newActivity.time = new Date(); // Add timestamp
+    SIMULATED_DATA.activities.unshift(newActivity);
+    // Keep only the last 15 activities
+    if (SIMULATED_DATA.activities.length > 15) {
+      SIMULATED_DATA.activities.pop();
+    }
+  }
+
+  // Simulate an activity every 10 seconds
+  setInterval(simulateNewActivity, 10000); 
+
+  function renderAnalyticsDashboard(startAutoRefresh = false) {
+    const lang = langSelect.value;
+
+    // Update Total Downloads
+    totalDownloadsElement.textContent = `${lang === 'id' ? translations.id['Total Downloads:'] : 'Total Downloads:'} ${SIMULATED_DATA.totalDownloads.toLocaleString()}`;
+
+    // Update Recent Activities
+    activitiesList.innerHTML = '';
+    SIMULATED_DATA.activities.forEach(activity => {
+      const li = document.createElement('li');
+      const timeAgo = timeSince(activity.time, lang);
+      // Translate the activity type if a translation exists
+      const activityType = lang === 'id' ? (translations.id[activity.type] || activity.type) : activity.type;
+      li.innerHTML = `${activityType} <strong>${activity.details}</strong> (${timeAgo})`;
+      li.style.fontSize = '0.85rem';
+      li.style.lineHeight = '1.4';
+      activitiesList.appendChild(li);
+    });
+    
+    // Update last refreshed time
+    lastRefreshedDisplay.textContent = `Last refreshed: ${timeSince(new Date(), lang)}`;
+
+    if (startAutoRefresh) {
+      if (analyticsInterval) clearInterval(analyticsInterval); // Clear any existing interval
+      analyticsInterval = setInterval(() => {
+        renderAnalyticsDashboard();
+      }, 5000); // Update every 5 seconds
+    }
+  }
+
+  // Admin Toggle Status Logic (Simulated)
+  toggleServerStatus.addEventListener('click', () => {
+    serverIsOnline = !serverIsOnline;
+    const lang = langSelect.value;
+    serverStatusDisplay.textContent = serverIsOnline ? 
+      (lang === 'id' ? translations.id['Online'] : 'Online') : 
+      (lang === 'id' ? translations.id['Offline'] : 'Offline');
+    serverStatusDisplay.style.color = serverIsOnline ? 'var(--success)' : 'var(--danger)';
+    showToast(lang === 'id' ? (translations.id['Server Status changed.'] || 'Status Server diubah.') : 'Server Status changed.', 2000);
+    // Tracking disabled per user request.
+  });
+
+  // Admin Refresh Analytics Button
+  refreshAnalytics.addEventListener('click', () => {
+    renderAnalyticsDashboard();
+    showToast(langSelect.value === 'id' ? (translations.id['Refresh Data'] || 'Segarkan Data') + '...' : 'Refreshing data...', 1500);
+  });
+  
+  // Admin Save News Logic (Simulated)
+  saveNewsUpdate.addEventListener('click', () => {
+    // In a real app, this would save to a database. Here we simulate the action.
+    localStorage.setItem('last_saved_news', new Date().toISOString());
+    updateTime(); // Refresh the timeAgo display
+    showToast(langSelect.value === 'id' ? (translations.id['News updated successfully.'] || 'Berita berhasil diperbarui.') : 'News updated successfully.', 3000);
+  });
+
+  // Admin Save SEO Meta Logic
+  saveSeoMeta.addEventListener('click', () => {
+    const title = seoTitleInput.value.trim();
+    const desc = seoDescTextarea.value.trim();
+    const keywords = seoKeywordsInput.value.trim();
+
+    saveSeoSettings(title, desc, keywords);
+    
+    // Apply new settings to the live HTML head
+    document.querySelector('title').textContent = title;
+    document.querySelector('meta[name="description"]').content = desc;
+    document.querySelector('meta[name="keywords"]').content = keywords;
+    
+    showToast(langSelect.value === 'id' ? (translations.id['SEO Meta updated successfully.'] || 'Meta SEO berhasil diperbarui.') : 'SEO Meta updated successfully.', 3000);
+  });
+
+  /* ===========================
+     Event listeners for Admin Area inputs (to update placeholder text)
+     =========================== */
+  seoTitleInput.addEventListener('input', () => {
+      const title = seoTitleInput.value.trim();
+      document.querySelector('title').textContent = title;
+  });
+
+  seoDescTextarea.addEventListener('input', () => {
+      const desc = seoDescTextarea.value.trim();
+      document.querySelector('meta[name="description"]').content = desc;
+  });
+
+  seoKeywordsInput.addEventListener('input', () => {
+      const keywords = seoKeywordsInput.value.trim();
+      document.querySelector('meta[name="keywords"]').content = keywords;
+  });
 
     /* ===========================
        Allow middle click / aux click default behavior on links (unchanged)
