@@ -22,6 +22,10 @@
 <meta name="twitter:title" content="Growfax Official - Private Growtopia Server & Downloads" />
 <meta name="twitter:description" content="Unduh file host terbaru untuk Growfax Private Server (Android, Windows, iOS) dan bergabunglah dengan komunitas Discord kami." />
 <meta name="twitter:image" content="https://growfax.web.id/Growfax_banner.jpg" />
+
+<meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload" />
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" /> 
+
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -611,7 +615,7 @@ const recentActivitiesTitle = document.getElementById('recentActivitiesTitle');
 const recentActivitiesElement = document.getElementById('recentActivities');
 const refreshAnalytics = document.getElementById('refreshAnalytics');
 
-// NEW SEO Refs
+// SEO Refs
 const seoTitle = document.getElementById('seoTitle');
 const seoTitleInput = document.getElementById('seoTitleInput');
 const seoDescTextarea = document.getElementById('seoDescTextarea');
@@ -621,7 +625,7 @@ const saveSeoMeta = document.getElementById('saveSeoMeta');
 let isServerOnline = true; // Simulated server status
 let pendingDownload = null;
 let isAdminLoggedIn = false; // New state tracker
-let analyticsIntervalId = null; // NEW: ID untuk auto-refresh dashboard
+let analyticsIntervalId = null; // ID untuk auto-refresh dashboard
 
 /* ===========================
    File metadata
@@ -713,7 +717,7 @@ const translations = {
     "Download initiated:": "Unduhan dimulai: ",
     "Admin Login success": "Login Admin berhasil",
 
-    // NEW SEO Translations
+    // SEO Translations
     "SEO Management": "Manajemen SEO",
     "Page Title (Hanya Title Tag HTML)": "Judul Halaman (Hanya Tag Title HTML)",
     "Meta Description": "Deskripsi Meta",
