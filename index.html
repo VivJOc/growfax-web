@@ -26,7 +26,6 @@
     --danger:#e74c3c;
     --mono: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     --border-color: rgba(0,0,0,0.08);
-    --report-btn-bg: #d9534f;
   }
   [data-theme="dark"]{
     --bg:#0f1720;
@@ -39,7 +38,6 @@
     --toast-bg:rgba(255,255,255,0.08);
     --glass: rgba(255,255,255,0.03);
     --border-color: rgba(255,255,255,0.06);
-    --report-btn-bg: #c23b3b;
   }
 
   html,body{height:100%;margin:0;font-family:var(--mono);background:var(--bg);color:var(--text);line-height:1.6;transition:background .25s,color .25s}
@@ -131,10 +129,6 @@
   .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:86px;background:var(--toast-bg);color:#fff;padding:8px 12px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;z-index:1600}
   [data-theme="dark"] .toast{color:#fff}
 
-  /* -------------------------
-     (Chatbot removed) - related CSS removed
-     ------------------------- */
-
   /* Typing animation helper (kept for possible future use) */
   .typing-container{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:0.95rem}
   .typing-dots{display:inline-block;position:relative;width:26px;height:10px}
@@ -152,63 +146,6 @@
   .typing-indicator{font-size:0.9rem;color:var(--muted);opacity:.95}
 
   @media (max-width:600px){ .platform-buttons a{width:92%} }
-
-  /* ===========================
-     Report Bug (floating button + popup)
-     =========================== */
-  .report-bug-btn {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    background: var(--report-btn-bg);
-    color: #fff;
-    border: none;
-    padding: 12px 16px;
-    border-radius: 10px;
-    font-weight: 700;
-    cursor: pointer;
-    z-index: 2000;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-    transition: transform .12s, box-shadow .12s;
-    font-size: 0.95rem;
-  }
-  .report-bug-btn:hover { transform: translateY(-3px); }
-
-  .report-popup {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 92%;
-    max-width: 520px;
-    background: var(--card-bg);
-    color: var(--text);
-    border-radius: 12px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    z-index: 2050;
-    display: none;
-    flex-direction: column;
-    padding: 18px;
-  }
-  .report-popup header { display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px; }
-  .report-popup h3 { margin:0;font-size:1.05rem; }
-  .report-popup .row { margin-bottom:10px; }
-  .report-popup input[type="text"], .report-popup textarea, .report-popup input[type="file"] {
-    width:100%;
-    padding:10px;
-    border-radius:8px;
-    border:1px solid var(--border-color);
-    background: transparent;
-    color: var(--text);
-  }
-  .report-popup .actions { display:flex;gap:10px;justify-content:flex-end;margin-top:8px; }
-  .report-popup .btn { padding:8px 12px;border-radius:8px;border:0;cursor:pointer;font-weight:700 }
-  .report-popup .btn.secondary { background: transparent;border:1px solid var(--border-color) }
-  .report-popup .btn.primary { background: var(--accent); color: #fff }
-
-  /* small image preview */
-  .report-preview { max-width:100%; border-radius:8px; margin-top:8px; display:none; }
-  @media (max-width:420px){ .report-popup{ padding:12px } .report-bug-btn{padding:10px 12px;font-size:0.9rem} }
 </style>
 </head>
 <body data-theme="light">
@@ -225,7 +162,7 @@
 
         <nav class="primary" aria-label="Main navigation">
           <a href="#downloads" id="navDownloads">📥 Downloads</a>
-          </nav>
+        </nav>
       </div>
 
       <div class="controls">
@@ -330,40 +267,12 @@
 
   <div id="toast" class="toast" role="status" aria-live="polite">Saved</div>
 
-  <button id="reportBugBtn" class="report-bug-btn">Report Bug</button>
-
-  <div id="reportPopup" class="report-popup" role="dialog" aria-modal="true" aria-labelledby="reportTitle">
-    <header>
-      <h3 id="reportTitle">Report Bug</h3>
-      <button id="closeReport" class="btn secondary" title="Close">✕</button>
-    </header>
-
-    <div class="row">
-      <input type="text" id="reportName" placeholder="Your name (optional)">
-    </div>
-
-    <div class="row">
-      <textarea id="reportDesc" placeholder="Describe the bug..." rows="5"></textarea>
-    </div>
-
-    <div class="row">
-      <input type="file" id="reportImage" accept="image/*">
-      <img id="reportPreview" class="report-preview" alt="preview">
-    </div>
-
-    <div class="actions">
-      <button id="sendReportBtn" class="btn primary">Kirim Report</button>
-      <button id="cancelReportBtn" class="btn secondary">Cancel</button>
-    </div>
-  </div>
-
 <script>
 /* ============================================================
    Growfax Official — FULL script
    - All logic in one place: translations, theme, time, modal,
-     download info, welcome popup, and integration to CPU Mapping.
-   - Chatbot removed.
-   - MODIFIED: PowerTunnel now copies host text instead of downloading.
+     download info, welcome popup.
+   - CPU Mapping, Webhook, and Bug Report logic REMOVED.
    ============================================================ */
 
 /* ===========================
@@ -395,7 +304,7 @@ let pendingDownload = null;
 
 /* ===========================
    File metadata
-   - PowerTunnel entry updated to include 'copytext' and revised changelog
+   - PowerTunnel entry for copy-text confirmed
    =========================== */
 const FILE_META = {
   virtualhost: { version: 'v2.1', updated: 'Oct 29, 2025', changelog: '- Fixed host parsing\\n- Improved TLS handling', size: '2.3 KB' },
@@ -412,8 +321,6 @@ const FILE_META = {
 
 /* ===========================
    Translation baseline
-   - We collect text nodes and store original text content
-   - Then apply translations by mapping strings -> translated text
    =========================== */
 const elements = document.querySelectorAll('body *:not(script):not(style)');
 elements.forEach(el=>{
@@ -475,8 +382,6 @@ function applyTranslations(lang){
 
 /* ===========================
    Theme control
-   - uses localStorage: 'growfax_theme'
-   - toggles body attribute data-theme
    =========================== */
 function setTheme(theme){
   document.body.setAttribute('data-theme', theme);
@@ -507,8 +412,6 @@ langSelect.addEventListener('change', ()=> {
 
 /* ===========================
    Time display (NY / Jakarta)
-   - updates every second
-   - shows localized greeting for Jakarta (indonesia)
    =========================== */
 function getIndoGreeting(hour){
   if(hour < 11) return 'pagi';
@@ -536,7 +439,7 @@ setInterval(updateTime, 1000);
 
 /* ===========================
    File Update Checker (modal)
-   - MODIFIED: PowerTunnel logic for copy-to-clipboard added
+   - PowerTunnel: Copy-to-clipboard logic
    =========================== */
 document.querySelectorAll('.platform-buttons a').forEach(a=>{
   a.addEventListener('click', (e)=>{
@@ -605,7 +508,6 @@ welcomeSkip.addEventListener('click', ()=> { hideWelcome(); showToast(langSelect
 
 /* ===========================
    Storage helpers & UI helpers
-   - kept lightweight for other features (no chat)
    =========================== */
 function showToast(text, ms=1500){
   toast.textContent = text;
@@ -641,133 +543,8 @@ document.querySelectorAll('.platform-buttons a').forEach(a=>{
 });
 
 /* ===========================
-   CPU Mapping integration
-   - Inject a nav link to cpu-mapping.html if not present
-   - Use smooth page transition when clicking
-   =========================== */
-(function ensureCpuNav(){
-  const nav = document.querySelector('nav.primary');
-  if(nav && !document.querySelector('#cpuNav')){
-    const cpuButton = document.createElement('a');
-    cpuButton.id = 'cpuNav';
-    cpuButton.href = 'cpu-mapping.html';
-    cpuButton.textContent = '🧠 CPU Mapping';
-    cpuButton.style.marginLeft = '12px';
-    cpuButton.style.textDecoration = 'none';
-    cpuButton.style.fontWeight = '700';
-    cpuButton.addEventListener('click', (e)=>{
-      // smooth fade before navigation
-      e.preventDefault();
-      document.body.style.transition = 'opacity 0.25s';
-      document.body.style.opacity = '0';
-      setTimeout(()=> window.location.href = cpuButton.href, 260);
-    });
-    nav.appendChild(cpuButton);
-  }
-})();
-
-/* ===========================
-   Report Bug UI logic
-   - Sends report directly to Discord webhook (no backend)
-   - IMPORTANT: Replace WEBHOOK_URL with your webhook before using
-   =========================== */
-const reportBtn = document.getElementById('reportBugBtn');
-const reportPopup = document.getElementById('reportPopup');
-const closeReport = document.getElementById('closeReport');
-const cancelReportBtn = document.getElementById('cancelReportBtn');
-const sendReportBtn = document.getElementById('sendReportBtn');
-const reportName = document.getElementById('reportName');
-const reportDesc = document.getElementById('reportDesc');
-const reportImage = document.getElementById('reportImage');
-const reportPreview = document.getElementById('reportPreview');
-
-// <-- REPLACE THIS with your webhook URL (do not commit publicly)
-const WEBHOOK_URL = "GANTI_DENGAN_WEBHOOK_KAMU";
-
-function openReportPopup(){
-  reportPopup.style.display = 'flex';
-  // ensure popup is centered and visible
-  reportPopup.scrollTop = 0;
-  reportDesc.focus();
-}
-function closeReportPopup(){
-  reportPopup.style.display = 'none';
-  reportName.value = '';
-  reportDesc.value = '';
-  reportImage.value = '';
-  reportPreview.style.display = 'none';
-  reportPreview.src = '';
-}
-
-reportBtn.addEventListener('click', openReportPopup);
-closeReport.addEventListener('click', closeReportPopup);
-cancelReportBtn.addEventListener('click', closeReportPopup);
-
-// preview image when selected
-reportImage.addEventListener('change', (e)=>{
-  const f = e.target.files[0];
-  if(!f) { reportPreview.style.display='none'; reportPreview.src=''; return; }
-  const reader = new FileReader();
-  reader.onload = function(ev){
-    reportPreview.src = ev.target.result;
-    reportPreview.style.display = 'block';
-  };
-  reader.readAsDataURL(f);
-});
-
-// send report
-sendReportBtn.addEventListener('click', async ()=>{
-  const name = (reportName.value || 'Anonymous').trim();
-  const desc = (reportDesc.value || '').trim();
-  const file = reportImage.files[0];
-
-  if(!desc){
-    showToast('❌ Deskripsi tidak boleh kosong!');
-    return;
-  }
-
-  if(WEBHOOK_URL === "https://discord.com/api/webhooks/1433278338910130308/0LALQ9yjgPrdiQEypPXVXpq3WzYmZgr-bg36FxCvnlyO8yuLW93u7ohabMdnPCZUPB4G"){
-    showToast('⚠️ GANTI WEBHOOK URL terlebih dahulu di script.');
-    return;
-  }
-
-  // Build payload: use form-data to include image as file attachment if provided
-  const embed = {
-    title: `🐞 Bug Report — ${name}`,
-    description: desc,
-    color: 15158332, // red-ish
-    timestamp: new Date().toISOString(),
-    fields: [
-      { name: "Reporter", value: name, inline: true },
-      { name: "Platform", value: navigator.platform || 'unknown', inline: true }
-    ]
-  };
-
-  const form = new FormData();
-  form.append('payload_json', JSON.stringify({ username: 'Growfax Reporter', embeds: [embed] }));
-
-  if(file){
-    // append file directly (Discord webhook supports file attachments)
-    form.append('file', file, file.name);
-  }
-
-  try{
-    const resp = await fetch(WEBHOOK_URL, { method: 'POST', body: form });
-    if(resp.ok || resp.status === 204){
-      showToast('✅ Report berhasil dikirim!');
-      closeReportPopup();
-    } else {
-      console.error('Webhook error', resp.status, await resp.text());
-      showToast('❌ Gagal mengirim report!');
-    }
-  } catch(err){
-    console.error(err);
-    showToast('❌ Terjadi kesalahan saat mengirim!');
-  }
-});
-
-/* ===========================
    Misc small UI effects (already present)
+   - Removed CPU Mapping and Report Bug code
    =========================== */
 
 // status indicator pulse if present
