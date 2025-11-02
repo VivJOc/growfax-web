@@ -557,7 +557,7 @@
 
 <script>
 /* ============================================================
-   Growfax Official — FULL script (MODIFIED for Trakteer Only)
+   Growfax Official — FULL script (MODIFIED for Trakteer Direct Redirect)
    ============================================================ */
 
 /* ===========================
@@ -577,9 +577,10 @@ function trackEvent(eventName, eventParams = {}) {
 /* ===========================
    Core refs & state
    =========================== */
-// --- NEW CONSTANTS (MUST MATCH BACKEND PORT) ---
-// Ganti jika server backend (server.js) berjalan di port atau URL lain
-const BACKEND_URL = 'http://localhost:3000'; 
+// --- KONSTANTA TRAKTEER WAJIB DIISI ---
+// Ganti dengan URL Trakteer Creator ID Anda!
+const TRAKTEER_CREATOR_ID = 'your_trakteer_id_here'; 
+const TRAKTEER_BASE_URL = `https://trakteer.id/${TRAKTEER_CREATOR_ID}/tip`;
 
 const langSelect = document.getElementById('langSelect');
 const themeToggle = document.getElementById('themeToggle');
@@ -643,6 +644,7 @@ const FILE_META = {
 
 // --- NEW: Role Metadata (used for Modal display) ---
 const ROLE_PRICES = {
+    // Harga di sini adalah harga total yang akan masuk ke Trakteer (sudah termasuk biaya platform jika ada)
     "GOD": { price: 180000, description: "Role tertinggi. Akses penuh ke semua fitur dan prioritas dukungan." },
     "Developer": { price: 120000, description: "Role untuk penguji beta dan kontributor. Akses ke area pengembangan." },
     "Super Moderator": { price: 80000, description: "Role pengelola komunitas. Akses ke alat moderasi tingkat lanjut." },
@@ -706,15 +708,20 @@ const translations = {
     "Please enter your GrowID.": "Mohon masukkan GrowID Anda.",
     "Failed to register purchase: ": "Gagal mendaftar pembelian: ",
     "Failed to connect to backend server.": "Gagal terhubung ke server backend.",
-    "Redirect to Trakteer for payment.": "Arahkan ke Trakteer untuk pembayaran.",
+    "Redirecting to Trakteer...": "Mengarahkan ke Trakteer...",
     "Payment Instructions": "Instruksi Pembayaran",
-    "We will redirect you. Please ensure you write your GrowID in the Trakteer donation message.": "Kami akan mengarahkan Anda. Pastikan Anda menuliskan GrowID Anda di pesan donasi Trakteer.",
+    "We will redirect you. Please ensure you write your GrowID in the Trakteer donation message.": "Kami akan mengarahkan Anda. **WAJIB** pastikan GrowID dan Role Name Anda tertulis di kolom Pesan Trakteer.",
     "Proceed to Trakteer": "Lanjut ke Trakteer",
-    "Please complete the payment on Trakteer. Role will be processed automatically.": "Silakan selesaikan pembayaran di Trakteer. Role akan otomatis diproses setelah pembayaran.",
-    "Mengarahkan...": "Memproses...",
+    "Please complete the payment on Trakteer. Role will be processed automatically.": "Silakan selesaikan pembayaran di Trakteer (termasuk via DANA). Role akan diproses secara manual/otomatis.",
+    "Processing...": "Memproses...",
     "Instruksi: Konfigurasi Surge/Shadowrocket telah disalin secara otomatis ke clipboard Anda. Tempelkan di bagian [Host] atau custom config.": "Instruksi: Konfigurasi Surge/Shadowrocket telah disalin secara otomatis ke clipboard Anda. Tempelkan di bagian [Host] atau custom config.",
     "Instruksi: Teks Host telah disalin secara otomatis ke clipboard Anda. Silakan tempelkan ke konfigurasi PowerTunnel Anda.": "Instruksi: Teks Host telah disalin secara otomatis ke clipboard Anda. Silakan tempelkan ke konfigurasi PowerTunnel Anda.",
     "Role Granted (Discord Notified)": "Role Diberikan (Discord Diberitahu)",
+    "Role Dipilih": "Role Dipilih",
+    "Harga": "Harga",
+    "GrowID Anda": "GrowID Anda",
+    "Lanjut ke Trakteer": "Lanjut ke Trakteer",
+    "Example:": "Contoh:",
   }
 };
 
@@ -823,14 +830,12 @@ function showModal(){
     // NEW: Reset modal state for purchase/download toggle
     document.querySelector('.meta').style.display = 'flex';
     modalFilename.style.display = 'block';
-    growidInputGroup.style.display = 'none';
     modalConfirm.dataset.redirectUrl = '';
     modalCancel.style.display = 'block';
     growidInput.value = ''; // Clear GrowID input
     
     modalBackdrop.style.display='flex'; 
     modalBackdrop.setAttribute('aria-hidden','false'); 
-    setTimeout(()=>growidInput.focus(),200);
 }
 function hideModal(){ 
     modalBackdrop.style.display='none'; 
@@ -838,6 +843,11 @@ function hideModal(){
     pendingDownload=null; 
     pendingRole=null; 
     isRolePurchase=false; 
+    
+    // Reset tombol dan input
+    modalConfirm.disabled = false; 
+    delete modalConfirm.dataset.redirectUrl;
+    growidInputGroup.style.display = 'none';
 }
 modalCancel.addEventListener('click', ()=> hideModal());
 modalBackdrop.addEventListener('click', (e)=>{ if(e.target===modalBackdrop) hideModal(); });
@@ -918,8 +928,12 @@ document.querySelectorAll('#downloadContainer a').forEach(a=>{
             (translations.id['Version'] || 'Versi') + ': ' : 'Version: '}${meta.version}`; 
         modalUpdated.textContent = `${(lang === 'id') ? 
             (translations.id['Updated'] || 'Diperbarui') + ': ' : 'Updated: '}${meta.updated}`; 
-        modalChangelog.innerText = `${(lang === 'id') ? 
-            (translations.id['Changelog'] || 'Catatan pembaruan') + ':' : 'Changelog:'}\n${meta.changelog}\n\n${(lang === 'id') ? (translations.id['Size'] || 'Ukuran') + ': ' : 'Size: '}${meta.size}`;
+        modalChangelog.innerHTML = `
+            <div style="text-align: left;">
+                <p><strong>${(lang === 'id') ? (translations.id['Changelog'] || 'Catatan pembaruan') : 'Changelog'}</strong>:</p>
+                <div style="white-space: pre-wrap; margin-left: 10px;">${meta.changelog}</div>
+                <p style="margin-top: 10px;"><strong>${(lang === 'id') ? (translations.id['Size'] || 'Ukuran') : 'Size'}</strong>: ${meta.size}</p>
+            </div>`;
         
         modalFilename.textContent = (lang === 'id' ? (translations.id['Filename'] || 'Nama berkas') : 'Filename') + `: ${filename}`;
 
@@ -939,6 +953,36 @@ document.querySelectorAll('#downloadContainer a').forEach(a=>{
 // -------------------------------------------------------------------------------------
 // ROLE PURCHASE LOGIC
 // -------------------------------------------------------------------------------------
+
+/**
+ * Memformat URL Trakteer dengan jumlah (trakteer) dan pesan yang berisi GrowID dan Role.
+ * @param {string} growId GrowID dari pengguna.
+ * @param {string} roleName Nama role yang dibeli.
+ * @param {number} price Harga role dalam Rupiah.
+ * @returns {string} URL Trakteer yang sudah diformat.
+ */
+function getTrakteerUrl(growId, roleName, price) {
+    if (!TRAKTEER_CREATOR_ID || TRAKTEER_CREATOR_ID === 'your_trakteer_id_here') {
+        console.error("TRAKTEER_CREATOR_ID belum diisi!");
+        return '';
+    }
+
+    // Hitung jumlah 'trakteer' (1 trakteer = Rp5000)
+    // Walaupun di Trakteer bisa input harga manual, kita pakai parameter amount
+    // untuk memastikan harga minimum/rekomendasi.
+    const numberOfTrakteer = Math.ceil(price / 5000); 
+
+    // Pesan yang WAJIB dibaca oleh webhook Anda
+    const message = `Pembelian Role - GrowID: ${growId} - Role: ${roleName}`;
+
+    // Gunakan URL encoding
+    const encodedMessage = encodeURIComponent(message);
+    
+    // Format URL: https://trakteer.id/your_id/tip?amount=X&message=
+    const url = `${TRAKTEER_BASE_URL}?amount=${numberOfTrakteer}&message=${encodedMessage}`;
+    return url;
+}
+
 
 document.querySelectorAll('#rolePurchaseContainer a').forEach(a=>{ 
     a.addEventListener('click', (e)=>{ 
@@ -969,8 +1013,7 @@ document.querySelectorAll('#rolePurchaseContainer a').forEach(a=>{
         growidInputGroup.style.display = 'block';
         growidPrompt.textContent = lang === 'id' ? (translations.id['Enter your GrowID to process the role:'] || 'Enter your GrowID to process the role:') : 'Enter your GrowID to process the role:';
         growidInput.value = ''; // Clear input
-        growidInput.focus();
-
+        
         // Display role/price info in changelog area
         modalChangelog.innerHTML = `
             <div style="text-align: left; margin-top: 5px;">
@@ -981,7 +1024,8 @@ document.querySelectorAll('#rolePurchaseContainer a').forEach(a=>{
         
         modalConfirm.textContent = lang === 'id' ? (translations.id['Beli'] || 'Buy') : 'Buy';
         showModal(); 
-
+        setTimeout(()=>growidInput.focus(),200); // Focus input
+        
         trackEvent('role_selection', { role: roleName, price: price });
     }); 
 });
@@ -994,77 +1038,61 @@ function handleModalConfirmClick() {
     const lang = langSelect.value;
 
     if (isRolePurchase) {
-        // --- ROLE PURCHASE LOGIC (2 STEPS: INPUT GROWID -> REDIRECT) ---
+        // --- ROLE PURCHASE LOGIC (DIRECT REDIRECT) ---
         
-        // Check if GrowID input is visible (STEP 1: Get GrowID)
-        const growID = growidInput.value.trim();
-
+        // Cek apakah tombol saat ini adalah 'Beli' (Langkah 1: Ambil GrowID)
         if (modalConfirm.textContent === (lang === 'id' ? 'Beli' : 'Buy')) {
-             if (!growID) {
+            const growId = growidInput.value.trim();
+
+            if (!growId) {
                 showToast(lang === 'id' ? (translations.id['Please enter your GrowID.'] || 'Mohon masukkan GrowID Anda.') : 'Please enter your GrowID.', 2000);
                 growidInput.focus();
                 return;
             }
             
-            // STEP 1: Confirmed GrowID, register purchase intent via API and get Trakteer Link
-            
-            modalConfirm.textContent = lang === 'id' ? (translations.id['Mengarahkan...'] || 'Processing...') : 'Processing...';
-            modalConfirm.disabled = true;
-
+            // Generate Trakteer Link
             const roleName = pendingRole.name;
+            const price = pendingRole.price;
+            const redirectUrl = getTrakteerUrl(growId, roleName, price);
             
-            // Call Backend API to get the Trakteer Redirect URL
-            fetch(`${BACKEND_URL}/api/roles/initiate-purchase`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ roleName, growId: growID })
-            })
-            .then(res => res.json())
-            .then(data => {
-                modalConfirm.disabled = false;
-                if (data.success && data.redirectUrl) {
-                    
-                    // Lanjutkan ke tampilan instruksi Trakteer (STEP 2)
-                    modalTitle.textContent = lang === 'id' ? (translations.id['Payment Instructions'] || 'Payment Instructions') : 'Payment Instructions';
-                    modalDesc.textContent = lang === 'id' ? (translations.id['We will redirect you. Please ensure you write your GrowID in the Trakteer donation message.'] || 'We will redirect you. Please ensure you write your GrowID in the Trakteer donation message.');
-                    
-                    const priceFormatted = parseInt(data.price).toLocaleString('id-ID');
+            if (!redirectUrl) {
+                showToast(lang === 'id' ? 'Trakteer Creator ID belum diatur!' : 'Trakteer Creator ID is not set!', 4000);
+                return;
+            }
 
-                    // Tampilkan instruksi di modal
-                    modalChangelog.innerHTML = `
-                        <div style="text-align: left;">
-                            <p><strong>Role:</strong> ${data.roleName}</p>
-                            <p><strong>Harga:</strong> Rp${priceFormatted}</p>
-                            <p><strong>GrowID Anda:</strong> <span style="font-weight: bold; color: var(--accent);">${data.growId}</span></p>
-                            <p style="margin-top: 15px; font-weight: bold; text-align: center;">1. Klik tombol di bawah untuk diarahkan ke Trakteer.</p>
-                            <p style="text-align: center;">2. **WAJIB** tulis GrowID Anda di kolom "Pesan" Trakteer! (Contoh: GrowID: ${data.growId})</p>
-                        </div>
-                    `;
-                    
-                    growidInputGroup.style.display = 'none';
-                    document.querySelector('.meta').style.display = 'none';
-                    modalFilename.style.display = 'none';
-                    modalCancel.style.display = 'none'; 
-                    
-                    // Ubah tombol untuk redirect dan tutup modal
-                    modalConfirm.textContent = lang === 'id' ? (translations.id['Lanjut ke Trakteer'] || 'Proceed to Trakteer') : 'Proceed to Trakteer';
-                    
-                    modalConfirm.dataset.redirectUrl = data.redirectUrl; 
-
-                    trackEvent('role_purchase_initiated_trakteer', { role: roleName, grow_id: growID, price: data.price });
-
-                } else {
-                    showToast(lang === 'id' ? `${(translations.id['Failed to register purchase: '] || 'Gagal mendaftar pembelian: ')}${data.message}` : `Failed to register purchase: ${data.message}`, 3000);
-                    modalConfirm.textContent = lang === 'id' ? (translations.id['Beli'] || 'Buy') : 'Buy';
-                }
-            })
-            .catch(error => {
-                modalConfirm.disabled = false;
-                console.error('Error:', error);
-                showToast(lang === 'id' ? (translations.id['Failed to connect to backend server.'] || 'Gagal terhubung ke server backend.') : 'Failed to connect to backend server.', 3000);
-                modalConfirm.textContent = lang === 'id' ? (translations.id['Beli'] || 'Buy') : 'Buy'; 
-            });
+            // Lanjutkan ke tampilan instruksi Trakteer (STEP 2)
+            modalTitle.textContent = lang === 'id' ? (translations.id['Payment Instructions'] || 'Payment Instructions') : 'Payment Instructions';
+            modalDesc.textContent = lang === 'id' ? (translations.id['We will redirect you. Please ensure you write your GrowID in the Trakteer donation message.'] || 'Kami akan mengarahkan Anda. **WAJIB** pastikan GrowID dan Role Name Anda tertulis di kolom Pesan Trakteer.');
             
+            const priceFormatted = parseInt(price).toLocaleString('id-ID');
+            const messageExample = `GrowID: ${growId} | Role: ${roleName}`;
+
+
+            // Tampilkan instruksi di modal
+            modalChangelog.innerHTML = `
+                <div style="text-align: left;">
+                    <p><strong>${lang === 'id' ? 'Role Dipilih' : 'Selected Role'}:</strong> ${roleName}</p>
+                    <p><strong>${lang === 'id' ? 'Harga' : 'Price'}:</strong> Rp${priceFormatted} (Termasuk DANA/QRIS)</p>
+                    <p><strong>${lang === 'id' ? 'GrowID Anda' : 'Your GrowID'}:</strong> <span style="font-weight: bold; color: var(--accent);">${growId}</span></p>
+                    <p style="margin-top: 15px; font-weight: bold; text-align: center;">1. Klik tombol di bawah untuk diarahkan ke Trakteer.</p>
+                    <p style="text-align: center;">2. **WAJIB** pastikan pesan Anda di Trakteer berisi detail berikut:</p>
+                    <p style="text-align: center; font-weight: bold; color: ${lang === 'id' ? '#e74c3c' : '#c0392b'}; background: var(--glass); padding: 8px; border-radius: 6px; border: 1px dashed var(--border-color); margin: 8px 0;">
+                        ${messageExample}
+                    </p>
+                </div>
+            `;
+            
+            growidInputGroup.style.display = 'none';
+            document.querySelector('.meta').style.display = 'none';
+            modalFilename.style.display = 'none';
+            modalCancel.style.display = 'none'; 
+            
+            // Ubah tombol untuk redirect dan tutup modal
+            modalConfirm.textContent = lang === 'id' ? (translations.id['Lanjut ke Trakteer'] || 'Proceed to Trakteer') : 'Proceed to Trakteer';
+            modalConfirm.dataset.redirectUrl = redirectUrl; 
+
+            trackEvent('role_purchase_initiated_trakteer', { role: roleName, grow_id: growId, price: price });
+
         } else if (modalConfirm.textContent === (lang === 'id' ? 'Lanjut ke Trakteer' : 'Proceed to Trakteer')) {
             // STEP 2: Redirect and Close Modal
             const redirectUrl = modalConfirm.dataset.redirectUrl;
@@ -1073,9 +1101,8 @@ function handleModalConfirmClick() {
             }
             hideModal();
             modalCancel.style.display = 'block'; 
-            showToast(lang === 'id' ? (translations.id['Please complete the payment on Trakteer. Role will be processed automatically.'] || 'Silakan selesaikan pembayaran di Trakteer. Role akan otomatis diproses setelah pembayaran.') : `Please complete the payment on Trakteer. Role will be processed automatically.`, 5000);
+            showToast(lang === 'id' ? (translations.id['Please complete the payment on Trakteer. Role will be processed automatically.'] || 'Silakan selesaikan pembayaran di Trakteer (termasuk via DANA). Role akan diproses secara manual/otomatis.') : `Please complete the payment on Trakteer. Role will be processed automatically.`, 5000);
             
-            delete modalConfirm.dataset.redirectUrl; 
         }
 
     } else {
@@ -1162,6 +1189,11 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         // Show welcome only on first load
         welcomeBackdrop.style.display = 'flex';
+    }
+    
+    // Peringatan jika TRAKTEER_CREATOR_ID belum diubah
+    if (TRAKTEER_CREATOR_ID === 'your_trakteer_id_here') {
+        showToast('PERINGATAN: Ganti TRAKTEER_CREATOR_ID di kode script!', 8000);
     }
 });
 
