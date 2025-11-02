@@ -1,1 +1,673 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="utf-8" /> <meta name="viewport" content="width=device-width, initial-scale=1" /> <title>Growfax Official</title> <link rel="icon" href="Growfax_banner.jpg" type="image/jpeg"> <style> :root{ --bg:#f8f8f8; --card-bg:#fff; --text:#1a1a1a; --accent:#0078d7; --card-shadow:0 8px 20px rgba(0,0,0,0.08); --discord-color:#7289da; --muted:#667; --toast-bg:rgba(0,0,0,0.8); --glass: rgba(255,255,255,0.6); --success:#2ecc71; --danger:#e74c3c; --mono: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; --border-color: rgba(0,0,0,0.08); --report-btn-bg: #d9534f; } [data-theme="dark"]{ --bg:#0f1720; --card-bg:#0b1220; --text:#e6eef8; --accent:#4da3ff; --card-shadow:0 8px 28px rgba(0,0,0,0.6); --discord-color:#5b6ea6; --muted:#9aa; --toast-bg:rgba(255,255,255,0.08); --glass: rgba(255,255,255,0.03); --border-color: rgba(255,255,255,0.06); --report-btn-bg: #c23b3b; } html,body{height:100%;margin:0;font-family:var(--mono);background:var(--bg);color:var(--text);line-height:1.6;transition:background .25s,color .25s} /* Header */ header{background:var(--card-bg);box-shadow:var(--card-shadow);position:sticky;top:0;z-index:1200} .header-content{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap} .header-left{display:flex;align-items:center;gap:14px} .brand-wrap{display:flex;align-items:center;gap:12px} .brand-wrap img{width:46px;height:46px;border-radius:8px;object-fit:cover} h1{font-size:1.4rem;margin:0;font-weight:700} nav.primary a{color:var(--accent);text-decoration:none;font-weight:700;margin-left:12px} nav.primary a:hover{opacity:.86;transform:translateY(-1px)} .controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap} .theme-toggle,.lang-select,.open-welcome{font-size:0.98rem;padding:8px 12px;border-radius:10px;border:1px solid var(--border-color);background:transparent;color:var(--text);cursor:pointer} /* Banner */ .banner-section{text-align:center;padding:56px 20px;background:linear-gradient(90deg, rgba(0,0,0,0.03), rgba(255,255,255,0.02))} .banner-section img{max-width:240px;border-radius:10px;margin-bottom:18px;object-fit:cover;width:100%;max-width:240px} .banner-section h2{font-size:1.9rem;color:#ffaa00;margin:8px 0;text-shadow:0 0 10px rgba(255,170,0,0.18)} .banner-section p{font-size:1.05rem;opacity:.92;margin:0} .time-display{margin-top:10px;font-size:0.98rem;font-weight:600;opacity:.9} /* Container main */ .container{max-width:1000px;margin:48px auto;text-align:center;padding:0 18px} .container h2{font-size:1.6rem;margin-bottom:28px} .platform-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:20px} .platform-buttons a{display:flex;align-items:center;justify-content:center;gap:12px;width:300px;padding:14px 18px;border-radius:12px;color:#fff;font-weight:700;text-decoration:none;border:1px solid transparent;font-size:1.02rem;transition:transform .18s ease,box-shadow .18s} .platform-buttons a img{width:30px;height:30px;border-radius:6px;object-fit:cover} .platform-buttons a:hover{transform:translateY(-4px)} .btn-android{background:#34c759;--glow:#4cff77;box-shadow:0 6px 24px rgba(76,255,119,0.08)} .btn-windows{background:#0078d7;--glow:#4da3ff;box-shadow:0 6px 24px rgba(77,163,255,0.08)} .btn-ios{background:#007aff;--glow:#7acbff;box-shadow:0 6px 24px rgba(122,203,255,0.08)} .btn-powertunnel{background:#b71c1c;--glow:#ff5a5a;box-shadow:0 6px 24px rgba(255,90,90,0.08)} /* Discord section */ .discord-section{background:var(--discord-color);color:#fff;padding:32px;border-radius:12px;max-width:820px;margin:42px auto 60px;text-align:center;box-shadow:var(--card-shadow)} .discord-section img{width:58px;height:58px;border-radius:8px;margin-bottom:10px;object-fit:cover} /* Footer */ footer{text-align:center;margin:30px 0 40px;font-size:.95rem;opacity:.85} /* Modal */ .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:1300} .modal{width:92%;max-width:560px;background:var(--card-bg);color:var(--text);border-radius:12px;padding:18px;box-shadow:0 14px 40px rgba(0,0,0,0.2);transform:translateY(16px);transition:transform .18s,opacity .18s} .modal h3{margin:0 0 8px;font-size:1.15rem} .modal p{margin:0 0 12px;color:var(--text);opacity:.9} .modal .meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px} .meta .chip{background:rgba(0,0,0,0.05);padding:6px 10px;border-radius:8px;font-weight:600} [data-theme="dark"] .meta .chip{background:rgba(255,255,255,0.04)} .modal .changelog{background:rgba(0,0,0,0.03);padding:8px;border-radius:8px;font-size:0.95rem;margin-bottom:12px;white-space:pre-wrap} [data-theme="dark"] .modal .changelog{background:rgba(255,255,255,0.03)} .modal .buttons{display:flex;justify-content:flex-end;gap:10px} .btn{padding:8px 12px;border-radius:8px;border:0;cursor:pointer;font-weight:700} .btn.secondary{background:transparent;border:1px solid var(--border-color)} .btn.primary{background:var(--accent);color:#fff} /* Welcome popup */ .welcome-backdrop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.4), rgba(0,0,0,0.6));z-index:1400} .welcome{width:92%;max-width:520px;background:var(--card-bg);color:var(--text);padding:20px;border-radius:12px;box-shadow:0 18px 48px rgba(0,0,0,0.28)} .welcome h2{margin:0 0 8px} .welcome .row{display:flex;gap:10px;align-items:center;margin:10px 0} .welcome label{min-width:90px;font-weight:700} .welcome select,.welcome input[type="radio"]{padding:8px;border-radius:8px} /* Floating Discord button */ .floating-chat{position:fixed;right:18px;bottom:18px;width:56px;height:56px;border-radius:50%;background:var(--discord-color);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,0.2);cursor:pointer;z-index:1500} .floating-chat img{width:28px;height:28px;border-radius:6px;object-fit:cover} /* Toast */ .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:86px;background:var(--toast-bg);color:#fff;padding:8px 12px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;z-index:1600} [data-theme="dark"] .toast{color:#fff} /* Typing dots (kept) */ .typing-container{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:0.95rem} .typing-dots{display:inline-block;position:relative;width:26px;height:10px} .typing-dots span{position:absolute;left:0;top:0;width:6px;height:6px;border-radius:50%;background:var(--muted);opacity:0;transform:translateY(0)} .typing-dots span:nth-child(1){left:0;animation:dotAnim 1s infinite 0s} .typing-dots span:nth-child(2){left:8px;animation:dotAnim 1s infinite 0.16s} .typing-dots span:nth-child(3){left:16px;animation:dotAnim 1s infinite 0.32s} @keyframes dotAnim{0%{opacity:0;transform:translateY(0)}30%{opacity:1;transform:translateY(-5px)}60%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(0)}} @media (max-width:600px){ .platform-buttons a{width:92%} } /* Report bug floating button + popup */ .report-bug-btn { position: fixed; bottom: 20px; left: 20px; background: var(--report-btn-bg); color: #fff; border: none; padding: 12px 16px; border-radius: 10px; font-weight: 700; cursor: pointer; z-index: 2000; box-shadow: 0 6px 20px rgba(0,0,0,0.2); transition: transform .12s, box-shadow .12s; font-size: 0.95rem; } .report-bug-btn:hover { transform: translateY(-3px); } .report-popup { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 92%; max-width: 520px; background: var(--card-bg); color: var(--text); border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); z-index: 2050; display: none; flex-direction: column; padding: 18px; } .report-popup header { display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px; } .report-popup h3 { margin:0;font-size:1.05rem; } .report-popup .row { margin-bottom:10px; } .report-popup input[type="text"], .report-popup textarea, .report-popup input[type="file"] { width:100%; padding:10px; border-radius:8px; border:1px solid var(--border-color); background: transparent; color: var(--text); } .report-popup .actions { display:flex;gap:10px;justify-content:flex-end;margin-top:8px; } .report-popup .btn { padding:8px 12px;border-radius:8px;border:0;cursor:pointer;font-weight:700 } .report-popup .btn.secondary { background: transparent;border:1px solid var(--border-color) } .report-popup .btn.primary { background: var(--accent); color: #fff } .report-preview { max-width:100%; border-radius:8px; margin-top:8px; display:none; } @media (max-width:420px){ .report-popup{ padding:12px } .report-bug-btn{padding:10px 12px;font-size:0.9rem} } </style> </head> <body data-theme="light"> <!-- Header --> <header> <div class="header-content"> <div class="header-left"> <div class="brand-wrap"> <img src="Growfax_banner.jpg" alt="Growfax Logo"> <div> <h1>Growfax Official</h1> <div style="font-size:0.85rem;color:var(--muted)">Private Growtopia Server</div> </div> </div> <nav class="primary" aria-label="Main navigation"> <a href="#downloads" id="navDownloads">📥 Downloads</a> </nav> </div> <div class="controls"> <button id="openWelcome" class="open-welcome" title="Welcome & Preferences">⚙️</button> <select id="langSelect" class="lang-select" title="Language" aria-label="Select language"> <option value="en">🇬🇧 English</option> <option value="id">🇮🇩 Bahasa</option> </select> <button id="themeToggle" class="theme-toggle" aria-pressed="false" title="Toggle theme">🌞 Light</button> </div> </div> </header> <!-- Banner / Hero --> <section class="banner-section" role="region" aria-label="Main banner"> <img src="Growfax_banner.jpg" alt="Growfax Banner"> <h2>Welcome to Growfax</h2> <p>Private Growtopia Server</p> <div id="timeDisplay" class="time-display">Loading time...</div> </section> <!-- Downloads (main) --> <main class="container" id="downloads" role="main"> <h2>📥 Essential File Downloads</h2> <div class="platform-buttons" role="list"> <a href="Growfax_VirtualHost.txt" class="btn-android" data-filename="Growfax_VirtualHost.txt" data-filekey="virtualhost" download role="listitem"> <img src="virtual-host.png" alt="">Play on Android </a> <a href="Growfax_Patched_.bat" class="btn-windows" data-filename="Growfax_Patched_.bat" data-filekey="patched" download role="listitem"> <img src="windows.png" alt="">Play on Windows </a> <a href="GrowFax_ios.txt" class="btn-ios" data-filename="GrowFax_ios.txt" data-filekey="ios" download role="listitem"> <img src="surge5.png" alt="">Play on iOS </a> <a href="PowerTunnel_Host.txt" class="btn-powertunnel" data-filename="PowerTunnel_Host.txt" data-filekey="powertunnel" download role="listitem"> <img src="powertunnel.jpeg" alt="">Play via PowerTunnel </a> </div> </main> <!-- Discord community section --> <section class="discord-section" aria-label="Discord community"> <img src="discord.jpeg" alt="Discord Logo"> <h3>Join Our Community</h3> <p>Connect with others and get support in our official Discord server.</p> <a id="discordLink" href="https://discord.gg/smgS6sq83y" target="_blank" rel="noopener">Join Growfax Discord</a> </section> <footer>© 2025 Growfax. All rights reserved.</footer> <!-- Modal (file info) --> <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true"> <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"> <h3 id="modalTitle">File info</h3> <p id="modalDesc">Details before download</p> <div class="meta"> <div class="chip" id="modalVersion">v0.0</div> <div class="chip" id="modalUpdated">Updated: —</div> </div> <div class="changelog" id="modalChangelog">Changelog: —</div> <div style="display:flex;gap:8px;align-items:center;justify-content:space-between"> <div style="font-size:.9rem;color:var(--muted)" id="modalFilename">Filename</div> <div class="buttons"> <button class="btn secondary" id="modalCancel">Cancel</button> <button class="btn primary" id="modalConfirm">Download</button> </div> </div> </div> </div> <!-- Welcome popup (first-visit) --> <div id="welcomeBackdrop" class="welcome-backdrop" aria-hidden="true"> <div class="welcome" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle"> <h2 id="welcomeTitle">Welcome to Growfax</h2> <p style="margin:6px 0 12px;opacity:.9">Set your preferred language and theme. We'll remember this for next time.</p> <div class="row"> <label for="welcomeLang">Language</label> <select id="welcomeLang" class="lang-select"> <option value="en">🇬🇧 English</option> <option value="id">🇮🇩 Bahasa</option> </select> </div> <div class="row"> <label>Theme</label> <div style="display:flex;gap:10px;align-items:center"> <label><input type="radio" name="welcomeTheme" value="light" checked> Light</label> <label><input type="radio" name="welcomeTheme" value="dark"> Dark</label> </div> </div> <div class="actions" style="display:flex;justify-content:flex-end;gap:8px;margin-top:14px"> <button class="btn secondary" id="welcomeSkip">Skip</button> <button class="btn primary" id="welcomeSave">Save & Continue</button> </div> </div> </div> <!-- Floating Discord chat --> <a id="floatingChat" class="floating-chat" href="https://discord.gg/smgS6sq83y" target="_blank" rel="noopener" title="Open Discord"> <img src="discord.jpeg" alt="Discord"> </a> <!-- Toast --> <div id="toast" class="toast" role="status" aria-live="polite">Saved</div> <!-- Report Bug button + popup --> <button id="reportBugBtn" class="report-bug-btn">Report Bug</button> <div id="reportPopup" class="report-popup" role="dialog" aria-modal="true" aria-labelledby="reportTitle"> <header> <h3 id="reportTitle">Report Bug</h3> <button id="closeReport" class="btn secondary" title="Close">✕</button> </header> <div class="row"> <input type="text" id="reportName" placeholder="Your name (optional)"> </div> <div class="row"> <textarea id="reportDesc" placeholder="Describe the bug..." rows="5"></textarea> </div> <div class="row"> <input type="file" id="reportImage" accept="image/*"> <img id="reportPreview" class="report-preview" alt="preview"> </div> <div class="actions"> <button id="sendReportBtn" class="btn primary">Kirim Report</button> <button id="cancelReportBtn" class="btn secondary">Cancel</button> </div> </div> <script> /* ============================================================ Full script (based on your original) — CPU Mapping removed ============================================================ */ /* Core refs & state */ const langSelect = document.getElementById('langSelect'); const themeToggle = document.getElementById('themeToggle'); const openWelcome = document.getElementById('openWelcome'); const toast = document.getElementById('toast'); const modalBackdrop = document.getElementById('modalBackdrop'); const modalTitle = document.getElementById('modalTitle'); const modalDesc = document.getElementById('modalDesc'); const modalVersion = document.getElementById('modalVersion'); const modalUpdated = document.getElementById('modalUpdated'); const modalChangelog = document.getElementById('modalChangelog'); const modalFilename = document.getElementById('modalFilename'); const modalConfirm = document.getElementById('modalConfirm'); const modalCancel = document.getElementById('modalCancel'); const welcomeBackdrop = document.getElementById('welcomeBackdrop'); const welcomeLang = document.getElementById('welcomeLang'); const welcomeSave = document.getElementById('welcomeSave'); const welcomeSkip = document.getElementById('welcomeSkip'); const timeDisplay = document.getElementById('timeDisplay'); const discordLink = document.getElementById('discordLink'); let pendingDownload = null; /* File metadata */ const FILE_META = { virtualhost: { version: 'v2.1', updated: 'Oct 29, 2025', changelog: '- Fixed host parsing\\n- Improved TLS handling', size: '2.3 KB' }, patched: { version: 'v1.9', updated: 'Oct 20, 2025', changelog: '- Patched launcher\\n- Minor fixes', size: '12.1 KB' }, ios: { version: 'v1.4', updated: 'Sep 30, 2025', changelog: '- iOS config update\\n- Surge tweak', size: '3.7 KB' }, powertunnel: { version: 'v3.0', updated: 'Oct 10, 2025', changelog: '- PowerTunnel rules updated\\n- Stability improvements', size: '1.9 KB' } }; /* Collect simple text nodes for translation */ const elements = document.querySelectorAll('body *:not(script):not(style)'); elements.forEach(el=>{ if (el.childNodes.length === 1 && el.textContent.trim() !== '') { el.dataset.original = el.textContent.trim(); } }); /* Translation dictionary */ const translations = { id: { "Growfax Official": "Growfax Resmi", "📥 Downloads": "📥 Unduhan", "Welcome to Growfax": "Selamat Datang di Growfax", "Private Growtopia Server": "Server Growtopia Pribadi", "Local Time (New York):": "Waktu Lokal (New York):", "Waktu Lokal (Jakarta):": "Waktu Lokal (Jakarta):", "📥 Essential File Downloads": "📥 Unduhan File Penting", "Play on Android": "Main di Android", "Play on Windows": "Main di Windows", "Play on iOS": "Main di iOS", "Play via PowerTunnel": "Main lewat PowerTunnel", "Join Our Community": "Bergabung dengan Komunitas Kami", "Connect with others and get support in our official Discord server.": "Terhubung dengan anggota lain dan dapatkan dukungan di server Discord resmi kami.", "Join Growfax Discord": "Gabung Discord Growfax", "© 2025 Growfax. All rights reserved.": "© 2025 Growfax. Semua hak dilindungi.", "Are you sure you want to download": "Apakah Anda yakin ingin mengunduh", "Details before download": "Detail sebelum mengunduh", "Cancel": "Batal", "Download": "Unduh", "Filename": "Nama berkas", "Version": "Versi", "Updated": "Diperbarui", "Changelog": "Catatan pembaruan", "Size": "Ukuran", "Set your preferred language and theme. We'll remember this for next time.": "Pilih bahasa dan tema favoritmu. Kami akan menyimpannya untuk kunjungan berikutnya.", "Save & Continue": "Simpan & Lanjutkan", "Skip": "Lewati", "Language": "Bahasa", "Theme": "Tema", "Opening Discord...": "Membuka Discord..." } }; function applyTranslations(lang){ elements.forEach(el=>{ const orig = el.dataset.original; if(!orig) return; el.textContent = lang === 'en' ? orig : (translations[lang]?.[orig] || orig); }); // Fix for non-simple elements modalCancel.textContent = lang === 'id' ? (translations.id['Cancel'] || 'Batal') : 'Cancel'; modalConfirm.textContent = lang === 'id' ? (translations.id['Download'] || 'Unduh') : 'Download'; welcomeSave.textContent = lang === 'id' ? (translations.id['Save & Continue'] || 'Simpan & Lanjutkan') : 'Save & Continue'; welcomeSkip.textContent = lang === 'id' ? (translations.id['Skip'] || 'Lewati') : 'Skip'; discordLink.textContent = lang === 'id' ? (translations.id['Join Growfax Discord'] || 'Gabung Discord Growfax') : 'Join Growfax Discord'; } /* Theme control */ function setTheme(theme){ document.body.setAttribute('data-theme', theme); themeToggle.textContent = theme === 'dark' ? '🌙 Dark' : '🌞 Light'; themeToggle.setAttribute('aria-pressed', theme === 'dark'); localStorage.setItem('growfax_theme', theme); } themeToggle.addEventListener('click', ()=> { setTheme(document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); }); setTheme(localStorage.getItem('growfax_theme') || 'light'); /* Language control */ langSelect.addEventListener('change', ()=> { const lang = langSelect.value; localStorage.setItem('growfax_lang', lang); applyTranslations(lang); updateTime(); showToast(lang === 'id' ? 'Bahasa: Indonesia' : 'Language: English'); }); (function initLang(){ const saved = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en'); langSelect.value = saved; applyTranslations(saved); })(); /* Time display (Jakarta / New York) */ function getIndoGreeting(hour){ if(hour < 11) return 'pagi'; if(hour < 15) return 'siang'; if(hour < 18) return 'sore'; return 'malam'; } function updateTime(){ const now = new Date(); const lang = langSelect.value || 'en'; if(lang === 'id'){ const options = { timeZone: 'Asia/Jakarta', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' }; const indoTime = new Intl.DateTimeFormat('id-ID', options).format(now); const hour = parseInt(now.toLocaleString('en-US', { timeZone: 'Asia/Jakarta', hour: '2-digit', hour12: false })); const greeting = getIndoGreeting(hour); timeDisplay.textContent = Waktu Lokal (Jakarta): ${indoTime} - ${greeting}; } else { const options = { timeZone: 'America/New_York', hour12: true, timeStyle: 'medium', dateStyle: 'medium' }; const usTime = now.toLocaleString('en-US', options); timeDisplay.textContent = Local Time (New York): ${usTime}; } } updateTime(); setInterval(updateTime, 1000); /* File Update Checker (modal) */ document.querySelectorAll('.platform-buttons a').forEach(a=>{ a.addEventListener('click', (e)=>{ if(e.ctrlKey || e.metaKey || e.button === 1) return; e.preventDefault(); const key = a.dataset.filekey; const meta = FILE_META[key] || { version: 'v1.0', updated: 'Unknown', changelog: 'No details', size: '—' }; const filename = a.dataset.filename || key; modalTitle.textContent = (langSelect.value === 'id') ? (translations.id['Details before download'] || 'Detail sebelum mengunduh') : 'Details before download'; modalDesc.textContent = (langSelect.value === 'id') ? Info untuk ${filename} : Info for ${filename}; modalVersion.textContent = ${(langSelect.value === 'id') ? (translations.id['Version'] || 'Versi') + ': ' : 'Version: '}${meta.version}; modalUpdated.textContent = ${(langSelect.value === 'id') ? (translations.id['Updated'] || 'Diperbarui') + ': ' : 'Updated: '}${meta.updated}; modalChangelog.innerText = ${(langSelect.value === 'id') ? (translations.id['Changelog'] || 'Catatan pembaruan') + ':' : 'Changelog:'}\n${meta.changelog}\n\n${(langSelect.value === 'id') ? (translations.id['Size'] || 'Ukuran') + ': ' : 'Size: '}${meta.size}; modalFilename.textContent = (langSelect.value === 'id' ? (translations.id['Filename'] || 'Nama berkas') : 'Filename') + : ${filename}; pendingDownload = { href: a.getAttribute('href'), filename }; showModal(); }); }); function showModal(){ modalBackdrop.style.display='flex'; modalBackdrop.setAttribute('aria-hidden','false'); setTimeout(()=>modalConfirm.focus(),200); } function hideModal(){ modalBackdrop.style.display='none'; modalBackdrop.setAttribute('aria-hidden','true'); pendingDownload=null; } modalCancel.addEventListener('click', ()=> hideModal()); modalBackdrop.addEventListener('click', (e)=>{ if(e.target===modalBackdrop) hideModal(); }); modalConfirm.addEventListener('click', ()=>{ if(!pendingDownload) return hideModal(); const a = document.createElement('a'); a.href = pendingDownload.href; a.download = pendingDownload.filename; document.body.appendChild(a); a.click(); a.remove(); hideModal(); showToast(langSelect.value === 'id' ? 'Mulai mengunduh...' : 'Download started...'); }); /* Welcome popup */ function showWelcome(){ welcomeBackdrop.style.display='flex'; welcomeBackdrop.setAttribute('aria-hidden','false'); } function hideWelcome(){ welcomeBackdrop.style.display='none'; welcomeBackdrop.setAttribute('aria-hidden','true'); } openWelcome.addEventListener('click', ()=> showWelcome()); welcomeSave.addEventListener('click', ()=>{ const chosenLang = document.getElementById('welcomeLang').value; const theme = Array.from(document.querySelectorAll('input[name="welcomeTheme"]')).find(r=>r.checked).value; langSelect.value = chosenLang; localStorage.setItem('growfax_lang', chosenLang); applyTranslations(chosenLang); updateTime(); setTheme(theme); hideWelcome(); showToast(chosenLang === 'id' ? 'Bahasa disimpan' : 'Preferences saved'); }); welcomeSkip.addEventListener('click', ()=> { hideWelcome(); showToast(langSelect.value === 'id' ? 'Dipilih nanti' : 'Maybe later'); }); (function firstVisit(){ const seen = localStorage.getItem('growfax_seen'); if(!seen){ welcomeLang.value = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en'); const savedTheme = localStorage.getItem('growfax_theme') || 'light'; document.querySelectorAll('input[name="welcomeTheme"]').forEach(r=> r.checked = (r.value === savedTheme)); showWelcome(); localStorage.setItem('growfax_seen','1'); }})(); /* Storage helpers & UI helpers */ function showToast(text, ms=1500){ toast.textContent = text; toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)'; toast.style.pointerEvents = 'auto'; toast.style.display = 'block'; setTimeout(()=> { toast.style.opacity = '0'; toast.style.pointerEvents = 'none'; setTimeout(()=> toast.style.display = 'none', 200); }, ms); } /* floating discord click (toast feedback) */ document.getElementById('floatingChat').addEventListener('click', (e)=>{ showToast(langSelect.value === 'id' ? 'Membuka Discord...' : 'Opening Discord...'); }); /* initial translations + time */ const initLang = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en'); langSelect.value = initLang; applyTranslations(initLang); updateTime(); /* allow middle click / aux click default behavior */ document.querySelectorAll('.platform-buttons a').forEach(a=>{ a.addEventListener('auxclick', (e) => {/* allow default behavior */}); }); /* Report Bug UI logic (sends to Discord webhook) */ const reportBtn = document.getElementById('reportBugBtn'); const reportPopup = document.getElementById('reportPopup'); const closeReport = document.getElementById('closeReport'); const cancelReportBtn = document.getElementById('cancelReportBtn'); const sendReportBtn = document.getElementById('sendReportBtn'); const reportName = document.getElementById('reportName'); const reportDesc = document.getElementById('reportDesc'); const reportImage = document.getElementById('reportImage'); const reportPreview = document.getElementById('reportPreview'); // <-- REPLACE THIS with your webhook URL (do not commit publicly) const WEBHOOK_URL = "GANTI_DENGAN_WEBHOOK_KAMU"; function openReportPopup(){ reportPopup.style.display = 'flex'; reportPopup.scrollTop = 0; reportDesc.focus(); } function closeReportPopup(){ reportPopup.style.display = 'none'; reportName.value = ''; reportDesc.value = ''; reportImage.value = ''; reportPreview.style.display = 'none'; reportPreview.src = ''; } reportBtn.addEventListener('click', openReportPopup); closeReport.addEventListener('click', closeReportPopup); cancelReportBtn.addEventListener('click', closeReportPopup); // preview image reportImage.addEventListener('change', (e)=>{ const f = e.target.files[0]; if(!f) { reportPreview.style.display='none'; reportPreview.src=''; return; } const reader = new FileReader(); reader.onload = function(ev){ reportPreview.src = ev.target.result; reportPreview.style.display = 'block'; }; reader.readAsDataURL(f); }); // send report sendReportBtn.addEventListener('click', async ()=>{ const name = (reportName.value || 'Anonymous').trim(); const desc = (reportDesc.value || '').trim(); const file = reportImage.files[0]; if(!desc){ showToast('❌ Deskripsi tidak boleh kosong!'); return; } if(WEBHOOK_URL === "https://discord.com/api/webhooks/1433278338910130308/0LALQ9yjgPrdiQEypPXVXpq3WzYmZgr-bg36FxCvnlyO8yuLW93u7ohabMdnPCZUPB4G"){ showToast('⚠️ GANTI WEBHOOK URL terlebih dahulu di script.'); return; } const embed = { title: 🐞 Bug Report — ${name}, description: desc, color: 15158332, timestamp: new Date().toISOString(), fields: [ { name: "Reporter", value: name, inline: true }, { name: "Platform", value: navigator.platform || 'unknown', inline: true } ] }; const form = new FormData(); form.append('payload_json', JSON.stringify({ username: 'Growfax Reporter', embeds: [embed] })); if(file){ form.append('file', file, file.name); } try{ const resp = await fetch(WEBHOOK_URL, { method: 'POST', body: form }); if(resp.ok || resp.status === 204){ showToast('✅ Report berhasil dikirim!'); closeReportPopup(); } else { console.error('Webhook error', resp.status, await resp.text()); showToast('❌ Gagal mengirim report!'); } } catch(err){ console.error(err); showToast('❌ Terjadi kesalahan saat mengirim!'); } }); /* Misc small UI effects */ const status = document.querySelector('#status-indicator'); if (status) { setInterval(() => { status.style.opacity = status.style.opacity === '1' ? '0.5' : '1'; }, 600); } /* graceful page link transition for html links */ document.querySelectorAll('a').forEach(link => { link.addEventListener('click', e => { try { const href = link.getAttribute('href'); if(href && href.endsWith('.html') && !link.hasAttribute('data-no-transition')){ e.preventDefault(); document.body.style.opacity = '0'; setTimeout(() => (window.location.href = href), 300); } } catch(err){ /* ignore */ } }); }); /* Console debug */ console.log('%cGrowfax Engine Ready ✅', 'color: #00ff88; font-weight: bold;'); </script> </body> </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Growfax Official</title>
+<link rel="icon" href="Growfax_banner.jpg" type="image/jpeg">
+<style>
+  :root{
+    --bg:#f8f8f8;
+    --card-bg:#fff;
+    --text:#1a1a1a;
+    --accent:#0078d7;
+    --card-shadow:0 8px 20px rgba(0,0,0,0.08);
+    --discord-color:#7289da;
+    --muted:#667;
+    --toast-bg:rgba(0,0,0,0.8);
+    --glass: rgba(255,255,255,0.6);
+    --success:#2ecc71;
+    --danger:#e74c3c;
+    --mono: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    --border-color: rgba(0,0,0,0.08);
+    --report-btn-bg: #d9534f;
+  }
+  [data-theme="dark"]{
+    --bg:#0f1720;
+    --card-bg:#0b1220;
+    --text:#e6eef8;
+    --accent:#4da3ff;
+    --card-shadow:0 8px 28px rgba(0,0,0,0.6);
+    --discord-color:#5b6ea6;
+    --muted:#9aa;
+    --toast-bg:rgba(255,255,255,0.08);
+    --glass: rgba(255,255,255,0.03);
+    --border-color: rgba(255,255,255,0.06);
+    --report-btn-bg: #c23b3b;
+  }
+
+  html,body{height:100%;margin:0;font-family:var(--mono);background:var(--bg);color:var(--text);line-height:1.6;transition:background .25s,color .25s}
+  /* Header */
+  header{background:var(--card-bg);box-shadow:var(--card-shadow);position:sticky;top:0;z-index:1200}
+  .header-content{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .header-left{display:flex;align-items:center;gap:14px}
+  .brand-wrap{display:flex;align-items:center;gap:12px}
+  .brand-wrap img{width:46px;height:46px;border-radius:8px;object-fit:cover}
+  h1{font-size:1.4rem;margin:0;font-weight:700}
+  nav.primary a{color:var(--accent);text-decoration:none;font-weight:700;margin-left:12px}
+  nav.primary a:hover{opacity:.86;transform:translateY(-1px)}
+  .controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .theme-toggle,.lang-select,.open-welcome{font-size:0.98rem;padding:8px 12px;border-radius:10px;border:1px solid var(--border-color);background:transparent;color:var(--text);cursor:pointer}
+
+  /* Banner */
+  .banner-section{text-align:center;padding:56px 20px;background:linear-gradient(90deg, rgba(0,0,0,0.03), rgba(255,255,255,0.02))}
+  .banner-section img{max-width:240px;border-radius:10px;margin-bottom:18px;object-fit:cover;width:100%;max-width:240px}
+  .banner-section h2{font-size:1.9rem;color:#ffaa00;margin:8px 0;text-shadow:0 0 10px rgba(255,170,0,0.18)}
+  .banner-section p{font-size:1.05rem;opacity:.92;margin:0}
+  .time-display{margin-top:10px;font-size:0.98rem;font-weight:600;opacity:.9}
+
+  /* Container main */
+  .container{max-width:1000px;margin:48px auto;text-align:center;padding:0 18px}
+  .container h2{font-size:1.6rem;margin-bottom:28px}
+  .platform-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:20px}
+  .platform-buttons a{display:flex;align-items:center;justify-content:center;gap:12px;width:300px;padding:14px 18px;border-radius:12px;color:#fff;font-weight:700;text-decoration:none;border:1px solid transparent;font-size:1.02rem;transition:transform .18s ease,box-shadow .18s}
+  .platform-buttons a img{width:30px;height:30px;border-radius:6px;object-fit:cover}
+  .platform-buttons a:hover{transform:translateY(-4px)}
+  .btn-android{background:#34c759;--glow:#4cff77;box-shadow:0 6px 24px rgba(76,255,119,0.08)}
+  .btn-windows{background:#0078d7;--glow:#4da3ff;box-shadow:0 6px 24px rgba(77,163,255,0.08)}
+  .btn-ios{background:#007aff;--glow:#7acbff;box-shadow:0 6px 24px rgba(122,203,255,0.08)}
+  .btn-powertunnel{background:#b71c1c;--glow:#ff5a5a;box-shadow:0 6px 24px rgba(255,90,90,0.08)}
+
+  /* Discord section */
+  .discord-section{background:var(--discord-color);color:#fff;padding:32px;border-radius:12px;max-width:820px;margin:42px auto 60px;text-align:center;box-shadow:var(--card-shadow)}
+  .discord-section img{width:58px;height:58px;border-radius:8px;margin-bottom:10px;object-fit:cover}
+
+  /* Footer */
+  footer{text-align:center;margin:30px 0 40px;font-size:.95rem;opacity:.85}
+
+  /* Modal */
+  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:1300}
+  .modal{width:92%;max-width:560px;background:var(--card-bg);color:var(--text);border-radius:12px;padding:18px;box-shadow:0 14px 40px rgba(0,0,0,0.2);transform:translateY(16px);transition:transform .18s,opacity .18s}
+  .modal h3{margin:0 0 8px;font-size:1.15rem}
+  .modal p{margin:0 0 12px;color:var(--text);opacity:.9}
+  .modal .meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+  .meta .chip{background:rgba(0,0,0,0.05);padding:6px 10px;border-radius:8px;font-weight:600}
+  [data-theme="dark"] .meta .chip{background:rgba(255,255,255,0.04)}
+  .modal .changelog{background:rgba(0,0,0,0.03);padding:8px;border-radius:8px;font-size:0.95rem;margin-bottom:12px;white-space:pre-wrap}
+  [data-theme="dark"] .modal .changelog{background:rgba(255,255,255,0.03)}
+  .modal .buttons{display:flex;justify-content:flex-end;gap:10px}
+  .btn{padding:8px 12px;border-radius:8px;border:0;cursor:pointer;font-weight:700}
+  .btn.secondary{background:transparent;border:1px solid var(--border-color)}
+  .btn.primary{background:var(--accent);color:#fff}
+
+  /* Welcome popup */
+  .welcome-backdrop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.4), rgba(0,0,0,0.6));z-index:1400}
+  .welcome{width:92%;max-width:520px;background:var(--card-bg);color:var(--text);padding:20px;border-radius:12px;box-shadow:0 18px 48px rgba(0,0,0,0.28)}
+  .welcome h2{margin:0 0 8px}
+  .welcome .row{display:flex;gap:10px;align-items:center;margin:10px 0}
+  .welcome label{min-width:90px;font-weight:700}
+  .welcome select,.welcome input[type="radio"]{padding:8px;border-radius:8px}
+
+  /* Floating Discord button */
+  .floating-chat{position:fixed;right:18px;bottom:18px;width:56px;height:56px;border-radius:50%;background:var(--discord-color);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,0.2);cursor:pointer;z-index:1500}
+  .floating-chat img{width:28px;height:28px;border-radius:6px;object-fit:cover}
+
+  /* Toast */
+  .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:86px;background:var(--toast-bg);color:#fff;padding:8px 12px;border-radius:10px;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;z-index:1600}
+  [data-theme="dark"] .toast{color:#fff}
+
+  /* Typing dots (kept) */
+  .typing-container{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:0.95rem}
+  .typing-dots{display:inline-block;position:relative;width:26px;height:10px}
+  .typing-dots span{position:absolute;left:0;top:0;width:6px;height:6px;border-radius:50%;background:var(--muted);opacity:0;transform:translateY(0)}
+  .typing-dots span:nth-child(1){left:0;animation:dotAnim 1s infinite 0s}
+  .typing-dots span:nth-child(2){left:8px;animation:dotAnim 1s infinite 0.16s}
+  .typing-dots span:nth-child(3){left:16px;animation:dotAnim 1s infinite 0.32s}
+  @keyframes dotAnim{0%{opacity:0;transform:translateY(0)}30%{opacity:1;transform:translateY(-5px)}60%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(0)}}
+
+  @media (max-width:600px){ .platform-buttons a{width:92%} }
+
+  /* Report bug floating button + popup */
+  .report-bug-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: var(--report-btn-bg);
+    color: #fff;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    z-index: 2000;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    transition: transform .12s, box-shadow .12s;
+    font-size: 0.95rem;
+  }
+  .report-bug-btn:hover { transform: translateY(-3px); }
+
+  .report-popup {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 92%;
+    max-width: 520px;
+    background: var(--card-bg);
+    color: var(--text);
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    z-index: 2050;
+    display: none;
+    flex-direction: column;
+    padding: 18px;
+  }
+  .report-popup header { display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px; }
+  .report-popup h3 { margin:0;font-size:1.05rem; }
+  .report-popup .row { margin-bottom:10px; }
+  .report-popup input[type="text"], .report-popup textarea, .report-popup input[type="file"] {
+    width:100%;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid var(--border-color);
+    background: transparent;
+    color: var(--text);
+  }
+  .report-popup .actions { display:flex;gap:10px;justify-content:flex-end;margin-top:8px; }
+  .report-popup .btn { padding:8px 12px;border-radius:8px;border:0;cursor:pointer;font-weight:700 }
+  .report-popup .btn.secondary { background: transparent;border:1px solid var(--border-color) }
+  .report-popup .btn.primary { background: var(--accent); color: #fff }
+
+  .report-preview { max-width:100%; border-radius:8px; margin-top:8px; display:none; }
+  @media (max-width:420px){ .report-popup{ padding:12px } .report-bug-btn{padding:10px 12px;font-size:0.9rem} }
+</style>
+</head>
+<body data-theme="light">
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="header-left">
+        <div class="brand-wrap">
+          <img src="Growfax_banner.jpg" alt="Growfax Logo">
+          <div>
+            <h1>Growfax Official</h1>
+            <div style="font-size:0.85rem;color:var(--muted)">Private Growtopia Server</div>
+          </div>
+        </div>
+
+        <nav class="primary" aria-label="Main navigation">
+          <a href="#downloads" id="navDownloads">📥 Downloads</a>
+        </nav>
+      </div>
+
+      <div class="controls">
+        <button id="openWelcome" class="open-welcome" title="Welcome & Preferences">⚙️</button>
+        <select id="langSelect" class="lang-select" title="Language" aria-label="Select language">
+          <option value="en">🇬🇧 English</option>
+          <option value="id">🇮🇩 Bahasa</option>
+        </select>
+        <button id="themeToggle" class="theme-toggle" aria-pressed="false" title="Toggle theme">🌞 Light</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Banner / Hero -->
+  <section class="banner-section" role="region" aria-label="Main banner">
+    <img src="Growfax_banner.jpg" alt="Growfax Banner">
+    <h2>Welcome to Growfax</h2>
+    <p>Private Growtopia Server</p>
+    <div id="timeDisplay" class="time-display">Loading time...</div>
+  </section>
+
+  <!-- Downloads (main) -->
+  <main class="container" id="downloads" role="main">
+    <h2>📥 Essential File Downloads</h2>
+    <div class="platform-buttons" role="list">
+      <a href="Growfax_VirtualHost.txt" class="btn-android" data-filename="Growfax_VirtualHost.txt" data-filekey="virtualhost" download role="listitem">
+        <img src="virtual-host.png" alt="">Play on Android
+      </a>
+
+      <a href="Growfax_Patched_.bat" class="btn-windows" data-filename="Growfax_Patched_.bat" data-filekey="patched" download role="listitem">
+        <img src="windows.png" alt="">Play on Windows
+      </a>
+
+      <a href="GrowFax_ios.txt" class="btn-ios" data-filename="GrowFax_ios.txt" data-filekey="ios" download role="listitem">
+        <img src="surge5.png" alt="">Play on iOS
+      </a>
+
+      <a href="PowerTunnel_Host.txt" class="btn-powertunnel" data-filename="PowerTunnel_Host.txt" data-filekey="powertunnel" download role="listitem">
+        <img src="powertunnel.jpeg" alt="">Play via PowerTunnel
+      </a>
+    </div>
+  </main>
+
+  <!-- Discord community section -->
+  <section class="discord-section" aria-label="Discord community">
+    <img src="discord.jpeg" alt="Discord Logo">
+    <h3>Join Our Community</h3>
+    <p>Connect with others and get support in our official Discord server.</p>
+    <a id="discordLink" href="https://discord.gg/smgS6sq83y" target="_blank" rel="noopener">Join Growfax Discord</a>
+  </section>
+
+  <footer>© 2025 Growfax. All rights reserved.</footer>
+
+  <!-- Modal (file info) -->
+  <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h3 id="modalTitle">File info</h3>
+      <p id="modalDesc">Details before download</p>
+
+      <div class="meta">
+        <div class="chip" id="modalVersion">v0.0</div>
+        <div class="chip" id="modalUpdated">Updated: —</div>
+      </div>
+
+      <div class="changelog" id="modalChangelog">Changelog: —</div>
+
+      <div style="display:flex;gap:8px;align-items:center;justify-content:space-between">
+        <div style="font-size:.9rem;color:var(--muted)" id="modalFilename">Filename</div>
+        <div class="buttons">
+          <button class="btn secondary" id="modalCancel">Cancel</button>
+          <button class="btn primary" id="modalConfirm">Download</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Welcome popup (first-visit) -->
+  <div id="welcomeBackdrop" class="welcome-backdrop" aria-hidden="true">
+    <div class="welcome" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+      <h2 id="welcomeTitle">Welcome to Growfax</h2>
+      <p style="margin:6px 0 12px;opacity:.9">Set your preferred language and theme. We'll remember this for next time.</p>
+      <div class="row">
+        <label for="welcomeLang">Language</label>
+        <select id="welcomeLang" class="lang-select">
+          <option value="en">🇬🇧 English</option>
+          <option value="id">🇮🇩 Bahasa</option>
+        </select>
+      </div>
+      <div class="row">
+        <label>Theme</label>
+        <div style="display:flex;gap:10px;align-items:center">
+          <label><input type="radio" name="welcomeTheme" value="light" checked> Light</label>
+          <label><input type="radio" name="welcomeTheme" value="dark"> Dark</label>
+        </div>
+      </div>
+
+      <div class="actions" style="display:flex;justify-content:flex-end;gap:8px;margin-top:14px">
+        <button class="btn secondary" id="welcomeSkip">Skip</button>
+        <button class="btn primary" id="welcomeSave">Save & Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Discord chat -->
+  <a id="floatingChat" class="floating-chat" href="https://discord.gg/smgS6sq83y" target="_blank" rel="noopener" title="Open Discord">
+    <img src="discord.jpeg" alt="Discord">
+  </a>
+
+  <!-- Toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite">Saved</div>
+
+  <!-- Report Bug button + popup -->
+  <button id="reportBugBtn" class="report-bug-btn">Report Bug</button>
+
+  <div id="reportPopup" class="report-popup" role="dialog" aria-modal="true" aria-labelledby="reportTitle">
+    <header>
+      <h3 id="reportTitle">Report Bug</h3>
+      <button id="closeReport" class="btn secondary" title="Close">✕</button>
+    </header>
+
+    <div class="row">
+      <input type="text" id="reportName" placeholder="Your name (optional)">
+    </div>
+
+    <div class="row">
+      <textarea id="reportDesc" placeholder="Describe the bug..." rows="5"></textarea>
+    </div>
+
+    <div class="row">
+      <input type="file" id="reportImage" accept="image/*">
+      <img id="reportPreview" class="report-preview" alt="preview">
+    </div>
+
+    <div class="actions">
+      <button id="sendReportBtn" class="btn primary">Kirim Report</button>
+      <button id="cancelReportBtn" class="btn secondary">Cancel</button>
+    </div>
+  </div>
+
+<script>
+/* ============================================================
+   Full script (based on your original) — CPU Mapping removed
+   ============================================================ */
+
+/* Core refs & state */
+const langSelect = document.getElementById('langSelect');
+const themeToggle = document.getElementById('themeToggle');
+const openWelcome = document.getElementById('openWelcome');
+const toast = document.getElementById('toast');
+const modalBackdrop = document.getElementById('modalBackdrop');
+const modalTitle = document.getElementById('modalTitle');
+const modalDesc = document.getElementById('modalDesc');
+const modalVersion = document.getElementById('modalVersion');
+const modalUpdated = document.getElementById('modalUpdated');
+const modalChangelog = document.getElementById('modalChangelog');
+const modalFilename = document.getElementById('modalFilename');
+const modalConfirm = document.getElementById('modalConfirm');
+const modalCancel = document.getElementById('modalCancel');
+
+const welcomeBackdrop = document.getElementById('welcomeBackdrop');
+const welcomeLang = document.getElementById('welcomeLang');
+const welcomeSave = document.getElementById('welcomeSave');
+const welcomeSkip = document.getElementById('welcomeSkip');
+
+const timeDisplay = document.getElementById('timeDisplay');
+const discordLink = document.getElementById('discordLink');
+
+let pendingDownload = null;
+
+/* File metadata */
+const FILE_META = {
+  virtualhost: { version: 'v2.1', updated: 'Oct 29, 2025', changelog: '- Fixed host parsing\\n- Improved TLS handling', size: '2.3 KB' },
+  patched: { version: 'v1.9', updated: 'Oct 20, 2025', changelog: '- Patched launcher\\n- Minor fixes', size: '12.1 KB' },
+  ios: { version: 'v1.4', updated: 'Sep 30, 2025', changelog: '- iOS config update\\n- Surge tweak', size: '3.7 KB' },
+  powertunnel: { version: 'v3.0', updated: 'Oct 10, 2025', changelog: '- PowerTunnel rules updated\\n- Stability improvements', size: '1.9 KB' }
+};
+
+/* Collect simple text nodes for translation */
+const elements = document.querySelectorAll('body *:not(script):not(style)');
+elements.forEach(el=>{
+  if (el.childNodes.length === 1 && el.textContent.trim() !== '') {
+    el.dataset.original = el.textContent.trim();
+  }
+});
+
+/* Translation dictionary */
+const translations = {
+  id: {
+    "Growfax Official": "Growfax Resmi",
+    "📥 Downloads": "📥 Unduhan",
+    "Welcome to Growfax": "Selamat Datang di Growfax",
+    "Private Growtopia Server": "Server Growtopia Pribadi",
+    "Local Time (New York):": "Waktu Lokal (New York):",
+    "Waktu Lokal (Jakarta):": "Waktu Lokal (Jakarta):",
+    "📥 Essential File Downloads": "📥 Unduhan File Penting",
+    "Play on Android": "Main di Android",
+    "Play on Windows": "Main di Windows",
+    "Play on iOS": "Main di iOS",
+    "Play via PowerTunnel": "Main lewat PowerTunnel",
+    "Join Our Community": "Bergabung dengan Komunitas Kami",
+    "Connect with others and get support in our official Discord server.": "Terhubung dengan anggota lain dan dapatkan dukungan di server Discord resmi kami.",
+    "Join Growfax Discord": "Gabung Discord Growfax",
+    "© 2025 Growfax. All rights reserved.": "© 2025 Growfax. Semua hak dilindungi.",
+    "Are you sure you want to download": "Apakah Anda yakin ingin mengunduh",
+    "Details before download": "Detail sebelum mengunduh",
+    "Cancel": "Batal",
+    "Download": "Unduh",
+    "Filename": "Nama berkas",
+    "Version": "Versi",
+    "Updated": "Diperbarui",
+    "Changelog": "Catatan pembaruan",
+    "Size": "Ukuran",
+    "Set your preferred language and theme. We'll remember this for next time.": "Pilih bahasa dan tema favoritmu. Kami akan menyimpannya untuk kunjungan berikutnya.",
+    "Save & Continue": "Simpan & Lanjutkan",
+    "Skip": "Lewati",
+    "Language": "Bahasa",
+    "Theme": "Tema",
+    "Opening Discord...": "Membuka Discord..."
+  }
+};
+
+function applyTranslations(lang){
+  elements.forEach(el=>{
+    const orig = el.dataset.original;
+    if(!orig) return;
+    el.textContent = lang === 'en' ? orig : (translations[lang]?.[orig] || orig);
+  });
+  // Fix for non-simple elements
+  modalCancel.textContent = lang === 'id' ? (translations.id['Cancel'] || 'Batal') : 'Cancel';
+  modalConfirm.textContent = lang === 'id' ? (translations.id['Download'] || 'Unduh') : 'Download';
+  welcomeSave.textContent = lang === 'id' ? (translations.id['Save & Continue'] || 'Simpan & Lanjutkan') : 'Save & Continue';
+  welcomeSkip.textContent = lang === 'id' ? (translations.id['Skip'] || 'Lewati') : 'Skip';
+  discordLink.textContent = lang === 'id' ? (translations.id['Join Growfax Discord'] || 'Gabung Discord Growfax') : 'Join Growfax Discord';
+}
+
+/* Theme control */
+function setTheme(theme){
+  document.body.setAttribute('data-theme', theme);
+  themeToggle.textContent = theme === 'dark' ? '🌙 Dark' : '🌞 Light';
+  themeToggle.setAttribute('aria-pressed', theme === 'dark');
+  localStorage.setItem('growfax_theme', theme);
+}
+themeToggle.addEventListener('click', ()=> {
+  setTheme(document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+setTheme(localStorage.getItem('growfax_theme') || 'light');
+
+/* Language control */
+langSelect.addEventListener('change', ()=> {
+  const lang = langSelect.value;
+  localStorage.setItem('growfax_lang', lang);
+  applyTranslations(lang);
+  updateTime();
+  showToast(lang === 'id' ? 'Bahasa: Indonesia' : 'Language: English');
+});
+(function initLang(){
+  const saved = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en');
+  langSelect.value = saved;
+  applyTranslations(saved);
+})();
+
+/* Time display (Jakarta / New York) */
+function getIndoGreeting(hour){
+  if(hour < 11) return 'pagi';
+  if(hour < 15) return 'siang';
+  if(hour < 18) return 'sore';
+  return 'malam';
+}
+function updateTime(){
+  const now = new Date();
+  const lang = langSelect.value || 'en';
+  if(lang === 'id'){
+    const options = { timeZone: 'Asia/Jakarta', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' };
+    const indoTime = new Intl.DateTimeFormat('id-ID', options).format(now);
+    const hour = parseInt(now.toLocaleString('en-US', { timeZone: 'Asia/Jakarta', hour: '2-digit', hour12: false }));
+    const greeting = getIndoGreeting(hour);
+    timeDisplay.textContent = `Waktu Lokal (Jakarta): ${indoTime} - ${greeting}`;
+  } else {
+    const options = { timeZone: 'America/New_York', hour12: true, timeStyle: 'medium', dateStyle: 'medium' };
+    const usTime = now.toLocaleString('en-US', options);
+    timeDisplay.textContent = `Local Time (New York): ${usTime}`;
+  }
+}
+updateTime();
+setInterval(updateTime, 1000);
+
+/* File Update Checker (modal) */
+document.querySelectorAll('.platform-buttons a').forEach(a=>{
+  a.addEventListener('click', (e)=>{
+    if(e.ctrlKey || e.metaKey || e.button === 1) return;
+    e.preventDefault();
+    const key = a.dataset.filekey;
+    const meta = FILE_META[key] || { version: 'v1.0', updated: 'Unknown', changelog: 'No details', size: '—' };
+    const filename = a.dataset.filename || key;
+    modalTitle.textContent = (langSelect.value === 'id') ? (translations.id['Details before download'] || 'Detail sebelum mengunduh') : 'Details before download';
+    modalDesc.textContent = (langSelect.value === 'id') ? `Info untuk ${filename}` : `Info for ${filename}`;
+    modalVersion.textContent = `${(langSelect.value === 'id') ? (translations.id['Version'] || 'Versi') + ': ' : 'Version: '}${meta.version}`;
+    modalUpdated.textContent = `${(langSelect.value === 'id') ? (translations.id['Updated'] || 'Diperbarui') + ': ' : 'Updated: '}${meta.updated}`;
+    modalChangelog.innerText = `${(langSelect.value === 'id') ? (translations.id['Changelog'] || 'Catatan pembaruan') + ':' : 'Changelog:'}\n${meta.changelog}\n\n${(langSelect.value === 'id') ? (translations.id['Size'] || 'Ukuran') + ': ' : 'Size: '}${meta.size}`;
+    modalFilename.textContent = (langSelect.value === 'id' ? (translations.id['Filename'] || 'Nama berkas') : 'Filename') + `: ${filename}`;
+    pendingDownload = { href: a.getAttribute('href'), filename };
+    showModal();
+  });
+});
+function showModal(){ modalBackdrop.style.display='flex'; modalBackdrop.setAttribute('aria-hidden','false'); setTimeout(()=>modalConfirm.focus(),200); }
+function hideModal(){ modalBackdrop.style.display='none'; modalBackdrop.setAttribute('aria-hidden','true'); pendingDownload=null; }
+modalCancel.addEventListener('click', ()=> hideModal());
+modalBackdrop.addEventListener('click', (e)=>{ if(e.target===modalBackdrop) hideModal(); });
+modalConfirm.addEventListener('click', ()=>{
+  if(!pendingDownload) return hideModal();
+  const a = document.createElement('a'); a.href = pendingDownload.href; a.download = pendingDownload.filename; document.body.appendChild(a); a.click(); a.remove();
+  hideModal(); showToast(langSelect.value === 'id' ? 'Mulai mengunduh...' : 'Download started...');
+});
+
+/* Welcome popup */
+function showWelcome(){ welcomeBackdrop.style.display='flex'; welcomeBackdrop.setAttribute('aria-hidden','false'); }
+function hideWelcome(){ welcomeBackdrop.style.display='none'; welcomeBackdrop.setAttribute('aria-hidden','true'); }
+openWelcome.addEventListener('click', ()=> showWelcome());
+welcomeSave.addEventListener('click', ()=>{
+  const chosenLang = document.getElementById('welcomeLang').value;
+  const theme = Array.from(document.querySelectorAll('input[name="welcomeTheme"]')).find(r=>r.checked).value;
+  langSelect.value = chosenLang;
+  localStorage.setItem('growfax_lang', chosenLang);
+  applyTranslations(chosenLang);
+  updateTime();
+  setTheme(theme);
+  hideWelcome();
+  showToast(chosenLang === 'id' ? 'Bahasa disimpan' : 'Preferences saved');
+});
+welcomeSkip.addEventListener('click', ()=> { hideWelcome(); showToast(langSelect.value === 'id' ? 'Dipilih nanti' : 'Maybe later'); });
+(function firstVisit(){ const seen = localStorage.getItem('growfax_seen'); if(!seen){ welcomeLang.value = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en'); const savedTheme = localStorage.getItem('growfax_theme') || 'light'; document.querySelectorAll('input[name="welcomeTheme"]').forEach(r=> r.checked = (r.value === savedTheme)); showWelcome(); localStorage.setItem('growfax_seen','1'); }})();
+
+/* Storage helpers & UI helpers */
+function showToast(text, ms=1500){
+  toast.textContent = text;
+  toast.style.opacity = '1';
+  toast.style.transform = 'translateX(-50%) translateY(0)';
+  toast.style.pointerEvents = 'auto';
+  toast.style.display = 'block';
+  setTimeout(()=> {
+    toast.style.opacity = '0';
+    toast.style.pointerEvents = 'none';
+    setTimeout(()=> toast.style.display = 'none', 200);
+  }, ms);
+}
+
+/* floating discord click (toast feedback) */
+document.getElementById('floatingChat').addEventListener('click', (e)=>{
+  showToast(langSelect.value === 'id' ? 'Membuka Discord...' : 'Opening Discord...');
+});
+
+/* initial translations + time */
+const initLang = localStorage.getItem('growfax_lang') || (navigator.language && navigator.language.startsWith('id') ? 'id' : 'en');
+langSelect.value = initLang;
+applyTranslations(initLang);
+updateTime();
+
+/* allow middle click / aux click default behavior */
+document.querySelectorAll('.platform-buttons a').forEach(a=>{
+  a.addEventListener('auxclick', (e) => {/* allow default behavior */});
+});
+
+/* Report Bug UI logic (sends to Discord webhook) */
+const reportBtn = document.getElementById('reportBugBtn');
+const reportPopup = document.getElementById('reportPopup');
+const closeReport = document.getElementById('closeReport');
+const cancelReportBtn = document.getElementById('cancelReportBtn');
+const sendReportBtn = document.getElementById('sendReportBtn');
+const reportName = document.getElementById('reportName');
+const reportDesc = document.getElementById('reportDesc');
+const reportImage = document.getElementById('reportImage');
+const reportPreview = document.getElementById('reportPreview');
+
+// <-- REPLACE THIS with your webhook URL (do not commit publicly)
+const WEBHOOK_URL = "GANTI_DENGAN_WEBHOOK_KAMU";
+
+function openReportPopup(){
+  reportPopup.style.display = 'flex';
+  reportPopup.scrollTop = 0;
+  reportDesc.focus();
+}
+function closeReportPopup(){
+  reportPopup.style.display = 'none';
+  reportName.value = '';
+  reportDesc.value = '';
+  reportImage.value = '';
+  reportPreview.style.display = 'none';
+  reportPreview.src = '';
+}
+
+reportBtn.addEventListener('click', openReportPopup);
+closeReport.addEventListener('click', closeReportPopup);
+cancelReportBtn.addEventListener('click', closeReportPopup);
+
+// preview image
+reportImage.addEventListener('change', (e)=>{
+  const f = e.target.files[0];
+  if(!f) { reportPreview.style.display='none'; reportPreview.src=''; return; }
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    reportPreview.src = ev.target.result;
+    reportPreview.style.display = 'block';
+  };
+  reader.readAsDataURL(f);
+});
+
+// send report
+sendReportBtn.addEventListener('click', async ()=>{
+  const name = (reportName.value || 'Anonymous').trim();
+  const desc = (reportDesc.value || '').trim();
+  const file = reportImage.files[0];
+
+  if(!desc){
+    showToast('❌ Deskripsi tidak boleh kosong!');
+    return;
+  }
+
+  if(WEBHOOK_URL === "https://discord.com/api/webhooks/1433278338910130308/0LALQ9yjgPrdiQEypPXVXpq3WzYmZgr-bg36FxCvnlyO8yuLW93u7ohabMdnPCZUPB4G"){
+    showToast('⚠️ GANTI WEBHOOK URL terlebih dahulu di script.');
+    return;
+  }
+
+  const embed = {
+    title: `🐞 Bug Report — ${name}`,
+    description: desc,
+    color: 15158332,
+    timestamp: new Date().toISOString(),
+    fields: [
+      { name: "Reporter", value: name, inline: true },
+      { name: "Platform", value: navigator.platform || 'unknown', inline: true }
+    ]
+  };
+
+  const form = new FormData();
+  form.append('payload_json', JSON.stringify({ username: 'Growfax Reporter', embeds: [embed] }));
+
+  if(file){
+    form.append('file', file, file.name);
+  }
+
+  try{
+    const resp = await fetch(WEBHOOK_URL, { method: 'POST', body: form });
+    if(resp.ok || resp.status === 204){
+      showToast('✅ Report berhasil dikirim!');
+      closeReportPopup();
+    } else {
+      console.error('Webhook error', resp.status, await resp.text());
+      showToast('❌ Gagal mengirim report!');
+    }
+  } catch(err){
+    console.error(err);
+    showToast('❌ Terjadi kesalahan saat mengirim!');
+  }
+});
+
+/* Misc small UI effects */
+const status = document.querySelector('#status-indicator');
+if (status) {
+  setInterval(() => {
+    status.style.opacity = status.style.opacity === '1' ? '0.5' : '1';
+  }, 600);
+}
+
+/* graceful page link transition for html links */
+document.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', e => {
+    try {
+      const href = link.getAttribute('href');
+      if(href && href.endsWith('.html') && !link.hasAttribute('data-no-transition')){
+        e.preventDefault();
+        document.body.style.opacity = '0';
+        setTimeout(() => (window.location.href = href), 300);
+      }
+    } catch(err){ /* ignore */ }
+  });
+});
+
+/* Console debug */
+console.log('%cGrowfax Engine Ready ✅', 'color: #00ff88; font-weight: bold;');
+
+</script>
+</body>
+</html>
