@@ -257,7 +257,7 @@
   .btn-ios{background:#007aff;--glow:#7acbff;box-shadow:0 4px 16px rgba(122,203,255,0.08)}
   .btn-powertunnel{background:#b71c1c;--glow:#ff5a5a;box-shadow:0 4px 16px rgba(255,90,90,0.08)}
 
-  /* NEW: Shop Roles Grid */
+  /* NEW: Shop Roles Grid - CENTERING ADDED */
   .shop-roles {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -267,21 +267,32 @@
       margin-left: auto;
       margin-right: auto;
       text-align: left;
+      /* ADDED: Centering the single card */
+      justify-content: center; 
   }
   .shop-role-card {
       background: var(--card-bg);
       padding: 20px;
       border-radius: 12px;
-      border-top: 4px solid var(--shop-bg);
+      /* UPDATED: Change border style for full glowing border */
+      border: 1px solid var(--shop-bg); 
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-      height: auto; /* Allow card height to adjust to content */
+      /* UPDATED: Increased transition for smoother glow */
+      transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+      height: auto; 
+      
+      /* ADDED: Persistent Glow Effect */
+      box-shadow: 0 0 5px var(--shop-glow), /* Outer subtle glow */
+                  inset 0 0 5px var(--shop-glow); /* Inner subtle glow for border effect */
   }
   .shop-role-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 10px 30px var(--shop-glow);
+      /* Enhanced hover glow */
+      box-shadow: 0 0 15px var(--shop-glow), 
+                  0 10px 30px var(--shop-glow),
+                  inset 0 0 15px var(--shop-glow);
   }
   .shop-role-card h3 {
       margin-top: 0;
@@ -515,9 +526,10 @@
     }
     .platform-buttons a:hover{transform:translateY(-4px)}
     
-    /* Shop Roles Grid PC */
+    /* Shop Roles Grid PC - Centering logic simplified by using max-width and margin-auto on container, and justify-content: center */
     .shop-roles {
-        grid-template-columns: repeat(3, minmax(200px, 1fr)); /* 3 columns on desktop */
+        /* Remove explicit 3-column setup to better center a single item */
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
     }
     /* On desktop, buttons can take up less space */
     .shop-role-card .purchase-buttons .btn-purchase {
@@ -1230,19 +1242,19 @@
                 toastMessage = lang === 'en' ? `Opening PayPal for IDR purchase (${roleName} - Rp ${idrPrice})...` : (translations.id['Opening PayPal for IDR purchase'] || 'Membuka PayPal untuk pembelian Rp IDR') + ` (${roleName})...`;
             } else if (button.classList.contains('btn-eur')) {
                 const eurPrice = button.getAttribute('data-price-eur');
-                toastMessage = lang === 'en' ? `Opening PayPal for EUR purchase (${roleName} - € ${eurPrice})...` : (translations.id['Opening PayPal for EUR purchase'] || 'Membuka PayPal untuk pembelian € EUR') + ` (${roleName})...`;
+                toastMessage = lang === 'en' ? `Opening PayPal for EUR purchase (${roleName} - € ${eurPrice})...` : (translations.id['Opening PayPal untuk pembelian € EUR'] || 'Membuka PayPal untuk pembelian € EUR') + ` (${roleName})...`;
             } else if (button.classList.contains('btn-gbp')) {
                 const gbpPrice = button.getAttribute('data-price-gbp');
-                toastMessage = lang === 'en' ? `Opening PayPal for GBP purchase (${roleName} - £ ${gbpPrice})...` : (translations.id['Opening PayPal for GBP purchase'] || 'Membuka PayPal untuk pembelian £ GBP') + ` (${roleName})...`;
+                toastMessage = lang === 'en' ? `Opening PayPal for GBP purchase (${roleName} - £ ${gbpPrice})...` : (translations.id['Opening PayPal untuk pembelian £ GBP'] || 'Membuka PayPal untuk pembelian £ GBP') + ` (${roleName})...`;
             } else if (button.classList.contains('btn-aud')) {
                 const audPrice = button.getAttribute('data-price-aud');
-                toastMessage = lang === 'en' ? `Opening PayPal for AUD purchase (${roleName} - A$ ${audPrice})...` : (translations.id['Opening PayPal for AUD purchase'] || 'Membuka PayPal untuk pembelian A$ AUD') + ` (${roleName})...`;
+                toastMessage = lang === 'en' ? `Opening PayPal for AUD purchase (${roleName} - A$ ${audPrice})...` : (translations.id['Opening PayPal untuk pembelian A$ AUD'] || 'Membuka PayPal untuk pembelian A$ AUD') + ` (${roleName})...`;
             } else if (button.classList.contains('btn-sgd')) {
                 const sgdPrice = button.getAttribute('data-price-sgd');
-                toastMessage = lang === 'en' ? `Opening PayPal for SGD purchase (${roleName} - S$ ${sgdPrice})...` : (translations.id['Opening PayPal for SGD purchase'] || 'Membuka PayPal untuk pembelian S$ SGD') + ` (${roleName})...`;
+                toastMessage = lang === 'en' ? `Opening PayPal for SGD purchase (${roleName} - S$ ${sgdPrice})...` : (translations.id['Opening PayPal untuk pembelian S$ SGD'] || 'Membuka PayPal untuk pembelian S$ SGD') + ` (${roleName})...`;
             } else if (button.classList.contains('btn-cad')) {
                 const cadPrice = button.getAttribute('data-price-cad');
-                toastMessage = lang === 'en' ? `Opening PayPal for CAD purchase (${roleName} - C$ ${cadPrice})...` : (translations.id['Opening PayPal for CAD purchase'] || 'Membuka PayPal untuk pembelian C$ CAD') + ` (${roleName})...`;
+                toastMessage = lang === 'en' ? `Opening PayPal for CAD purchase (${roleName} - C$ ${cadPrice})...` : (translations.id['Opening PayPal untuk pembelian C$ CAD'] || 'Membuka PayPal untuk pembelian C$ CAD') + ` (${roleName})...`;
             } else {
                 const usdPrice = button.getAttribute('data-price');
                 toastMessage = lang === 'en' ? `Opening PayPal for USD purchase (${roleName} - $ ${usdPrice})...` : (translations.id['Opening PayPal for USD purchase'] || 'Membuka PayPal untuk pembelian $USD') + ` (${roleName})...`;
