@@ -496,10 +496,33 @@ function showModal(){ modalBackdrop.style.display='flex'; modalBackdrop.setAttri
 function hideModal(){ modalBackdrop.style.display='none'; modalBackdrop.setAttribute('aria-hidden','true'); pendingDownload=null; }
 modalCancel.addEventListener('click', ()=> hideModal());
 modalBackdrop.addEventListener('click', (e)=>{ if(e.target===modalBackdrop) hideModal(); });
+
+/* ============================================================
+   🔹 EDIT BAGIAN INI — PowerTunnel buka tab baru
+   ============================================================ */
 modalConfirm.addEventListener('click', ()=>{
   if(!pendingDownload) return hideModal();
-  const a = document.createElement('a'); a.href = pendingDownload.href; a.download = pendingDownload.filename; document.body.appendChild(a); a.click(); a.remove();
-  hideModal(); showToast(langSelect.value === 'id' ? 'Mulai mengunduh...' : 'Download started...');
+
+  const filename = pendingDownload.filename.toLowerCase();
+
+  // [EDITED] PowerTunnel buka tab baru
+  if (filename.includes("powertunnel")) {
+    window.open(pendingDownload.href, "_blank");
+    hideModal();
+    showToast(langSelect.value === 'id' ? 'Menampilkan isi PowerTunnel...' : 'Opening PowerTunnel file...');
+    return;
+  }
+
+  // File lain tetap diunduh
+  const a = document.createElement('a');
+  a.href = pendingDownload.href;
+  a.download = pendingDownload.filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+  hideModal();
+  showToast(langSelect.value === 'id' ? 'Mulai mengunduh...' : 'Download started...');
 });
 
 /* Welcome popup */
