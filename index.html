@@ -51,13 +51,12 @@
     100% { transform: scale(1); box-shadow: var(--logo-shadow); }
   }
   
-  /* NEW: Keyframes for subtle moving image effect on banner */
-  @keyframes subtle-pan-zoom {
-      0% { transform: scale(1) translate(0, 0); }
-      50% { transform: scale(1.03) translate(1%, -1%); }
-      100% { transform: scale(1) translate(0, 0); }
+  /* NEW: Keyframes for Banner Image Animation */
+  @keyframes floatUpAndDown {
+    0% { transform: translateY(0) }
+    50% { transform: translateY(-5px) }
+    100% { transform: translateY(0) }
   }
-
 
   :root{
     --bg:#f8f8f8;
@@ -219,20 +218,13 @@
   /* -------------------------
      Banner / Hero
      ------------------------- */
-  .banner-section{
-    text-align:center;
-    padding:40px 10px;
-    background:linear-gradient(90deg, rgba(0,0,0,0.03), rgba(255,255,255,0.02));
-    overflow: hidden; /* Added to contain the moving image */
-  }
+  .banner-section{text-align:center;padding:40px 10px;background:linear-gradient(90deg, rgba(0,0,0,0.03), rgba(255,255,255,0.02))}
   .banner-section img{
     max-width:200px;
     border-radius:8px;
     margin-bottom:14px;
-    
-    /* NEW: Moving image animation */
-    transition: box-shadow .25s, transform .25s, opacity 0.2s ease;
-    animation: subtle-pan-zoom 15s infinite ease-in-out;
+    /* NEW: Apply subtle float animation */
+    animation: floatUpAndDown 4s ease-in-out infinite; 
   }
   .banner-section h2{
     font-size:1.6rem;
@@ -283,44 +275,6 @@
   .btn-powertunnel{background:#b71c1c;--glow:#ff5a5a;box-shadow:0 4px 16px rgba(255,90,90,0.08)}
 
   /* -------------------------
-     NEW: Role Shop Styles
-     ------------------------- */
-  /* New Shop Button Base Style (Inherits from platform-buttons a but overrides size) */
-  .shop-btn {
-    width: 100% !important; 
-    max-width: 400px;
-    height: auto;
-    padding: 12px 18px !important;
-    justify-content: flex-start !important; /* Align content to the left */
-    gap: 12px !important;
-    background: var(--card-bg); /* Use card background for more premium look */
-    color: var(--text); /* Use text color */
-    border: 2px solid var(--border-color); /* Add visible border */
-    box-shadow: var(--card-shadow);
-    transition: transform .18s ease, box-shadow .18s, background .18s;
-  }
-  .shop-btn:hover {
-    transform: translateY(-4px) !important;
-    background: rgba(0,0,0,0.05); /* Slight hover effect */
-  }
-  [data-theme="dark"] .shop-btn:hover {
-     background: rgba(255,255,255,0.05);
-  }
-  .shop-btn div {
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  /* Custom Accent Colors for Roles */
-  .btn-vip { border-color: #ffc107; } /* Yellow */
-  .btn-vipplus { border-color: #007aff; } /* Blue */
-  .btn-moderator { border-color: #2ecc71; } /* Green */
-  .btn-supermod { border-color: #9b59b6; } /* Purple */
-  .btn-developer { border-color: #f39c12; } /* Orange */
-  .btn-god { border-color: #e91e63; } /* Pink */
-  
-  /* -------------------------
      Discord Section
      ------------------------- */
   .discord-section{background:var(--discord-color);color:#fff;padding:24px;border-radius:10px;max-width:820px;margin:32px auto 50px;text-align:center;box-shadow:var(--card-shadow)}
@@ -341,13 +295,13 @@
   }
 
   /* -------------------------
-     Welcome/Admin Popup (Modal was removed)
+     Modal & Welcome/Admin Popup
      ------------------------- */
-  .welcome-backdrop, .admin-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:1300}
-  .welcome, .modal{width:92%;max-width:560px;background:var(--card-bg);color:var(--text);border-radius:12px;padding:16px;box-shadow:0 14px 40px rgba(0,0,0,0.2);transform:translateY(0);transition:transform .18s,opacity .18s}
+  .modal-backdrop, .welcome-backdrop, .admin-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:1300}
+  .modal, .welcome{width:92%;max-width:560px;background:var(--card-bg);color:var(--text);border-radius:12px;padding:16px;box-shadow:0 14px 40px rgba(0,0,0,0.2);transform:translateY(0);transition:transform .18s,opacity .18s}
   
   /* Added opacity transition to modal/welcome text elements */
-  .welcome h2, .welcome p, .welcome label, .welcome button, .modal h2, .modal h4 {
+  .modal h3, .modal p, .modal .changelog, .welcome h2, .welcome p, .welcome label, .welcome button, .modal h2, .modal h4 {
       transition: opacity 0.2s ease;
   }
   
@@ -410,22 +364,14 @@
       width:300px; 
     }
     .platform-buttons a:hover{transform:translateY(-4px)}
-    
-    /* Tombol Shop menyesuaikan ke max-width 400px (desktop) */
-    .shop-role-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      max-width: 400px;
-      margin: 0 auto;
-    }
-    .shop-btn {
-      width: 100% !important;
-    }
 
     /* Banner/Content padding besar */
     .banner-section{padding:56px 20px;}
-    .banner-section img{max-width:240px;border-radius:10px;}
+    .banner-section img{
+        max-width:240px;
+        border-radius:10px;
+        /* Animation applied above, just size change here */
+    }
     .banner-section h2{font-size:1.9rem;}
     .container{margin:48px auto;padding:0 18px}
     .container h2{font-size:1.6rem;margin-bottom:28px}
@@ -480,7 +426,7 @@
   </section>
 
   <main class="container" id="home" role="main">
-    <h2 data-original="📥 Essential File Downloads">📥 Essential File Downloads</h2>
+    <h2>📥 Essential File Downloads</h2>
     <div class="platform-buttons" role="list">
       <a href="Growfax_VirtualHost.txt" class="btn-android" data-filename="Growfax_VirtualHost.txt" data-filekey="virtualhost" download role="listitem">
         <img src="virtual-host.png" alt="">Play on Android
@@ -491,68 +437,14 @@
       </a>
 
       <a href="#" class="btn-ios" data-filename="GrowFax_ios_config.txt" data-filekey="ios" role="listitem">
-        <img src="surge5.png" alt="">Play on iOS
+        <img src="surge5.png" alt="">Copy iOS Config
       </a>
 
       <a href="#" class="btn-powertunnel" data-filename="PowerTunnel_Host.txt" data-filekey="powertunnel" role="listitem">
         <img src="powertunnel.jpeg" alt="">Play via PowerTunnel
       </a>
     </div>
-
-    <h2 style="margin-top: 40px;" data-original="💳 Growfax Role Shop">💳 Growfax Role Shop</h2>
-    <p style="margin-bottom: 24px; opacity: 0.9;" data-original="Dapatkan keuntungan eksklusif dan dukung server kami dengan membeli role di bawah ini. Pembayaran diproses melalui PayPal.">Dapatkan keuntungan eksklusif dan dukung server kami dengan membeli role di bawah ini. Pembayaran diproses melalui PayPal.</p>
-    <div class="shop-role-buttons" role="list" style="display:flex; flex-direction:column; gap:12px; max-width:400px; margin: 0 auto;">
-      
-      <a href="https://paypal.me/Growfax/0.903USD" target="_blank" rel="noopener" class="shop-btn btn-vip" role="listitem">
-        <span style="font-size: 1.5rem;">⭐</span>
-        <div>
-          <span style="font-size:1.1rem; font-weight:700;" data-original="VIP Role">VIP Role</span>
-          <span style="font-size:0.9rem; opacity:0.8; display:block;">$0.903 USD — <span data-original="Buy Now">Buy Now</span></span>
-        </div>
-      </a>
-
-      <a href="https://paypal.me/Growfax/1.085USD" target="_blank" rel="noopener" class="shop-btn btn-vipplus" role="listitem">
-        <span style="font-size: 1.5rem;">🌟</span>
-        <div>
-          <span style="font-size:1.1rem; font-weight:700;" data-original="VIP+ Role">VIP+ Role</span>
-          <span style="font-size:0.9rem; opacity:0.8; display:block;">$1.085 USD — <span data-original="Buy Now">Buy Now</span></span>
-        </div>
-      </a>
-
-      <a href="https://paypal.me/Growfax/3.008USD" target="_blank" rel="noopener" class="shop-btn btn-moderator" role="listitem">
-        <span style="font-size: 1.5rem;">🛡️</span>
-        <div>
-          <span style="font-size:1.1rem; font-weight:700;" data-original="Moderator Role">Moderator Role</span>
-          <span style="font-size:0.9rem; opacity:0.8; display:block;">$3.008 USD — <span data-original="Buy Now">Buy Now</span></span>
-        </div>
-      </a>
-
-      <a href="https://paypal.me/Growfax/4.813USD" target="_blank" rel="noopener" class="shop-btn btn-supermod" role="listitem">
-        <span style="font-size: 1.5rem;">👑</span>
-        <div>
-          <span style="font-size:1.1rem; font-weight:700;" data-original="Super Moderator Role">Super Moderator Role</span>
-          <span style="font-size:0.9rem; opacity:0.8; display:block;">$4.813 USD — <span data-original="Buy Now">Buy Now</span></span>
-        </div>
-      </a>
-
-      <a href="https://paypal.me/Growfax/7.22USD" target="_blank" rel="noopener" class="shop-btn btn-developer" role="listitem">
-        <span style="font-size: 1.5rem;">💻</span>
-        <div>
-          <span style="font-size:1.1rem; font-weight:700;" data-original="Developer Role">Developer Role</span>
-          <span style="font-size:0.9rem; opacity:0.8; display:block;">$7.22 USD — <span data-original="Buy Now">Buy Now</span></span>
-        </div>
-      </a>
-      
-      <a href="https://paypal.me/Growfax/10.83USD" target="_blank" rel="noopener" class="shop-btn btn-god" role="listitem">
-        <span style="font-size: 1.5rem;">✨</span>
-        <div>
-          <span style="font-size:1.1rem; font-weight:700;" data-original="God Role">God Role</span>
-          <span style="font-size:0.9rem; opacity:0.8; display:block;">$10.83 USD — <span data-original="Buy Now">Buy Now</span></span>
-        </div>
-      </a>
-      
-    </div>
-    </main>
+  </main>
 
   <section class="discord-section" aria-label="Discord community">
     <img src="discord.jpeg" alt="Discord Logo">
@@ -562,6 +454,28 @@
   </section>
 
   <footer>© 2025 Growfax. All rights reserved.</footer>
+
+  <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h3 id="modalTitle">File info</h3>
+      <p id="modalDesc">Details before download</p>
+
+      <div class="meta">
+        <div class="chip" id="modalVersion">v0.0</div>
+        <div class="chip" id="modalUpdated">Updated: —</div>
+      </div>
+
+      <div class="changelog" id="modalChangelog">Changelog: —</div>
+
+      <div style="display:flex;gap:8px;align-items:center;justify-content:space-between">
+        <div style="font-size:.9rem;color:var(--muted)" id="modalFilename">Filename</div>
+        <div class="buttons">
+          <button class="btn secondary" id="modalCancel">Cancel</button>
+          <button class="btn primary" id="modalConfirm">Download</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div id="welcomeBackdrop" class="welcome-backdrop" aria-hidden="true">
     <div class="welcome" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
@@ -675,7 +589,15 @@ const langSelect = document.getElementById('langSelect');
 const themeToggle = document.getElementById('themeToggle');
 const openWelcome = document.getElementById('openWelcome');
 const toast = document.getElementById('toast');
-// REMOVED: modalBackdrop, modalTitle, modalDesc, modalVersion, modalUpdated, modalChangelog, modalFilename, modalConfirm, modalCancel
+const modalBackdrop = document.getElementById('modalBackdrop');
+const modalTitle = document.getElementById('modalTitle');
+const modalDesc = document.getElementById('modalDesc');
+const modalVersion = document.getElementById('modalVersion');
+const modalUpdated = document.getElementById('modalUpdated');
+const modalChangelog = document.getElementById('modalChangelog');
+const modalFilename = document.getElementById('modalFilename');
+const modalConfirm = document.getElementById('modalConfirm');
+const modalCancel = document.getElementById('modalCancel');
 
 const welcomeBackdrop = document.getElementById('welcomeBackdrop');
 const welcomeLang = document.getElementById('welcomeLang');
@@ -718,17 +640,30 @@ const seoKeywordsInput = document.getElementById('seoKeywordsInput');
 const saveSeoMeta = document.getElementById('saveSeoMeta');
 
 let isServerOnline = true; // Simulated server status
+let pendingDownload = null;
 let isAdminLoggedIn = false; // New state tracker
 let analyticsIntervalId = null; // ID untuk auto-refresh dashboard
 
 /* ===========================
-   File metadata (Simplified for Copy Text)
+   File metadata
+   - PowerTunnel & iOS: Copy-text
    =========================== */
-const FILE_META_COPY = {
+const FILE_META = {
+  virtualhost: { version: 'v2.1', updated: 'Oct 29, 2025', changelog: '- Fixed host parsing\\n- Improved TLS handling', size: '2.3 KB' },
+  patched: { version: 'v1.9', updated: 'Oct 20, 2025', changelog: '- Patched launcher\\n- Minor fixes', size: '12.1 KB' },
+  // MODIFIED: iOS now uses copytext instead of download
   ios: { 
+    version: 'v1.5', 
+    updated: 'Nov 02, 2025', 
+    changelog: 'Instruksi: Konfigurasi Surge/Shadowrocket telah disalin secara otomatis ke clipboard Anda. Tempelkan di bagian [Host] atau custom config.', 
+    size: '1.5 KB',
     copytext: `[General]\nbypass-system = true\n\n[Rule]\nFINAL,DIRECT\n\n[Host]\ngrowtopia1.com = 91.134.85.13\ngrowtopia2.com = 91.134.85.13\nwww.growtopia1.com = 91.134.85.13\nwww.growtopia2.com = 91.134.85.13`
   },
   powertunnel: { 
+    version: 'v3.0', 
+    updated: 'Oct 10, 2025', 
+    changelog: 'Instruksi: Teks Host telah disalin secara otomatis ke clipboard Anda. Silakan tempelkan ke konfigurasi PowerTunnel Anda.', 
+    size: '1.9 KB',
     copytext: `15.235.232.75 growtopia1.com\n15.235.232.75 growtopia2.com\n15.235.232.75 www.growtopia1.com\n15.235.232.75 www.growtopia2.com`
   }
 };
@@ -756,13 +691,16 @@ const translations = {
     "📥 Essential File Downloads": "📥 Unduhan File Penting",
     "Play on Android": "Main di Android",
     "Play on Windows": "Main di Windows",
-    "Play on iOS": "Main di iOS",
+    // MODIFIED: Added translation for new iOS button text
+    "Copy iOS Config": "Salin Konfigurasi iOS", 
+    "Play on iOS": "Salin Konfigurasi iOS", 
     "Play via PowerTunnel": "Main lewat PowerTunnel",
     "Join Our Community": "Bergabung dengan Komunitas Kami",
     "Connect with others and get support in our official Discord server.": "Terhubung dengan anggota lain dan dapatkan dukungan di server Discord resmi kami.",
     "Join Growfax Discord": "Gabung Discord Growfax",
     "© 2025 Growfax. All rights reserved.": "© 2025 Growfax. Semua hak dilindungi.",
-    // REMOVED: modal translations
+    "Are you sure you want to download": "Apakah Anda yakin ingin mengunduh",
+    "Details before download": "Detail sebelum mengunduh",
     "Cancel": "Batal",
     "Download": "Unduh",
     "Filename": "Nama berkas",
@@ -778,17 +716,6 @@ const translations = {
     "Opening Discord...": "Membuka Discord...",
     "🐞 Report Bug": "🐞 Laporkan Bug",
     
-    // NEW: Role Shop Translations
-    "💳 Growfax Role Shop": "💳 Toko Role Growfax",
-    "Dapatkan keuntungan eksklusif dan dukung server kami dengan membeli role di bawah ini. Pembayaran diproses melalui PayPal.": "Dapatkan keuntungan eksklusif dan dukung server kami dengan membeli role di bawah ini. Pembayaran diproses melalui PayPal.",
-    "VIP Role": "Role VIP",
-    "VIP+ Role": "Role VIP+",
-    "Moderator Role": "Role Moderator",
-    "Super Moderator Role": "Role Super Moderator",
-    "Developer Role": "Role Developer",
-    "God Role": "Role God",
-    "Buy Now": "Beli Sekarang",
-
     // Admin Translations
     "🔑 Admin Area": "🔑 Area Admin",
     "Enter the Admin Token to proceed:": "Masukkan Token Admin untuk melanjutkan:",
@@ -1025,7 +952,7 @@ function updateAdminAreaTranslations(lang) {
 
 function applyTranslations(lang){
   const transitionDuration = 200; // ms
-  const elementsToTranslate = document.querySelectorAll('[data-original], #welcomeSave, #welcomeSkip, #discordLink, #reportBugLink, #adminTokenSubmit, #closeAdmin, #toggleServerStatus, #saveNewsUpdate, #refreshAnalytics');
+  const elementsToTranslate = document.querySelectorAll('[data-original], #modalCancel, #modalConfirm, #welcomeSave, #welcomeSkip, #discordLink, #reportBugLink, #adminTokenSubmit, #closeAdmin, #toggleServerStatus, #saveNewsUpdate, #refreshAnalytics');
 
   // 1. Fade out (Opacity 0)
   elementsToTranslate.forEach(el => {
@@ -1042,18 +969,12 @@ function applyTranslations(lang){
     elements.forEach(el=>{
       const orig = el.dataset.original;
       if(!orig) return;
-      
-      // Handle Buy Now Span
-      if (el.parentNode && el.parentNode.parentNode && el.parentNode.parentNode.classList.contains('shop-btn') && orig.toLowerCase() === 'buy now') {
-          el.textContent = lang === 'en' ? orig : (translations[lang]?.[orig] || orig);
-          return;
-      }
-      
       el.textContent = lang === 'en' ? orig : (translations[lang]?.[orig] || orig);
     });
 
     // Fix buttons/labels manually
-    // REMOVED: modalCancel, modalConfirm translations
+    modalCancel.textContent = lang === 'id' ? (translations.id['Cancel'] || 'Batal') : 'Cancel';
+    modalConfirm.textContent = lang === 'id' ? (translations.id['Download'] || 'Unduh') : 'Download';
     welcomeSave.textContent = lang === 'id' ? (translations.id['Save & Continue'] || 'Simpan & Lanjutkan') : 'Save & Continue';
     welcomeSkip.textContent = lang === 'id' ? (translations.id['Skip'] || 'Lewati') : 'Skip';
     discordLink.textContent = lang === 'id' ? (translations.id['Join Growfax Discord'] || 'Gabung Discord Growfax') : 'Join Growfax Discord';
@@ -1159,24 +1080,21 @@ updateTime();
 setInterval(updateTime, 1000);
 
 /* ===========================
-   File Download Logic (Direct Action - Modal Removed)
+   File Update Checker (modal)
    =========================== */
 document.querySelectorAll('.platform-buttons a').forEach(a=>{
   a.addEventListener('click', (e)=>{
     // Allow ctrl/meta click (open in new tab) and middle-click
-    if (e.ctrlKey || e.metaKey || e.button === 1) return;
-    
+    if(e.ctrlKey || e.metaKey || e.button === 1) return;
+    e.preventDefault();
     const key = a.dataset.filekey;
+    const meta = FILE_META[key] || { version: 'v1.0', updated: 'Unknown', changelog: 'No details', size: '—' };
     const filename = a.dataset.filename || key;
-    const href = a.getAttribute('href');
 
-    const isCopyText = (key === 'ios' || key === 'powertunnel'); 
-    
-    if (isCopyText) {
-        e.preventDefault(); // Stop default navigation
-        const copyMeta = FILE_META_COPY[key];
-        
-        navigator.clipboard.writeText(copyMeta.copytext).then(() => {
+    // --- MODIFIED LOGIC: COPY TEXT (iOS, PowerTunnel, dll.) ---
+    if (meta.copytext) {
+        // Teks tersedia, salin ke clipboard
+        navigator.clipboard.writeText(meta.copytext).then(() => {
             let toastMessage;
             if (key === 'ios') {
                 toastMessage = (langSelect.value === 'id') ? '✅ Konfigurasi iOS berhasil disalin!' : '✅ iOS configuration copied!';
@@ -1190,15 +1108,41 @@ document.querySelectorAll('.platform-buttons a').forEach(a=>{
             showToast(toastMessage, 3000);
         });
         
-        // Track Copy Event
+        // Track Copy Event (General)
         trackEvent('config_copied', { platform: key });
-    } else {
-        // Direct Download (Android/Windows) - Allow default behavior
-        // Track download initiation
-        trackEvent('file_download_initiated', { file_name: filename });
-        showToast(langSelect.value === 'id' ? 'Mulai mengunduh...' : 'Download started...');
+        
+        return; // Hentikan aksi selanjutnya (tidak perlu modal)
     }
+    // --- AKHIR LOGIKA COPY TEXT ---
+
+    // Lanjutkan dengan logika modal/download untuk file lain
+    modalTitle.textContent = (langSelect.value === 'id') ? 'Info Berkas' : 'File Info';
+    modalDesc.textContent = (langSelect.value === 'id') ? (translations.id['Details before download'] || 'Detail sebelum mengunduh') : 'Details before download';
+    modalVersion.textContent = `${(langSelect.value === 'id') ? (translations.id['Version'] || 'Versi') + ': ' : 'Version: '}${meta.version}`;
+    modalUpdated.textContent = `${(langSelect.value === 'id') ? (translations.id['Updated'] || 'Diperbarui') + ': ' : 'Updated: '}${meta.updated}`;
+    modalChangelog.innerText = `${(langSelect.value === 'id') ? (translations.id['Changelog'] || 'Catatan pembaruan') + ':' : 'Changelog:'}\n${meta.changelog}\n\n${(langSelect.value === 'id') ? (translations.id['Size'] || 'Ukuran') + ': ' : 'Size: '}${meta.size}`;
+    modalFilename.textContent = (langSelect.value === 'id' ? (translations.id['Filename'] || 'Nama berkas') : 'Filename') + `: ${filename}`;
+    pendingDownload = { href: a.getAttribute('href'), filename, version: meta.version };
+    showModal();
   });
+});
+function showModal(){ modalBackdrop.style.display='flex'; modalBackdrop.setAttribute('aria-hidden','false'); setTimeout(()=>modalConfirm.focus(),200); }
+function hideModal(){ modalBackdrop.style.display='none'; modalBackdrop.setAttribute('aria-hidden','true'); pendingDownload=null; }
+modalCancel.addEventListener('click', ()=> hideModal());
+modalBackdrop.addEventListener('click', (e)=>{ if(e.target===modalBackdrop) hideModal(); });
+
+// Added Analytical Tracking for Download
+modalConfirm.addEventListener('click', ()=>{
+  if(!pendingDownload) return hideModal();
+  
+  // Track file download initiation
+  trackEvent('file_download_initiated', {
+    file_name: pendingDownload.filename,
+    file_version: pendingDownload.version || 'Unknown'
+  });
+  
+  const a = document.createElement('a'); a.href = pendingDownload.href; a.download = pendingDownload.filename; document.body.appendChild(a); a.click(); a.remove();
+  hideModal(); showToast(langSelect.value === 'id' ? 'Mulai mengunduh...' : 'Download started...');
 });
 
 /* ===========================
