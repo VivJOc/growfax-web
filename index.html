@@ -484,6 +484,17 @@
             </div>
             
             <div style="margin-top: 20px; padding: 15px; border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
+                <h4 style="margin: 0 0 10px; color: var(--accent);" id="analyticsTitle">Analytical Dashboard</h4>
+                <div id="analyticsContent" style="text-align: left; font-size: 0.9rem;">
+                    <p id="totalDownloadsContainer">Total Downloads: <strong id="totalDownloads">—</strong></p>
+                    <p id="recentActivitiesTitle">Recent Activities:</p>
+                    <ul id="recentActivities" style="margin: 5px 0 0 20px; padding: 0; list-style-type: square; font-size: 0.85rem;">
+                        <li>Simulating data...</li>
+                    </ul>
+                    <button class="btn secondary" id="refreshAnalytics" style="margin-top: 10px; padding: 5px 10px;">Refresh Data</button>
+                </div>
+            </div>
+            <div style="margin-top: 20px; padding: 15px; border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
                 <h4 style="margin: 0 0 10px; color: var(--accent);">News & Updates</h4>
                 <textarea id="newsUpdateTextarea" style="width: 100%; height: 100px; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text); resize: vertical;" placeholder="Enter news/update text..."></textarea>
                 <button class="btn primary" id="saveNewsUpdate" style="margin-top: 10px;">Save News</button>
@@ -508,7 +519,7 @@
    ============================================================ */
 
 /* ===========================
-   Analytical Tool Function (NEW)
+   Analytical Tool Function 
    =========================== */
 function trackEvent(eventName, eventParams = {}) {
     // Fungsi ini menyimulasikan pengiriman data ke alat analitik (e.g., Google Analytics).
@@ -547,7 +558,7 @@ const timeDisplay = document.getElementById('timeDisplay');
 const discordLink = document.getElementById('discordLink');
 const reportBugLink = document.getElementById('reportBugLink');
 
-// NEW Admin Area Refs
+// Admin Area Refs
 const ADMIN_TOKEN = 'GFAx_2025_ADMN'; // Hardcoded token for static page simulation
 const openAdmin = document.getElementById('openAdmin');
 const adminBackdrop = document.getElementById('adminBackdrop');
@@ -563,8 +574,17 @@ const toggleServerStatus = document.getElementById('toggleServerStatus');
 const newsUpdateTextarea = document.getElementById('newsUpdateTextarea');
 const saveNewsUpdate = document.getElementById('saveNewsUpdate');
 
+// Analytical Dashboard Refs
+const analyticsTitle = document.getElementById('analyticsTitle');
+const totalDownloadsContainer = document.getElementById('totalDownloadsContainer');
+const totalDownloadsElement = document.getElementById('totalDownloads');
+const recentActivitiesTitle = document.getElementById('recentActivitiesTitle');
+const recentActivitiesElement = document.getElementById('recentActivities');
+const refreshAnalytics = document.getElementById('refreshAnalytics');
+
 let isServerOnline = true; // Simulated server status
 let pendingDownload = null;
+let isAdminLoggedIn = false; // New state tracker
 
 /* ===========================
    File metadata
@@ -629,7 +649,7 @@ const translations = {
     "Opening Discord...": "Membuka Discord...",
     "🐞 Report Bug": "🐞 Laporkan Bug",
     
-    // NEW Admin Translations
+    // Admin Translations
     "🔑 Admin Area": "🔑 Area Admin",
     "Enter the Admin Token to proceed:": "Masukkan Token Admin untuk melanjutkan:",
     "Submit": "Kirim",
@@ -639,15 +659,107 @@ const translations = {
     "News & Updates": "Berita & Pembaruan",
     "Toggle Status (Simulate)": "Ubah Status (Simulasi)",
     "Save News": "Simpan Berita",
-    "Close Admin Area": "Tutup Area Admin"
+    "Close Admin Area": "Tutup Area Admin",
+
+    // Analytical Tool Translations (NEW)
+    "Analytical Dashboard": "Dasbor Analitik",
+    "Total Downloads:": "Total Unduhan:",
+    "Recent Activities:": "Aktivitas Terbaru:",
+    "Refresh Data": "Perbarui Data",
+    "Download initiated:": "Unduhan dimulai: ",
+    "Admin Login success": "Login Admin berhasil",
   }
 };
+
+/* ===========================
+   Analytical Dashboard Logic (NEW)
+   =========================== */
+
+// Helper function to format time ago (simulated)
+function getTimeAgo(date, lang) {
+    const seconds = Math.floor((new Date() - date) / 1000);
+    let interval = seconds / 31536000;
+    const labels = {
+        'id': { year: 'tahun', month: 'bulan', day: 'hari', hour: 'jam', minute: 'menit', just: 'baru saja' },
+        'en': { year: 'year', month: 'month', day: 'day', hour: 'hour', minute: 'minute', just: 'just now' }
+    }[lang];
+
+    if (interval > 1) return Math.floor(interval) + ` ${labels.year} lalu`;
+    interval = seconds / 2592000;
+    if (interval > 1) return Math.floor(interval) + ` ${labels.month} lalu`;
+    interval = seconds / 86400;
+    if (interval > 1) return Math.floor(interval) + ` ${labels.day} lalu`;
+    interval = seconds / 3600;
+    if (interval > 1) return Math.floor(interval) + ` ${labels.hour} lalu`;
+    interval = seconds / 60;
+    if (interval > 1) return Math.floor(interval) + ` ${labels.minute} lalu`;
+    
+    if (seconds < 5) return labels.just;
+    return `${Math.floor(seconds)} detik lalu`;
+}
+
+function renderAnalyticsDashboard() {
+    const lang = langSelect.value;
+
+    // Simulated Analytics Data
+    const SIMULATED_DATA = {
+        totalDownloads: 12450,
+        activities: [
+            { time: new Date(Date.now() - 3600000), type: 'Download initiated:', details: 'VirtualHost (v2.1)' },
+            { time: new Date(Date.now() - 7200000), type: 'Admin Login success', details: 'Jakarta, ID' },
+            { time: new Date(Date.now() - 10800000), type: 'Download initiated:', details: 'Patched (.bat) (v1.9)' },
+            { time: new Date(Date.now() - 14400000), type: 'Download initiated:', details: 'iOS config (v1.4)' },
+        ]
+    };
+    
+    // Update Translations of Static Elements
+    analyticsTitle.textContent = lang === 'id' ? (translations.id['Analytical Dashboard'] || 'Dasbor Analitik') : 'Analytical Dashboard';
+    totalDownloadsContainer.innerHTML = (lang === 'id' ? (translations.id['Total Downloads:'] || 'Total Unduhan:') : 'Total Downloads:') + ` <strong id="totalDownloads">${SIMULATED_DATA.totalDownloads.toLocaleString()}</strong>`;
+    recentActivitiesTitle.textContent = lang === 'id' ? (translations.id['Recent Activities:'] || 'Aktivitas Terbaru:') : 'Recent Activities:';
+
+    // Update Totals
+    document.getElementById('totalDownloads').textContent = SIMULATED_DATA.totalDownloads.toLocaleString();
+
+    // Update Activities
+    recentActivitiesElement.innerHTML = '';
+    SIMULATED_DATA.activities.forEach(activity => {
+        const li = document.createElement('li');
+        const timeAgo = getTimeAgo(activity.time, lang);
+        
+        let typeText;
+        if (lang === 'id') {
+            if (activity.type.startsWith('Download initiated:')) {
+                typeText = (translations.id['Download initiated:'] || 'Unduhan dimulai: ') + activity.details;
+            } else if (activity.type === 'Admin Login success') {
+                typeText = (translations.id['Admin Login success'] || 'Login Admin berhasil') + ' (' + activity.details + ')';
+            } else {
+                typeText = activity.type + ' ' + activity.details;
+            }
+        } else {
+             typeText = activity.type + ' ' + activity.details;
+        }
+
+        li.textContent = `[${timeAgo}] ${typeText}`;
+        recentActivitiesElement.appendChild(li);
+    });
+
+    // Handle button translation
+    refreshAnalytics.textContent = lang === 'id' ? (translations.id['Refresh Data'] || 'Perbarui Data') : 'Refresh Data';
+    
+    refreshAnalytics.onclick = () => {
+        showToast(lang === 'id' ? 'Memperbarui data analitik...' : 'Refreshing analytics data...', 1000);
+        // Simulate refresh by re-rendering
+        renderAnalyticsDashboard(); 
+        trackEvent('analytics_refresh');
+    };
+}
+
 
 /* ===========================
    Smooth Translation Logic
    =========================== */
 function updateAdminAreaTranslations(lang) {
-    if (!adminLoginPrompt) return; // Exit if admin elements not loaded (shouldn't happen)
+    if (!adminLoginPrompt) return; // Exit if admin elements not loaded
     
     adminLoginPrompt.textContent = lang === 'id' 
         ? (translations.id["Enter the Admin Token to proceed:"] || 'Masukkan Token Admin untuk melanjutkan:') 
@@ -665,7 +777,7 @@ function updateAdminAreaTranslations(lang) {
         document.querySelector('#adminContent h4:nth-child(1)').textContent = lang === 'id' 
             ? (translations.id["Server Status"] || 'Status Server')
             : 'Server Status';
-        document.querySelector('#adminContent h4:nth-child(2)').textContent = lang === 'id' 
+        document.querySelector('#adminContent h4:nth-child(3)').textContent = lang === 'id' 
             ? (translations.id["News & Updates"] || 'Berita & Pembaruan')
             : 'News & Updates';
         
@@ -678,8 +790,11 @@ function updateAdminAreaTranslations(lang) {
         closeAdmin.textContent = lang === 'id' 
             ? (translations.id["Close Admin Area"] || 'Tutup Area Admin')
             : 'Close Admin Area';
+
+        // Update Analytics Dashboard content if logged in
+        renderAnalyticsDashboard(); 
     }
-    // Update token input placeholder if needed (not supported by data-original system)
+    // Update token input placeholder
     adminTokenInput.placeholder = lang === 'id' ? 'Token' : 'Token';
     adminTokenSubmit.textContent = lang === 'id' ? (translations.id["Submit"] || 'Kirim') : 'Submit';
 }
@@ -687,7 +802,7 @@ function updateAdminAreaTranslations(lang) {
 
 function applyTranslations(lang){
   const transitionDuration = 200; // ms
-  const elementsToTranslate = document.querySelectorAll('[data-original], #modalCancel, #modalConfirm, #welcomeSave, #welcomeSkip, #discordLink, #reportBugLink, #adminTokenSubmit, #closeAdmin, #toggleServerStatus, #saveNewsUpdate');
+  const elementsToTranslate = document.querySelectorAll('[data-original], #modalCancel, #modalConfirm, #welcomeSave, #welcomeSkip, #discordLink, #reportBugLink, #adminTokenSubmit, #closeAdmin, #toggleServerStatus, #saveNewsUpdate, #refreshAnalytics');
 
   // 1. Fade out (Opacity 0)
   elementsToTranslate.forEach(el => {
@@ -816,7 +931,6 @@ setInterval(updateTime, 1000);
 
 /* ===========================
    File Update Checker (modal)
-   - PowerTunnel: Copy-to-clipboard logic
    =========================== */
 document.querySelectorAll('.platform-buttons a').forEach(a=>{
   a.addEventListener('click', (e)=>{
@@ -839,7 +953,7 @@ document.querySelectorAll('.platform-buttons a').forEach(a=>{
             showToast(toastMessage, 3000);
         });
         
-        // NEW: Track PowerTunnel Copy Event
+        // Track PowerTunnel Copy Event
         trackEvent('powertunnel_host_copied');
         
         return; // Hentikan aksi selanjutnya (tidak perlu modal)
@@ -866,7 +980,7 @@ modalBackdrop.addEventListener('click', (e)=>{ if(e.target===modalBackdrop) hide
 modalConfirm.addEventListener('click', ()=>{
   if(!pendingDownload) return hideModal();
   
-  // NEW: Track file download initiation
+  // Track file download initiation
   trackEvent('file_download_initiated', {
     file_name: pendingDownload.filename,
     file_version: pendingDownload.version || 'Unknown'
@@ -877,7 +991,7 @@ modalConfirm.addEventListener('click', ()=>{
 });
 
 /* ===========================
-   Admin Area Logic (NEW)
+   Admin Area Logic 
    =========================== */
 function updateServerStatusDisplay() {
     const lang = langSelect.value;
@@ -891,13 +1005,21 @@ function updateServerStatusDisplay() {
 function showAdminModal() {
     adminBackdrop.style.display = 'flex';
     adminBackdrop.setAttribute('aria-hidden', 'false');
-    // Always show login prompt first
-    adminLogin.style.display = 'block';
-    adminContent.style.display = 'none';
-    adminTokenInput.value = '';
+    
+    // Check if already logged in
+    if (isAdminLoggedIn) {
+        adminLogin.style.display = 'none';
+        adminContent.style.display = 'block';
+        renderAnalyticsDashboard(); // Load analytics when reopening
+    } else {
+        adminLogin.style.display = 'block';
+        adminContent.style.display = 'none';
+        adminTokenInput.value = '';
+        setTimeout(() => adminTokenInput.focus(), 300);
+    }
+
     // Re-apply current language settings to modal text
     updateAdminAreaTranslations(langSelect.value); 
-    setTimeout(() => adminTokenInput.focus(), 300);
 }
 
 function hideAdminModal() {
@@ -914,24 +1036,28 @@ adminBackdrop.addEventListener('click', (e) => {
     if (e.target === adminBackdrop) hideAdminModal();
 });
 
-// MODIFIED: Added Analytical Tracking for Login Success/Failure
+// MODIFIED: Added Analytical Tracking and Analytics Dashboard Render
 adminTokenSubmit.addEventListener('click', () => {
     const token = adminTokenInput.value.trim();
     const lang = langSelect.value;
     
     if (token === ADMIN_TOKEN) {
+        isAdminLoggedIn = true; // Set login state
         adminLogin.style.display = 'none';
         adminContent.style.display = 'block';
         updateServerStatusDisplay();
         // Load simulated news from local storage
         newsUpdateTextarea.value = localStorage.getItem('growfax_news_update') || ''; 
         
-        // NEW: Track Admin Login Success
+        // NEW: Render Analytics Dashboard on successful login
+        renderAnalyticsDashboard();
+
+        // Track Admin Login Success
         trackEvent('admin_login_success');
         
         showToast(lang === 'id' ? '✅ Akses Admin diberikan!' : '✅ Admin Access granted!', 2000);
     } else {
-        // NEW: Track Admin Login Failure
+        // Track Admin Login Failure
         trackEvent('admin_login_failure');
         
         showToast(lang === 'id' ? '❌ Token Admin Salah.' : '❌ Incorrect Admin Token.', 2000);
@@ -945,7 +1071,7 @@ toggleServerStatus.addEventListener('click', () => {
     isServerOnline = !isServerOnline;
     updateServerStatusDisplay();
     
-    // NEW: Track Server Status Toggle
+    // Track Server Status Toggle
     trackEvent('server_status_toggled', {
         new_status: isServerOnline ? 'Online' : 'Offline'
     });
@@ -959,7 +1085,7 @@ saveNewsUpdate.addEventListener('click', () => {
     // Save to local storage for persistence
     localStorage.setItem('growfax_news_update', news); 
     
-    // NEW: Track News Update
+    // Track News Update
     trackEvent('news_update_saved', {
         char_count: news.length
     });
@@ -984,7 +1110,7 @@ welcomeSave.addEventListener('click', ()=>{
   setTheme(theme);
   hideWelcome();
   
-  // NEW: Track Preference Save
+  // Track Preference Save
   trackEvent('preferences_saved', {
       language: chosenLang,
       theme: theme
@@ -995,7 +1121,7 @@ welcomeSave.addEventListener('click', ()=>{
 welcomeSkip.addEventListener('click', ()=> { 
     hideWelcome(); 
     
-    // NEW: Track Preference Skip
+    // Track Preference Skip
     trackEvent('preferences_skipped');
     
     showToast(langSelect.value === 'id' ? 'Dipilih nanti' : 'Maybe later'); 
@@ -1020,7 +1146,7 @@ function showToast(text, ms=1500){
 
 /* floating discord click (toast feedback) */
 document.getElementById('floatingChat').addEventListener('click', (e)=>{
-  // NEW: Track Discord Click
+  // Track Discord Click
   trackEvent('discord_button_click', { placement: 'floating' });
   
   showToast(langSelect.value === 'id' ? 'Membuka Discord...' : 'Opening Discord...');
@@ -1030,7 +1156,7 @@ document.getElementById('floatingChat').addEventListener('click', (e)=>{
    Report Bug Link Handler (Optional for toast feedback)
    =========================== */
 reportBugLink.addEventListener('click', () => {
-  // NEW: Track Report Bug Click
+  // Track Report Bug Click
   trackEvent('report_bug_click');
   
   // Hanya berikan feedback toast karena mailto: link sudah diatur
