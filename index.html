@@ -243,20 +243,13 @@
   /* Platform Buttons: Full width for mobile */
   .platform-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
   .platform-buttons a{
-    /* Use display:flex and gap:12px to space the icon and text */
     display:flex;align-items:center;justify-content:center;gap:12px;
     width:92%; 
     padding:14px 18px;border-radius:12px;color:#fff;font-weight:700;
     text-decoration:none;border:1px solid transparent;font-size:1.02rem;
     transition:transform .18s ease,box-shadow .18s, opacity 0.2s ease;
   }
-  /* REMOVED: .platform-buttons a img{width:30px;height:30px;border-radius:6px} */
-  /* NEW: Style for Emoji icons to ensure size consistency */
-  .platform-buttons a .platform-icon {
-      font-size: 1.8rem; /* Make the emoji prominent */
-      line-height: 1; /* Prevent extra vertical space */
-  }
-
+  .platform-buttons a img{width:30px;height:30px;border-radius:6px}
   .platform-buttons a:hover{transform:translateY(-2px)}
 
   .btn-android{background:#34c759;--glow:#4cff77;box-shadow:0 4px 16px rgba(76,255,119,0.08)}
@@ -621,19 +614,19 @@
         <h2>📥 Essential File Downloads</h2>
         <div class="platform-buttons" role="list">
           <a href="Growfax_VirtualHost.txt" class="btn-android" data-filename="Growfax_VirtualHost.txt" data-filekey="virtualhost" download role="listitem">
-            <span aria-hidden="true" class="platform-icon">🤖</span>Play on Android
+            <img src="virtual-host.png" alt="">Play on Android
           </a>
 
           <a href="Growfax_Patched_.bat" class="btn-windows" data-filename="Growfax_Patched_.bat" data-filekey="patched" download role="listitem">
-            <span aria-hidden="true" class="platform-icon">🖥️</span>Play on Windows
+            <img src="windows.png" alt="">Play on Windows
           </a>
 
           <a href="#" class="btn-ios" data-filename="GrowFax_ios_config.txt" data-filekey="ios" role="listitem">
-            <span aria-hidden="true" class="platform-icon">🍎</span>Play on iOS
+            <img src="surge5.png" alt="">Play on iOS
           </a>
 
           <a href="#" class="btn-powertunnel" data-filename="PowerTunnel_Host.txt" data-filekey="powertunnel" role="listitem">
-            <span aria-hidden="true" class="platform-icon">🛡️</span>Play via PowerTunnel
+            <img src="powertunnel.jpeg" alt="">Play via PowerTunnel
           </a>
         </div>
     </section>
