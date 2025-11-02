@@ -794,13 +794,13 @@
   const saveSeoMeta = document.getElementById('saveSeoMeta');
 
   let isServerOnline = true; // Simulated server status
-  let pendingDownload = null;
+  let pendingDownload = null; // We keep this, but it's only used by the copy modal now
   let isAdminLoggedIn = false; // New state tracker
   let analyticsIntervalId = null; // ID untuk auto-refresh dashboard
 
 
   /* ===========================
-     File metadata (unchanged)
+     File metadata (UPDATED)
      =========================== */
   const FILE_META = {
     virtualhost: {
@@ -808,26 +808,30 @@
       updated: 'Oct 29, 2025',
       changelog: '- Fixed host parsing\n- Improved TLS handling',
       size: '2.3 KB'
+      // No copytext, this is a direct download
     },
     patched: {
       version: 'v1.9',
       updated: 'Oct 20, 2025',
       changelog: '- Patched launcher\n- Minor fixes',
       size: '12.1 KB'
+      // No copytext, this is a direct download
     },
     ios: {
       version: 'v1.5',
       updated: 'Nov 02, 2025',
       changelog: '- New profile format for Surge 5\n- Added support for new regions',
       size: 'Text Config',
-      copytext: '[Rule]\nHOST,growfax.web.id,REJECT\nHOST-SUFFIX,rt.growfax.com,REJECT' // Dummy iOS Config
+      // UPDATED copytext
+      copytext: "[General]\nbypass-system = true\n\n[Rule]\nFINAL,DIRECT\n\n[Host]\ngrowtopia1.com = 91.134.85.13\ngrowtopia2.com = 91.134.85.13\nwww.growtopia1.com = 91.134.85.13\nwww.growtopia2.com = 91.134.85.13"
     },
     powertunnel: {
       version: 'v1.1',
       updated: 'Oct 15, 2025',
       changelog: '- Updated host list\n- Added new block rules',
       size: 'Text Host',
-      copytext: '127.0.0.1 growfax.web.id\n127.0.0.1 rt.growfax.com' // Dummy PowerTunnel Host
+      // UPDATED copytext
+      copytext: "91.134.85.13 growtopia1.com\n91.134.85.13 growtopia2.com\n91.134.85.13 www.growtopia1.com\n91.134.85.13 www.growtopia2.com"
     }
   };
 
@@ -1331,7 +1335,7 @@
   });
 
 
-  /* =========================== Utility Functions / Time (MODIFIED) =========================== */
+  /* =========================== Utility Functions / Time (FIXED: ensured periodic update is active) =========================== */
   function getIndoGreeting(hour) {
     if (hour >= 4 && hour < 11) return (translations.id['Pagi'] || 'Pagi');
     if (hour >= 11 && hour < 15) return (translations.id['Siang'] || 'Siang');
@@ -1343,18 +1347,18 @@
     const timeDisplay = document.getElementById('timeDisplay');
     const now = new Date();
 
-    // Timezone: Sydney (AEST, UTC+10/UTC+11)
-    const sydneyTime = new Date(now.toLocaleString("en-US", { timeZone: "Australia/Sydney" }));
+    // Timezone: Jakarta (WIB, UTC+7) - Placeholder for simplicity
+    const jakartaTime = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Jakarta" }));
     const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }; // Added 'second' for visual confirmation of movement
-    const formattedTime = sydneyTime.toLocaleString('en-US', options);
-    const currentHour = sydneyTime.getHours(); // Use Sydney time for greeting
+    const formattedTime = jakartaTime.toLocaleString('en-US', options);
+    const currentHour = jakartaTime.getHours();
     const lang = langSelect.value;
     
     if (lang === 'id') {
       const greeting = getIndoGreeting(currentHour);
-      timeDisplay.textContent = `${greeting}, ${sydneyTime.toLocaleString('id-ID', options)} AEST`;
+      timeDisplay.textContent = `${greeting}, ${jakartaTime.toLocaleString('id-ID', options)} WIB`;
     } else {
-      timeDisplay.textContent = `Server Time (AEST): ${formattedTime}`;
+      timeDisplay.textContent = `Server Time (WIB): ${formattedTime}`;
     }
 
     // Update news based on saved local storage content
@@ -1369,7 +1373,9 @@
   updateTime();
 
 
-  /* =========================== File Download/Info Modal Logic (Copy Text Added) (unchanged) =========================== */
+  /* ===========================
+     File Download/Info Modal Logic (MODIFIED)
+     =========================== */
   const modalBackdrop = document.getElementById('modalBackdrop');
   const modalCancel = document.getElementById('modalCancel');
   const modalConfirm = document.getElementById('modalConfirm');
@@ -1382,15 +1388,18 @@
 
   // Open modal/Initiate download/copy
   document.querySelectorAll('.platform-buttons a').forEach(a => {
-    a.addEventListener('click', (e) => {
-      const key = a.dataset.filekey;
-      const meta = FILE_META[key] || { version: 'v1.0', updated: 'Unknown', changelog: 'No details', size: '—' };
-      const filename = a.dataset.filename || key;
-      const lang = langSelect.value;
-      
-      // --- MODIFIED LOGIC: COPY TEXT (iOS, PowerTunnel, dll.) ---
-      if (meta.copytext) {
-        e.preventDefault(); 
+    const key = a.dataset.filekey;
+    const meta = FILE_META[key] || { version: 'v1.0', updated: 'Unknown', changelog: 'No details', size: '—' };
+    
+    // --- MODIFIED LOGIC ---
+    // ONLY add the 'click' interceptor for files that need to copy text (iOS, PowerTunnel)
+    // The other buttons (Android, Windows) will now download directly without a modal.
+    if (meta.copytext) { 
+      a.addEventListener('click', (e) => {
+        e.preventDefault(); // Prevent default ONLY for copy text links
+        
+        const filename = a.dataset.filename || key;
+        const lang = langSelect.value;
         
         // Teks tersedia, salin ke clipboard
         navigator.clipboard.writeText(meta.copytext).then(() => {
@@ -1398,8 +1407,8 @@
             showToast(copyText, 2500);
         }).catch(err => {
             console.error('Could not copy text: ', err);
-            // Fallback for older browsers: show modal with copy button (not implemented here)
-            showToast('Failed to copy. Use modal.', 3000); 
+            // Fallback: show modal with copy button
+            showToast('Failed to copy. Showing modal.', 3000); 
         });
 
         // Update modal for confirmation/info, change button to 'Copy Config'
@@ -1408,26 +1417,31 @@
         modalConfirm.textContent = lang === 'id' ? (translations.id['Copy Config'] || 'Copy Config') : 'Copy Config';
         modalConfirm.dataset.action = 'copy'; // Custom attribute to check action
 
-      } else {
-        // --- ORIGINAL LOGIC: DOWNLOAD (Android, Windows, dll.) ---
-        e.preventDefault();
-        pendingDownload = a; // Simpan referensi ke anchor tag untuk di-klik saat konfirmasi
+        // Populate modal with details
+        modalVersion.textContent = `${(lang === 'id') ? (translations.id['Version'] || 'Versi') + ': ' : 'Version: '}${meta.version}`;
+        modalUpdated.textContent = `${(lang === 'id') ? (translations.id['Updated'] || 'Diperbarui') + ': ' : 'Updated: '}${meta.updated}`;
+        modalChangelog.innerText = `${(lang === 'id') ? (translations.id['Changelog'] || 'Catatan pembaruan') + ':' : 'Changelog:'}\n${meta.changelog}\n\n${(lang === 'id') ? (translations.id['Size'] || 'Ukuran') + ': ' : 'Size: '}${meta.size}`;
+        modalFilename.textContent = `${(lang === 'id') ? (translations.id['Filename'] || 'Nama berkas') + ': ' : 'Filename: '}${filename}`;
         
-        // Update modal for download, change button to 'Download'
-        modalTitle.textContent = lang === 'id' ? `Info untuk ${filename}` : `Info for ${filename}`;
-        modalDesc.textContent = lang === 'id' ? (translations.id['Details before download'] || 'Detail sebelum mengunduh') : 'Details before download';
-        modalConfirm.textContent = lang === 'id' ? (translations.id['Download'] || 'Download') : 'Download';
-        modalConfirm.dataset.action = 'download';
-      }
+        modalBackdrop.style.display = 'flex';
+        modalBackdrop.setAttribute('aria-hidden', 'false');
 
-      modalVersion.textContent = `${(lang === 'id') ? (translations.id['Version'] || 'Versi') + ': ' : 'Version: '}${meta.version}`;
-      modalUpdated.textContent = `${(lang === 'id') ? (translations.id['Updated'] || 'Diperbarui') + ': ' : 'Updated: '}${meta.updated}`;
-      modalChangelog.innerText = `${(lang === 'id') ? (translations.id['Changelog'] || 'Catatan pembaruan') + ':' : 'Changelog:'}\n${meta.changelog}\n\n${(lang === 'id') ? (translations.id['Size'] || 'Ukuran') + ': ' : 'Size: '}${meta.size}`;
-      modalFilename.textContent = `${(lang === 'id') ? (translations.id['Filename'] || 'Nama berkas') + ': ' : 'Filename: '}${filename}`;
-      
-      modalBackdrop.style.display = 'flex';
-      modalBackdrop.setAttribute('aria-hidden', 'false');
-    });
+        // Set pendingDownload to null to be safe
+        pendingDownload = null;
+      });
+    } else {
+      // This is a direct download link (Android, Windows)
+      // No event listener needed. The browser will handle the 'download' attribute.
+      // We can add a simple listener for tracking if needed, but not one that prevents default.
+      a.addEventListener('click', (e) => {
+        // Event Tracking/Webhook function disabled per user request.
+        // trackEvent('Download Initiated', { file: key });
+        
+        // We still show a toast message for user feedback
+        const lang = langSelect.value;
+        showToast(lang === 'id' ? `Unduhan ${key} dimulai.` : `${key} download started.`, 2000);
+      });
+    }
   });
 
   // Close modal logic
@@ -1445,30 +1459,37 @@
     }
   });
 
-  // Confirm download/copy logic
+  // Confirm download/copy logic (MODIFIED)
   modalConfirm.addEventListener('click', () => {
     const action = modalConfirm.dataset.action;
     const lang = langSelect.value;
 
-    if (action === 'download' && pendingDownload) {
-      const key = pendingDownload.dataset.filekey;
+    // The 'download' action is no longer handled by this modal.
+    // This button is now only for 'copy'
+    if (action === 'copy') {
+      // Logic is already handled in the anchor click event (auto-copy)
+      // This button in the modal is just a "confirm" / "info" modal
+      // We can add a re-copy action here for robustness if the first one failed
       
-      // Simulate download (by triggering click on original anchor tag)
-      pendingDownload.click();
-
-      // Download Event Tracking disabled per user request.
-
+      const filenameFromModal = modalFilename.textContent.split(': ')[1];
+      const key = document.querySelector(`a[data-filename="${filenameFromModal}"]`)?.dataset.filekey;
+      
+      if (key && FILE_META[key] && FILE_META[key].copytext) {
+         navigator.clipboard.writeText(FILE_META[key].copytext).then(() => {
+            const copyText = lang === 'id' ? (translations.id['Config copied!'] || 'Konfigurasi disalin!') : 'Config copied!';
+            showToast(copyText, 2500);
+         }).catch(err => {
+            console.error('Could not copy text: ', err);
+            showToast('Failed to copy.', 3000); 
+         });
+      }
+      
       modalBackdrop.style.display = 'none';
       modalBackdrop.setAttribute('aria-hidden', 'true');
-      const lang = langSelect.value;
-      showToast(lang === 'id' ? `Unduhan ${key} dimulai.` : `${key} download started.`, 2000);
-      pendingDownload = null;
-
-    } else if (action === 'copy') {
-      // Logic handled in the anchor click above (for iOS/PowerTunnel)
+    } else {
+      // Fallback in case something weird happens
       modalBackdrop.style.display = 'none';
       modalBackdrop.setAttribute('aria-hidden', 'true');
-      // showToast is already called in the anchor click logic after success
     }
   });
 
