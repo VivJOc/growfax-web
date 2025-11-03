@@ -1,248 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title data-en="Growfax Official Download Center" data-id="Pusat Unduhan Resmi Growfax">
-    Growfax Official Download Center
-  </title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --primary: #4caf50;
-      --primary-hover: #66bb6a;
-      --accent: #00e676;
-      --background: #0e0e0e;
-      --surface: #1a1a1a;
-      --text: #ffffff;
-      --text-muted: #aaaaaa;
-      --discord: #5865f2;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Growfax Official Download Center</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #4CAF50;
+    --secondary: #388E3C;
+    --bg-dark: #121212;
+    --surface: #1e1e1e;
+    --text: #fff;
+    --text-muted: #b0b0b0;
+    --discord: #5865F2;
+  }
 
-    * { box-sizing: border-box; transition: all 0.25s ease; }
+  body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background: var(--bg-dark);
+    color: var(--text);
+    overflow-x: hidden;
+  }
 
-    body {
-      margin: 0;
-      font-family: "Poppins", sans-serif;
-      background-color: var(--background);
-      color: var(--text);
-      text-align: center;
-    }
+  /* HEADER */
+  header {
+    background: var(--surface);
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .header-content {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+  }
+  .header-content h1 {
+    margin: 0;
+    color: var(--primary);
+  }
 
-    .header {
-      background-color: var(--surface);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
-      padding: 18px 0;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
+  /* CONTAINER */
+  .container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 40px 20px;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
 
-    .header-content {
-      max-width: 1200px;
-      margin: auto;
-      padding: 0 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+  h2 {
+    font-size: 2em;
+    color: var(--text);
+  }
+  p.description {
+    color: var(--text-muted);
+    margin-bottom: 40px;
+  }
 
-    .header h1 { margin: 0; font-size: 1.8em; color: var(--primary); font-weight: 700; letter-spacing: 1px; }
+  /* BUTTONS */
+  .button-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .action-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--surface);
+    color: var(--text);
+    text-decoration: none;
+    padding: 20px;
+    border-radius: 10px;
+    transition: all 0.3s;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .action-button:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  }
+  .button-icon {
+    width: 60px; height: 60px;
+    margin-bottom: 10px;
+    background: rgba(255,255,255,0.1);
+    display: flex; justify-content: center; align-items: center;
+    border-radius: 6px;
+  }
+  .button-icon img { width: 80%; }
 
-    .language-switcher { display: flex; gap: 8px; }
+  .button-text { font-weight: 600; }
+  .small-text { font-size: 0.85em; color: var(--text-muted); }
 
-    .lang-button {
-      background: none;
-      border: 1px solid var(--text-muted);
-      color: var(--text);
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.9em;
-      font-weight: 600;
-      text-decoration: none;
-    }
+  /* FOOTER */
+  footer {
+    background: var(--surface);
+    text-align: center;
+    padding: 20px;
+    color: var(--text-muted);
+    font-size: 0.9em;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
 
-    .lang-button.active, .lang-button:hover {
-      background-color: var(--primary);
-      border-color: var(--primary);
-      color: #fff;
-    }
+  /* DISCORD FLOAT */
+  .floating-discord-button {
+    position: fixed;
+    bottom: 25px; right: 25px;
+    background: var(--discord);
+    border-radius: 50%;
+    width: 60px; height: 60px;
+    display: flex; justify-content: center; align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    transition: all 0.3s;
+  }
+  .floating-discord-button:hover { transform: scale(1.1); }
+  .floating-discord-button img { width: 70%; filter: invert(1); }
 
-    .banner-section {
-      max-width: 1200px;
-      margin: 40px auto;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
-    }
+  /* VIRTUAL HOST PAGE */
+  #virtualhost-page {
+    display: none;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  #virtualhost-page.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+  }
 
-    .banner-section img {
-      width: 100%;
-      height: auto;
-      max-height: 220px;
-      object-fit: cover;
-    }
+  pre {
+    background: #111;
+    padding: 20px;
+    border-radius: 8px;
+    color: #00ff9d;
+    font-size: 0.95em;
+    overflow-x: auto;
+  }
 
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 0 20px;
-    }
-
-    h2 { font-size: 2.3em; font-weight: 700; margin-bottom: 15px; }
-    .description { color: var(--text-muted); font-size: 1.1em; margin-bottom: 50px; }
-
-    .button-group {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 25px;
-      margin-bottom: 40px;
-    }
-
-    .action-button {
-      background-color: var(--surface);
-      padding: 18px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      text-decoration: none;
-      color: var(--text);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .action-button:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
-      border-color: var(--primary-hover);
-    }
-
-    .button-icon {
-      width: 60px;
-      height: 60px;
-      border-radius: 10px;
-      background-color: rgba(255, 255, 255, 0.05);
-      margin-bottom: 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .button-icon img { width: 65%; height: 65%; object-fit: contain; }
-
-    .button-text { font-size: 1.1em; font-weight: 600; margin-top: 8px; }
-
-    .small-text { font-size: 0.85em; color: var(--text-muted); margin-top: 5px; }
-
-    .windows-button { background: linear-gradient(145deg, #0078d4, #0060a9); }
-    .virtualhost-button { background: linear-gradient(145deg, #f9a825, #c49000); }
-
-    .footer {
-      background-color: var(--surface);
-      padding: 25px 0;
-      font-size: 0.9em;
-      color: var(--text-muted);
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      margin-top: 70px;
-    }
-
-    .footer p { margin: 6px 0; }
-
-    .floating-discord-button {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
-      width: 60px;
-      height: 60px;
-      background-color: var(--discord);
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-    }
-
-    .floating-discord-button:hover { transform: scale(1.1); }
-    .floating-discord-button img { width: 65%; height: 65%; filter: invert(100%); }
-  </style>
+  .back-btn {
+    display: inline-block;
+    margin-top: 20px;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .back-btn:hover { color: #66bb6a; }
+</style>
 </head>
 <body>
-  <header class="header">
-    <div class="header-content">
-      <h1>GROWFAX</h1>
-      <div class="language-switcher">
-        <a href="javascript:void(0)" class="lang-button" id="lang-id" onclick="changeLanguage('id')">🇮🇩 ID</a>
-        <a href="javascript:void(0)" class="lang-button active" id="lang-en" onclick="changeLanguage('en')">🇺🇸 EN</a>
-      </div>
-    </div>
-  </header>
 
-  <section class="banner-section">
-    <img src="Growfax_banner.jpg" alt="Growfax Official Banner" />
-  </section>
+<header>
+  <div class="header-content">
+    <h1>GROWFAX</h1>
+  </div>
+</header>
 
-  <main class="container">
-    <h2 data-en="GET STARTED. SELECT YOUR PLATFORM." data-id="MULAI. PILIH PLATFORM ANDA.">
-      GET STARTED. SELECT YOUR PLATFORM.
-    </h2>
-    <p class="description" data-en="Download the required assets and join our official community on Discord." data-id="Unduh aset yang dibutuhkan dan bergabunglah dengan komunitas resmi kami.">
-      Download the required assets and join our official community on Discord.
-    </p>
+<!-- PAGE 1: MAIN DOWNLOAD -->
+<div class="container" id="main-page">
+  <h2>GET STARTED. SELECT YOUR PLATFORM.</h2>
+  <p class="description">Download the required assets and join our official community on Discord.</p>
 
-    <div class="button-group">
-      <a href="Growfax_Patched_.bat" download class="action-button windows-button">
-        <div class="button-icon"><img src="windows.png" alt="Windows Logo" /></div>
-        <span class="button-text" data-en="DOWNLOAD for Windows" data-id="UNDUH untuk Windows">DOWNLOAD for Windows</span>
-        <span class="small-text" data-en="Secure Installer (.BAT)" data-id="Pemasang Aman (.BAT)">Secure Installer (.BAT)</span>
-      </a>
+  <div class="button-group">
+    <a href="Growfax_Patched_.bat" download class="action-button">
+      <div class="button-icon"><img src="windows.png"></div>
+      <span class="button-text">DOWNLOAD for Windows</span>
+      <span class="small-text">Secure Installer (.BAT)</span>
+    </a>
 
-      <a href="virtualhost.html" class="action-button virtualhost-button">
-        <div class="button-icon"><img src="virtual-host.png" alt="Virtual Host Logo" /></div>
-        <span class="button-text" data-en="HOSTING via Virtual Host" data-id="HOSTING melalui Virtual Host">HOSTING via Virtual Host</span>
-        <span class="small-text" data-en="Open Configuration Page" data-id="Buka Halaman Konfigurasi">Open Configuration Page</span>
-      </a>
-    </div>
-  </main>
+    <a href="#" class="action-button" id="open-virtualhost">
+      <div class="button-icon"><img src="virtual-host.png"></div>
+      <span class="button-text">HOSTING via Virtual Host</span>
+      <span class="small-text">View Configuration File</span>
+    </a>
+  </div>
+</div>
 
-  <footer class="footer">
-    <p>GROWFAX OFFICIAL © 2023–2024. All rights reserved.</p>
-    <p>Developed with spirit for the community.</p>
-  </footer>
+<!-- PAGE 2: VIRTUAL HOST CONFIG -->
+<div class="container" id="virtualhost-page">
+  <h2>Growfax Virtual Host Configuration</h2>
+  <p>Below is the configuration required for Virtual Host setup:</p>
+  <pre>
+# Growfax Virtual Host Configuration
+127.0.0.1 growfax.local
+127.0.0.1 api.growfax.local
+# Ensure your server proxy is active for these domains
+  </pre>
+  <a href="#" class="back-btn" id="back-to-main">← Back to Main Page</a>
+</div>
 
-  <a href="https://discord.gg/smgS6sq83y" target="_blank" class="floating-discord-button" title="Join Discord Community">
-    <img src="discord.jpeg" alt="Discord Icon" />
-  </a>
+<footer>
+  <p>GROWFAX OFFICIAL © 2023–2024. All rights reserved.</p>
+  <p>Developed with spirit for the community.</p>
+</footer>
 
-  <script>
-    const languageElements = document.querySelectorAll("[data-en]");
-    const langButtons = document.querySelectorAll(".lang-button");
+<a href="https://discord.gg/smgS6sq83y" target="_blank" class="floating-discord-button">
+  <img src="discord.jpeg" alt="Discord">
+</a>
 
-    function changeLanguage(lang) {
-      languageElements.forEach((el) => {
-        const text = el.getAttribute(`data-${lang}`);
-        if (text) {
-          if (el.tagName === "TITLE") document.title = text;
-          else el.textContent = text;
-        }
-      });
-      document.documentElement.lang = lang;
-      updateActiveButton(lang);
-    }
+<script>
+  const mainPage = document.getElementById('main-page');
+  const virtualPage = document.getElementById('virtualhost-page');
+  const openVirtual = document.getElementById('open-virtualhost');
+  const backToMain = document.getElementById('back-to-main');
 
-    function updateActiveButton(lang) {
-      langButtons.forEach((b) => b.classList.remove("active"));
-      document.getElementById(`lang-${lang}`).classList.add("active");
-    }
+  openVirtual.addEventListener('click', () => {
+    mainPage.style.display = 'none';
+    virtualPage.classList.add('active');
+    window.scrollTo(0,0);
+  });
 
-    document.addEventListener("DOMContentLoaded", () => changeLanguage("en"));
-  </script>
+  backToMain.addEventListener('click', () => {
+    virtualPage.classList.remove('active');
+    mainPage.style.display = 'block';
+    window.scrollTo(0,0);
+  });
+</script>
+
 </body>
 </html>
