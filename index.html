@@ -42,13 +42,13 @@
         .container { max-width: 1200px; margin: auto; padding: 0 20px; }
         .main-content { padding-bottom: 60px; }
         
-        /* STYLE WAKTU SYDNEY DIREVISI */
+        /* STYLE WAKTU SYDNEY */
         #sydney-time {
             display: block;
-            font-size: 1.0em; /* Dikecilkan */
-            font-weight: 400; /* Tidak Bold */
-            color: var(--text-muted); /* Warna abu-abu yang lebih profesional */
-            margin: 10px 0 25px 0; /* Jarak atas/bawah */
+            font-size: 1.0em; 
+            font-weight: 400; 
+            color: var(--text-muted); 
+            margin: 10px 0 25px 0; 
         }
         
         /* STYLE LOGO DI TENGAH HALAMAN (DI ATAS TOMBOL DOWNLOAD) */
@@ -63,32 +63,59 @@
         h2 { font-size: 2.2em; color: var(--text-light); margin-bottom: 10px; margin-top: 40px; } 
         .description { color: var(--text-muted); font-size: 1.1em; margin-bottom: 40px; } 
 
+        /* GRUP TOMBOL UTAMA (Kini 4 Kolom di PC) */
         .button-group {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 20px;
+            grid-template-columns: repeat(4, 1fr); /* Diubah menjadi 4 kolom */
+            gap: 15px; /* Mengurangi gap agar lebih rapat */
             padding: 0;
             margin-bottom: 30px; 
         }
         
-        /* Tombol Utama (Sudah Dikecilkan) */
+        /* Tombol Utama (DIKECILKAN) */
         .action-button {
-            display: flex; flex-direction: column; align-items: center; text-decoration: none; padding: 15px 15px; border-radius: 8px; transition: all 0.3s ease; color: var(--text-light); font-weight: 600; box-shadow: none; border: 1px solid rgba(255, 255, 255, 0.1); width: auto; max-width: 100%; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            text-decoration: none; 
+            padding: 10px 10px; /* Padding dikecilkan */
+            border-radius: 8px; 
+            transition: all 0.3s ease; 
+            color: var(--text-light); 
+            font-weight: 600; 
+            box-shadow: none; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            width: auto; 
+            max-width: 100%; 
         }
 
         .action-button:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4); border-color: var(--primary-color); }
         
+        /* Warna Tombol Baru */
         .windows-button { background-color: #0078D4; }
         .virtualhost-button { background-color: #F9A825; }
+        .ios-button { background-color: #A2A2A2; } /* Abu-abu untuk iOS */
+        .powertunnel-button { background-color: #E67E22; } /* Oranye tua untuk PowerTunnel */
 
+        /* Icon Tombol (Dikecilkan) */
         .button-icon {
-            display: flex; justify-content: center; align-items: center; width: 50px; height: 50px; margin-bottom: 5px; background-color: rgba(255, 255, 255, 0.1); border-radius: 5px; padding: 0; 
+            display: flex; justify-content: center; align-items: center; 
+            width: **35px**; /* Dikecilkan */
+            height: **35px**; /* Dikecilkan */
+            margin-bottom: 5px; 
+            background-color: rgba(255, 255, 255, 0.1); 
+            border-radius: 5px; padding: 0; 
         }
         
         .button-icon img { max-width: 90%; max-height: 90%; height: auto; width: auto; object-fit: contain; }
 
-        .button-text { font-size: 1.1em; margin-top: 5px; }
-        .small-text { font-size: 0.8em; font-weight: 400; opacity: 0.7; margin-top: 5px; }
+        .button-text { 
+            font-size: 0.9em; /* Font teks tombol dikecilkan */
+            margin-top: 5px; 
+        }
+        
+        /* Teks kecil di bawah tombol (DIHAPUS DARI TAMPILAN) */
+        .small-text { display: none; } 
 
         .footer {
             background-color: var(--surface-dark);
@@ -124,10 +151,14 @@
 
             #sydney-time { font-size: 0.9em; margin: 10px 0 15px 0; }
             
-            .button-group { grid-template-columns: 1fr; gap: 15px; }
-            .action-button { padding: 12px 15px; }
-            .button-icon { width: 45px; height: 45px; }
-            .button-text { font-size: 1em; }
+            /* Di HP, tata letak diubah menjadi 2 kolom */
+            .button-group { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 10px; 
+            }
+            .action-button { padding: 8px 8px; }
+            .button-icon { width: 30px; height: 30px; }
+            .button-text { font-size: 0.85em; }
             
             .footer { padding: 15px 0; }
             
@@ -158,16 +189,29 @@
     <img src="Growfax_banner.jpg" alt="Growfax Logo" class="centered-logo">
 
     <div class="button-group">
+        
         <a href="Growfax_Patched_.bat" download class="action-button windows-button">
             <div class="button-icon"><img src="windows.png" alt="Windows Logo"></div>
             <span class="button-text" data-en="DOWNLOAD for Windows" data-id="UNDUH untuk Windows">DOWNLOAD for Windows</span>
-            <span class="small-text" data-en="Secure Installer (.BAT)" data-id="Pemasang Aman (.BAT)">Secure Installer (.BAT)</span>
+            <span class="small-text">Secure Installer (.BAT)</span>
         </a>
 
         <a href="Growfax_VirtualHost.txt" download class="action-button virtualhost-button">
             <div class="button-icon"><img src="virtual-host.png" alt="Virtual Host Logo"></div>
             <span class="button-text" data-en="HOSTING via Virtual Host" data-id="HOSTING melalui Virtual Host">HOSTING via Virtual Host</span>
-            <span class="small-text" data-en="Configuration File (.TXT)" data-id="File Konfigurasi Host (.TXT)">Configuration File (.TXT)</span>
+            <span class="small-text">Configuration File (.TXT)</span>
+        </a>
+        
+        <a href="IOS GROWFAX.txt" download class="action-button ios-button">
+            <div class="button-icon"><img src="surge5.png" alt="iOS Logo"></div>
+            <span class="button-text" data-en="PLAY on iOS" data-id="MAINKAN di iOS">PLAY on iOS</span>
+            <span class="small-text">Configuration File (.TXT)</span>
+        </a>
+
+        <a href="PowerTunel_Host.txt" download class="action-button powertunnel-button">
+            <div class="button-icon"><img src="powertunnel.jpeg" alt="PowerTunnel Logo"></div>
+            <span class="button-text" data-en="PLAY on PowerTunnel" data-id="MAINKAN di PowerTunnel">PLAY on PowerTunnel</span>
+            <span class="small-text">Host File (.TXT)</span>
         </a>
 
     </div>
@@ -187,18 +231,16 @@
 
 
 <script type="text/javascript">
-    /* SCRIPT WAKTU SYDNEY DIREVISI */
+    /* SCRIPT WAKTU SYDNEY */
     function updateTime() {
         const now = new Date();
-        
-        // Menggunakan format yang lebih ringkas: HH:MM:SS (AEST/AEDT)
         const sydneyOptions = {
             timeZone: 'Australia/Sydney',
             hour: '2-digit',
             minute: '2-digit',
             second: '2-digit',
             hour12: false,
-            timeZoneName: 'short' // Menampilkan AEST atau AEDT
+            timeZoneName: 'short' 
         };
         
         const formatter = new Intl.DateTimeFormat('en-AU', sydneyOptions);
@@ -206,7 +248,6 @@
         
         const timeElement = document.getElementById('sydney-time');
         if (timeElement) {
-            // Teks yang lebih ringkas dan profesional
             timeElement.textContent = `Sydney Time: ${sydneyTime}`;
         }
     }
@@ -214,7 +255,7 @@
     updateTime();
     setInterval(updateTime, 1000);
 
-    /* SCRIPT TRANSLASI (TETAP SAMA) */
+    /* SCRIPT TRANSLASI */
     const languageElements = document.querySelectorAll('[data-en]');
     const langButtons = document.querySelectorAll('.lang-button');
 
