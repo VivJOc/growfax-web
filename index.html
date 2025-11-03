@@ -29,97 +29,14 @@
 <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload" />
 <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" /> 
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX">
-// ===================== Sydney Time (Local Display) =====================
-function updateSydneyTime() {
-  const timeDisplay = document.getElementById("timeDisplay");
-  try {
-    const now = new Date();
-    const sydneyTime = now.toLocaleString("en-AU", {
-      timeZone: "Australia/Sydney",
-      hour12: false,
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit"
-    });
-    timeDisplay.textContent = "Server Time (Sydney): " + sydneyTime;
-  } catch (e) {
-    timeDisplay.textContent = "Unable to load Sydney time.";
-  }
-}
-setInterval(updateSydneyTime, 1000);
-updateSydneyTime();
-
-// ===================== Copy Config for iOS & PowerTunnel =====================
-iosButton.addEventListener("click", (e) => {
-  e.preventDefault();
-  const text = FILE_META.ios.copytext;
-  navigator.clipboard.writeText(text).then(() => {
-    showToast("✅ Config copied for iOS!");
-  }).catch(() => {
-    showToast("❌ Failed to copy iOS config.");
-  });
-});
-
-powertunnelButton.addEventListener("click", (e) => {
-  e.preventDefault();
-  const text = FILE_META.powertunnel.copytext;
-  navigator.clipboard.writeText(text).then(() => {
-    showToast("✅ Config copied for PowerTunnel!");
-  }).catch(() => {
-    showToast("❌ Failed to copy PowerTunnel config.");
-  });
-});
-
-</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
 <script>
-  window.dataLayer = window.dataLayer ||
-[];
+  window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
   gtag('config', 'G-XXXXXXXXXX'); // Placeholder ID for Growfax Analytics
-
-// ===================== Sydney Time (Local Display) =====================
-function updateSydneyTime() {
-  const timeDisplay = document.getElementById("timeDisplay");
-  try {
-    const now = new Date();
-    const sydneyTime = now.toLocaleString("en-AU", {
-      timeZone: "Australia/Sydney",
-      hour12: false,
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit"
-    });
-    timeDisplay.textContent = "Server Time (Sydney): " + sydneyTime;
-  } catch (e) {
-    timeDisplay.textContent = "Unable to load Sydney time.";
-  }
-}
-setInterval(updateSydneyTime, 1000);
-updateSydneyTime();
-
-// ===================== Copy Config for iOS & PowerTunnel =====================
-iosButton.addEventListener("click", (e) => {
-  e.preventDefault();
-  const text = FILE_META.ios.copytext;
-  navigator.clipboard.writeText(text).then(() => {
-    showToast("✅ Config copied for iOS!");
-  }).catch(() => {
-    showToast("❌ Failed to copy iOS config.");
-  });
-});
-
-powertunnelButton.addEventListener("click", (e) => {
-  e.preventDefault();
-  const text = FILE_META.powertunnel.copytext;
-  navigator.clipboard.writeText(text).then(() => {
-    showToast("✅ Config copied for PowerTunnel!");
-  }).catch(() => {
-    showToast("❌ Failed to copy PowerTunnel config.");
-  });
-});
-
 </script>
+
 <style>
   /* ============================================================
      Growfax Official — FULL UI stylesheet (futuristic neon/fax)
@@ -133,11 +50,9 @@ powertunnelButton.addEventListener("click", (e) => {
 
   /* NEW: Keyframes for Logo Animation */
   @keyframes pulse {
-    0% { transform: scale(1);
- box-shadow: var(--logo-shadow); }
+    0% { transform: scale(1); box-shadow: var(--logo-shadow); }
     50% { transform: scale(1.02); box-shadow: var(--logo-shadow-hover); }
-    100% { transform: scale(1);
- box-shadow: var(--logo-shadow); }
+    100% { transform: scale(1); box-shadow: var(--logo-shadow); }
   }
 
   :root{
@@ -148,22 +63,20 @@ powertunnelButton.addEventListener("click", (e) => {
     --card-shadow:0 8px 20px rgba(0,0,0,0.08);
     --discord-color:#7289da;
     --muted:#667;
- --toast-bg:rgba(0,0,0,0.8);
+    --toast-bg:rgba(0,0,0,0.8);
     --glass: rgba(255,255,255,0.6);
     --success:#2ecc71;
     --danger:#e74c3c;
     --mono: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     --border-color: rgba(0,0,0,0.08);
-    --shop-bg: #8e44ad;
- /* New color for shop: Purple */
+    --shop-bg: #8e44ad; /* New color for shop: Purple */
     --shop-glow: rgba(142, 68, 173, 0.4);
- /* UPDATED: Custom properties for YELLOW glow effect in light mode */
-    --glow-color-light: rgba(255, 193, 7, 0.6);
- /* soft yellow glow */
+    /* UPDATED: Custom properties for YELLOW glow effect in light mode */
+    --glow-color-light: rgba(255, 193, 7, 0.6); /* soft yellow glow */
     --text-shadow-light: 0 0 10px var(--glow-color-light), 0 2px 4px rgba(0,0,0,0.2);
- --logo-shadow: 0 4px 12px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.08);
+    --logo-shadow: 0 4px 12px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.08);
     --logo-shadow-hover: 0 8px 20px rgba(255, 193, 7, 0.4);
- }
+  }
   [data-theme="dark"]{
     --bg:#0f1720;
     --card-bg:#0b1220;
@@ -174,16 +87,15 @@ powertunnelButton.addEventListener("click", (e) => {
     --muted:#9aa;
     --toast-bg:rgba(255,255,255,0.08);
     --glass: rgba(255,255,255,0.03);
- --border-color: rgba(255,255,255,0.06);
+    --border-color: rgba(255,255,255,0.06);
     --shop-bg: #9b59b6; /* Lighter purple for dark mode */
     --shop-glow: rgba(155, 89, 182, 0.6);
- /* UPDATED: Custom properties for YELLOW glow effect in dark mode */
-    --glow-color-dark: rgba(255, 170, 0, 0.8);
- /* brighter gold glow */
+    /* UPDATED: Custom properties for YELLOW glow effect in dark mode */
+    --glow-color-dark: rgba(255, 170, 0, 0.8); /* brighter gold glow */
     --text-shadow-dark: 0 0 12px var(--glow-color-dark), 0 2px 8px rgba(0,0,0,0.6);
- --logo-shadow: 0 6px 18px rgba(0,0,0,0.4), 0 3px 9px rgba(0,0,0,0.25);
+    --logo-shadow: 0 6px 18px rgba(0,0,0,0.4), 0 3px 9px rgba(0,0,0,0.25);
     --logo-shadow-hover: 0 10px 25px rgba(255, 170, 0, 0.5);
- }
+  }
 
   html,body{
     height:100%;
@@ -194,7 +106,7 @@ powertunnelButton.addEventListener("click", (e) => {
     line-height:1.6;
     transition:background .25s,color .25s;
     overflow-x: hidden;
- }
+  }
   
   /* -------------------------
      Header / Navigation (Optimasi Mobile)
@@ -202,52 +114,52 @@ powertunnelButton.addEventListener("click", (e) => {
   header{background:var(--card-bg);box-shadow:var(--card-shadow);position:sticky;top:0;z-index:1200}
   .header-content{
     max-width:1100px;
- margin:0 auto;
+    margin:0 auto;
     padding:10px 10px; /* ADJUSTED: Reduced padding for mobile */
     display:flex;
     justify-content:space-between;
     align-items:center;
     gap:8px;
     flex-wrap: wrap;
- }
+  }
   .header-left{
     display:flex;
     align-items:center;
     gap:8px; 
     flex: 1 1 50%;
- }
+  }
   .brand-wrap{display:flex;align-items:center;gap:8px}
   
   /* Glow, lift, and Pulse Animation for logo image */
   .brand-wrap img{
     width:36px;
- height:36px;
+    height:36px;
     border-radius:6px;
     object-fit:cover;
     transition: box-shadow .25s, transform .25s, opacity 0.2s ease;
     box-shadow: var(--logo-shadow);
- /* Apply animation */
+    /* Apply animation */
     animation: pulse 3s infinite ease-in-out;
   }
 
   h1{
     font-size:1.2rem;
     margin:0;
- font-weight:700;
+    font-weight:700;
     /* Added opacity transition for smoother language change */
     transition: text-shadow .25s, opacity 0.2s ease;
- color: var(--text);
+    color: var(--text);
     text-shadow: var(--text-shadow-light); 
   }
   [data-theme="dark"] h1 {
     text-shadow: var(--text-shadow-dark);
- }
+  }
 
   .brand-wrap > div > div { 
     font-size: 0.75rem;
- /* Added opacity transition for smoother language change */
+    /* Added opacity transition for smoother language change */
     transition: opacity 0.2s ease;
- }
+  }
 
   nav.primary{
     color:var(--accent);
@@ -256,19 +168,18 @@ powertunnelButton.addEventListener("click", (e) => {
     margin-left:auto; 
     font-size: 0.9rem;
     flex: 1 1 100%; 
-    margin-top: 6px;
- /* ADJUSTED: Reduced margin for tighter fit */
+    margin-top: 6px; /* ADJUSTED: Reduced margin for tighter fit */
     text-align: left;
- }
+  }
   nav.primary a{
       color:var(--accent);
       text-decoration:none;
       font-weight:700;
       margin-left:0;
       margin-right: 12px;
- /* Added opacity transition for smoother language change */
+      /* Added opacity transition for smoother language change */
       transition: opacity 0.2s ease, transform .18s;
- }
+  }
   nav.primary a:hover{opacity:.86;transform:translateY(-1px)}
   
   /* NEW: Style for active navigation link (SPA simulation) */
@@ -282,14 +193,14 @@ powertunnelButton.addEventListener("click", (e) => {
     align-items:center;
     gap:6px;
     flex: 0 1 auto;
- /* FIX FOR MOBILE WRAPPING: Allow buttons to wrap within the controls box */
+    /* FIX FOR MOBILE WRAPPING: Allow buttons to wrap within the controls box */
     flex-wrap: wrap;
- justify-content: flex-end; /* Keep the buttons aligned to the right */
+    justify-content: flex-end; /* Keep the buttons aligned to the right */
   }
   /* Gaya untuk semua tombol kontrol di header */
   .theme-toggle,.lang-select,.open-welcome, .report-bug-btn, #openAdmin, #openAuth, #openSettings {
     font-size:0.9rem;
- padding:6px 8px;
+    padding:6px 8px;
     border-radius:8px;
     border:1px solid var(--border-color);
     background:transparent;
@@ -299,15 +210,15 @@ powertunnelButton.addEventListener("click", (e) => {
     display: flex;
     align-items: center;
     gap: 4px;
- /* Added opacity transition for smoother language change */
+    /* Added opacity transition for smoother language change */
     transition: background-color .15s, opacity 0.2s ease;
- }
+  }
   .report-bug-btn:hover, .theme-toggle:hover, .open-welcome:hover, #openAdmin:hover, #openAuth:hover, #openSettings:hover {
     background: rgba(0,0,0,0.05);
- }
+  }
   [data-theme="dark"] .report-bug-btn:hover, [data-theme="dark"] .theme-toggle:hover, [data-theme="dark"] .open-welcome:hover, [data-theme="dark"] .#openAdmin:hover, [data-theme="dark"] #openAuth:hover, [data-theme="dark"] #openSettings:hover {
     background: rgba(255,255,255,0.05);
- }
+  }
   /* NEW: Style for the Logout button specifically */
   #authLogoutBtn {
       background: var(--danger) !important;
@@ -326,7 +237,7 @@ powertunnelButton.addEventListener("click", (e) => {
   .banner-section img{max-width:200px;border-radius:8px;margin-bottom:14px}
   .banner-section h2{
     font-size:1.6rem;
- color:#ffaa00;
+    color:#ffaa00;
     margin:8px 0;
     text-shadow:0 0 10px rgba(255,170,0,0.18);
     transition: opacity 0.2s ease;
@@ -334,7 +245,7 @@ powertunnelButton.addEventListener("click", (e) => {
   .banner-section p{
     font-size:0.95rem;
     opacity:.92;
- margin:0;
+    margin:0;
     transition: opacity 0.2s ease;
   }
   .time-display{
@@ -343,7 +254,7 @@ powertunnelButton.addEventListener("click", (e) => {
     font-weight:600;
     opacity:.9;
     transition: opacity 0.2s ease;
- }
+  }
 
   /* -------------------------
      Container (main content)
@@ -351,7 +262,7 @@ powertunnelButton.addEventListener("click", (e) => {
   .container{max-width:1000px;margin:32px auto;text-align:center;padding:0 10px}
   .container h2{
     font-size:1.4rem;
- margin-bottom:24px;
+    margin-bottom:24px;
     transition: opacity 0.2s ease;
   }
   
@@ -373,11 +284,11 @@ powertunnelButton.addEventListener("click", (e) => {
   .platform-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
   .platform-buttons a{
     display:flex;align-items:center;justify-content:center;gap:12px;
- width:92%; 
+    width:92%;
     padding:14px 18px;border-radius:12px;color:#fff;font-weight:700;
     text-decoration:none;border:1px solid transparent;font-size:1.02rem;
     transition:transform .18s ease,box-shadow .18s, opacity 0.2s ease;
- }
+  }
   .platform-buttons a img{width:30px;height:30px;border-radius:6px}
   .platform-buttons a:hover{transform:translateY(-2px)}
 
@@ -389,117 +300,112 @@ powertunnelButton.addEventListener("click", (e) => {
   /* NEW: Shop Roles Grid */
   .shop-roles {
       display: grid;
- grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 16px;
       margin-top: 24px;
       max-width: 900px;
       margin-left: auto;
       margin-right: auto;
       text-align: left;
- }
+  }
   .shop-role-card {
       background: var(--card-bg);
       padding: 20px;
       border-radius: 12px;
       border-top: 4px solid var(--shop-bg);
- display: flex;
+      display: flex;
       flex-direction: column;
       justify-content: space-between;
       transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-      height: auto;
- /* Allow card height to adjust to content */
+      height: auto; /* Allow card height to adjust to content */
   }
   .shop-role-card:hover {
       transform: translateY(-5px);
- box-shadow: 0 10px 30px var(--shop-glow);
+      box-shadow: 0 10px 30px var(--shop-glow);
   }
   .shop-role-card h3 {
       margin-top: 0;
       font-size: 1.25rem;
- color: var(--shop-bg);
+      color: var(--shop-bg);
       text-shadow: 0 0 5px rgba(142, 68, 173, 0.1);
- }
+  }
   .shop-role-card .price {
       font-size: 1.8rem;
       font-weight: 800;
       color: var(--text);
       margin: 8px 0 15px;
- }
+  }
   .shop-role-card .price small {
       font-size: 0.8rem;
       font-weight: 400;
       opacity: 0.7;
- }
+  }
   /* NEW: Style for the multiple currency display */
   .shop-role-card .currency-display {
       display: block;
- font-size: 0.8rem; /* Smaller font for secondary currencies */
+      font-size: 0.8rem; /* Smaller font for secondary currencies */
       font-weight: 500; 
       opacity: 0.8; 
       margin-top: 6px;
- line-height: 1.4;
+      line-height: 1.4;
       white-space: pre-wrap;
   }
   /* UPDATED: UL style for commands (Added Scroll functionality) */
   .shop-role-card ul {
       list-style-type: none;
- padding: 0;
+      padding: 0;
       margin-bottom: 20px;
       font-size: 0.9rem;
       color: var(--muted);
       white-space: pre-wrap;
- /* NEW SCROLL STYLES */
-      max-height: 200px;
- /* Max height before scroll */
+      /* NEW SCROLL STYLES */
+      max-height: 200px; /* Max height before scroll */
       overflow-y: auto;
-      border: 1px solid var(--border-color);
- /* Border for visual clarity of scroll area */
+      border: 1px solid var(--border-color); /* Border for visual clarity of scroll area */
       padding: 8px;
       border-radius: 6px;
- }
+  }
 
   /* Style adjustment for the list items inside the scrollable area */
   .shop-role-card ul li {
       margin-bottom: 8px;
- border-left: 3px solid var(--shop-bg);
+      border-left: 3px solid var(--shop-bg);
       padding-left: 8px;
       line-height: 1.3;
-      padding-right: 4px;
- /* Ensure content doesn't touch scrollbar */
+      padding-right: 4px; /* Ensure content doesn't touch scrollbar */
   }
   .shop-role-card ul li:before {
-      content: none;
- /* Remove default bullet */
+      content: none; /* Remove default bullet */
   }
   .shop-role-card ul li strong {
       color: var(--accent);
- font-weight: 600;
+      font-weight: 600;
       display: block;
       margin-bottom: 2px;
   }
   .shop-role-card ul li span {
       display: block;
- font-size: 0.85rem;
+      font-size: 0.85rem;
       opacity: 0.8;
   }
   .btn-purchase {
       background: var(--shop-bg);
       color: white;
       text-decoration: none;
- padding: 10px 15px;
+      padding: 10px 15px;
       border-radius: 8px;
       font-weight: 700;
       text-align: center;
       transition: background 0.15s, transform 0.15s;
- }
+  }
   .btn-purchase:hover {
       background: #732a9a;
       transform: translateY(-1px);
- }
+  }
   /* ADDED: Style for dual purchase buttons */
   .shop-role-card .purchase-buttons {
       display: flex;
- gap: 10px;
+      gap: 10px;
       margin-top: 15px;
       width: 100%;
       flex-wrap: wrap; /* NEW: Allow wrapping for many buttons */
@@ -507,61 +413,54 @@ powertunnelButton.addEventListener("click", (e) => {
   /* Ensure the button links themselves manage the flex sizing */
   .shop-role-card .purchase-buttons .btn-purchase {
       display: flex;
- flex: 1 1 calc(50% - 5px); /* Set to max 2 buttons per row on mobile */
+      flex: 1 1 calc(50% - 5px); /* Set to max 2 buttons per row on mobile */
       align-items: center;
- justify-content: center;
+      justify-content: center;
       min-width: 120px; /* Ensure a minimum size */
   }
   /* New style for IDR button */
   .btn-idr {
-      background: #27ae60;
- /* Green color for IDR/Rupiah */
+      background: #27ae60; /* Green color for IDR/Rupiah */
   }
   .btn-idr:hover {
       background: #1e8449;
- }
+  }
   /* NEW: EUR Button */
   .btn-eur {
-      background: #004494;
- /* Dark Blue for EUR */
+      background: #004494; /* Dark Blue for EUR */
   }
   .btn-eur:hover {
       background: #003370;
- }
+  }
   /* NEW: GBP Button */
   .btn-gbp {
-      background: #c0392b;
- /* Reddish Brown for GBP */
+      background: #c0392b; /* Reddish Brown for GBP */
   }
   .btn-gbp:hover {
       background: #a93226;
- }
+  }
   /* NEW: AUD Button */
   .btn-aud {
-      background: #f1c40f;
- /* Yellow/Gold for AUD */
-      color: #333;
- /* Dark text for contrast */
+      background: #f1c40f; /* Yellow/Gold for AUD */
+      color: #333; /* Dark text for contrast */
   }
   .btn-aud:hover {
       background: #d4ac0d;
- }
+  }
   /* NEW: SGD Button */
   .btn-sgd {
-      background: #3498db;
- /* Light Blue for SGD */
+      background: #3498db; /* Light Blue for SGD */
   }
   .btn-sgd:hover {
       background: #2980b9;
- }
+  }
   /* NEW: CAD Button */
   .btn-cad {
-      background: #e74c3c;
- /* Red for CAD */
+      background: #e74c3c; /* Red for CAD */
   }
   .btn-cad:hover {
       background: #c0392b;
- }
+  }
 
 
   /* -------------------------
@@ -571,14 +470,14 @@ powertunnelButton.addEventListener("click", (e) => {
   .discord-section img{width:48px;height:48px;border-radius:8px;margin-bottom:8px}
   .discord-section h3, .discord-section p, .discord-section a {
     transition: opacity 0.2s ease;
- }
+  }
 
   /* -------------------------
      Footer
      ------------------------- */
   footer{
     text-align:center;
- margin:30px 0 40px;
+    margin:30px 0 40px;
     font-size:.85rem;
     opacity:.85;
     transition: opacity 0.2s ease;
@@ -621,13 +520,13 @@ powertunnelButton.addEventListener("click", (e) => {
   /* Added opacity transition to modal/welcome text elements */
   .modal h3, .modal p, .modal .changelog, .welcome h2, .welcome p, .welcome label, .welcome button, .modal h2, .modal h4 {
       transition: opacity 0.2s ease;
- }
+  }
   
   /* NEW: Admin Modal specific styles (input and buttons) */
   #adminTokenInput, #newsUpdateTextarea, #seoTitleInput, #seoDescTextarea, #seoKeywordsInput {
     /* Ensure they match the theme */
     border: 1px solid var(--border-color) !important;
- background: var(--card-bg) !important;
+    background: var(--card-bg) !important;
     color: var(--text) !important;
   }
 
@@ -705,31 +604,30 @@ powertunnelButton.addEventListener("click", (e) => {
     /* Header/Nav kembali ke ukuran besar */
     .header-content {
         flex-wrap: nowrap;
- align-items: center;
+        align-items: center;
         padding: 14px 20px;
     }
     /* Logo size PC */
     .brand-wrap img{width:46px;height:46px;border-radius:8px}
     /* H1 size PC */
     h1{font-size:1.4rem;}
-    .brand-wrap > div > div { font-size: 0.85rem;
- }
+    .brand-wrap > div > div { font-size: 0.85rem; }
     nav.primary {
         flex: 0 1 auto; 
         margin-top: 0;
- margin-left: 12px; 
+        margin-left: 12px; 
         text-align: left;
     }
     nav.primary a{
         margin-left:12px;
         margin-right: 0;
- font-size: 1rem;
+        font-size: 1rem;
     }
     .controls{gap:10px; flex-wrap: nowrap;} /* Reset wrap on PC */
     /* Ukuran PC untuk semua tombol kontrol */
     .theme-toggle,.lang-select,.open-welcome, .report-bug-btn, #openAdmin, #openAuth, #openSettings {
         font-size:0.98rem;
- padding:8px 12px;
+        padding:8px 12px;
         border-radius: 10px;
     }
 
@@ -737,20 +635,18 @@ powertunnelButton.addEventListener("click", (e) => {
     .platform-buttons{gap:20px}
     .platform-buttons a{
       width:300px;
- }
+    }
     .platform-buttons a:hover{transform:translateY(-4px)}
     
     /* Shop Roles Grid PC */
     .shop-roles {
-        grid-template-columns: repeat(3, minmax(200px, 1fr));
- /* 3 columns on desktop */
+        grid-template-columns: repeat(3, minmax(200px, 1fr)); /* 3 columns on desktop */
     }
     /* On desktop, buttons can take up less space */
     .shop-role-card .purchase-buttons .btn-purchase {
-        flex: 1 1 calc(33.33% - 7px);
- /* Allow up to 3 buttons per row on PC */
+        flex: 1 1 calc(33.33% - 7px); /* Allow up to 3 buttons per row on PC */
         min-width: 90px;
- }
+    }
 
     /* Banner/Content padding besar */
     .banner-section{padding:56px 20px;}
@@ -772,8 +668,7 @@ powertunnelButton.addEventListener("click", (e) => {
     <div class="header-content">
       <div class="header-left">
         <div class="brand-wrap">
-          
- <img src="Growfax_banner.jpg" alt="Growfax Logo">
+          <img src="Growfax_banner.jpg" alt="Growfax Logo">
           <div>
             <h1>Growfax Official</h1>
             <div style="font-size:0.85rem;color:var(--muted)">Private Growtopia Server</div>
@@ -782,9 +677,9 @@ powertunnelButton.addEventListener("click", (e) => {
 
         <nav class="primary" aria-label="Main navigation">
           <a href="#downloads" id="navDownloads" class="active-nav">📥 Downloads</a> 
-          
-  
-       </nav>
+          <a href="#shop" id="navShop">🛒 Shop</a>
+          <a href="#news" id="navNews">🔔 News</a>
+        </nav>
       </div>
 
       <div class="controls">
@@ -810,10 +705,8 @@ powertunnelButton.addEventListener("click", (e) => {
   <section class="banner-section" role="region" aria-label="Main banner">
     <img src="Growfax_banner.jpg" alt="Growfax Banner">
     <h2>Welcome to Growfax</h2>
-    
- <p>Private Growtopia Server</p>
- 
-   <div id="timeDisplay" class="time-display">Loading time...</div>
+    <p>Private Growtopia Server</p>
+    <div id="timeDisplay" class="time-display">Loading time...</div>
   </section>
 
   <main class="container" role="main">
@@ -824,10 +717,8 @@ powertunnelButton.addEventListener("click", (e) => {
             <img src="virtual-host.png" alt="">Play on Android
           </a>
 
-          <a href="Growfax_Patched_.bat" class="btn-windows" data-filename="Growfax_Patched_.bat" data-filekey="patched" download 
- role="listitem">
-  
-        <img src="windows.png" alt="">Play on Windows
+          <a href="Growfax_Patched_.bat" class="btn-windows" data-filename="Growfax_Patched_.bat" data-filekey="patched" download role="listitem">
+            <img src="windows.png" alt="">Play on Windows
           </a>
 
           <a href="#" class="btn-ios" data-filename="GrowFax_ios_config.txt" data-filekey="ios" role="listitem">
@@ -836,197 +727,256 @@ powertunnelButton.addEventListener("click", (e) => {
 
           <a href="#" class="btn-powertunnel" data-filename="PowerTunnel_Host.txt" data-filekey="powertunnel" role="listitem">
             <img src="powertunnel.jpeg" alt="">Play via PowerTunnel
- 
-  
-       </a>
+          </a>
         </div>
     </section>
 
-    
+    <section id="shop" class="content-section hidden-section">
+        <h2>🛒 Growfax Server Roles</h2>
+        <p style="margin-bottom: 24px;">Support the server and unlock exclusive roles! Direct purchase via PayPal.me.</p>
+        
+        <div class="shop-roles">
+            <div class="shop-role-card" data-original="👑 Admin Server Role">
+                <h3>👑 Admin Server Role</h3>
+                <div class="price">$19.99 <small>USD / Lifetime</small></div>
+                <div class="currency-display">
+                    €18.59 EUR | £16.00 GBP
+                </div>
+                <ul>
+                    <li><strong>Can sell role</strong> <span>Benefit for selling roles to players.</span></li>
+                    <li><strong>Can sell title</strong> <span>Benefit for selling custom titles to players.</span></li>
+                    <li><strong>Can sell All item with Real Trade</strong> <span>Allows selling all in-game items via Real Trade system.</span></li>
+                </ul>
+                <div class="purchase-buttons">
+                    <a href="https://paypal.me/Growfax/19.99USD" target="_blank" class="btn-purchase btn-usd" data-original="Pay $USD">Pay $USD</a>
+                    <a href="https://paypal.me/Growfax/18.59EUR" target="_blank" class="btn-purchase btn-eur" data-original="Pay €EUR">Pay €EUR</a>
+                    <a href="https://paypal.me/Growfax/16.00GBP" target="_blank" class="btn-purchase btn-gbp" data-original="Pay £GBP">Pay £GBP</a>
+                </div>
+            </div>
+            
+            <div class="shop-role-card" data-original="⭐ Legend Role">
+                <h3>⭐ Legend Role</h3>
+                <div class="price">$9.99 <small>USD / Lifetime</small></div>
+                <div class="currency-display">
+                    A$15.00 AUD | S$13.50 SGD
+                </div>
+                <ul>
+                    <li><strong>Command: /legendary</strong> <span>Spawn exclusive Legendary item once per day.</span></li>
+                    <li><strong>Command: /vault</strong> <span>Access a personal, larger vault storage.</span></li>
+                    <li><strong>Command: /fly</strong> <span>Toggle flight mode in public worlds.</span></li>
+                </ul>
+                <div class="purchase-buttons">
+                    <a href="https://paypal.me/Growfax/9.99USD" target="_blank" class="btn-purchase btn-usd" data-original="Pay $USD">Pay $USD</a>
+                    <a href="https://paypal.me/Growfax/15.00AUD" target="_blank" class="btn-purchase btn-aud" data-original="Pay A$AUD">Pay A$AUD</a>
+                    <a href="https://paypal.me/Growfax/13.50SGD" target="_blank" class="btn-purchase btn-sgd" data-original="Pay S$SGD">Pay S$SGD</a>
+                </div>
+            </div>
+
+            <div class="shop-role-card" data-original="🛡️ Supporter Role">
+                <h3>🛡️ Supporter Role</h3>
+                <div class="price">Rp 50.000 <small>IDR / Lifetime</small></div>
+                <div class="currency-display">
+                    $3.50 USD | $4.50 CAD
+                </div>
+                <ul>
+                    <li><strong>Command: /rainbow</strong> <span>Access to rainbow-colored in-game text.</span></li>
+                    <li><strong>Command: /saber</strong> <span>Receive a Supporter-exclusive Saber item.</span></li>
+                    <li><strong>Chat Icon</strong> <span>Unique icon next to your name in chat.</span></li>
+                </ul>
+                <div class="purchase-buttons">
+                    <a href="https://saweria.co/Growfax/50000" target="_blank" class="btn-purchase btn-idr" data-original="Bayar Rp IDR">Bayar Rp IDR</a>
+                    <a href="https://paypal.me/Growfax/3.50USD" target="_blank" class="btn-purchase btn-usd" data-original="Pay $USD">Pay $USD</a>
+                    <a href="https://paypal.me/Growfax/4.50CAD" target="_blank" class="btn-purchase btn-cad" data-original="Pay C$CAD">Pay C$CAD</a>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="news" class="content-section hidden-section">
+        <h2>🔔 Server News & Updates</h2>
+        <div style="background: var(--card-bg); padding: 20px; border-radius: 12px; text-align: left; box-shadow: var(--card-shadow); max-width: 700px; margin: 0 auto;">
+          <h3 style="margin-top: 0; color: var(--accent);" data-original="Latest Update:">Latest Update:</h3>
+          <div id="newsContent">
+            <p style="opacity: 0.8;">No recent news available.</p>
+          </div>
+        </div>
+    </section>
+
+    <div class="discord-section">
+      <img src="discord.jpeg" alt="Discord Icon">
+      <h3>Join Our Discord Community!</h3>
+      <p>Need help or just want to chat? Join thousands of other players on our official Discord server.</p>
+      <a href="https://discord.gg/smgS6sq83y" target="_blank" class="btn" style="background:white;color:var(--discord-color);padding:10px 20px;border-radius:8px;display:inline-block;margin-top:12px;font-weight:700">Join Discord</a>
+    </div>
   </main>
 
-  <section class="discord-section" aria-label="Discord community">
-    <img src="discord.jpeg" alt="Discord Logo">
-    <h3>Join Our Community</h3>
-    <p>Connect with others and get support in our official Discord server.</p>
-    <a id="discordLink" href="https://discord.gg/smgS6sq83y" target="_blank" rel="noopener">Join Growfax Discord</a>
-  </section>
+  <footer>
+    <p>&copy; 2025 Growfax Official. All Rights Reserved. Not affiliated with Ubisoft.</p>
+  </footer>
 
-  
- <footer>© 2025 Growfax.
- All rights reserved.</footer>
-
-  <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <h3 id="modalTitle">File info</h3>
-      <p id="modalDesc">Details before download</p>
-
-      <div class="meta">
-        <div class="chip" id="modalVersion">v0.0</div>
-        <div class="chip" id="modalUpdated">Updated: —</div>
-      </div>
-
-      <div class="changelog" id="modalChangelog">Changelog: —</div>
-
-      <div style="display:flex;gap:8px;align-items:center;justify-content:space-between">
-        <div style="font-size:.9rem;color:var(--muted)" id="modalFilename">Filename</div>
-     
-    
- <div class="buttons">
-          <button class="btn secondary" id="modalCancel">Cancel</button>
-          <button class="btn primary" id="modalConfirm">Download</button>
+  <div id="downloadModalBackdrop" class="modal-backdrop" aria-hidden="true">
+    <div id="downloadModal" class="modal">
+      <h2 style="margin-top:0;" data-original="File info">File info</h2>
+      <h4 id="modalFilename">Filename:</h4>
+      <p style="opacity:0.9;" data-original="Details before download">Details before download</p>
+      
+      <div style="text-align:left;margin-top:15px;padding-top:15px;border-top:1px solid var(--border-color);">
+        <p style="margin:5px 0 8px;font-weight:700;" data-original="Version">Version: <span id="modalVersion" style="font-weight:400;color:var(--accent);"></span></p>
+        <p style="margin:5px 0 8px;font-weight:700;" data-original="Updated">Updated: <span id="modalUpdated" style="font-weight:400;color:var(--accent);"></span></p>
+        <p style="margin:5px 0 8px;font-weight:700;" data-original="Changelog">Changelog: <span id="modalChangelog" style="font-weight:400;opacity:0.8;"></span></p>
+        
+        <div id="modalCopyBlock" style="margin-top: 15px; display: none;">
+            <p style="margin:5px 0 8px;font-weight:700;">
+                <span data-original="Copy Config">Salin Konfigurasi</span>:
+                <button id="copyConfigButton" class="small-btn" style="background:var(--accent);color:white;border:none;margin-left:8px;" data-original="Copy Config">Copy Config</button>
+            </p>
+            <textarea id="modalCopyText" style="width:100%; height:150px; background:var(--glass); border:1px solid var(--border-color); color:var(--text); padding:8px; border-radius:6px; font-family: monospace; font-size: 0.9rem; resize: none;" readonly></textarea>
         </div>
-      </div>
-    </div>
-  </div>
 
-  <div id="authBackdrop" class="modal-backdrop welcome-backdrop" aria-hidden="true">
-    <div class="welcome auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
-      <h2 id="authTitle" data-original="Account">Account</h2>
-      
-      <div id="authTabs" style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">
-          <button id="tabLogin" class="btn primary small-btn active-tab" data-original="Login">Login</button>
-          <button id="tabRegister" class="btn secondary small-btn" data-original="Register">Register</button>
       </div>
-      
-      <div id="loginView" class="auth-view">
-          <p data-original="Welcome back! Please login to continue.">Welcome back! Please login to continue.</p>
-          <div class="row">
-              <label for="loginUsername" data-original="Username or Email">Username or Email</label>
-              <input type="text" id="loginUsername" placeholder="GrowfaxName" required>
-          </div>
-          <div class="row" style="margin-top:10px">
-              <label for="loginPassword" data-original="Password">Password</label>
-              <input type="password" id="loginPassword" required>
-          </div>
-          <a href="#" id="forgotPasswordLink" style="font-size:0.85rem; color:var(--accent); display:block; margin-top:10px; text-align:left;" data-original="Forgot Password?">Forgot Password?</a>
-          <div class="actions" style="display:flex;justify-content:flex-end;gap:8px;margin-top:14px">
-              <button class="btn primary" id="loginSubmit" data-original="Login">Login</button>
-          </div>
-      </div>
-      
-      <div id="registerView" class="auth-view" style="display:none;">
-          <p data-original="Join our community by creating an account.">Join our community by creating an account.</p>
-          <div class="row">
-              <label for="registerUsername" data-original="Username">Username</label>
-              <input type="text" id="registerUsername" placeholder="GrowfaxName" required>
-          </div>
-          <div class="row" style="margin-top:10px">
-              <label for="registerEmail" data-original="Email">Email</label>
-              <input type="email" id="registerEmail" placeholder="you@example.com" required>
-          </div>
-          <div class="row" style="margin-top:10px">
-              <label for="registerPassword" data-original="Password (Min 6 chars)">Password (Min 6 chars)</label>
-              <input type="password" id="registerPassword" required>
-          </div>
-          <div class="actions" style="display:flex;justify-content:flex-end;gap:8px;margin-top:14px">
-              <button class="btn primary" id="registerSubmit" data-original="Create Account">Create Account</button>
-          </div>
-      </div>
-      
-      <div id="forgotView" class="auth-view" style="display:none;">
-          <h3 style="margin-top:0;" data-original="Reset Password">Reset Password</h3>
-          <p data-original="Enter your email address and we will send you a password reset link.">Enter your email address and we will send you a password reset link.</p>
-          <div class="row">
-              <label for="resetEmail" data-original="Email Address">Email Address</label>
-              <input type="email" id="resetEmail" placeholder="you@example.com" required>
-          </div>
-          <div class="actions" style="display:flex;justify-content:space-between;gap:8px;margin-top:14px">
-              <button class="btn secondary" id="backToLogin" data-original="Back to Login">Back to Login</button>
-              <button class="btn primary" id="resetSubmit" data-original="Send Reset Link">Send Reset Link</button>
-          </div>
+
+      <div style="margin-top:20px;">
+        <button id="modalCancel" class="btn secondary" data-original="Cancel">Cancel</button>
+        <a id="modalConfirm" href="#" class="btn primary" style="background:var(--accent);color:white;text-decoration:none;padding:10px 20px;border-radius:8px;display:inline-block;font-weight:700;margin-left:10px;" data-original="Download">Download</a>
       </div>
     </div>
   </div>
 
   <div id="welcomeBackdrop" class="welcome-backdrop" aria-hidden="true">
-    <div class="welcome" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
-      <h2 id="welcomeTitle">Welcome to Growfax</h2>
-      <p style="margin:6px 0 12px;opacity:.9">Set your preferred language and theme.
- We'll remember this for next time.</p>
-      <div class="row">
-        <label for="welcomeLang">Language</label>
-        <select id="welcomeLang" class="lang-select">
-          <option value="en">🇬🇧 English</option>
-          <option value="id">🇮🇩 Bahasa</option>
-        </select>
-      </div>
-      <div class="row" style="margin-top:10px">
-        <label>Theme</label>
-        <div class="radio-group">
-      
-         <label><input type="radio" name="welcomeTheme" value="light" checked> Light</label>
-          <label><input type="radio" name="welcomeTheme" value="dark"> Dark</label>
+    <div id="welcomeModal" class="welcome">
+        <h2 style="margin-top:0;" data-original="Welcome to Growfax">Welcome to Growfax</h2>
+        <p style="opacity:0.8;margin-bottom:20px;">Set your preferred language and theme. We'll remember this for next time.</p>
+
+        <div style="text-align:left;padding-bottom:15px;border-bottom:1px solid var(--border-color);">
+            <label for="welcomeLang" style="font-weight:700;display:block;margin-bottom:5px;" data-original="Language">Language</label>
+            <select id="welcomeLang" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--border-color);background:var(--card-bg);color:var(--text);">
+                <option value="en">🇬🇧 English</option>
+                <option value="id">🇮🇩 Bahasa</option>
+            </select>
         </div>
-      </div>
-      <div class="actions" style="display:flex;justify-content:flex-end;gap:8px;margin-top:14px">
-        <button class="btn secondary" id="welcomeSkip">Skip</button>
-        <button class="btn primary" id="welcomeSave">Save & Continue</button>
-      </div>
+
+        <div style="text-align:left;padding-top:15px;">
+            <p style="font-weight:700;margin:0 0 10px;" data-original="Theme">Theme</p>
+            <div style="display:flex;gap:15px;">
+                <label style="display:flex;align-items:center;cursor:pointer;">
+                    <input type="radio" name="welcomeTheme" value="light" checked style="margin-right:8px;">
+                    🌞 Light
+                </label>
+                <label style="display:flex;align-items:center;cursor:pointer;">
+                    <input type="radio" name="welcomeTheme" value="dark" style="margin-right:8px;">
+                    🌙 Dark
+                </label>
+            </div>
+        </div>
+        
+        <div style="margin-top:30px;">
+            <button id="welcomeSkip" class="btn secondary" data-original="Skip">Skip</button>
+            <button id="welcomeSave" class="btn primary" style="background:var(--accent);color:white;padding:10px 20px;border-radius:8px;display:inline-block;font-weight:700;margin-left:10px;" data-original="Save & Continue">Save & Continue</button>
+        </div>
     </div>
   </div>
 
-  <div id="adminBackdrop" class="modal-backdrop admin-backdrop" aria-hidden="true">
-    <div class="modal admin-modal" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
-    
-      <h2 id="adminTitle">🔑 Admin Area</h2>
-      <button id="closeAdmin" class="btn secondary" style="position:absolute;top:10px;right:10px;font-size:0.8rem;padding:6px 10px;z-index:10;">Tutup Area Admin</button>
-      
-      <div id="adminLogin" style="text-align: center;
- padding: 20px;">
-        <p id="adminLoginPrompt">Enter the Admin Token to proceed:</p>
-        <input type="password" id="adminTokenInput" placeholder="Token" style="padding: 10px;
- width: 80%; max-width: 300px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--card-bg);
- color: var(--text);">
-        <button class="btn primary" id="adminTokenSubmit" style="margin-top: 10px; width: 80%;
- max-width: 300px;">Submit</button>
-      </div>
-
-      <div id="adminContent" style="display: none;
- padding-top: 10px;">
-        <div style="margin-top: 15px; padding: 15px; border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
-          <h4 style="margin: 0 0 10px;
- color: var(--accent);">Server Status</h4>
-          <p>Status: <strong id="serverStatusDisplay" style="color: var(--success);">Online</strong></p>
-          <button class="btn danger" id="toggleServerStatus" data-original="Toggle Status (Simulate)">Toggle Status (Simulate)</button>
+  <div id="adminBackdrop" class="admin-backdrop" aria-hidden="true">
+    <div id="adminModal" class="modal">
+        <h2 id="adminTitle" style="margin-top:0;" data-original="Admin Area">Admin Area</h2>
+        <div id="adminLogin">
+            <p id="adminLoginPrompt" data-original="Enter the Admin Token to proceed:">Enter the Admin Token to proceed:</p>
+            <input type="password" id="adminTokenInput" placeholder="Token" style="padding: 10px; width: 80%; max-width: 300px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text);">
+            <button class="btn primary" id="adminTokenSubmit" style="margin-top: 10px; width: 80%; max-width: 300px;">Submit</button>
         </div>
-
-        <div style="margin-top: 20px; padding: 15px; border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
-          <h4 id="analyticsTitle" style="margin: 0 0 10px; color: var(--accent);" data-original="Analytical Dashboard">Analytical Dashboard</h4>
-          <p style="margin: 5px 0 10px;">
-            <span data-original="Total Downloads:">Total Downloads:</span> <strong id="totalDownloadsDisplay">0</strong>
-          </p>
-          <p style="margin: 10px 0 5px; font-weight: 700; font-size: 0.95rem;" data-original="Recent Activities:">Recent Activities:</p>
-          <ul id="activitiesList" style="list-style-type: none; padding: 0; max-height: 150px; overflow-y: auto; text-align: left; font-size: 0.9rem;">
-            </ul>
-          <button class="btn secondary" id="refreshAnalytics" style="margin-top: 10px; width: 100%;" data-original="Refresh Data">Refresh Data</button>
+        <div id="adminContent" style="display: none; padding-top: 10px;">
+            <div style="margin-top: 15px; padding: 15px; border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
+                <h4 style="margin: 0 0 10px; color: var(--accent);">Server Status</h4>
+                <p>Status: <strong id="serverStatusDisplay" style="color: var(--success);">Online</strong></p>
+                <button class="btn danger" id="toggleServerStatus" data-original="Toggle Status (Simulate)">Toggle Status (Simulate)</button>
+            </div>
+            <div style="margin-top: 20px; padding: 15px; border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
+                <h4 id="analyticsTitle" style="margin: 0 0 10px; color: var(--accent);" data-original="Analytical Dashboard">Analytical Dashboard</h4>
+                <p style="margin: 5px 0 10px;">
+                    <span data-original="Total Downloads:">Total Downloads:</span> <strong id="totalDownloadsDisplay">0</strong>
+                </p>
+                <p style="margin: 10px 0 5px; font-weight: 700; font-size: 0.95rem;" data-original="Recent Activities:">Recent Activities:</p>
+                <ul id="activitiesList" style="list-style-type: none; padding: 0; max-height: 150px; overflow-y: auto; text-align: left; font-size: 0.9rem;">
+                    </ul>
+                <button class="btn secondary" id="refreshAnalytics" style="margin-top: 10px; width: 100%;" data-original="Refresh Data">Refresh Data</button>
+            </div>
+            <div style="margin-top: 20px; padding: 15px; border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
+                <h4 style="margin: 0 0 10px; color: var(--accent);" data-original="News & Updates">News & Updates</h4>
+                <textarea id="newsUpdateTextarea" style="width: 100%; height: 100px; padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text); resize: vertical; box-sizing: border-box;"></textarea>
+                <button class="btn primary" id="saveNewsUpdate" style="margin-top: 10px; width: 100%;" data-original="Save News">Save News</button>
+            </div>
+            <div style="margin-top: 20px; padding: 15px; border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
+                <h4 style="margin: 0 0 10px; color: var(--accent);" data-original="SEO Management">SEO Management</h4>
+                <label for="seoTitleInput" style="display:block;text-align:left;font-weight:600;margin-bottom:5px;" data-original="Page Title (Hanya Title Tag HTML)">Page Title (Hanya Title Tag HTML)</label>
+                <input type="text" id="seoTitleInput" style="width: 100%; padding: 8px; border-radius: 6px; margin-bottom: 10px;" maxlength="70">
+                <label for="seoDescTextarea" style="display:block;text-align:left;font-weight:600;margin-bottom:5px;" data-original="Meta Description">Meta Description</label>
+                <textarea id="seoDescTextarea" style="width: 100%; height: 80px; padding: 8px; border-radius: 6px; margin-bottom: 10px; resize: vertical;" maxlength="160"></textarea>
+                <label for="seoKeywordsInput" style="display:block;text-align:left;font-weight:600;margin-bottom:5px;" data-original="Meta Keywords (Comma-separated)">Meta Keywords (Comma-separated)</label>
+                <input type="text" id="seoKeywordsInput" style="width: 100%; padding: 8px; border-radius: 6px; margin-bottom: 10px;">
+                <button class="btn secondary" id="saveSeoMeta" style="width: 100%;" data-original="Update SEO Meta">Update SEO Meta</button>
+            </div>
         </div>
-
-        <div style="margin-top: 20px; padding: 15px; border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
-          <h4 style="margin: 0 0 10px; color: var(--accent);" data-original="News & Updates">News & Updates</h4>
-          <textarea id="newsUpdateTextarea" placeholder="Enter your news update..." style="width: 100%; padding: 10px; border-radius: 6px; font-family: var(--mono); font-size: 0.95rem;"></textarea>
-          <button class="btn primary" id="saveNewsUpdate" style="margin-top: 10px; width: 100%;" data-original="Save News">Save News</button>
+        <div style="margin-top:20px;">
+            <button id="closeAdmin" class="btn secondary" data-original="Close Admin Area">Close Admin Area</button>
         </div>
-
-        <div style="margin-top: 20px; padding: 15px; border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
-          <h4 style="margin: 0 0 10px; color: var(--accent);" data-original="SEO Management">SEO Management</h4>
-          <label style="display: block; text-align: left; margin-top: 5px; font-size: 0.9rem; color: var(--muted);" for="seoTitleInput" data-original="Page Title (Hanya Title Tag HTML)">Page Title (Hanya Title Tag HTML)</label>
-          <input type="text" id="seoTitleInput" placeholder="Growfax Official - Private Growtopia Server & Downloads" style="width: 100%; padding: 8px; border-radius: 6px; margin-bottom: 10px; font-family: var(--mono); font-size: 0.9rem;">
-          
-          <label style="display: block; text-align: left; margin-top: 10px; font-size: 0.9rem; color: var(--muted);" for="seoDescTextarea" data-original="Meta Description">Meta Description</label>
-          <textarea id="seoDescTextarea" placeholder="Situs resmi Growfax, private server Growtopia..." style="width: 100%; padding: 10px; border-radius: 6px; margin-bottom: 10px; font-family: var(--mono); font-size: 0.95rem;"></textarea>
-          
-          <label style="display: block; text-align: left; margin-top: 10px; font-size: 0.9rem;
- color: var(--muted);" for="seoKeywordsInput" data-original="Meta Keywords (Comma-separated)">Meta Keywords (Comma-separated)</label>
-          <input type="text" id="seoKeywordsInput" placeholder="Growfax, Growtopia Private Server, Growtopia PS, Download Growfax, Host Growfax, Growfax Android, Growfax Windows" style="width: 100%;
- padding: 8px; border-radius: 6px; margin-bottom: 10px; font-family: var(--mono); font-size: 0.9rem;">
-          <button class="btn primary" id="saveSeoMeta" style="margin-top: 10px;
- width: 100%;" data-original="Update SEO Meta">Update SEO Meta</button>
-        </div>
-      </div>
     </div>
   </div>
-  
+
+  <div id="authBackdrop" class="modal-backdrop" aria-hidden="true">
+    <div id="authModal" class="modal auth-view">
+        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+            <button class="small-btn active-tab" id="authTabLogin" data-view="login" data-original="Login">Login</button>
+            <button class="small-btn" id="authTabRegister" data-view="register" data-original="Register">Register</button>
+            <button class="small-btn" id="authTabReset" data-view="reset" style="display:none;" data-original="Reset Password">Reset Password</button>
+        </div>
+
+        <div id="authLoginView">
+            <h2 style="margin-top:0;font-size:1.4rem;" data-original="Welcome back! Please login to continue.">Welcome back! Please login to continue.</h2>
+            <div class="row" style="margin-bottom:15px;">
+                <label for="loginInput" data-original="Username or Email">Username or Email</label>
+                <input type="text" id="loginInput">
+            </div>
+            <div class="row" style="margin-bottom:20px;">
+                <label for="loginPassword" data-original="Password">Password</label>
+                <input type="password" id="loginPassword">
+            </div>
+            <button id="loginSubmit" class="btn primary" style="background:var(--accent);color:white;width:100%;padding:10px;border-radius:8px;font-weight:700;" data-original="Login">Login</button>
+            <a href="#" id="forgotPasswordLink" style="font-size:0.9rem;display:block;margin-top:15px;color:var(--accent);text-decoration:none;" data-original="Forgot Password?">Forgot Password?</a>
+        </div>
+
+        <div id="authRegisterView" style="display:none;">
+            <h2 style="margin-top:0;font-size:1.4rem;" data-original="Join our community by creating an account.">Join our community by creating an account.</h2>
+            <div class="row" style="margin-bottom:15px;">
+                <label for="registerUsername" data-original="Username">Username</label>
+                <input type="text" id="registerUsername">
+            </div>
+            <div class="row" style="margin-bottom:15px;">
+                <label for="registerEmail" data-original="Email">Email</label>
+                <input type="email" id="registerEmail">
+            </div>
+            <div class="row" style="margin-bottom:20px;">
+                <label for="registerPassword" data-original="Password (Min 6 chars)">Password (Min 6 chars)</label>
+                <input type="password" id="registerPassword">
+            </div>
+            <button id="registerSubmit" class="btn primary" style="background:var(--accent);color:white;width:100%;padding:10px;border-radius:8px;font-weight:700;" data-original="Create Account">Create Account</button>
+        </div>
+
+        <div id="authResetView" style="display:none;">
+            <h2 style="margin-top:0;font-size:1.4rem;" data-original="Reset Password">Reset Password</h2>
+            <p style="opacity:0.8;margin-bottom:20px;" data-original="Enter your email address and we will send you a password reset link.">Enter your email address and we will send you a password reset link.</p>
+            <div class="row" style="margin-bottom:20px;">
+                <label for="resetEmail" data-original="Email Address">Email Address</label>
+                <input type="email" id="resetEmail">
+            </div>
+            <button id="resetSubmit" class="btn primary" style="background:var(--accent);color:white;width:100%;padding:10px;border-radius:8px;font-weight:700;" data-original="Send Reset Link">Send Reset Link</button>
+            <a href="#" id="backToLoginLink" style="font-size:0.9rem;display:block;margin-top:15px;color:var(--accent);text-decoration:none;" data-original="Back to Login">Back to Login</a>
+        </div>
+
+        <button id="closeAuth" class="btn secondary" style="position: absolute; top: 10px; right: 10px;" data-original="Cancel">Cancel</button>
+    </div>
+  </div>
+
   <a id="floatingChat" class="floating-chat" href="https://discord.gg/smgS6sq83y" target="_blank" rel="noopener" title="Open Discord">
     <img src="discord.jpeg" alt="Discord">
   </a>
@@ -1038,8 +988,7 @@ powertunnelButton.addEventListener("click", (e) => {
     <button id="acceptCookies">I Accept</button>
   </div>
 
-
-<script>
+  <script>
 // --- File references (from Admin Area) ---
 const ADMIN_TOKEN = '1234'; // Simulated token
 const adminBackdrop = document.getElementById('adminBackdrop');
@@ -1069,28 +1018,38 @@ const langSelect = document.getElementById('langSelect');
 const themeToggle = document.getElementById('themeToggle');
 const timeDisplay = document.getElementById('timeDisplay');
 const downloadsSection = document.getElementById('downloads');
-const modalBackdrop = document.getElementById('modalBackdrop');
-const welcomeBackdrop = document.getElementById('welcomeBackdrop');
-const welcomeSkip = document.getElementById('welcomeSkip');
-const welcomeSave = document.getElementById('welcomeSave');
-const openSettings = document.getElementById('openSettings'); // RENAMED
-const welcomeLang = document.getElementById('welcomeLang');
-const modalConfirm = document.getElementById('modalConfirm');
-const modalCancel = document.getElementById('modalCancel');
-const downloadButtons = document.querySelectorAll('.platform-buttons a[download]');
+const shopSection = document.getElementById('shop');
+const newsSection = document.getElementById('news');
+const sections = document.querySelectorAll('.content-section');
+const navLinks = document.querySelectorAll('nav.primary a');
+const downloadButtons = document.querySelectorAll('.platform-buttons a:not(.btn-ios):not(.btn-powertunnel)');
 const iosButton = document.querySelector('.btn-ios');
 const powertunnelButton = document.querySelector('.btn-powertunnel');
-// --- NEW AUTH ELEMENTS ---// --- NEW AUTH ELEMENTS ---
+const modalBackdrop = document.getElementById('downloadModalBackdrop');
+const modalFilename = document.getElementById('modalFilename');
+const modalVersion = document.getElementById('modalVersion');
+const modalUpdated = document.getElementById('modalUpdated');
+const modalChangelog = document.getElementById('modalChangelog');
+const modalConfirm = document.getElementById('modalConfirm');
+const modalCancel = document.getElementById('modalCancel');
+const modalCopyBlock = document.getElementById('modalCopyBlock');
+const modalCopyText = document.getElementById('modalCopyText');
+const copyConfigButton = document.getElementById('copyConfigButton');
+
+// --- Welcome Modal Elements ---
+const welcomeBackdrop = document.getElementById('welcomeBackdrop');
+const openSettings = document.getElementById('openSettings');
+const welcomeLang = document.getElementById('welcomeLang');
+const welcomeSave = document.getElementById('welcomeSave');
+const welcomeSkip = document.getElementById('welcomeSkip');
+
+// --- Auth Modal Elements ---
 const authBackdrop = document.getElementById('authBackdrop');
 const openAuth = document.getElementById('openAuth');
-const tabLogin = document.getElementById('tabLogin');
-const tabRegister = document.getElementById('tabRegister');
-const loginView = document.getElementById('loginView');
-const registerView = document.getElementById('registerView');
-const forgotView = document.getElementById('forgotView');
-const forgotPasswordLink = document.getElementById('forgotPasswordLink');
-const backToLogin = document.getElementById('backToLogin');
-const loginUsername = document.getElementById('loginUsername');
+const authTabLogin = document.getElementById('authTabLogin');
+const authTabRegister = document.getElementById('authTabRegister');
+const authTabReset = document.getElementById('authTabReset');
+const loginInput = document.getElementById('loginInput');
 const loginPassword = document.getElementById('loginPassword');
 const loginSubmit = document.getElementById('loginSubmit');
 const registerUsername = document.getElementById('registerUsername');
@@ -1099,304 +1058,70 @@ const registerPassword = document.getElementById('registerPassword');
 const registerSubmit = document.getElementById('registerSubmit');
 const resetEmail = document.getElementById('resetEmail');
 const resetSubmit = document.getElementById('resetSubmit');
+const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+const backToLoginLink = document.getElementById('backToLoginLink');
+const authModal = document.getElementById('authModal');
+let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+let currentUsername = localStorage.getItem('currentUsername') || '';
 
-// --- State Variables ---
-let serverIsOnline = true; // Initial state
-let analyticsInterval = null;
-let isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn') === 'true'; // NEW: Check admin login state
-let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true'; // NEW: Check user login state
-let currentUsername = localStorage.getItem('currentUsername') || ''; // NEW: Store logged in username
+// --- Admin/Global State ---
+let serverIsOnline = true; // Simulated state
+let totalDownloads = 4520; // Simulated count
+let isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn') === 'true';
 
-/* =========================== Translations =========================== */
-const translations = {
-  en: {
-    "Pagi": "Morning",
-    "Siang": "Afternoon",
-    "Sore": "Evening",
-    "Malam": "Night",
-    "Admin Area": "Admin Area",
-    "Enter the Admin Token to proceed:": "Enter the Admin Token to proceed:",
-    "Login Admin berhasil": "Admin Login success",
-    "Toggle Status (Simulate)": "Toggle Status (Simulate)",
-    "Analytical Dashboard": "Analytical Dashboard",
-    "Total Downloads:": "Total Downloads:",
-    "Recent Activities:": "Recent Activities:",
-    "Refresh Data": "Refresh Data",
-    "News & Updates": "News & Updates",
-    "Save News": "Save News",
-    "SEO Management": "SEO Management",
-    "Page Title (Hanya Title Tag HTML)": "Page Title (HTML Title Tag Only)",
-    "Meta Description": "Meta Description",
-    "Meta Keywords (Comma-separated)": "Meta Keywords (Comma-separated)",
-    "Update SEO Meta": "Update SEO Meta",
-    "Close Admin Area": "Close Admin Area",
-    "Server Status changed.": "Server Status changed.",
-    "News updated successfully.": "News updated successfully.",
-    "SEO Meta updated successfully.": "SEO Meta updated successfully.",
-    "Welcome to Growfax": "Welcome to Growfax",
-    "Set your preferred language and theme. We'll remember this for next time.": "Set your preferred language and theme. We'll remember this for next time.",
-    "Language": "Language",
-    "Theme": "Theme",
-    "Save & Continue": "Save & Continue",
-    "Skip": "Skip",
-    "Tutup Area Admin": "Close Admin Area",
-    "Download initiated: ": "Download initiated: ",
-    : 
-    "Opening PayPal for USD purchase": "Opening PayPal for USD purchase",
-    "Opening PayPal for EUR purchase": "Opening PayPal for EUR purchase",
-    "Opening PayPal for GBP purchase": "Opening PayPal for GBP purchase",
-    "Opening PayPal for AUD purchase": "Opening PayPal for AUD purchase",
-    "Opening PayPal for SGD purchase": "Opening PayPal for SGD purchase",
-    "Opening PayPal for CAD purchase": "Opening PayPal for CAD purchase",
-    "Report Bug - Growfax": "Bug Report - Growfax",
-    "Hello Growfax Admin,\n\nI would like to report the following bug:\n\n[Describe the bug here, including steps to reproduce it, and the device you are using (Android/iOS/Windows).]\n\nThank you.": "Hello Growfax Admin,\n\nI would like to report the following bug:\n\n[Describe the bug here, including steps to reproduce it, and the device you are using (Android/iOS/Windows).]\n\nThank you.",
-    "Online": "Online",
-    "Offline": "Offline",
-    "Log out": "Log out", // NEW translation
-    "Logged out.": "Logged out.", // NEW translation
-    "⚠️ All SEO fields are required.": "⚠️ All SEO fields are required.", // NEW translation
-    "⚠️ Title (max 70 chars) and Description (max 160 chars) are too long.": "⚠️ Title (max 70 chars) and Description (max 160 chars) are too long.", // NEW translation
-    "We use cookies to ensure you get the best experience on our website. By continuing, you agree to our ": "We use cookies to ensure you get the best experience on our website. By continuing, you agree to our ", // NEW translation
-    "Privacy Policy": "Privacy Policy", // NEW translation
-    "I Accept": "I Accept", // NEW translation
-    "Thank you for accepting cookies.": "Thank you for accepting cookies.", // NEW translation
-    // --- NEW AUTH Translations ---
-    "Account": "Account",
-    "Login": "Login",
-    "Register": "Register",
-    "Welcome back! Please login to continue.": "Welcome back! Please login to continue.",
-    "Username or Email": "Username or Email",
-    "Password": "Password",
-    "Forgot Password?": "Forgot Password?",
-    "Join our community by creating an account.": "Join our community by creating an account.",
-    "Username": "Username",
-    "Email": "Email",
-    "Password (Min 6 chars)": "Password (Min 6 chars)",
-    "Create Account": "Create Account",
-    "Reset Password": "Reset Password",
-    "Enter your email address and we will send you a password reset link.": "Enter your email address and we will send you a password reset link.",
-    "Email Address": "Email Address",
-    "Back to Login": "Back to Login",
-    "Send Reset Link": "Send Reset Link",
-    "👋 Hi, ": "👋 Hi, ",
-    "Logout success.": "Logout success.",
-    "Login successful.": "Login successful.",
-    "Registration successful.": "Registration successful.",
-    "Welcome, ": "Welcome, ",
-    "Username is already taken.": "Username is already taken.",
-    "Email is already registered.": "Email is already registered.",
-    "Invalid username or password.": "Invalid username or password.",
-    "Username and Password are required.": "Username and Password are required.",
-    "Username, Email, and Password (min 6 chars) are required.": "Username, Email, and Password (min 6 chars) are required.",
-    "Password reset link sent to ": "Password reset link sent to ",
-    "Email not registered.": "Email not registered.",
-    "Invalid email address.": "Invalid email address.",
-  },
-  id: {
-    "Pagi": "Pagi",
-    "Siang": "Siang",
-    "Sore": "Sore",
-    "Malam": "Malam",
-    "Welcome & Preferences": "Selamat Datang & Preferensi",
-    "Admin Area": "Area Admin",
-    "Open Discord": "Buka Discord",
-    "Join Our Community": "Bergabunglah dengan Komunitas Kami",
-    "Connect with others and get support in our official Discord server.": "Terhubung dengan orang lain dan dapatkan bantuan di server Discord resmi kami.",
-    "Join Growfax Discord": "Gabung Discord Growfax",
-    "📥 Downloads": "📥 Unduhan",
-    "": "🛒 Toko",
-    "🐞 Report Bug": "🐞 Laporkan Bug",
-    "🔑 Admin": "🔑 Admin",
-    "Welcome to Growfax": "Selamat Datang di Growfax",
-    "Private Growtopia Server": "Server Growtopia Private",
-    "Loading time...": "Memuat waktu...",
-    "Essential File Downloads": "Unduhan File Penting",
-    "Play on Android": "Main di Android",
-    "Play on Windows": "Main di Windows",
-    "Play on iOS": "Main di iOS",
-    "Play via PowerTunnel": "Main via PowerTunnel",
-    "Server Time (AEDT):": "Waktu Server (AEDT):", // <-- MODIFIED: New Timezone label
-    "Version": "Versi",
-    "Updated": "Diperbarui",
-    "Changelog": "Catatan pembaruan",
-    "Filename": "Nama berkas",
-    "File info": "Info berkas",
-    "Details before download": "Detail sebelum mengunduh",
-    "Cancel": "Batal",
-    "Download": "Unduh",
-    "Download failed: file not found.": "Unduhan gagal: berkas tidak ditemukan.",
-    "Config copied!": "Konfigurasi disalin!",
-    "Copy Config": "Salin Konfigurasi",
-    "Support the server and unlock exclusive roles! Direct purchase via PayPal.me.": "Dukung server dan buka peran eksklusif! Pembelian langsung via PayPal.me.",
-    "Growfax Server Roles": "Peran Server Growfax",
-    "Opening PayPal for USD purchase": "Membuka PayPal untuk pembelian $USD",
-    "Opening PayPal for EUR purchase": "Membuka PayPal untuk pembelian €EUR",
-    "Opening PayPal for GBP purchase": "Membuka PayPal untuk pembelian £GBP",
-    "Opening PayPal for AUD purchase": "Membuka PayPal untuk pembelian A$AUD",
-    "Opening PayPal for SGD purchase": "Membuka PayPal untuk pembelian S$SGD",
-    "Opening PayPal for CAD purchase": "Membuka PayPal untuk pembelian C$CAD",
-    "Report Bug - Growfax": "Laporan Bug - Growfax",
-    "Halo Admin Growfax,\n\nSaya ingin melaporkan bug berikut:\n\n[Jelaskan bug di sini, termasuk langkah-langkah untuk mereproduksinya, dan perangkat yang Anda gunakan (Android/iOS/Windows).]\n\nTerima kasih.": "Halo Admin Growfax,\n\nSaya ingin melaporkan bug berikut:\n\n[Jelaskan bug di sini, termasuk langkah-langkah untuk mereproduksinya, dan perangkat yang Anda gunakan (Android/iOS/Windows).]\n\nTerima kasih.",
-    "Enter the Admin Token to proceed:": "Masukkan Token Admin untuk melanjutkan:",
-    "Login Admin berhasil": "Login Admin berhasil",
-    "Online": "Online",
-    "Offline": "Offline",
-    "Toggle Status (Simulate)": "Ubah Status (Simulasi)",
-    "Server Status changed.": "Status Server diubah.",
-    "Analytical Dashboard": "Dasbor Analitik",
-    "Total Downloads:": "Total Unduhan:",
-    "Recent Activities:": "Aktivitas Terbaru:",
-    "Refresh Data": "Segarkan Data",
-    "News & Updates": "Berita & Pembaruan",
-    "Save News": "Simpan Berita",
-    "News updated successfully.": "Berita berhasil diperbarui.",
-    "SEO Management": "Manajemen SEO",
-    "Page Title (Hanya Title Tag HTML)": "Judul Halaman (Hanya Tag Title HTML)",
-    "Meta Description": "Meta Deskripsi",
-    "Meta Keywords (Comma-separated)": "Kata Kunci Meta (Dipisahkan Koma)",
-    "Update SEO Meta": "Perbarui Meta SEO",
-    "SEO Meta updated successfully.": "Meta SEO berhasil diperbarui.",
-    "Close Admin Area": "Tutup Area Admin",
-    "Download initiated: ": "Unduhan dimulai: ",
-    : "Pembelian toko: ",
-    "👑 Admin Server Role": "👑 Peran Admin Server",
-    "Can sell role": "Bisa menjual peran",
-    "Benefit for selling roles to players.": "Keuntungan dari menjual peran kepada pemain.",
-    "Can sell title": "Bisa menjual gelar",
-    "Benefit for selling custom titles to players.": "Keuntungan dari menjual gelar kustom kepada pemain.",
-    "Can sell All item with Real Trade": "Bisa menjual semua item dengan Real Trade",
-    "Allows selling all in-game items via Real Trade system.": "Memungkinkan menjual semua item dalam game melalui sistem Real Trade.",
-    " ago": " yang lalu",
-    "minute": ["menit"],
-    "hour": ["jam"],
-    "day": ["hari"],
-    "month": ["bulan"],
-    "year": ["tahun"],
-    "now": "baru saja",
-    "Log out": "Keluar", // NEW translation
-    "Logged out.": "Berhasil Keluar.", // NEW translation
-    "⚠️ All SEO fields are required.": "⚠️ Semua bidang SEO wajib diisi.", // NEW translation
-    "⚠️ Title (max 70 chars) and Description (max 160 chars) are too long.": "⚠️ Judul (maks 70 kar.) dan Deskripsi (maks 160 kar.) terlalu panjang.", // NEW translation
-    "We use cookies to ensure you get the best experience on our website. By continuing, you agree to our ": "Kami menggunakan cookie untuk memastikan Anda mendapatkan pengalaman terbaik di website kami. Dengan melanjutkan, Anda menyetujui ", // NEW translation
-    "Privacy Policy": "Kebijakan Privasi", // NEW translation
-    "I Accept": "Saya Terima", // NEW translation
-    "Thank you for accepting cookies.": "Terima kasih telah menerima cookie.", // NEW translation
-    // --- NEW AUTH Translations ---
-    "Account": "Akun",
-    "Login": "Masuk",
-    "Register": "Daftar",
-    "Welcome back! Please login to continue.": "Selamat datang kembali! Silakan masuk untuk melanjutkan.",
-    "Username or Email": "Nama Pengguna atau Email",
-    "Password": "Kata Sandi",
-    "Forgot Password?": "Lupa Kata Sandi?",
-    "Join our community by creating an account.": "Bergabunglah dengan komunitas kami dengan membuat akun.",
-    "Username": "Nama Pengguna",
-    "Email": "Email",
-    "Password (Min 6 chars)": "Kata Sandi (Min 6 karakter)",
-    "Create Account": "Buat Akun",
-    "Reset Password": "Atur Ulang Kata Sandi",
-    "Enter your email address and we will send you a password reset link.": "Masukkan alamat email Anda dan kami akan mengirimkan tautan pengaturan ulang kata sandi.",
-    "Email Address": "Alamat Email",
-    "Back to Login": "Kembali ke Masuk",
-    "Send Reset Link": "Kirim Tautan Reset",
-    "👋 Hi, ": "👋 Hai, ",
-    "Logout success.": "Berhasil Keluar.",
-    "Login successful.": "Login berhasil.",
-    "Registration successful.": "Pendaftaran berhasil.",
-    "Welcome, ": "Selamat datang, ",
-    "Username is already taken.": "Nama pengguna sudah dipakai.",
-    "Email is already registered.": "Email sudah terdaftar.",
-    "Invalid username or password.": "Nama pengguna atau kata sandi tidak valid.",
-    "Username and Password are required.": "Nama Pengguna dan Kata Sandi wajib diisi.",
-    "Username, Email, and Password (min 6 chars) are required.": "Nama Pengguna, Email, dan Kata Sandi (min 6 kar.) wajib diisi.",
-    "Password reset link sent to ": "Tautan reset kata sandi dikirim ke ",
-    "Email not registered.": "Email tidak terdaftar.",
-    "Invalid email address.": "Alamat email tidak valid.",
-  }
-};
-/* =========================== Local Storage & SEO Functions =========================== */
-function loadTheme() {
-  const savedTheme = localStorage.getItem('growfax_theme');
-  const lang = langSelect.value;
-  const t = translations[lang];
-  const lightText = t['🌞 Light'] || '🌞 Light';
-  const darkText = t['🌙 Dark'] || '🌙 Dark';
-
-  if (savedTheme) {
-    document.body.setAttribute('data-theme', savedTheme);
-    themeToggle.textContent = savedTheme === 'dark' ? lightText : darkText;
-  } else {
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      document.body.setAttribute('data-theme', 'dark');
-      themeToggle.textContent = lightText;
-    } else {
-      document.body.setAttribute('data-theme', 'light');
-      themeToggle.textContent = darkText;
-    }
-  }
+/* =========================== Simulated Backend/Database (Local Storage) =========================== */
+function getSimulatedUsers() {
+    const users = JSON.parse(localStorage.getItem('growfax_users') || '[]');
+    return users;
 }
-function loadLang() {
-  const savedLang = localStorage.getItem('growfax_lang');
-  if (savedLang) {
-    langSelect.value = savedLang;
-    welcomeLang.value = savedLang;
-    applyTranslations(savedLang);
-  }
+function saveSimulatedUsers(users) {
+    localStorage.setItem('growfax_users', JSON.stringify(users));
 }
-function loadSeoSettings() {
-  const savedTitle = localStorage.getItem('seo_title');
-  const savedDesc = localStorage.getItem('seo_desc');
-  const savedKeywords = localStorage.getItem('seo_keywords');
-  // Apply to Admin Area inputs
-  seoTitleInput.value = savedTitle || document.querySelector('title').textContent;
-  seoDescTextarea.value = savedDesc || document.querySelector('meta[name="description"]').content;
-  seoKeywordsInput.value = savedKeywords || document.querySelector('meta[name="keywords"]').content;
-  // Apply to HTML head
-  if (savedTitle) document.querySelector('title').textContent = savedTitle;
-  if (savedDesc) document.querySelector('meta[name="description"]').content = savedDesc;
-  if (savedKeywords) document.querySelector('meta[name="keywords"]').content = savedKeywords;
+function getActivities() {
+    return JSON.parse(localStorage.getItem('growfax_activities') || '[]');
 }
-function saveSeoSettings(title, desc, keywords) {
-  localStorage.setItem('seo_title', title);
-  localStorage.setItem('seo_desc', desc);
-  localStorage.setItem('seo_keywords', keywords);
-}
-function loadNewsUpdate() {
-  const savedNews = localStorage.getItem('news_update_text') || 'No recent updates.';
-  const savedTime = localStorage.getItem('news_update_time');
-  newsUpdateTextarea.value = savedNews;
-  if (savedTime) {
-    updateNewsTimeAgo(new Date(savedTime));
-  }
+function addActivity(type, data) {
+    const activities = getActivities();
+    const newActivity = { type, data, timestamp: new Date().toISOString() };
+    activities.unshift(newActivity); // Add to the front
+    localStorage.setItem('growfax_activities', JSON.stringify(activities.slice(0, 50))); // Keep max 50
 }
 function saveNewsUpdateText(text) {
-  const now = new Date();
-  localStorage.setItem('news_update_text', text);
-  localStorage.setItem('news_update_time', now.toISOString());
-  loadNewsUpdate();
+    localStorage.setItem('growfax_news', text);
+}
+function loadNewsUpdate() {
+    const newsContent = document.getElementById('newsContent');
+    const savedNews = localStorage.getItem('growfax_news');
+    if (savedNews) {
+        newsContent.innerHTML = savedNews;
+    }
+}
+// Simulated file download counter (for dashboard only)
+function incrementDownload(filekey) {
+    totalDownloads++;
+    localStorage.setItem('totalDownloads', totalDownloads);
+    addActivity('download', filekey);
 }
 
-/* =========================== File Metadata (Version, Update Date, Changelog, Copy Text) - Managed via Admin Area / Local Storage.
- Default values below. - Note: copytext must use \n for newlines in JS strings.
- =========================== */
+/* =========================== File Metadata (Config for Downloads) =========================== */
 const FILE_META = {
-  virtualhost: {
-    version: "v4.2.1",
-    updated: "2025-10-31",
-    changelog: "Optimized connection stability.",
-    copytext: `103.27.206.183 growtopia1.com\n103.27.206.183 growtopia2.com\n103.27.206.183 www.growtopia1.com\n103.27.206.183 www.growtopia2.com`
-  },
-  patched: {
-    version: "v4.2.1",
-    updated: "2025-10-31",
-    changelog: "Improved launch efficiency.",
-    copytext: "This file is a .BAT executable and cannot be copied as plain text."
-  },
-  ios: {
-    version: "v1.1.0",
-    updated: "2025-10-25",
-    changelog: "Added support for Surge 5.",
-    copytext: `[General]
+    virtualhost: {
+        version: "v4.2.1",
+        updated: "2025-10-31",
+        changelog: "Improved launch efficiency.",
+        downloadUrl: "Growfax_VirtualHost.txt"
+    },
+    patched: {
+        version: "v4.2.1",
+        updated: "2025-10-31",
+        changelog: "Improved launch efficiency.",
+        copytext: "This file is a .BAT executable and cannot be copied as plain text."
+    },
+    ios: {
+        version: "v1.1.0",
+        updated: "2025-10-25",
+        changelog: "Added support for Surge 5. Updated IP to 91.134.85.13.",
+        copytext: `[General]
 bypass-system = true
 
 [Rule]
@@ -1407,157 +1132,468 @@ growtopia1.com = 91.134.85.13
 growtopia2.com = 91.134.85.13
 www.growtopia1.com = 91.134.85.13
 www.growtopia2.com = 91.134.85.13`
-  },
-  powertunnel: {
-    version: "v2.0.0",
-    updated: "2025-10-25",
-    changelog: "Optimized for PowerTunnel v2.",
-    copytext: `15.235.232.75 growtopia1.com
-15.235.232.75 growtopia2.com
-15.235.232.75 www.growtopia1.com
-15.235.232.75 www.growtopia2.com`
-  }
-};
-
-/* =========================== Utility Functions =========================== */
-
-function showToast(msg, duration = 2000) {
-  const toast = document.getElementById('toast');
-  toast.textContent = msg;
-  toast.style.opacity = '1';
-  toast.style.transform = 'translateX(-50%) translateY(0)';
-  setTimeout(() => {
-    toast.style.opacity = '0';
-    toast.style.transform = 'translateX(-50%) translateY(10px)';
-  }, duration);
-}
-
-function plural(count, words) {
-  const lang = langSelect.value;
-  // Simple Indonesian pluralization (only provides the word)
-  if (lang === 'id') {
-    return words[0];
-  }
-  // Simple English pluralization
-  return count === 1 ? words[0] : words[0] + 's';
-}
-
-function timeSince(date) {
-  const lang = langSelect.value;
-  const seconds = Math.floor((new Date() - date) / 1000);
-  const l = translations[lang] || translations.en;
-  
-  if (seconds < 5) return l.now || 'just now';
-
-  let interval = seconds / 31536000;
-  if (interval > 1) return Math.floor(interval) + (lang === 'id' ? ' tahun yang lalu' : ` ${plural(Math.floor(interval), l.year)} ago`);
-  interval = seconds / 2592000;
-  if (interval > 1) return Math.floor(interval) + (lang === 'id' ? ' bulan yang lalu' : ` ${plural(Math.floor(interval), l.month)} ago`);
-  interval = seconds / 86400;
-  if (interval > 1) return Math.floor(interval) + (lang === 'id' ? ' hari yang lalu' : ` ${plural(Math.floor(interval), l.day)} ago`);
-  interval = seconds / 3600;
-  if (interval > 1) return Math.floor(interval) + (lang === 'id' ? ' jam yang lalu' : ` ${plural(Math.floor(interval), l.hour)} ago`);
-  interval = seconds / 60;
-  if (interval > 1) return Math.floor(interval) + (lang === 'id' ? ' menit yang lalu' : ` ${plural(Math.floor(interval), l.minute)} ago`);
-  return seconds + (lang === 'id' ? ' detik yang lalu' : ` seconds ago`);
-}
-
-function getIndoGreeting(hour) {
-  if (hour >= 4 && hour < 11) return (translations.id['Pagi'] || 'Pagi');
-  if (hour >= 11 && hour < 15) return (translations.id['Siang'] || 'Siang');
-  if (hour >= 15 && hour < 18) return (translations.id['Sore'] || 'Sore');
-  return (translations.id['Malam'] || 'Malam');
-}
-
-function updateNewsTimeAgo(date) {
-  const newsUpdateSection = newsUpdateTextarea.parentNode;
-  const timeAgo = timeSince(date);
-  let timeAgoElement = document.getElementById('news-time-ago');
-  if (!timeAgoElement) {
-    timeAgoElement = document.createElement('p');
-    timeAgoElement.id = 'news-time-ago';
-    timeAgoElement.style.fontSize = '0.85rem';
-    timeAgoElement.style.color = 'var(--muted)';
-    newsUpdateSection.insertBefore(timeAgoElement, newsUpdateTextarea);
-  }
-  timeAgoElement.textContent = `Last saved: ${timeAgo}`;
-}
-
-function updateTime() {
-  const now = new Date();
-  // Simulated server time (AEDT is GMT+11)
-  const aedtOffset = 11 * 60; // 11 hours in minutes
-  const localOffset = now.getTimezoneOffset(); // Local timezone offset in minutes
-  const aedtTime = new Date(now.getTime() + (localOffset + aedtOffset) * 60000);
-  
-  const hour = aedtTime.getHours();
-  const minute = aedtTime.getMinutes().toString().padStart(2, '0');
-  const second = aedtTime.getSeconds().toString().padStart(2, '0');
-  
-  const lang = langSelect.value;
-  let timeLabel = lang === 'id' ? (translations.id['Waktu Server (AEDT):'] || 'Waktu Server (AEDT):') : 'Server Time (AEDT):';
-  let greeting = lang === 'id' ? getIndoGreeting(hour) : '';
-
-  if (lang === 'id') {
-    greeting = getIndoGreeting(hour);
-    timeLabel = `${timeLabel} ${greeting}`;
-  }
-  
-  timeDisplay.textContent = `${timeLabel} ${hour.toString().padStart(2, '0')}:${minute}:${second}`;
-}
-
-/* =========================== Dynamic Translations & Localization =========================== */
-
-// Command Texts for translation (Shop Role)
-const commandData = {
-  admin_commands: [ 
-    { strong: "Can sell role", span: "Benefit for selling roles to players." }, 
-    { strong: "Can sell title", span: "Benefit for selling custom titles to players." }, 
-    { strong: "Can sell All item with Real Trade", span: "Allows selling all in-game items via Real Trade system." }
-  ]
-};
-
-// Update command list translations in the Shop section
-function updateCommandTranslations(lang) {
-  for (const id in commandData) {
-    const ul = document.getElementById(id);
-    if (ul) {
-      ul.innerHTML = ''; // Clear existing content
-      commandData[id].forEach(item => {
-        const li = document.createElement('li');
-        // Translate the text content of the strong/span elements
-        const strongText = lang === 'en' ? item.strong : (translations[lang]?.[item.strong] || item.strong);
-        li.innerHTML = `<strong>${strongText}</strong>`;
-        if (item.span) {
-          const spanText = lang === 'en' ? item.span : (translations[lang]?.[item.span] || item.span);
-          li.innerHTML += `<span>${spanText}</span>`;
-        }
-        ul.appendChild(li);
-      });
+    },
+    powertunnel: {
+        version: "v2.0.0",
+        updated: "2025-10-25",
+        changelog: "Optimized for PowerTunnel v2. Updated IP to 91.134.85.13.",
+        copytext: `91.134.85.13 growtopia1.com
+91.134.85.13 growtopia2.com
+91.134.85.13 www.growtopia1.com
+91.134.85.13 www.growtopia2.com`
     }
+};
+
+/* =========================== Time Zone Update Function =========================== */
+function updateTime() {
+  const lang = langSelect.value;
+  const timeDisplay = document.getElementById("timeDisplay");
+  try {
+    const now = new Date();
+    const sydneyTime = now.toLocaleString("en-AU", {
+      timeZone: "Australia/Sydney",
+      hour12: false,
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    });
+    
+    // Determine greeting
+    const hour = now.getHours();
+    let greeting;
+    if (hour < 10) greeting = 'Pagi'; // Before 10 AM
+    else if (hour < 15) greeting = 'Siang'; // Before 3 PM
+    else if (hour < 18) greeting = 'Sore'; // Before 6 PM
+    else greeting = 'Malam'; // After 6 PM
+
+    const t = translations[lang] || translations.en;
+    const greetingKey = t[greeting] || greeting;
+    const timeZoneLabel = t['Server Time (AEDT):'] || 'Server Time (Sydney):'; // Using AEDT to denote the timezone, which is Sydney's standard
+    
+    timeDisplay.textContent = `${greetingKey}, ${timeZoneLabel} ${sydneyTime}`;
+  } catch (e) {
+    timeDisplay.textContent = (translations[lang] && translations[lang]['Unable to load Sydney time.']) || "Unable to load Sydney time.";
   }
 }
 
-// Update dynamic texts in the Admin Area that aren't covered by data-original
-function updateAdminDynamicTexts(lang) {
-  // Update login prompt based on current language
-  adminLoginPrompt.textContent = lang === 'id' ? 
-    (translations.id["Enter the Admin Token to proceed:"] || 'Masukkan Token Admin untuk melanjutkan:') : 'Enter the Admin Token to proceed:';
-  
-  // Server Status and Analytics (Dynamic)
-  serverStatusDisplay.textContent = serverIsOnline ? 
-    (lang === 'id' ? translations.id['Online'] : 'Online') : (lang === 'id' ? translations.id['Offline'] : 'Offline');
-  
-  // Update admin logout button text
-  const logoutBtn = document.getElementById('adminLogout');
-  if (logoutBtn) {
-    logoutBtn.textContent = lang === 'id' ? (translations.id['Log out'] || 'Keluar') : 'Logout';
-  }
-  
-  // Refresh analytics data to update language on dynamic strings
-  renderAnalyticsDashboard(); 
+/* =========================== Translations =========================== */
+const translations = {
+    en: {
+        "Pagi": "Morning",
+        "Siang": "Afternoon",
+        "Sore": "Evening",
+        "Malam": "Night",
+        "Admin Area": "Admin Area",
+        "Enter the Admin Token to proceed:": "Enter the Admin Token to proceed:",
+        "Login Admin berhasil": "Admin Login success",
+        "Toggle Status (Simulate)": "Toggle Status (Simulate)",
+        "Analytical Dashboard": "Analytical Dashboard",
+        "Total Downloads:": "Total Downloads:",
+        "Recent Activities:": "Recent Activities:",
+        "Refresh Data": "Refresh Data",
+        "News & Updates": "News & Updates",
+        "Save News": "Save News",
+        "SEO Management": "SEO Management",
+        "Page Title (Hanya Title Tag HTML)": "Page Title (HTML Title Tag Only)",
+        "Meta Description": "Meta Description",
+        "Meta Keywords (Comma-separated)": "Meta Keywords (Comma-separated)",
+        "Update SEO Meta": "Update SEO Meta",
+        "Close Admin Area": "Close Admin Area",
+        "Server Status changed.": "Server Status changed.",
+        "News updated successfully.": "News updated successfully.",
+        "SEO Meta updated successfully.": "SEO Meta updated successfully.",
+        "Welcome to Growfax": "Welcome to Growfax",
+        "Set your preferred language and theme. We'll remember this for next time.": "Set your preferred language and theme. We'll remember this for next time.",
+        "Language": "Language",
+        "Theme": "Theme",
+        "Save & Continue": "Save & Continue",
+        "Skip": "Skip",
+        "Tutup Area Admin": "Close Admin Area",
+        "Download initiated: ": "Download initiated: ",
+        "Download failed: file not found.": "Download failed: file not found.",
+        "Config copied!": "Config copied!",
+        "Copy Config": "Copy Config",
+        "Failed to copy. Please copy manually from the modal.": "Failed to copy. Please copy manually from the modal.",
+        "Play on Android": "Play on Android",
+        "Play on Windows": "Play on Windows",
+        "Play on iOS": "Play on iOS",
+        "Play via PowerTunnel": "Play via PowerTunnel",
+        "Latest Update:": "Latest Update:",
+        "Unable to load Sydney time.": "Unable to load Sydney time.",
+        "Online": "Online",
+        "Offline": "Offline",
+        "Server Time (AEDT):": "Server Time (Sydney):", // Changed label for clarity
+        "Version": "Version",
+        "Updated": "Updated",
+        "Changelog": "Changelog",
+        "Filename": "Filename",
+        "File info": "File info",
+        "Details before download": "Details before download",
+        "Cancel": "Cancel",
+        "Download": "Download",
+        "Shop": "🛒 Shop",
+        "News": "🔔 News",
+        "Essential File Downloads": "📥 Essential File Downloads",
+        "Growfax Server Roles": "Growfax Server Roles",
+        "Support the server and unlock exclusive roles! Direct purchase via PayPal.me.": "Support the server and unlock exclusive roles! Direct purchase via PayPal.me.",
+        "Pay $USD": "Pay $USD",
+        "Pay €EUR": "Pay €EUR",
+        "Pay £GBP": "Pay £GBP",
+        "Pay A$AUD": "Pay A$AUD",
+        "Pay S$SGD": "Pay S$SGD",
+        "Pay C$CAD": "Pay C$CAD",
+        "Bayar Rp IDR": "Pay Rp IDR",
+        "Opening PayPal for USD purchase": "Opening PayPal for USD purchase",
+        "Opening PayPal for EUR purchase": "Opening PayPal for EUR purchase",
+        "Opening PayPal for GBP purchase": "Opening PayPal for GBP purchase",
+        "Opening PayPal for AUD purchase": "Opening PayPal for AUD purchase",
+        "Opening PayPal for SGD purchase": "Opening PayPal for SGD purchase",
+        "Opening PayPal for CAD purchase": "Opening PayPal for CAD purchase",
+        "Opening Saweria for IDR purchase": "Opening Saweria for IDR purchase",
+        "👑 Admin Server Role": "👑 Admin Server Role",
+        "Can sell role": "Can sell role",
+        "Benefit for selling roles to players.": "Benefit for selling roles to players.",
+        "Can sell title": "Can sell title",
+        "Benefit for selling custom titles to players.": "Benefit for selling custom titles to players.",
+        "Can sell All item with Real Trade": "Can sell All item with Real Trade",
+        "Allows selling all in-game items via Real Trade system.": "Allows selling all in-game items via Real Trade system.",
+        "⭐ Legend Role": "⭐ Legend Role",
+        "Command: /legendary": "Command: /legendary",
+        "Spawn exclusive Legendary item once per day.": "Spawn exclusive Legendary item once per day.",
+        "Command: /vault": "Command: /vault",
+        "Access a personal, larger vault storage.": "Access a personal, larger vault storage.",
+        "Command: /fly": "Command: /fly",
+        "Toggle flight mode in public worlds.": "Toggle flight mode in public worlds.",
+        "🛡️ Supporter Role": "🛡️ Supporter Role",
+        "Command: /rainbow": "Command: /rainbow",
+        "Access to rainbow-colored in-game text.": "Access to rainbow-colored in-game text.",
+        "Command: /saber": "Command: /saber",
+        "Receive a Supporter-exclusive Saber item.": "Receive a Supporter-exclusive Saber item.",
+        "Chat Icon": "Chat Icon",
+        "Unique icon next to your name in chat.": "Unique icon next to your name in chat.",
+        " minute": [" minute"],
+        " hour": [" hour"],
+        " day": [" day"],
+        " month": [" month"],
+        " year": [" year"],
+        "now": "just now",
+        "Log out": "Log out", // NEW translation
+        "Logged out.": "Logged out.", // NEW translation
+        "⚠️ All SEO fields are required.": "⚠️ All SEO fields are required.", // NEW translation
+        "⚠️ Title (max 70 chars) and Description (max 160 chars) are too long.": "⚠️ Title (max 70 chars) and Description (max 160 chars) are too long.", // NEW translation
+        "We use cookies to ensure you get the best experience on our website. By continuing, you agree to our ": "We use cookies to ensure you get the best experience on our website. By continuing, you agree to our ", // NEW translation
+        "Privacy Policy": "Privacy Policy", // NEW translation
+        "I Accept": "I Accept", // NEW translation
+        "Thank you for accepting cookies.": "Thank you for accepting cookies.", // NEW translation
+        // --- NEW AUTH Translations ---
+        "Account": "Account",
+        "Login": "Login",
+        "Register": "Register",
+        "Welcome back! Please login to continue.": "Welcome back! Please login to continue.",
+        "Username or Email": "Username or Email",
+        "Password": "Password",
+        "Forgot Password?": "Forgot Password?",
+        "Join our community by creating an account.": "Join our community by creating an account.",
+        "Username": "Username",
+        "Email": "Email",
+        "Password (Min 6 chars)": "Password (Min 6 chars)",
+        "Create Account": "Create Account",
+        "Reset Password": "Reset Password",
+        "Enter your email address and we will send you a password reset link.": "Enter your email address and we will send you a password reset link.",
+        "Email Address": "Email Address",
+        "Back to Login": "Back to Login",
+        "Send Reset Link": "Send Reset Link",
+        "👋 Hi, ": "👋 Hi, ",
+        "Login successful.": "Login successful.",
+        "Registration successful.": "Registration successful.",
+        "Welcome, ": "Welcome, ",
+        "Username is already taken.": "Username is already taken.",
+        "Email is already registered.": "Email is already registered.",
+        "Invalid username or password.": "Invalid username or password.",
+        "Username and Password are required.": "Username and Password are required.",
+        "Username, Email, and Password (min 6 chars) are required.": "Username, Email, and Password (min 6 chars) are required.",
+        "Password reset link sent to ": "Password reset link sent to ",
+        "Email not registered.": "Email not registered.",
+        "Invalid email address.": "Invalid email address.",
+        "✅ Config copied for iOS!": "✅ Config copied for iOS!",
+        "❌ Failed to copy iOS config.": "❌ Failed to copy iOS config.",
+        "✅ Config copied for PowerTunnel!": "✅ Config copied for PowerTunnel!",
+        "❌ Failed to copy PowerTunnel config.": "❌ Failed to copy PowerTunnel config.",
+    },
+    id: {
+        "Pagi": "Pagi",
+        "Siang": "Siang",
+        "Sore": "Sore",
+        "Malam": "Malam",
+        "Admin Area": "Area Admin",
+        "Enter the Admin Token to proceed:": "Masukkan Token Admin untuk melanjutkan:",
+        "Login Admin berhasil": "Login Admin berhasil",
+        "Toggle Status (Simulate)": "Ubah Status (Simulasi)",
+        "Analytical Dashboard": "Dasbor Analitik",
+        "Total Downloads:": "Total Unduhan:",
+        "Recent Activities:": "Aktivitas Terbaru:",
+        "Refresh Data": "Segarkan Data",
+        "News & Updates": "Berita & Pembaruan",
+        "Save News": "Simpan Berita",
+        "SEO Management": "Manajemen SEO",
+        "Page Title (Hanya Title Tag HTML)": "Judul Halaman (Hanya Tag Title HTML)",
+        "Meta Description": "Deskripsi Meta",
+        "Meta Keywords (Comma-separated)": "Kata Kunci Meta (Dipisahkan Koma)",
+        "Update SEO Meta": "Perbarui Meta SEO",
+        "Close Admin Area": "Tutup Area Admin",
+        "Server Status changed.": "Status Server diubah.",
+        "News updated successfully.": "Berita berhasil diperbarui.",
+        "SEO Meta updated successfully.": "Meta SEO berhasil diperbarui.",
+        "Welcome to Growfax": "Selamat Datang di Growfax",
+        "Set your preferred language and theme. We'll remember this for next time.": "Atur bahasa dan tema pilihan Anda. Kami akan mengingatnya untuk kunjungan berikutnya.",
+        "Language": "Bahasa",
+        "Theme": "Tema",
+        "Save & Continue": "Simpan & Lanjutkan",
+        "Skip": "Lewati",
+        "Tutup Area Admin": "Tutup Area Admin",
+        "Download initiated: ": "Unduhan dimulai: ",
+        "Download failed: file not found.": "Unduhan gagal: berkas tidak ditemukan.",
+        "Config copied!": "Konfigurasi disalin!",
+        "Copy Config": "Salin Konfigurasi",
+        "Failed to copy. Please copy manually from the modal.": "Gagal menyalin. Silakan salin manual dari modal.",
+        "Play on Android": "Main di Android",
+        "Play on Windows": "Main di Windows",
+        "Play on iOS": "Main di iOS",
+        "Play via PowerTunnel": "Main via PowerTunnel",
+        "Latest Update:": "Pembaruan Terbaru:",
+        "Unable to load Sydney time.": "Gagal memuat waktu Sydney.",
+        "Online": "Online",
+        "Offline": "Offline",
+        "Server Time (AEDT):": "Waktu Server (Sydney):", // Changed label for clarity
+        "Version": "Versi",
+        "Updated": "Diperbarui",
+        "Changelog": "Catatan pembaruan",
+        "Filename": "Nama berkas",
+        "File info": "Info berkas",
+        "Details before download": "Detail sebelum mengunduh",
+        "Cancel": "Batal",
+        "Download": "Unduh",
+        "Shop": "🛒 Toko",
+        "News": "🔔 Berita",
+        "Essential File Downloads": "📥 Unduhan File Penting",
+        "Growfax Server Roles": "Peran Server Growfax",
+        "Support the server and unlock exclusive roles! Direct purchase via PayPal.me.": "Dukung server dan buka peran eksklusif! Pembelian langsung via PayPal.me.",
+        "Pay $USD": "Bayar $USD",
+        "Pay €EUR": "Bayar €EUR",
+        "Pay £GBP": "Bayar £GBP",
+        "Pay A$AUD": "Bayar A$AUD",
+        "Pay S$SGD": "Bayar S$SGD",
+        "Pay C$CAD": "Bayar C$CAD",
+        "Bayar Rp IDR": "Bayar Rp IDR",
+        "Opening PayPal for USD purchase": "Membuka PayPal untuk pembelian $USD",
+        "Opening PayPal for EUR purchase": "Membuka PayPal untuk pembelian €EUR",
+        "Opening PayPal for GBP purchase": "Membuka PayPal untuk pembelian £GBP",
+        "Opening PayPal for AUD purchase": "Membuka PayPal untuk pembelian A$AUD",
+        "Opening PayPal for SGD purchase": "Membuka PayPal untuk pembelian S$SGD",
+        "Opening PayPal for CAD purchase": "Membuka PayPal untuk pembelian C$CAD",
+        "Opening Saweria for IDR purchase": "Membuka Saweria untuk pembelian Rp IDR",
+        "👑 Admin Server Role": "👑 Peran Admin Server",
+        "Can sell role": "Bisa menjual peran",
+        "Benefit for selling roles to players.": "Keuntungan dari menjual peran kepada pemain.",
+        "Can sell title": "Bisa menjual gelar",
+        "Benefit for selling custom titles to players.": "Keuntungan dari menjual gelar kustom kepada pemain.",
+        "Can sell All item with Real Trade": "Bisa menjual semua item dengan Real Trade",
+        "Allows selling all in-game items via Real Trade system.": "Memungkinkan menjual semua item dalam game melalui sistem Real Trade.",
+        "⭐ Legend Role": "⭐ Peran Legenda",
+        "Command: /legendary": "Perintah: /legendary",
+        "Spawn exclusive Legendary item once per day.": "Memunculkan item Legendaris eksklusif sekali sehari.",
+        "Command: /vault": "Perintah: /vault",
+        "Access a personal, larger vault storage.": "Akses penyimpanan vault pribadi yang lebih besar.",
+        "Command: /fly": "Perintah: /fly",
+        "Toggle flight mode in public worlds.": "Mengaktifkan/menonaktifkan mode terbang di dunia publik.",
+        "🛡️ Supporter Role": "🛡️ Peran Pendukung",
+        "Command: /rainbow": "Perintah: /rainbow",
+        "Access to rainbow-colored in-game text.": "Akses ke teks dalam game berwarna pelangi.",
+        "Command: /saber": "Perintah: /saber",
+        "Receive a Supporter-exclusive Saber item.": "Menerima item Saber eksklusif Pendukung.",
+        "Chat Icon": "Ikon Obrolan",
+        "Unique icon next to your name in chat.": "Ikon unik di sebelah nama Anda di obrolan.",
+        " minute": [" menit"],
+        " hour": [" jam"],
+        " day": [" hari"],
+        " month": [" bulan"],
+        " year": [" tahun"],
+        "now": "baru saja",
+        "Log out": "Keluar", // NEW translation
+        "Logged out.": "Berhasil Keluar.", // NEW translation
+        "⚠️ All SEO fields are required.": "⚠️ Semua bidang SEO wajib diisi.", // NEW translation
+        "⚠️ Title (max 70 chars) and Description (max 160 chars) are too long.": "⚠️ Judul (maks 70 kar.) dan Deskripsi (maks 160 kar.) terlalu panjang.", // NEW translation
+        "We use cookies to ensure you get the best experience on our website. By continuing, you agree to our ": "Kami menggunakan cookie untuk memastikan Anda mendapatkan pengalaman terbaik di website kami. Dengan melanjutkan, Anda menyetujui ", // NEW translation
+        "Privacy Policy": "Kebijakan Privasi", // NEW translation
+        "I Accept": "Saya Terima", // NEW translation
+        "Thank you for accepting cookies.": "Terima kasih telah menerima cookie.", // NEW translation
+        // --- NEW AUTH Translations ---
+        "Account": "Akun",
+        "Login": "Masuk",
+        "Register": "Daftar",
+        "Welcome back! Please login to continue.": "Selamat datang kembali! Silakan masuk untuk melanjutkan.",
+        "Username or Email": "Nama Pengguna atau Email",
+        "Password": "Kata Sandi",
+        "Forgot Password?": "Lupa Kata Sandi?",
+        "Join our community by creating an account.": "Bergabunglah dengan komunitas kami dengan membuat akun.",
+        "Username": "Nama Pengguna",
+        "Email": "Email",
+        "Password (Min 6 chars)": "Kata Sandi (Min 6 kar.)",
+        "Create Account": "Buat Akun",
+        "Reset Password": "Atur Ulang Kata Sandi",
+        "Enter your email address and we will send you a password reset link.": "Masukkan alamat email Anda dan kami akan mengirimkan tautan atur ulang kata sandi.",
+        "Email Address": "Alamat Email",
+        "Back to Login": "Kembali ke Masuk",
+        "Send Reset Link": "Kirim Tautan Atur Ulang",
+        "👋 Hi, ": "👋 Hai, ",
+        "Login successful.": "Login berhasil.",
+        "Registration successful.": "Pendaftaran berhasil.",
+        "Welcome, ": "Selamat datang, ",
+        "Username is already taken.": "Nama pengguna sudah dipakai.",
+        "Email is already registered.": "Email sudah terdaftar.",
+        "Invalid username or password.": "Nama pengguna atau kata sandi tidak valid.",
+        "Username and Password are required.": "Nama Pengguna dan Kata Sandi wajib diisi.",
+        "Username, Email, and Password (min 6 chars) are required.": "Nama Pengguna, Email, dan Kata Sandi (min 6 kar.) wajib diisi.",
+        "Password reset link sent to ": "Tautan reset kata sandi dikirim ke ",
+        "Email not registered.": "Email tidak terdaftar.",
+        "Invalid email address.": "Alamat email tidak valid.",
+        "✅ Config copied for iOS!": "✅ Konfig disalin untuk iOS!",
+        "❌ Failed to copy iOS config.": "❌ Gagal menyalin konfig iOS.",
+        "✅ Config copied for PowerTunnel!": "✅ Konfig disalin untuk PowerTunnel!",
+        "❌ Failed to copy PowerTunnel config.": "❌ Gagal menyalin konfig PowerTunnel.",
+    }
+};
+
+/* =========================== Local Storage & SEO Functions =========================== */
+function loadTheme() {
+    const savedTheme = localStorage.getItem('growfax_theme');
+    const lang = langSelect.value;
+    const t = translations[lang];
+    const lightText = t['🌞 Light'] || '🌞 Light';
+    const darkText = t['🌙 Dark'] || '🌙 Dark';
+
+    if (savedTheme) {
+        document.body.setAttribute('data-theme', savedTheme);
+        themeToggle.textContent = savedTheme === 'dark' ? lightText : darkText;
+    } else {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.body.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = lightText;
+        } else {
+            document.body.setAttribute('data-theme', 'light');
+            themeToggle.textContent = darkText;
+        }
+    }
+}
+function loadLang() {
+    const savedLang = localStorage.getItem('growfax_lang');
+    if (savedLang) {
+        langSelect.value = savedLang;
+        welcomeLang.value = savedLang;
+        applyTranslations(savedLang);
+    }
+}
+function loadSeoSettings() {
+    const savedTitle = localStorage.getItem('seo_title');
+    const savedDesc = localStorage.getItem('seo_desc');
+    const savedKeywords = localStorage.getItem('seo_keywords');
+    if (savedTitle) {
+        document.title = savedTitle;
+        seoTitleInput.value = savedTitle;
+    }
+    if (savedDesc) {
+        document.querySelector('meta[name="description"]').setAttribute('content', savedDesc);
+        seoDescTextarea.value = savedDesc;
+    }
+    if (savedKeywords) {
+        document.querySelector('meta[name="keywords"]').setAttribute('content', savedKeywords);
+        seoKeywordsInput.value = savedKeywords;
+    }
 }
 
+// =========================== Helper Functions ===========================
+function showToast(message, duration = 3000) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.style.opacity = '1';
+    toast.style.transform = 'translate(-50%, -10px)';
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translate(-50%, 0)';
+    }, duration);
+}
+function timeAgo(dateString) {
+    const lang = langSelect.value;
+    const t = translations[lang] || translations.en;
+    const now = new Date();
+    const past = new Date(dateString);
+    const seconds = Math.floor((now - past) / 1000);
+
+    if (seconds < 60) return t['now'];
+
+    const intervals = [
+        { key: t[' year'][0], seconds: 31536000 },
+        { key: t[' month'][0], seconds: 2592000 },
+        { key: t[' day'][0], seconds: 86400 },
+        { key: t[' hour'][0], seconds: 3600 },
+        { key: t[' minute'][0], seconds: 60 }
+    ];
+
+    for (let i = 0; i < intervals.length; i++) {
+        const interval = intervals[i];
+        const count = Math.floor(seconds / interval.seconds);
+        if (count >= 1) {
+            return count + interval.key + (t[' ago'] || ' ago');
+        }
+    }
+    return t['now'];
+}
+function renderAnalyticsDashboard() {
+    const lang = langSelect.value;
+    const t = translations[lang] || translations.en;
+    
+    // Update total downloads (simulated)
+    const savedDownloads = localStorage.getItem('totalDownloads');
+    if (savedDownloads) totalDownloads = parseInt(savedDownloads);
+    totalDownloadsDisplay.textContent = totalDownloads.toLocaleString();
+
+    // Update activities
+    const activities = getActivities();
+    activitiesList.innerHTML = '';
+    activities.forEach(activity => {
+        const li = document.createElement('li');
+        let text = '';
+        if (activity.type === 'download') {
+            text = (t['Download initiated: '] || 'Download initiated: ') + activity.data;
+        } else if (activity.type === 'purchase') {
+            text = (t['Shop purchase: '] || 'Shop purchase: ') + activity.data;
+        } else if (activity.type === 'login') {
+            text = activity.data; // Already translated "User [x] logged in"
+        } else if (activity.type === 'register') {
+            text = activity.data; // Already translated
+        }
+        li.textContent = `${text} (${timeAgo(activity.timestamp)})`;
+        activitiesList.appendChild(li);
+    });
+
+    // Update dynamic text on toggle button
+    toggleServerStatus.textContent = serverIsOnline 
+        ? (t['Toggle Status (Simulate)'] || 'Toggle Status (Simulate)') 
+        : (t['Toggle Status (Simulate)'] || 'Toggle Status (Simulate)'); // Placeholder text is the same
+    
+    // Update server status display
+    serverStatusDisplay.textContent = serverIsOnline 
+        ? (lang === 'id' ? translations.id['Online'] : 'Online') 
+        : (lang === 'id' ? translations.id['Offline'] : 'Offline');
+
+    // Update admin logout button text
+    const logoutBtn = document.getElementById('adminLogout');
+    if (logoutBtn) {
+        logoutBtn.textContent = lang === 'id' 
+            ? (translations.id['Log out'] || 'Keluar') 
+            : 'Logout';
+    }
+}
 // NEW: Update Auth UI dynamic texts (e.g., Hi, [Username])
 function updateAuthUI(lang) {
     const t = translations[lang] || translations.en;
@@ -1565,494 +1601,453 @@ function updateAuthUI(lang) {
         openAuth.textContent = `${t['👋 Hi, ']}${currentUsername}`;
         // Change title to reflect logout option
         openAuth.title = t['Log out'] || 'Log out';
-        openAuth.onclick = logoutUser; // Set click action to logout
+        openAuth.onclick = logoutUser;
+        // Set click action to logout
         openAuth.classList.remove('open-welcome');
         openAuth.classList.add('report-bug-btn', 'logged-in-user'); // Use similar style but highlight
     } else {
         openAuth.textContent = '👤 ' + (t['Account'] || 'Akun');
         openAuth.title = t['Account'] || 'Akun';
-        openAuth.onclick = () => { showAuthModal('login'); }; // Set click action to open login modal
+        openAuth.onclick = () => { showAuthModal('login'); };
+        // Set click action to open login modal
         openAuth.classList.add('open-welcome');
         openAuth.classList.remove('report-bug-btn', 'logged-in-user');
     }
 }
-
 function applyTranslations(lang) {
-  const transitionDuration = 200; // 200 ms
-  const elementsToTranslate = document.querySelectorAll('[data-original], #modalCancel, #modalConfirm, #welcomeSave, #welcomeSkip, #discordLink, #reportBugLink, #adminTokenSubmit, #closeAdmin, #toggleServerStatus, #saveNewsUpdate, #refreshAnalytics, #saveSeoMeta, #acceptCookies');
-  
-  // 1. Fade out (Opacity 0)
-  elementsToTranslate.forEach(el => {
-    if (el.offsetWidth > 0 || el.offsetHeight > 0 || el.getClientRects().length > 0) {
-      el.style.opacity = '0';
-    }
-  });
-  document.body.style.opacity = '0.01';
-
-  setTimeout(() => {
+    const transitionDuration = 200; // 200 ms
+    const elementsToTranslate = document.querySelectorAll('[data-original], #modalCancel, #modalConfirm, #welcomeSave, #welcomeSkip, #openSettings');
     const t = translations[lang] || translations.en;
-    // 2. Perform the translation
-    document.querySelectorAll('[data-original]').forEach(el => {
-      const originalText = el.getAttribute('data-original');
-      el.textContent = t[originalText] || originalText;
-    });
 
-    // Update commands list
-    updateCommandTranslations(lang); 
+    // 1. Fade out (Opacity 0) and hide
+    elementsToTranslate.forEach(el => { el.style.opacity = '0'; });
+    document.body.style.opacity = '0';
 
-    // Update Admin Area dynamic texts
-    updateAdminDynamicTexts(lang); 
-    
-    // Update theme toggle text
-    loadTheme(); // Calls itself to update theme toggle text with correct language
-    
-    // Update Auth UI (Hi, [User])
-    updateAuthUI(lang);
-    
-    // Update non-data-original elements
-    document.getElementById('navDownloads').textContent = t['📥 Downloads'] || '📥 Downloads';
-    document.getElementById('navShop').textContent = t[''] || '';
-    document.getElementById('modalCancel').textContent = t['Cancel'] || 'Batal';
-    document.getElementById('modalConfirm').textContent = t['Download'] || 'Unduh';
-    document.getElementById('welcomeSave').textContent = t['Save & Continue'] || 'Simpan & Lanjutkan';
-    document.getElementById('welcomeSkip').textContent = t['Skip'] || 'Lewati';
-    document.getElementById('discordLink').textContent = t['Join Growfax Discord'] || 'Gabung Discord Growfax';
-    document.getElementById('openSettings').title = t['Welcome & Preferences'] || 'Selamat Datang & Preferensi';
+    setTimeout(() => {
+        // 2. Apply text changes
+        document.querySelector('h1').textContent = t['Growfax Official'] || 'Growfax Official';
+        document.querySelector('.banner-section h2').textContent = t['Welcome to Growfax'] || 'Welcome to Growfax';
+        document.querySelector('.banner-section p').textContent = t['Private Growtopia Server'] || 'Private Growtopia Server';
+        document.querySelector('a[href="#downloads"]').textContent = t['📥 Downloads'] || '📥 Downloads';
+        document.querySelector('a[href="#shop"]').textContent = t['🛒 Shop'] || '🛒 Shop';
+        document.querySelector('a[href="#news"]').textContent = t['🔔 News'] || '🔔 News';
+        document.querySelector('.discord-section h3').textContent = t['Join Our Discord Community!'] || 'Join Our Discord Community!';
+        document.querySelector('.discord-section p').textContent = t['Need help or just want to chat? Join thousands of other players on our official Discord server.'] || 'Need help or just want to chat? Join thousands of other players on our official Discord server.';
+        document.querySelector('.discord-section a').textContent = t['Join Discord'] || 'Join Discord';
+        document.querySelector('#navDownloads').textContent = t['📥 Downloads'] || '📥 Downloads';
+        document.querySelector('#reportBugLink').textContent = t['🐞 Report Bug'] || '🐞 Report Bug';
+        
+        // Update other controls/buttons
+        openSettings.title = t['Welcome & Preferences'] || 'Welcome & Preferences';
+        document.getElementById('openAdmin').title = t['Admin Area'] || 'Admin Area';
+        document.getElementById('openAuth').title = t['Account'] || 'Account';
+        document.getElementById('adminTokenInput').placeholder = t['Token'] || 'Token';
+        document.getElementById('adminTokenSubmit').textContent = t['Submit'] || 'Submit';
+        document.getElementById('closeAuth').textContent = t['Cancel'] || 'Cancel';
 
-    // Update Shop button texts
-    const usdButtons = document.querySelectorAll('.btn-usd');
-    const eurButtons = document.querySelectorAll('.btn-eur');
-    const gbpButtons = document.querySelectorAll('.btn-gbp');
-    const audButtons = document.querySelectorAll('.btn-aud');
-    const sgdButtons = document.querySelectorAll('.btn-sgd');
-    const cadButtons = document.querySelectorAll('.btn-cad');
-    const idrButtons = document.querySelectorAll('.btn-idr');
+        // Update theme toggle text
+        loadTheme();
+        
+        // Update all elements with data-original
+        elementsToTranslate.forEach(el => {
+            const originalText = el.getAttribute('data-original');
+            if (originalText && t[originalText]) {
+                el.textContent = t[originalText];
+            } else if (el.id === 'modalCancel') {
+                el.textContent = t['Cancel'] || 'Cancel';
+            } else if (el.id === 'modalConfirm') {
+                el.textContent = t['Download'] || 'Download';
+            }
+        });
 
-    usdButtons.forEach(btn => { btn.textContent = t['Pay $USD'] || 'Pay $USD'; });
-    eurButtons.forEach(btn => { btn.textContent = t['Pay €EUR'] || 'Pay €EUR'; });
-    gbpButtons.forEach(btn => { btn.textContent = t['Pay £GBP'] || 'Pay £GBP'; });
-    audButtons.forEach(btn => { btn.textContent = t['Pay A$AUD'] || 'Pay A$AUD'; });
-    sgdButtons.forEach(btn => { btn.textContent = t['Pay S$SGD'] || 'Pay S$SGD'; });
-    cadButtons.forEach(btn => { btn.textContent = t['Pay C$CAD'] || 'Pay C$CAD'; });
-    idrButtons.forEach(btn => { btn.textContent = t['Bayar Rp IDR'] || 'Bayar Rp IDR'; });
-    
-    // Update cookie banner button
-    document.getElementById('acceptCookies').textContent = t['I Accept'] || 'Saya Terima';
+        // Update shop buttons
+        const usdButtons = document.querySelectorAll('.btn-usd');
+        const eurButtons = document.querySelectorAll('.btn-eur');
+        const gbpButtons = document.querySelectorAll('.btn-gbp');
+        const audButtons = document.querySelectorAll('.btn-aud');
+        const sgdButtons = document.querySelectorAll('.btn-sgd');
+        const cadButtons = document.querySelectorAll('.btn-cad');
+        const idrButtons = document.querySelectorAll('.btn-idr');
 
-    // 3. Fade back in (Opacity 1)
-    elementsToTranslate.forEach(el => { el.style.opacity = '1'; });
-    document.body.style.opacity = '1';
+        usdButtons.forEach(btn => { btn.textContent = t['Pay $USD'] || 'Pay $USD'; });
+        eurButtons.forEach(btn => { btn.textContent = t['Pay €EUR'] || 'Pay €EUR'; });
+        gbpButtons.forEach(btn => { btn.textContent = t['Pay £GBP'] || 'Pay £GBP'; });
+        audButtons.forEach(btn => { btn.textContent = t['Pay A$AUD'] || 'Pay A$AUD'; });
+        sgdButtons.forEach(btn => { btn.textContent = t['Pay S$SGD'] || 'Pay S$SGD'; });
+        cadButtons.forEach(btn => { btn.textContent = t['Pay C$CAD'] || 'Pay C$CAD'; });
+        idrButtons.forEach(btn => { btn.textContent = t['Bayar Rp IDR'] || 'Bayar Rp IDR'; });
 
-  }, transitionDuration);
+        // Update cookie banner button
+        document.getElementById('acceptCookies').textContent = t['I Accept'] || 'Saya Terima';
+
+        // Update Auth UI after translations are loaded
+        updateAuthUI(lang);
+        
+        // Update Admin UI dynamic elements
+        if (isAdminLoggedIn) {
+            updateAdminUI(lang);
+            renderAnalyticsDashboard(); // Render dashboard content in new language
+        }
+        
+        // 3. Fade back in (Opacity 1)
+        elementsToTranslate.forEach(el => { el.style.opacity = '1'; });
+        document.body.style.opacity = '1';
+
+    }, transitionDuration);
+}
+// NEW: Admin UI translation helper
+function updateAdminUI(lang) {
+    const t = translations[lang] || translations.en;
+    document.getElementById('adminLoginPrompt').textContent = isAdminLoggedIn
+        ? (t['Tutup Area Admin'] || 'Close Admin Area')
+        : (t['Enter the Admin Token to proceed:'] || 'Enter the Admin Token to proceed:');
 }
 
 /* =========================== SPA Section Navigation (NEW FEATURE) =========================== */
-const sections = document.querySelectorAll('.content-section');
-const navLinks = document.querySelectorAll('nav.primary a');
-
 function showSection(sectionId) {
-    // 1. Fade out current section and hide all
+    const transitionDuration = 400;
+
+    // 1. Fade out current section and hide
     sections.forEach(sec => {
         if (!sec.classList.contains('hidden-section')) {
             sec.classList.add('fading-out');
         }
     });
 
-    // 2. After fade-out, switch visibility
     setTimeout(() => {
         sections.forEach(sec => {
             sec.classList.add('hidden-section');
             sec.classList.remove('fading-out');
-            sec.style.opacity = '0';
         });
 
+        // 2. Show target section and fade in
         const targetSection = document.querySelector(sectionId);
         if (targetSection) {
             targetSection.classList.remove('hidden-section');
-            // 3. Fade in new section
+            // Give a moment for the display:block to apply before fading in
             setTimeout(() => {
-                targetSection.style.opacity = '1';
-                targetSection.style.transform = 'translateY(0)';
-            }, 50); // Small delay to re-trigger transition
+                targetSection.classList.remove('fading-out');
+            }, 50); 
         }
-    }, 400); // Wait for the transition defined in CSS (0.4s)
 
-    // Update URL Hash and scroll to top of main content
-    if (window.location.hash !== sectionId) {
-        history.pushState(null, null, sectionId);
-    }
-    document.querySelector('.container').scrollIntoView({ behavior: 'smooth' });
-
-    // Update active navigation link
-    navLinks.forEach(link => {
-        link.classList.remove('active-nav');
-        if (link.getAttribute('href') === sectionId) {
-            link.classList.add('active-nav');
+        // 3. Update navigation active state
+        navLinks.forEach(link => {
+            link.classList.remove('active-nav');
+            if (link.getAttribute('href') === sectionId) {
+                link.classList.add('active-nav');
+            }
+        });
+        
+        // 4. Update URL hash
+        if (history.pushState) {
+            history.pushState(null, null, sectionId);
+        } else {
+            window.location.hash = sectionId;
         }
-    });
+
+    }, transitionDuration);
 }
-
-// Event listener for navigation links
+function handleUrlHash() {
+    const hash = window.location.hash;
+    if (hash && document.querySelector(hash + '.content-section')) {
+        showSection(hash);
+    } else {
+        showSection('#downloads'); // Default view
+    }
+}
 navLinks.forEach(link => {
     link.addEventListener('click', (e) => {
         e.preventDefault();
-        const targetId = link.getAttribute('href');
-        showSection(targetId);
+        showSection(link.getAttribute('href'));
     });
 });
-
-// Handle initial load and history changes
-function handleUrlHash() {
-    const hash = window.location.hash || '#downloads';
-    showSection(hash);
-}
-
-window.addEventListener('popstate', handleUrlHash);
-
-/* =========================== Settings Modal Logic (was Welcome Modal) =========================== */
-openSettings.addEventListener('click', () => {
-  welcomeBackdrop.style.display = 'flex';
-  welcomeBackdrop.setAttribute('aria-hidden', 'false');
-});
-
-[welcomeBackdrop, welcomeSkip].forEach(el => {
-  el.addEventListener('click', (e) => {
-    if (e.target === welcomeBackdrop || e.target === welcomeSkip) {
-      welcomeBackdrop.style.display = 'none';
-      welcomeBackdrop.setAttribute('aria-hidden', 'true');
-    }
-  });
-});
-
-welcomeSave.addEventListener('click', () => {
-  const lang = welcomeLang.value;
-  const theme = document.querySelector('input[name="welcomeTheme"]:checked').value;
-  // 1. Save preferences
-  localStorage.setItem('growfax_lang', lang);
-  localStorage.setItem('growfax_theme', theme);
-  // 2. Apply theme 
-  document.body.setAttribute('data-theme', theme);
-  // 3. Apply translations (calls loadTheme/updateTime internally if needed)
-  langSelect.value = lang;
-  applyTranslations(lang);
-  updateTime();
-  loadTheme(); // Re-apply theme toggle text with correct language
-  // 4. Hide modal
-  welcomeBackdrop.style.display = 'none';
-  welcomeBackdrop.setAttribute('aria-hidden', 'true');
-});
+window.addEventListener('hashchange', handleUrlHash);
 
 /* =========================== Theme Toggle Logic =========================== */
 themeToggle.addEventListener('click', () => {
-  const currentTheme = document.body.getAttribute('data-theme');
-  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-  document.body.setAttribute('data-theme', newTheme);
-  localStorage.setItem('growfax_theme', newTheme);
-  
-  const lang = langSelect.value;
-  const t = translations[lang] || translations.en;
-  
-  if (newTheme === 'dark') {
-    themeToggle.textContent = t['🌞 Light'] || '🌞 Light';
-  } else {
-    themeToggle.textContent = t['🌙 Dark'] || '🌙 Dark';
-  }
+    const currentTheme = document.body.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.body.setAttribute('data-theme', newTheme);
+    localStorage.setItem('growfax_theme', newTheme);
+    const lang = langSelect.value;
+    const t = translations[lang] || translations.en;
+    if (newTheme === 'dark') {
+        themeToggle.textContent = t['🌞 Light'] || '🌞 Light';
+    } else {
+        themeToggle.textContent = t['🌙 Dark'] || '🌙 Dark';
+    }
 });
 
 /* =========================== Language Selector Logic =========================== */
 langSelect.addEventListener('change', (e) => {
-  const newLang = e.target.value;
-  localStorage.setItem('growfax_lang', newLang);
-  welcomeLang.value = newLang; // Sync welcome modal
-  applyTranslations(newLang);
-  updateTime();
+    const newLang = e.target.value;
+    localStorage.setItem('growfax_lang', newLang);
+    welcomeLang.value = newLang; // Sync welcome modal
+    applyTranslations(newLang);
+    updateTime();
 });
 
 /* =========================== Download/Modal Logic =========================== */
-
 // Handle download button clicks
 downloadButtons.forEach(button => {
-  button.addEventListener('click', (e) => {
-    const filename = button.getAttribute('data-filename');
-    const filekey = button.getAttribute('data-filekey');
-    const meta = FILE_META[filekey];
-    const lang = langSelect.value;
-    
-    // Check if file metadata exists for modal info
-    if (!meta) {
-      showToast(lang === 'id' ? (translations.id['Download failed: file not found.'] || 'Unduhan gagal: berkas tidak ditemukan.') : 'Download failed: file not found.', 3000);
-      return;
-    }
+    button.addEventListener('click', (e) => {
+        e.preventDefault();
+        const filename = button.getAttribute('data-filename');
+        const filekey = button.getAttribute('data-filekey');
+        const meta = FILE_META[filekey];
+        const lang = langSelect.value;
 
-    // Modal elements
-    document.getElementById('modalVersion').textContent = `v${meta.version}`;
-    document.getElementById('modalUpdated').textContent = `${lang === 'id' ? (translations.id['Updated'] || 'Diperbarui') : 'Updated'}: ${meta.updated}`;
-    document.getElementById('modalChangelog').textContent = `${lang === 'id' ? (translations.id['Changelog'] || 'Catatan pembaruan') : 'Changelog'}: ${meta.changelog}`;
-    document.getElementById('modalFilename').textContent = `${lang === 'id' ? (translations.id['Filename'] || 'Nama berkas') : 'Filename'}: ${filename}`;
-    
-    // Set download URL for confirm button
-    modalConfirm.onclick = () => {
-        // Hide the modal first
-        modalBackdrop.style.display = 'none';
-        modalBackdrop.setAttribute('aria-hidden', 'true');
-        
-        // Manual download trigger for robustness (since we intercepted the click)
-        const href = button.getAttribute('href');
-        const temp = document.createElement('a');
-        temp.href = href;
-        temp.download = filename || '';
-        document.body.appendChild(temp);
-        temp.click();
-        temp.remove();
-        showToast(lang === 'id' ? (translations.id['Download initiated: '] || 'Unduhan dimulai: ') + filename : 'Download initiated: ' + filename, 1500);
+        // Check if file metadata exists for modal info
+        if (!meta) {
+            showToast(lang === 'id' ? (translations.id['Download failed: file not found.'] || 'Unduhan gagal: berkas tidak ditemukan.') : 'Download failed: file not found.', 3000);
+            return;
+        }
 
-    };
+        // Populate modal with file info
+        modalFilename.textContent = (translations[lang] && translations[lang]['Filename'] || 'Filename') + ': ' + filename;
+        modalVersion.textContent = meta.version;
+        modalUpdated.textContent = meta.updated;
+        modalChangelog.textContent = meta.changelog;
 
-    // Show modal
-    modalBackdrop.style.display = 'flex';
-    modalBackdrop.setAttribute('aria-hidden', 'false');
+        // Hide copy block for standard downloads
+        modalCopyBlock.style.display = 'none';
 
-    // Handle cancel button
-    modalCancel.onclick = () => {
-      modalBackdrop.style.display = 'none';
-      modalBackdrop.setAttribute('aria-hidden', 'true');
-    };
-  });
+        // Set download link
+        modalConfirm.setAttribute('href', meta.downloadUrl);
+        modalConfirm.onclick = () => {
+            incrementDownload(filekey);
+            showToast((translations[lang] && translations[lang]['Download initiated: '] || 'Download initiated: ') + filename, 2000);
+            setTimeout(() => {
+                modalBackdrop.style.display = 'none';
+                modalBackdrop.setAttribute('aria-hidden', 'true');
+            }, 500);
+            return true; // Proceed with download
+        };
+
+        // Show modal
+        modalBackdrop.style.display = 'flex';
+        modalBackdrop.setAttribute('aria-hidden', 'false');
+    });
 });
 
 // Handle iOS/PowerTunnel button clicks (Copy Config)
 [iosButton, powertunnelButton].forEach(button => {
     button.addEventListener('click', (e) => {
         e.preventDefault();
+        const filename = button.getAttribute('data-filename');
         const filekey = button.getAttribute('data-filekey');
         const meta = FILE_META[filekey];
         const lang = langSelect.value;
-        
+        const t = translations[lang] || translations.en;
+
         if (!meta || !meta.copytext) {
-             showToast(lang === 'id' ? (translations.id['Download failed: file not found.'] || 'Unduhan gagal: berkas tidak ditemukan.') : 'Download failed: file not found.', 3000);
-             return;
-        }
-        
-        // Logic to copy config text
-        if (navigator.clipboard) {
-            navigator.clipboard.writeText(meta.copytext).then(() => {
-                showToast(lang === 'id' ? (translations.id['Config copied!'] || 'Konfigurasi disalin!') : 'Config copied!', 2500);
-            }).catch(err => {
-                console.error('Could not copy text: ', err);
-                showToast(lang === 'id' ? 'Gagal menyalin. Silakan salin manual dari modal.' : 'Failed to copy. Please copy manually from the modal.', 3000);
-            });
-        } else {
-             // Fallback for older browsers
-             const ta = document.createElement('textarea');
-             ta.value = meta.copytext;
-             document.body.appendChild(ta);
-             ta.select();
-             try{ document.execCommand('copy'); showToast(lang === 'id' ? (translations.id['Config copied!'] || 'Konfigurasi disalin!') : 'Config copied!', 2500);}catch(e){ alert('Salin manual:\n'+meta.copytext); }
-             ta.remove();
+            showToast(t['Download failed: file not found.'] || 'Download failed: file not found.', 3000);
+            return;
         }
 
-        // Display modal with copy text/info
-        document.getElementById('modalVersion').textContent = `v${meta.version}`;
-        document.getElementById('modalUpdated').textContent = `${lang === 'id' ? (translations.id['Updated'] || 'Diperbarui') : 'Updated'}: ${meta.updated}`;
-        document.getElementById('modalChangelog').textContent = `${lang === 'id' ? (translations.id['Changelog'] || 'Catatan pembaruan') : 'Changelog'}: ${meta.changelog}`;
-        document.getElementById('modalFilename').textContent = `${lang === 'id' ? (translations.id['Filename'] || 'Nama berkas') : 'Filename'}: ${button.getAttribute('data-filename')}`;
+        // Populate modal with file info
+        modalFilename.textContent = (t['Filename'] || 'Filename') + ': ' + filename;
+        modalVersion.textContent = meta.version;
+        modalUpdated.textContent = meta.updated;
+        modalChangelog.textContent = meta.changelog;
+        modalCopyText.value = meta.copytext;
 
-        document.getElementById('modalTitle').textContent = lang === 'id' ? (translations.id['File info'] || 'Info berkas') : 'File info';
-        document.getElementById('modalDesc').innerHTML = `<p>${lang === 'id' ? 'Konfigurasi berhasil disalin. Gunakan teks di bawah ini di aplikasi Anda:' : 'Config copied successfully. Use the text below in your app:'}</p><textarea readonly style="width:100%; height:100px; padding:10px; border:1px solid var(--border-color); border-radius:6px; background:var(--card-bg); color:var(--text); margin-top:10px; font-family:monospace; font-size: 0.85rem;">${meta.copytext}</textarea>`;
-        
-        // Change confirm button to 'Copy Config'
-        modalConfirm.textContent = lang === 'id' ? (translations.id['Copy Config'] || 'Salin Konfigurasi') : 'Copy Config';
-        modalConfirm.onclick = () => {
-             // Re-copy on button click
-             navigator.clipboard.writeText(meta.copytext).then(() => {
-                showToast(lang === 'id' ? (translations.id['Config copied!'] || 'Konfigurasi disalin!') : 'Config copied!', 2500);
-            });
+        // Show copy block
+        modalCopyBlock.style.display = 'block';
+
+        // Hide/disable download link (since this is a copy)
+        modalConfirm.style.display = 'none'; // Hide download button
+        modalConfirm.onclick = () => { return false; };
+
+        // Set up the dedicated copy button inside the modal
+        copyConfigButton.onclick = () => {
+             // Logic to copy config text
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(meta.copytext).then(() => {
+                    showToast(t['Config copied!'] || 'Config copied!', 2500);
+                }).catch(err => {
+                    console.error('Could not copy text: ', err);
+                    showToast(t['Failed to copy. Please copy manually from the modal.'] || 'Failed to copy. Please copy manually from the modal.', 3000);
+                });
+            } else {
+                // Fallback for older browsers
+                modalCopyText.select();
+                document.execCommand('copy');
+                showToast(t['Config copied!'] || 'Config copied!', 2500);
+            }
         };
-        
+
+        // Show modal
         modalBackdrop.style.display = 'flex';
         modalBackdrop.setAttribute('aria-hidden', 'false');
-        modalCancel.onclick = () => {
-          modalBackdrop.style.display = 'none';
-          modalBackdrop.setAttribute('aria-hidden', 'true');
-        };
     });
 });
 
-/* =========================== Shop Purchase Logic =========================== */
-shopButtons.forEach(button => {
-  button.addEventListener('click', (e) => {
-    e.preventDefault();
-    const roleName = button.getAttribute('data-role');
-    const lang = langSelect.value;
-    let toastMessage = lang === 'en' ? `Opening PayPal for purchase (${roleName})...` : `Membuka PayPal untuk pembelian (${roleName})...`;
-
-    if (button.classList.contains('btn-usd')) {
-      const usdPrice = button.getAttribute('data-price');
-      toastMessage = lang === 'en' ? `Opening PayPal for USD purchase (${roleName} - $${usdPrice})...` : (translations.id['Opening PayPal for USD purchase'] || 'Membuka PayPal untuk pembelian $USD') + ` (${roleName})...`;
-    } else if (button.classList.contains('btn-idr')) {
-      const idrPrice = button.getAttribute('data-idr-price');
-      toastMessage = lang === 'en' ? `Opening PayPal for IDR purchase (${roleName} - Rp ${idrPrice})...` : (translations.id['Membuka PayPal untuk pembelian Rp IDR'] || 'Membuka PayPal untuk pembelian Rp IDR') + ` (${roleName})...`;
-    } else if (button.classList.contains('btn-eur')) {
-      const eurPrice = button.getAttribute('data-price-eur');
-      toastMessage = lang === 'en' ? `Opening PayPal for EUR purchase (${roleName} - €${eurPrice})...` : (translations.id['Opening PayPal for EUR purchase'] || 'Membuka PayPal untuk pembelian €EUR') + ` (${roleName})...`;
-    } else if (button.classList.contains('btn-gbp')) {
-      const gbpPrice = button.getAttribute('data-price-gbp');
-      toastMessage = lang === 'en' ? `Opening PayPal for GBP purchase (${roleName} - £${gbpPrice})...` : (translations.id['Opening PayPal for GBP purchase'] || 'Membuka PayPal untuk pembelian £GBP') + ` (${roleName})...`;
-    } else if (button.classList.contains('btn-aud')) {
-      const audPrice = button.getAttribute('data-price-aud');
-      toastMessage = lang === 'en' ? `Opening PayPal for AUD purchase (${roleName} - A$${audPrice})...` : (translations.id['Opening PayPal for AUD purchase'] || 'Membuka PayPal untuk pembelian A$AUD') + ` (${roleName})...`;
-    } else if (button.classList.contains('btn-sgd')) {
-      const sgdPrice = button.getAttribute('data-price-sgd');
-      toastMessage = lang === 'en' ? `Opening PayPal for SGD purchase (${roleName} - S$${sgdPrice})...` : (translations.id['Opening PayPal for SGD purchase'] || 'Membuka PayPal untuk pembelian S$ SGD') + ` (${roleName})...`;
-    } else if (button.classList.contains('btn-cad')) {
-      const cadPrice = button.getAttribute('data-price-cad');
-      toastMessage = lang === 'en' ? `Opening PayPal for CAD purchase (${roleName} - C$${cadPrice})...` : (translations.id['Opening PayPal for CAD purchase'] || 'Membuka PayPal untuk pembelian C$ CAD') + ` (${roleName})...`;
-    } 
-
-    showToast(toastMessage, 2000);
-    window.open(button.href, '_blank', 'noopener'); // Open the PayPal link
-  });
+// Close modal on cancel or backdrop click
+modalCancel.addEventListener('click', () => {
+    modalBackdrop.style.display = 'none';
+    modalBackdrop.setAttribute('aria-hidden', 'true');
+    modalConfirm.style.display = 'inline-block'; // Reset download button visibility
+});
+modalBackdrop.addEventListener('click', (e) => {
+    if (e.target.id === 'downloadModalBackdrop') {
+        modalBackdrop.style.display = 'none';
+        modalBackdrop.setAttribute('aria-hidden', 'true');
+        modalConfirm.style.display = 'inline-block'; // Reset download button visibility
+    }
 });
 
-/* =========================== AUTHENTICATION LOGIC (Login, Register, Reset) =========================== */
-
-function getSimulatedUsers() {
-    const users = localStorage.getItem('growfax_users');
-    return users ? JSON.parse(users) : [];
+/* =========================== Welcome Modal Logic =========================== */
+function openWelcomeModal() {
+    welcomeBackdrop.style.display = 'flex';
+    welcomeBackdrop.setAttribute('aria-hidden', 'false');
+    // Ensure modal's selected language matches current lang
+    welcomeLang.value = langSelect.value;
+    // Ensure modal's selected theme matches current theme
+    const currentTheme = document.body.getAttribute('data-theme') || 'light';
+    document.querySelector(`input[name="welcomeTheme"][value="${currentTheme}"]`).checked = true;
 }
+openSettings.addEventListener('click', openWelcomeModal);
+welcomeSkip.addEventListener('click', () => {
+    welcomeBackdrop.style.display = 'none';
+    welcomeBackdrop.setAttribute('aria-hidden', 'true');
+});
+welcomeSave.addEventListener('click', () => {
+    const lang = welcomeLang.value;
+    const theme = document.querySelector('input[name="welcomeTheme"]:checked').value;
+    
+    // 1. Save preferences
+    localStorage.setItem('growfax_lang', lang);
+    localStorage.setItem('growfax_theme', theme);
 
-function saveSimulatedUsers(users) {
-    localStorage.setItem('growfax_users', JSON.stringify(users));
-}
+    // 2. Apply theme
+    document.body.setAttribute('data-theme', theme);
+    
+    // 3. Apply translations (calls loadTheme/updateTime internally if needed)
+    langSelect.value = lang;
+    applyTranslations(lang);
+    updateTime();
+    loadTheme(); // Re-apply theme toggle text with correct language
 
+    // 4. Hide modal
+    welcomeBackdrop.style.display = 'none';
+    welcomeBackdrop.setAttribute('aria-hidden', 'true');
+});
+
+
+/* =========================== Auth Modal Logic (NEW FEATURE) =========================== */
 function showAuthModal(view = 'login') {
-    // Reset inputs
-    loginUsername.value = '';
-    loginPassword.value = '';
-    registerUsername.value = '';
-    registerEmail.value = '';
-    registerPassword.value = '';
-    resetEmail.value = '';
-
-    // Hide all views
-    loginView.style.display = 'none';
-    registerView.style.display = 'none';
-    forgotView.style.display = 'none';
-    tabLogin.classList.remove('active-tab');
-    tabRegister.classList.remove('active-tab');
-
-    // Show selected view
-    if (view === 'login') {
-        loginView.style.display = 'block';
-        tabLogin.classList.add('active-tab');
-    } else if (view === 'register') {
-        registerView.style.display = 'block';
-        tabRegister.classList.add('active-tab');
-    } else if (view === 'forgot') {
-        forgotView.style.display = 'block';
-    }
-
-    // Show modal
     authBackdrop.style.display = 'flex';
     authBackdrop.setAttribute('aria-hidden', 'false');
+    switchAuthView(view);
 }
-
 function hideAuthModal() {
     authBackdrop.style.display = 'none';
     authBackdrop.setAttribute('aria-hidden', 'true');
 }
-
+function switchAuthView(view) {
+    document.getElementById('authLoginView').style.display = 'none';
+    document.getElementById('authRegisterView').style.display = 'none';
+    document.getElementById('authResetView').style.display = 'none';
+    authTabLogin.style.display = 'inline-block';
+    authTabRegister.style.display = 'inline-block';
+    authTabReset.style.display = 'none'; // Hide reset tab button by default
+    
+    // Reset active tab class
+    authTabLogin.classList.remove('active-tab');
+    authTabRegister.classList.remove('active-tab');
+    
+    // Show the requested view
+    if (view === 'login') {
+        document.getElementById('authLoginView').style.display = 'block';
+        authTabLogin.classList.add('active-tab');
+    } else if (view === 'register') {
+        document.getElementById('authRegisterView').style.display = 'block';
+        authTabRegister.classList.add('active-tab');
+    } else if (view === 'reset') {
+        document.getElementById('authResetView').style.display = 'block';
+        authTabReset.style.display = 'inline-block';
+    }
+}
 function logoutUser() {
     const lang = langSelect.value;
     const t = translations[lang] || translations.en;
-    
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('currentUsername');
     isLoggedIn = false;
     currentUsername = '';
-    
     updateAuthUI(lang);
-    showToast(t['Logout success.'] || 'Berhasil Keluar.', 2000);
-    openAuth.classList.remove('logged-in-user');
+    showToast(t['Logged out.'] || 'Logged out.', 2000);
+    // Reset admin login state too
+    localStorage.removeItem('isAdminLoggedIn');
+    isAdminLoggedIn = false;
 }
-
-// Event listeners for tabs
-tabLogin.addEventListener('click', () => showAuthModal('login'));
-tabRegister.addEventListener('click', () => showAuthModal('register'));
-forgotPasswordLink.addEventListener('click', (e) => { e.preventDefault(); showAuthModal('forgot'); });
-backToLogin.addEventListener('click', () => showAuthModal('login'));
-[authBackdrop].forEach(el => {
-    el.addEventListener('click', (e) => {
-        if (e.target === authBackdrop) {
-            hideAuthModal();
-        }
-    });
+// Event listeners for switching views
+authTabLogin.addEventListener('click', () => switchAuthView('login'));
+authTabRegister.addEventListener('click', () => switchAuthView('register'));
+forgotPasswordLink.addEventListener('click', (e) => { e.preventDefault(); switchAuthView('reset'); });
+backToLoginLink.addEventListener('click', (e) => { e.preventDefault(); switchAuthView('login'); });
+document.getElementById('closeAuth').addEventListener('click', hideAuthModal);
+authBackdrop.addEventListener('click', (e) => {
+    if (e.target.id === 'authBackdrop') {
+        hideAuthModal();
+    }
 });
+// Attach logout to a dynamically created button if logged in (handled by updateAuthUI)
+// If logged in, openAuth button acts as logout. Otherwise, it opens the modal.
 
-// User Registration Logic
+// Simulated Registration Logic
 registerSubmit.addEventListener('click', () => {
     const lang = langSelect.value;
     const t = translations[lang] || translations.en;
     const username = registerUsername.value.trim();
     const email = registerEmail.value.trim();
-    const password = registerPassword.value;
+    const password = registerPassword.value.trim();
     const users = getSimulatedUsers();
 
-    if (!username || !email || !password || password.length < 6) {
-        showToast(t['Username, Email, and Password (min 6 chars) are required.'] || 'Nama Pengguna, Email, dan Kata Sandi (min 6 kar.) wajib diisi.', 3000);
+    if (!username || !email || password.length < 6) {
+        showToast(t['Username, Email, and Password (min 6 chars) are required.'] || 'Username, Email, and Password (min 6 chars) are required.', 3000);
         return;
     }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        showToast(t['Invalid email address.'] || 'Alamat email tidak valid.', 3000);
-        return;
-    }
-
     if (users.some(user => user.username === username)) {
-        showToast(t['Username is already taken.'] || 'Nama pengguna sudah dipakai.', 3000);
+        showToast(t['Username is already taken.'] || 'Username is already taken.', 3000);
         return;
     }
-
     if (users.some(user => user.email === email)) {
-        showToast(t['Email is already registered.'] || 'Email sudah terdaftar.', 3000);
+        showToast(t['Email is already registered.'] || 'Email is already registered.', 3000);
         return;
     }
 
-    // Hash simulation (just using btoa for base64 encoding, NOT secure hashing)
-    const newUser = {
-        username,
-        email,
-        password: btoa(password) 
-    };
+    const newUser = { username, email, password: btoa(password), registered: new Date().toISOString() };
     users.push(newUser);
     saveSimulatedUsers(users);
-    
-    // Auto-login after registration (best practice)
+
+    // Auto-login after registration
     localStorage.setItem('isLoggedIn', 'true');
     localStorage.setItem('currentUsername', username);
     isLoggedIn = true;
     currentUsername = username;
-
+    
+    addActivity('register', `User ${username} registered.`);
     hideAuthModal();
     updateAuthUI(lang);
     showToast(t['Registration successful.'] + ' ' + t['Welcome, '] + username, 3000);
 });
 
-// User Login Logic
+// Simulated Login Logic
 loginSubmit.addEventListener('click', () => {
     const lang = langSelect.value;
     const t = translations[lang] || translations.en;
-    const input = loginUsername.value.trim(); // Can be username or email
-    const password = loginPassword.value;
+    const input = loginInput.value.trim(); // Can be username or email
+    const password = loginPassword.value.trim();
     const users = getSimulatedUsers();
 
     if (!input || !password) {
-        showToast(t['Username and Password are required.'] || 'Nama Pengguna dan Kata Sandi wajib diisi.', 3000);
+        showToast(t['Username and Password are required.'] || 'Username and Password are required.', 3000);
         return;
     }
 
-    const user = users.find(u => 
-        u.username === input || u.email === input
-    );
+    const user = users.find(u => u.username === input || u.email === input );
 
     if (user && user.password === btoa(password)) {
         // Login successful
@@ -2060,7 +2055,7 @@ loginSubmit.addEventListener('click', () => {
         localStorage.setItem('currentUsername', user.username);
         isLoggedIn = true;
         currentUsername = user.username;
-
+        addActivity('login', `User ${user.username} logged in.`);
         hideAuthModal();
         updateAuthUI(lang);
         showToast(t['Login successful.'] + ' ' + t['Welcome, '] + user.username, 3000);
@@ -2085,283 +2080,156 @@ resetSubmit.addEventListener('click', () => {
         hideAuthModal();
         showToast(t['Password reset link sent to '] + email, 4000); // Simulated send
     } else {
-        showToast(t['Email not registered.'] || 'Email tidak terdaftar.', 3000);
+        showToast(t['Email not registered.'] || 'Email not registered.', 3000);
     }
 });
 
-/* =========================== Admin Dashboard Logic (ENHANCED with Logout) =========================== */
 
-// NEW: Admin Logout Button Logic
+/* =========================== Admin Dashboard Logic (ENHANCED with Logout) =========================== */
 const adminLogout = document.createElement('button');
 adminLogout.id = 'adminLogout';
 adminLogout.className = 'btn secondary';
-adminLogout.textContent = isAdminLoggedIn ? (langSelect.value === 'id' ? (translations.id['Log out'] || 'Keluar') : 'Logout') : '';
+adminLogout.textContent = isAdminLoggedIn 
+    ? (langSelect.value === 'id' ? (translations.id['Log out'] || 'Keluar') : 'Logout') 
+    : '';
 adminLogout.style.position = 'absolute';
 adminLogout.style.top = '10px';
-adminLogout.style.right = '70px'; // Adjusted position
-adminLogout.style.fontSize = '0.8rem';
-adminLogout.style.padding = '6px 10px';
-adminLogout.style.zIndex = '10';
-adminLogout.style.display = isAdminLoggedIn ? 'block' : 'none'; // Show if already logged in
+adminLogout.style.right = '70px'; // Adjusted
+adminLogout.style.display = isAdminLoggedIn ? 'block' : 'none';
+adminModal.appendChild(adminLogout); // Append logout button to the modal
 
 adminLogout.addEventListener('click', () => {
-    const lang = langSelect.value;
     localStorage.removeItem('isAdminLoggedIn');
     isAdminLoggedIn = false;
     adminContent.style.display = 'none';
-    adminLogin.style.display = 'block';
+    adminTokenInput.value = '';
     adminLogout.style.display = 'none';
-    
-    // Stop the analytics auto-refresh loop when logging out
-    if (analyticsInterval) { 
-        clearInterval(analyticsInterval); 
-        analyticsInterval = null; 
-    }
-    
-    closeAdmin.click(); // Close modal
-    showToast(lang === 'id' ? (translations.id['Logged out.'] || 'Berhasil Keluar.') : 'Logged out.', 2000);
+    updateAdminUI(langSelect.value);
+    showToast('Admin logged out.', 2000);
+    // After logging out, show the login form
+    adminLogin.style.display = 'block';
 });
-document.querySelector('.admin-modal').appendChild(adminLogout);
-
 
 document.getElementById('openAdmin').addEventListener('click', () => {
-  adminBackdrop.style.display = 'flex';
-  adminBackdrop.setAttribute('aria-hidden', 'false');
-  if (isAdminLoggedIn) {
-    adminLogin.style.display = 'none';
-    adminContent.style.display = 'block';
-    adminLogout.style.display = 'block'; // Show logout button
-    renderAnalyticsDashboard(); // Ensure analytics starts/updates
-  } else {
-    adminLogin.style.display = 'block';
-    adminContent.style.display = 'none';
-    adminLogout.style.display = 'none';
-  }
+    const lang = langSelect.value;
+    adminBackdrop.style.display = 'flex';
+    adminBackdrop.setAttribute('aria-hidden', 'false');
+    
+    if (isAdminLoggedIn) {
+        adminLogin.style.display = 'none';
+        adminContent.style.display = 'block';
+        adminLogout.style.display = 'block';
+        renderAnalyticsDashboard();
+    } else {
+        adminLogin.style.display = 'block';
+        adminContent.style.display = 'none';
+        adminLogout.style.display = 'none';
+    }
+    updateAdminUI(lang);
 });
 
 closeAdmin.addEventListener('click', () => {
-  adminBackdrop.style.display = 'none';
-  adminBackdrop.setAttribute('aria-hidden', 'true');
-  // Stop the analytics auto-refresh loop when closing
-  if (analyticsInterval) {
-    clearInterval(analyticsInterval);
-    analyticsInterval = null;
-  }
+    adminBackdrop.style.display = 'none';
+    adminBackdrop.setAttribute('aria-hidden', 'true');
 });
 
-// Admin Login Logic (Updated with Auto-Refresh and Session)
+adminBackdrop.addEventListener('click', (e) => {
+    if (e.target.id === 'adminBackdrop') {
+        adminBackdrop.style.display = 'none';
+        adminBackdrop.setAttribute('aria-hidden', 'true');
+    }
+});
+
 adminTokenSubmit.addEventListener('click', () => {
-  const lang = langSelect.value;
-  if (adminTokenInput.value === ADMIN_TOKEN) {
-    adminLogin.style.display = 'none';
-    adminContent.style.display = 'block';
-    isAdminLoggedIn = true; // NEW: Set session flag
-    localStorage.setItem('isAdminLoggedIn', 'true'); // NEW: Persist login
-    adminLogout.style.display = 'block'; // Show logout button
+    const token = adminTokenInput.value;
+    const lang = langSelect.value;
+    if (token === ADMIN_TOKEN) {
+        adminLogin.style.display = 'none';
+        adminContent.style.display = 'block';
+        isAdminLoggedIn = true; // NEW: Set session flag
+        localStorage.setItem('isAdminLoggedIn', 'true'); // NEW: Persist login
+        adminLogout.style.display = 'block'; // Show logout button
+        renderAnalyticsDashboard();
+        showToast(lang === 'id' ? (translations.id['Login Admin berhasil'] || 'Login Admin berhasil') : 'Admin Login success', 2000);
+    } else {
+        showToast('Invalid Token.', 2000);
+    }
+});
+
+// Admin Server Status Toggle Logic
+toggleServerStatus.addEventListener('click', () => {
+    serverIsOnline = !serverIsOnline;
+    const lang = langSelect.value;
     renderAnalyticsDashboard();
-    showToast(lang === 'id' ? (translations.id['Login Admin berhasil'] || 'Login Admin berhasil') : 'Admin Login success', 2000);
-  } else {
-    showToast('Invalid Token.', 2000);
-  }
+    showToast(lang === 'id' ? (translations.id['Server Status changed.'] || 'Status Server diubah.') : 'Server Status changed.', 2000);
 });
 
 // Admin News Save Logic
 saveNewsUpdate.addEventListener('click', () => {
-  const text = newsUpdateTextarea.value;
-  const lang = langSelect.value;
-  saveNewsUpdateText(text);
-  showToast(lang === 'id' ? (translations.id['News updated successfully.'] || 'Berita berhasil diperbarui.') : 'News updated successfully.', 2000);
+    const text = newsUpdateTextarea.value;
+    const lang = langSelect.value;
+    saveNewsUpdateText(text);
+    loadNewsUpdate(); // Update the displayed news
+    showToast(lang === 'id' ? (translations.id['News updated successfully.'] || 'Berita berhasil diperbarui.') : 'News updated successfully.', 2000);
 });
 
 // Admin SEO Save Logic (NEW: Added Validation)
 document.getElementById('saveSeoMeta').addEventListener('click', () => {
+    const lang = langSelect.value;
+    const t = translations[lang] || translations.en;
     const title = seoTitleInput.value.trim();
     const desc = seoDescTextarea.value.trim();
     const keywords = seoKeywordsInput.value.trim();
-    const lang = langSelect.value;
 
     if (!title || !desc || !keywords) {
-        showToast(lang === 'id' ? (translations.id['⚠️ All SEO fields are required.'] || '⚠️ Semua bidang SEO wajib diisi.') : (translations.en['⚠️ All SEO fields are required.'] || '⚠️ All SEO fields are required.'), 3000);
+        showToast(t['⚠️ All SEO fields are required.'] || '⚠️ All SEO fields are required.', 3000);
         return;
     }
-
     if (title.length > 70 || desc.length > 160) {
-        showToast(lang === 'id' ? (translations.id['⚠️ Title (max 70 chars) and Description (max 160 chars) are too long.'] || '⚠️ Judul (maks 70 kar.) dan Deskripsi (maks 160 kar.) terlalu panjang.') : (translations.en['⚠️ Title (max 70 chars) and Description (max 160 chars) are too long.'] || '⚠️ Title (max 70 chars) and Description (max 160 chars) are too long.'), 4000);
+        showToast(t['⚠️ Title (max 70 chars) and Description (max 160 chars) are too long.'] || '⚠️ Title (max 70 chars) and Description (max 160 chars) are too long.', 3000);
         return;
     }
 
-    saveSeoSettings(title, desc, keywords);
-    loadSeoSettings(); // Re-apply to HTML head
-
-    showToast(lang === 'id' ? (translations.id['SEO Meta updated successfully.'] || 'Meta SEO berhasil diperbarui.') : 'SEO Meta updated successfully.', 2000);
-});
-
-/* =========================== Admin Dashboard Analytics (Simulated) =========================== */
-const SIMULATED_DATA = {
-  totalDownloads: 12500, // Initial value
-  activities: [] // Store simulated activities
-};
-
-function simulateNewActivity() {
-  SIMULATED_DATA.totalDownloads += Math.floor(Math.random() * 5) + 1; // Increase downloads
-  const possibleActivities = [
-    { type: "Download initiated: ", details: "VirtualHost.txt" },
-    { type: "Download initiated: ", details: "GrowFax_ios_config.txt" },
-    { type:  details: "Admin Role" },
-    { type: "Admin Login success", details: "192.168.1.1" }
-  ];
-  const newActivity = possibleActivities[Math.floor(Math.random() * possibleActivities.length)];
-  newActivity.time = new Date(); // Add timestamp
-  SIMULATED_DATA.activities.unshift(newActivity);
-  // Keep only the last 15 activities
-  if (SIMULATED_DATA.activities.length > 15) {
-    SIMULATED_DATA.activities.pop();
-  }
-}
-// Simulate an activity every 10 seconds
-setInterval(simulateNewActivity, 10000);
-
-function renderAnalyticsDashboard() {
-  const lang = langSelect.value;
-  totalDownloadsDisplay.textContent = SIMULATED_DATA.totalDownloads.toLocaleString(lang);
-  activitiesList.innerHTML = '';
-  const t = translations[lang] || translations.en;
-  
-  SIMULATED_DATA.activities.forEach(activity => {
-    const li = document.createElement('li');
-    const timeAgo = timeSince(activity.time);
-    let activityType = t[activity.type.trim()] || activity.type;
-    let details = activity.details;
-
-    if (activityType.includes(t['Download initiated: ']) && lang === 'id') {
-      activityType = t['Download initiated: '];
-    } else if (activityType.includes(t[]) && lang === 'id') {
-      activityType = t[];
-      details = t[details] || details; // Translate role name
-    } else if (activityType === t['Admin Login success']) {
-        // No change needed for details (IP)
-    }
+    localStorage.setItem('seo_title', title);
+    localStorage.setItem('seo_desc', desc);
+    localStorage.setItem('seo_keywords', keywords);
     
-    li.innerHTML = `<strong>${activityType}</strong>${details ? details : ''} <span style="font-size:0.75rem; color:var(--muted); white-space:nowrap;">(${timeAgo})</span>`;
-    activitiesList.appendChild(li);
-  });
-
-  // Start auto-refresh only if content is visible
-  if (adminContent.style.display === 'block') {
-    if (analyticsInterval) clearInterval(analyticsInterval);
-    analyticsInterval = setInterval(() => {
-      renderAnalyticsDashboard();
-    }, 5000); // Update every 5 seconds
-  }
-}
-
-// Admin Toggle Status Logic (Simulated)
-toggleServerStatus.addEventListener('click', () => {
-  serverIsOnline = !serverIsOnline;
-  const lang = langSelect.value;
-  const t = translations[lang] || translations.en;
-  serverStatusDisplay.textContent = serverIsOnline ? t['Online'] : t['Offline'];
-  serverStatusDisplay.style.color = serverIsOnline ? 'var(--success)' : 'var(--danger)';
-  showToast(t['Server Status changed.'] || 'Status Server diubah.', 2000);
+    loadSeoSettings(); // Apply changes immediately
+    showToast(t['SEO Meta updated successfully.'] || 'SEO Meta updated successfully.', 2000);
 });
 
-// Admin Refresh Analytics Button
-refreshAnalytics.addEventListener('click', () => {
-  renderAnalyticsDashboard();
-  showToast(langSelect.value === 'id' ? (translations.id['Refresh Data'] || 'Segarkan Data') + '...' : 'Refreshing Data...', 1000);
-});
-
-/* =========================== Report Bug Button Logic =========================== */
-document.getElementById('reportBugLink').addEventListener('click', (e) => {
-  e.preventDefault();
-  const lang = langSelect.value;
-  const t = translations[lang] || translations.en;
-  const emailSubject = t['Report Bug - Growfax'] || 'Bug Report - Growfax';
-  const emailBody = t['Hello Growfax Admin,\n\nI would like to report the following bug:\n\n[Describe the bug here, including steps to reproduce it, and the device you are using (Android/iOS/Windows).]\n\nThank you.'] || `Hello Growfax Admin,\n\nI would like to report the following bug:\n\n[Describe the bug here, including steps to reproduce it, and the device you are using (Android/iOS/Windows).]\n\nThank you.`;
-  const mailtoLink = `mailto:growfax.dev@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-  window.open(mailtoLink, '_blank');
-});
 
 /* =========================== Cookie Consent Logic (NEW FEATURE) =========================== */
 const cookieConsent = document.getElementById('cookieConsent');
 const acceptCookies = document.getElementById('acceptCookies');
-const COOKIE_KEY = 'growfax_cookies_accepted';
 
 function checkCookieConsent() {
-    if (localStorage.getItem(COOKIE_KEY) !== 'true') {
+    if (localStorage.getItem('growfax_cookie_consent') !== 'accepted') {
         cookieConsent.classList.remove('hidden');
-    } else {
-        cookieConsent.classList.add('hidden');
     }
 }
-
 function setCookieConsent() {
     const lang = langSelect.value;
     const t = translations[lang] || translations.en;
-    localStorage.setItem(COOKIE_KEY, 'true');
+    localStorage.setItem('growfax_cookie_consent', 'accepted');
     cookieConsent.classList.add('hidden');
-    // Optional: Initialize tracking scripts (like Google Analytics) here if they were deferred
+    // Initialize tracking scripts (like Google Analytics) here if they were deferred
     showToast(t['Thank you for accepting cookies.'] || 'Terima kasih telah menerima cookie.', 2000);
 }
-
 acceptCookies.addEventListener('click', setCookieConsent);
 
 
-// =========================== Initial Load Sequence ===========================
-
+/* =========================== Initial Load Sequence =========================== */
 // Initial call (Must be called in this order)
 loadLang(); // Must be called before loadTheme to set initial langSelect value
 loadTheme();
 loadSeoSettings();
 loadNewsUpdate();
 updateTime();
-handleUrlHash(); // NEW: Initial routing/SPA setup
+handleUrlHash(); // Initial routing/SPA setup
 checkCookieConsent(); // NEW: Initial cookie check
 updateAuthUI(langSelect.value); // NEW: Set initial Auth UI state
 setInterval(updateTime, 1000); // Set a periodic update for time
-
-
-// ===================== Sydney Time (Local Display) =====================
-function updateSydneyTime() {
-  const timeDisplay = document.getElementById("timeDisplay");
-  try {
-    const now = new Date();
-    const sydneyTime = now.toLocaleString("en-AU", {
-      timeZone: "Australia/Sydney",
-      hour12: false,
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit"
-    });
-    timeDisplay.textContent = "Server Time (Sydney): " + sydneyTime;
-  } catch (e) {
-    timeDisplay.textContent = "Unable to load Sydney time.";
-  }
-}
-setInterval(updateSydneyTime, 1000);
-updateSydneyTime();
-
-// ===================== Copy Config for iOS & PowerTunnel =====================
-iosButton.addEventListener("click", (e) => {
-  e.preventDefault();
-  const text = FILE_META.ios.copytext;
-  navigator.clipboard.writeText(text).then(() => {
-    showToast("✅ Config copied for iOS!");
-  }).catch(() => {
-    showToast("❌ Failed to copy iOS config.");
-  });
-});
-
-powertunnelButton.addEventListener("click", (e) => {
-  e.preventDefault();
-  const text = FILE_META.powertunnel.copytext;
-  navigator.clipboard.writeText(text).then(() => {
-    showToast("✅ Config copied for PowerTunnel!");
-  }).catch(() => {
-    showToast("❌ Failed to copy PowerTunnel config.");
-  });
-});
-
-</script>
+  </script>
 </body>
 </html>
