@@ -8,7 +8,7 @@
     <style>
         /* Global Styles */
         :root {
-            --primary-color: #4CAF50; /* Hijau yang lebih profesional */
+            --primary-color: #4CAF50;
             --secondary-color: #388E3C;
             --background-dark: #121212;
             --surface-dark: #1e1e1e;
@@ -27,12 +27,20 @@
             text-align: center;
         }
 
-        /* Header / Navigation Bar (Minimalis) */
+        /* Header & Navigation Bar */
         .header {
             background-color: var(--surface-dark);
             padding: 15px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            margin-bottom: 20px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px;
         }
 
         .header h1 {
@@ -41,7 +49,35 @@
             color: var(--primary-color);
         }
 
-        /* Container & Sections */
+        /* Language Switcher Styles */
+        .language-switcher {
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-button {
+            background: none;
+            border: 1px solid var(--text-muted);
+            color: var(--text-light);
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+            text-decoration: none; /* Menghilangkan underline pada link */
+            font-size: 0.9em;
+        }
+
+        .lang-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .lang-button.active {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        /* Semua Gaya Lain dari Kode Sebelumnya (Container, Banner, Button Group, Footer) */
         .container {
             max-width: 1200px;
             margin: auto;
@@ -52,13 +88,6 @@
             padding-bottom: 60px;
         }
         
-        /* Google Translate Widget Styling */
-        #google_translate_element {
-            float: right;
-            padding-top: 10px;
-        }
-
-        /* Banner Section */
         .banner-section {
             background-color: var(--surface-dark);
             border-radius: 12px;
@@ -75,7 +104,6 @@
             display: block;
         }
 
-        /* Title & Description */
         h2 {
             font-size: 2.2em;
             color: var(--text-light);
@@ -88,7 +116,6 @@
             margin-bottom: 40px;
         }
 
-        /* Button Group */
         .button-group {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -96,7 +123,6 @@
             padding: 10px;
         }
 
-        /* Action Button Styles */
         .action-button {
             display: flex;
             flex-direction: column;
@@ -117,18 +143,16 @@
             border-color: var(--primary-color);
         }
         
-        /* Specific Button Colors */
         .windows-button {
-            background-color: #0078D4; /* Biru Windows */
+            background-color: #0078D4;
         }
         .virtualhost-button {
-            background-color: #F9A825; /* Kuning/Emas */
+            background-color: #F9A825;
         }
         .discord-button {
             background-color: var(--discord-color);
         }
 
-        /* Icon Styling */
         .button-icon {
             width: 80px;
             height: 80px;
@@ -151,7 +175,6 @@
             margin-top: 5px;
         }
 
-        /* Footer */
         .footer {
             background-color: var(--surface-dark);
             padding: 20px 0;
@@ -164,34 +187,18 @@
         .footer p {
             margin: 5px 0;
         }
-        
-        /* Responsiveness for Translate Widget */
-        @media (max-width: 768px) {
-            #google_translate_element {
-                float: none;
-                display: block;
-                text-align: center;
-                margin-bottom: 15px;
-            }
-            .header {
-                text-align: center;
-            }
-        }
     </style>
 </head>
 <body>
 
-<div id="google_translate_element" style="padding-right: 20px;"></div>
-<script type="text/javascript">
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({pageLanguage: 'id', includedLanguages: 'id,en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
-}
-</script>
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
 <div class="header">
-    <div class="container">
+    <div class="header-content">
         <h1>GROWFAX</h1>
+        
+        <div class="language-switcher">
+            <a href="javascript:void(0)" class="lang-button active" onclick="doGTranslate('id|id'); return false;">🇮🇩 ID</a>
+            <a href="javascript:void(0)" class="lang-button" onclick="doGTranslate('id|en'); return false;">🇺🇸 EN</a>
+        </div>
     </div>
 </div>
 
@@ -235,5 +242,55 @@ function googleTranslateElementInit() {
     </div>
 </div>
 
-</body>
-</html>
+<script type="text/javascript">
+    // Fungsi untuk memicu terjemahan (ditemukan pada Google Translate Widget)
+    function doGTranslate(lang_pair) {
+        if (typeof GTranslateGetCurrentLang == 'function' && GTranslateGetCurrentLang() == null) {
+            // Jika belum terinisialisasi, muat skrip (hanya sekali)
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+            document.head.appendChild(script);
+
+            script.onload = function() {
+                doGTranslate(lang_pair);
+            };
+            return;
+        }
+
+        // Ambil bahasa tujuan
+        var lang = lang_pair.split('|')[1];
+        
+        // Panggil fungsi terjemahan
+        var te_element = document.getElementById('google_translate_element');
+        if (te_element) te_element.innerHTML = '';
+        new google.translate.TranslateElement({pageLanguage: 'id'}, 'google_translate_element');
+
+        // Tambahkan delay kecil untuk eksekusi yang lebih smooth
+        setTimeout(function() {
+            var select = document.querySelector('select.goog-te-combo');
+            if (select) {
+                select.value = lang;
+                select.dispatchEvent(new Event('change'));
+            }
+            updateActiveButton(lang);
+        }, 100); 
+    }
+
+    // Fungsi inisialisasi dummy
+    function googleTranslateElementInit() {}
+
+    // Fungsi untuk memperbarui tampilan tombol yang aktif
+    function updateActiveButton(lang) {
+        document.querySelectorAll('.lang-button').forEach(btn => btn.classList.remove('active'));
+        if (lang === 'id') {
+            document.querySelector('.language-switcher a:first-child').classList.add('active');
+        } else if (lang === 'en') {
+            document.querySelector('.language-switcher a:last-child').classList.add('active');
+        }
+    }
+    
+    // Inisialisasi awal ke Indonesia (aktifkan tombol ID)
+    updateActiveButton('id');
+</script>
+<div id="google_translate_element" style="display:none;"></div>
