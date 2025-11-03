@@ -30,7 +30,18 @@
         /* Header */
         .header { background-color: var(--surface-dark); padding: 15px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
         .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: auto; padding: 0 20px; }
-        .header h1 { margin: 0; font-size: 1.8em; color: var(--primary-color); }
+        /* MENGHAPUS STYLE H1 UNTUK LOGO TEXT */
+        /* .header h1 { margin: 0; font-size: 1.8em; color: var(--primary-color); } */
+
+        /* STYLE BARU UNTUK LOGO GAMBAR DI HEADER */
+        .header-logo {
+            height: 40px; /* Tinggi logo kecil */
+            width: auto; /* Lebar otomatis untuk menjaga rasio aspek */
+            object-fit: contain; /* Memastikan gambar tidak terpotong */
+            margin: 0; /* Hapus margin default */
+            vertical-align: middle; /* Agar sejajar dengan tombol bahasa */
+        }
+
         .language-switcher { display: flex; gap: 10px; }
         .lang-button { background: none; border: 1px solid var(--text-muted); color: var(--text-light); padding: 5px 10px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s, border-color 0.3s; text-decoration: none; font-size: 0.9em; line-height: 1; }
         .lang-button:hover { background-color: rgba(255, 255, 255, 0.1); border-color: var(--primary-color); }
@@ -50,7 +61,7 @@
         .banner-section img { 
             width: 100%; 
             height: auto; 
-            max-height: 60px; /* Banner super kecil */
+            max-height: 60px; 
             object-fit: cover; 
             display: block; 
         }
@@ -106,41 +117,30 @@
         .floating-discord-button:hover { transform: scale(1.1); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.7); }
         .floating-discord-button img { width: 100%; height: 100%; object-fit: contain; filter: invert(100%); }
         
-        /* ======================================= */
         /* MEDIA QUERIES UNTUK RESPONSIVITAS (HP/Tablet Kecil) */
-        /* ======================================= */
         @media (max-width: 768px) {
             
             /* Header lebih ringkas */
             .header-content { padding: 0 15px; }
-            .header h1 { font-size: 1.6em; }
+            /* LOGO UTAMA DI HEADER UNTUK LAYAR KECIL */
+            .header-logo {
+                height: 30px; /* Logo lebih kecil di HP */
+            }
 
-            /* Ukuran font utama dikecilkan */
             h2 { font-size: 1.8em; }
             .description { font-size: 1em; margin-bottom: 30px; }
 
-            /* Tombol utama diubah menjadi 1 kolom penuh */
             .button-group { 
                 grid-template-columns: 1fr;
                 gap: 15px; 
             }
             
-            /* Tombol utama dibuat lebih datar di HP */
-            .action-button { 
-                padding: 12px 15px;
-            }
-            .button-icon {
-                width: 45px; 
-                height: 45px;
-            }
-            .button-text {
-                font-size: 1em;
-            }
+            .action-button { padding: 12px 15px; }
+            .button-icon { width: 45px; height: 45px; }
+            .button-text { font-size: 1em; }
             
-            /* Footer padding dikurangi */
             .footer { padding: 15px 0; }
             
-            /* Tombol Floating Discord dibuat sedikit lebih kecil (opsional) */
             .floating-discord-button {
                 width: 50px;
                 height: 50px;
@@ -154,7 +154,7 @@
     
 <div class="header">
     <div class="header-content">
-        <h1>GROWFAX</h1>
+        <img src="growfax_logo.png" alt="Growfax Logo" class="header-logo">
         
         <div class="language-switcher">
             <a href="javascript:void(0)" class="lang-button" id="lang-id" onclick="changeLanguage('id');">🇮🇩 ID</a>
@@ -232,7 +232,6 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-        // Atur bahasa default (EN) saat halaman dimuat pertama kali
         changeLanguage('en');
     });
 </script>
