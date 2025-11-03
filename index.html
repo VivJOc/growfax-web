@@ -29,12 +29,96 @@
 <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload" />
 <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" /> 
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX">
+// ===================== Sydney Time (Local Display) =====================
+function updateSydneyTime() {
+  const timeDisplay = document.getElementById("timeDisplay");
+  try {
+    const now = new Date();
+    const sydneyTime = now.toLocaleString("en-AU", {
+      timeZone: "Australia/Sydney",
+      hour12: false,
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    });
+    timeDisplay.textContent = "Server Time (Sydney): " + sydneyTime;
+  } catch (e) {
+    timeDisplay.textContent = "Unable to load Sydney time.";
+  }
+}
+setInterval(updateSydneyTime, 1000);
+updateSydneyTime();
+
+// ===================== Copy Config for iOS & PowerTunnel =====================
+iosButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  const text = FILE_META.ios.copytext;
+  navigator.clipboard.writeText(text).then(() => {
+    showToast("✅ Config copied for iOS!");
+  }).catch(() => {
+    showToast("❌ Failed to copy iOS config.");
+  });
+});
+
+powertunnelButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  const text = FILE_META.powertunnel.copytext;
+  navigator.clipboard.writeText(text).then(() => {
+    showToast("✅ Config copied for PowerTunnel!");
+  }).catch(() => {
+    showToast("❌ Failed to copy PowerTunnel config.");
+  });
+});
+
+</script>
 <script>
   window.dataLayer = window.dataLayer ||
 [];
   function gtag(){dataLayer.push(arguments);}
   gtag('config', 'G-XXXXXXXXXX'); // Placeholder ID for Growfax Analytics
+
+// ===================== Sydney Time (Local Display) =====================
+function updateSydneyTime() {
+  const timeDisplay = document.getElementById("timeDisplay");
+  try {
+    const now = new Date();
+    const sydneyTime = now.toLocaleString("en-AU", {
+      timeZone: "Australia/Sydney",
+      hour12: false,
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    });
+    timeDisplay.textContent = "Server Time (Sydney): " + sydneyTime;
+  } catch (e) {
+    timeDisplay.textContent = "Unable to load Sydney time.";
+  }
+}
+setInterval(updateSydneyTime, 1000);
+updateSydneyTime();
+
+// ===================== Copy Config for iOS & PowerTunnel =====================
+iosButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  const text = FILE_META.ios.copytext;
+  navigator.clipboard.writeText(text).then(() => {
+    showToast("✅ Config copied for iOS!");
+  }).catch(() => {
+    showToast("❌ Failed to copy iOS config.");
+  });
+});
+
+powertunnelButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  const text = FILE_META.powertunnel.copytext;
+  navigator.clipboard.writeText(text).then(() => {
+    showToast("✅ Config copied for PowerTunnel!");
+  }).catch(() => {
+    showToast("❌ Failed to copy PowerTunnel config.");
+  });
+});
+
 </script>
 <style>
   /* ============================================================
@@ -2228,6 +2312,48 @@ handleUrlHash(); // NEW: Initial routing/SPA setup
 checkCookieConsent(); // NEW: Initial cookie check
 updateAuthUI(langSelect.value); // NEW: Set initial Auth UI state
 setInterval(updateTime, 1000); // Set a periodic update for time
+
+
+// ===================== Sydney Time (Local Display) =====================
+function updateSydneyTime() {
+  const timeDisplay = document.getElementById("timeDisplay");
+  try {
+    const now = new Date();
+    const sydneyTime = now.toLocaleString("en-AU", {
+      timeZone: "Australia/Sydney",
+      hour12: false,
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    });
+    timeDisplay.textContent = "Server Time (Sydney): " + sydneyTime;
+  } catch (e) {
+    timeDisplay.textContent = "Unable to load Sydney time.";
+  }
+}
+setInterval(updateSydneyTime, 1000);
+updateSydneyTime();
+
+// ===================== Copy Config for iOS & PowerTunnel =====================
+iosButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  const text = FILE_META.ios.copytext;
+  navigator.clipboard.writeText(text).then(() => {
+    showToast("✅ Config copied for iOS!");
+  }).catch(() => {
+    showToast("❌ Failed to copy iOS config.");
+  });
+});
+
+powertunnelButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  const text = FILE_META.powertunnel.copytext;
+  navigator.clipboard.writeText(text).then(() => {
+    showToast("✅ Config copied for PowerTunnel!");
+  }).catch(() => {
+    showToast("❌ Failed to copy PowerTunnel config.");
+  });
+});
 
 </script>
 </body>
