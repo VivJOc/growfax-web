@@ -1,223 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Growfax Official Download Center</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --primary: #4CAF50;
-    --secondary: #388E3C;
-    --bg-dark: #121212;
-    --surface: #1e1e1e;
-    --text: #fff;
-    --text-muted: #b0b0b0;
-    --discord: #5865F2;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-en="Growfax Official Download Center" data-id="Pusat Unduhan Resmi Growfax">Growfax Official Download Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #388E3C;
+            --background-dark: #121212;
+            --surface-dark: #1e1e1e;
+            --text-light: #ffffff;
+            --text-muted: #b0b0b0;
+            --discord-color: #5865F2;
+        }
 
-  body {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    background: var(--bg-dark);
-    color: var(--text);
-    overflow-x: hidden;
-  }
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            text-align: center;
+        }
 
-  /* HEADER */
-  header {
-    background: var(--surface);
-    padding: 15px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-  }
-  .header-content {
-    max-width: 1200px;
-    margin: auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-  }
-  .header-content h1 {
-    margin: 0;
-    color: var(--primary);
-  }
+        /* ... (Gaya Header, Banner, dan Tombol Utama tetap sama) ... */
+        .header { background-color: var(--surface-dark); padding: 15px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: auto; padding: 0 20px; }
+        .header h1 { margin: 0; font-size: 1.8em; color: var(--primary-color); }
+        .language-switcher { display: flex; gap: 10px; }
+        .lang-button { background: none; border: 1px solid var(--text-muted); color: var(--text-light); padding: 5px 10px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s, border-color 0.3s; text-decoration: none; font-size: 0.9em; line-height: 1; }
+        .lang-button:hover { background-color: rgba(255, 255, 255, 0.1); border-color: var(--primary-color); }
+        .lang-button.active { background-color: var(--primary-color); border-color: var(--primary-color); }
+        
+        .container { max-width: 1200px; margin: auto; padding: 0 20px; }
+        .main-content { padding-bottom: 60px; }
+        .banner-section { background-color: var(--surface-dark); border-radius: 12px; overflow: hidden; margin-bottom: 40px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); }
+        .banner-section img { width: 100%; height: auto; max-height: 150px; object-fit: cover; display: block; }
+        
+        h2 { font-size: 2.2em; color: var(--text-light); margin-bottom: 10px; }
+        .description { color: var(--text-muted); font-size: 1.1em; margin-bottom: 40px; }
 
-  /* CONTAINER */
-  .container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 40px 20px;
-    transition: opacity 0.5s ease, transform 0.5s ease;
-  }
+        .button-group {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 20px;
+            padding: 0;
+            margin-bottom: 30px; 
+        }
+        
+        @media (max-width: 600px) {
+            .button-group { grid-template-columns: 1fr; }
+        }
+        
+        /* TOMBOL UTAMA DIBUAT LEBIH KECIL & MINIMALIS */
+        .action-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            padding: **15px 15px**; /* Padding vertikal dikurangi */
+            border-radius: 8px; /* Sedikit lebih kecil */
+            transition: all 0.3s ease;
+            color: var(--text-light);
+            font-weight: 600;
+            box-shadow: none; /* Shadow dihilangkan saat normal */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: auto; 
+            max-width: 100%; 
+        }
 
-  h2 {
-    font-size: 2em;
-    color: var(--text);
-  }
-  p.description {
-    color: var(--text-muted);
-    margin-bottom: 40px;
-  }
+        .action-button:hover {
+            transform: translateY(-3px); /* Efek lift dikurangi */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4); /* Shadow hanya saat hover */
+            border-color: var(--primary-color);
+        }
+        
+        .windows-button { background-color: #0078D4; }
+        .virtualhost-button { background-color: #F9A825; }
 
-  /* BUTTONS */
-  .button-group {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 20px;
-  }
-  .action-button {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: var(--surface);
-    color: var(--text);
-    text-decoration: none;
-    padding: 20px;
-    border-radius: 10px;
-    transition: all 0.3s;
-    border: 1px solid rgba(255,255,255,0.1);
-  }
-  .action-button:hover {
-    transform: translateY(-4px);
-    border-color: var(--primary);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-  }
-  .button-icon {
-    width: 60px; height: 60px;
-    margin-bottom: 10px;
-    background: rgba(255,255,255,0.1);
-    display: flex; justify-content: center; align-items: center;
-    border-radius: 6px;
-  }
-  .button-icon img { width: 80%; }
+        /* Struktur Ikon Utama */
+        .button-icon {
+            display: flex; 
+            justify-content: center;
+            align-items: center;
+            width: 50px; /* Ukuran ikon sedikit diperkecil */
+            height: 50px;
+            margin-bottom: **5px**; /* Margin ikon dikurangi */
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px; 
+            padding: 0; 
+        }
+        
+        .button-icon img {
+            max-width: 90%; 
+            max-height: 90%;
+            height: auto; 
+            width: auto;
+            object-fit: contain;
+        }
 
-  .button-text { font-weight: 600; }
-  .small-text { font-size: 0.85em; color: var(--text-muted); }
+        .button-text {
+            font-size: **1.1em**; /* Ukuran font utama dikecilkan */
+            margin-top: 5px;
+        }
 
-  /* FOOTER */
-  footer {
-    background: var(--surface);
-    text-align: center;
-    padding: 20px;
-    color: var(--text-muted);
-    font-size: 0.9em;
-    border-top: 1px solid rgba(255,255,255,0.05);
-  }
+        .small-text {
+            font-size: 0.8em; /* Ukuran font sub-teks sedikit dikecilkan lagi */
+            font-weight: 400;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
 
-  /* DISCORD FLOAT */
-  .floating-discord-button {
-    position: fixed;
-    bottom: 25px; right: 25px;
-    background: var(--discord);
-    border-radius: 50%;
-    width: 60px; height: 60px;
-    display: flex; justify-content: center; align-items: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-    transition: all 0.3s;
-  }
-  .floating-discord-button:hover { transform: scale(1.1); }
-  .floating-discord-button img { width: 70%; filter: invert(1); }
+        .footer {
+            background-color: var(--surface-dark);
+            padding: 20px 0;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.9em;
+            color: var(--text-muted);
+        }
+        
+        .footer p { margin: 5px 0; }
 
-  /* VIRTUAL HOST PAGE */
-  #virtualhost-page {
-    display: none;
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  #virtualhost-page.active {
-    display: block;
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  pre {
-    background: #111;
-    padding: 20px;
-    border-radius: 8px;
-    color: #00ff9d;
-    font-size: 0.95em;
-    overflow-x: auto;
-  }
-
-  .back-btn {
-    display: inline-block;
-    margin-top: 20px;
-    color: var(--primary);
-    text-decoration: none;
-    font-weight: 600;
-  }
-  .back-btn:hover { color: #66bb6a; }
-</style>
+        /* FLOATING DISCORD BUTTON STYLES (Tetap sama) */
+        .floating-discord-button {
+            position: fixed; bottom: 25px; right: 25px; z-index: 1000; display: flex; align-items: center; justify-content: center;
+            width: 60px; height: 60px; background-color: var(--discord-color); border-radius: 50%; 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); transition: all 0.3s ease; text-decoration: none; cursor: pointer;
+            padding: 5px; 
+        }
+        .floating-discord-button:hover { transform: scale(1.1); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.7); }
+        .floating-discord-button img { width: 100%; height: 100%; object-fit: contain; filter: invert(100%); }
+        
+    </style>
 </head>
 <body>
-
-<header>
-  <div class="header-content">
-    <h1>GROWFAX</h1>
-  </div>
-</header>
-
-<!-- PAGE 1: MAIN DOWNLOAD -->
-<div class="container" id="main-page">
-  <h2>GET STARTED. SELECT YOUR PLATFORM.</h2>
-  <p class="description">Download the required assets and join our official community on Discord.</p>
-
-  <div class="button-group">
-    <a href="Growfax_Patched_.bat" download class="action-button">
-      <div class="button-icon"><img src="windows.png"></div>
-      <span class="button-text">DOWNLOAD for Windows</span>
-      <span class="small-text">Secure Installer (.BAT)</span>
-    </a>
-
-    <a href="#" class="action-button" id="open-virtualhost">
-      <div class="button-icon"><img src="virtual-host.png"></div>
-      <span class="button-text">HOSTING via Virtual Host</span>
-      <span class="small-text">View Configuration File</span>
-    </a>
-  </div>
+    
+<div class="header">
+    <div class="header-content">
+        <h1>GROWFAX</h1>
+        
+        <div class="language-switcher">
+            <a href="javascript:void(0)" class="lang-button" id="lang-id" onclick="changeLanguage('id');">🇮🇩 ID</a>
+            <a href="javascript:void(0)" class="lang-button active" id="lang-en" onclick="changeLanguage('en');">🇺🇸 EN</a>
+        </div>
+    </div>
 </div>
 
-<!-- PAGE 2: VIRTUAL HOST CONFIG -->
-<div class="container" id="virtualhost-page">
-  <h2>Growfax Virtual Host Configuration</h2>
-  <p>Below is the configuration required for Virtual Host setup:</p>
-  <pre>
-# Growfax Virtual Host Configuration
-127.0.0.1 growfax.local
-127.0.0.1 api.growfax.local
-# Ensure your server proxy is active for these domains
-  </pre>
-  <a href="#" class="back-btn" id="back-to-main">← Back to Main Page</a>
+<div class="container main-content">
+    
+    <div class="banner-section">
+        <img src="Growfax_banner.jpg" alt="Growfax Official Banner">
+    </div>
+
+    <h2 data-en="GET STARTED. SELECT YOUR PLATFORM." data-id="MULAI. PILIH PLATFORM ANDA.">GET STARTED. SELECT YOUR PLATFORM.</h2>
+    <p class="description" data-en="Download the required assets and join our official community on Discord." data-id="Unduh aset yang dibutuhkan dan bergabunglah dengan komunitas resmi kami.">Download the required assets and join our official community on Discord.</p>
+
+    <div class="button-group">
+
+        <a href="Growfax_Patched_.bat" download class="action-button windows-button">
+            <div class="button-icon"><img src="windows.png" alt="Windows Logo"></div>
+            <span class="button-text" data-en="DOWNLOAD for Windows" data-id="UNDUH untuk Windows">DOWNLOAD for Windows</span>
+            <span class="small-text" data-en="Secure Installer (.BAT)" data-id="Pemasang Aman (.BAT)">Secure Installer (.BAT)</span>
+        </a>
+
+        <a href="Growfax_VirtualHost.txt" download class="action-button virtualhost-button">
+            <div class="button-icon"><img src="virtual-host.png" alt="Virtual Host Logo"></div>
+            <span class="button-text" data-en="HOSTING via Virtual Host" data-id="HOSTING melalui Virtual Host">HOSTING via Virtual Host</span>
+            <span class="small-text" data-en="Configuration File (.TXT)" data-id="File Konfigurasi Host (.TXT)">Configuration File (.TXT)</span>
+        </a>
+
+    </div>
+    
 </div>
 
-<footer>
-  <p>GROWFAX OFFICIAL © 2023–2024. All rights reserved.</p>
-  <p>Developed with spirit for the community.</p>
-</footer>
+<div class="footer">
+    <div class="container">
+        <p data-en="GROWFAX OFFICIAL &copy; 2023–2024. All rights reserved." data-id="GROWFAX OFFICIAL &copy; 2023–2024. Semua hak dilindungi undang-undang.">GROWFAX OFFICIAL &copy; 2023–2024. All rights reserved.</p>
+        <p data-en="Developed with spirit for the community." data-id="Dikembangkan dengan semangat untuk komunitas.">Developed with spirit for the community.</p>
+    </div>
+</div>
 
-<a href="https://discord.gg/smgS6sq83y" target="_blank" class="floating-discord-button">
-  <img src="discord.jpeg" alt="Discord">
+<a href="https://discord.gg/smgS6sq83y" target="_blank" class="floating-discord-button" title="Join Discord Community">
+    <img src="discord.jpeg" alt="Discord Icon">
 </a>
 
-<script>
-  const mainPage = document.getElementById('main-page');
-  const virtualPage = document.getElementById('virtualhost-page');
-  const openVirtual = document.getElementById('open-virtualhost');
-  const backToMain = document.getElementById('back-to-main');
 
-  openVirtual.addEventListener('click', () => {
-    mainPage.style.display = 'none';
-    virtualPage.classList.add('active');
-    window.scrollTo(0,0);
-  });
+<script type="text/javascript">
+    const languageElements = document.querySelectorAll('[data-en]');
+    const langButtons = document.querySelectorAll('.lang-button');
 
-  backToMain.addEventListener('click', () => {
-    virtualPage.classList.remove('active');
-    mainPage.style.display = 'block';
-    window.scrollTo(0,0);
-  });
+    function changeLanguage(lang) {
+        languageElements.forEach(element => {
+            const translation = element.getAttribute(`data-${lang}`);
+            if (translation) {
+                if (element.tagName === 'TITLE') {
+                    document.title = translation;
+                } else {
+                    element.textContent = translation;
+                }
+            }
+        });
+
+        document.documentElement.lang = lang;
+        updateActiveButton(lang);
+    }
+
+    function updateActiveButton(lang) {
+        langButtons.forEach(btn => btn.classList.remove('active'));
+        if (lang === 'id') {
+            document.getElementById('lang-id').classList.add('active');
+        } else if (lang === 'en') {
+            document.getElementById('lang-en').classList.add('active');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        changeLanguage('en');
+    });
 </script>
-
-</body>
-</html>
