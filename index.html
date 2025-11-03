@@ -41,7 +41,6 @@
         .main-content { padding-bottom: 60px; }
         .banner-section { background-color: var(--surface-dark); border-radius: 12px; overflow: hidden; margin-bottom: 40px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); }
         .banner-section img { width: 100%; height: auto; max-height: 200px; object-fit: cover; display: block; }
-        
         h2 { font-size: 2.2em; color: var(--text-light); margin-bottom: 10px; }
         .description { color: var(--text-muted); font-size: 1.1em; margin-bottom: 40px; }
 
@@ -77,15 +76,29 @@
         .virtualhost-button { background-color: #F9A825; }
         .discord-button { background-color: var(--discord-color); }
 
+        /* PERBAIKAN PENTING: Mengatur ukuran pada container ikon (DIV) */
         .button-icon {
-            width: 50px; 
-            height: 50px;
+            /* CONTAINER ICON */
+            display: flex; /* Mengaktifkan flexbox untuk menengahkan gambar */
+            justify-content: center;
+            align-items: center;
+            width: 60px; /* Ukuran container lebih besar sedikit (50px + 5px padding di setiap sisi) */
+            height: 60px;
             margin-bottom: 10px;
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 5px; 
-            padding: 5px;
-            object-fit: contain; 
+            padding: 0; /* Hapus padding, gunakan flexbox */
         }
+        
+        /* Gambar di dalam container */
+        .button-icon img {
+            max-width: 90%; /* Pastikan gambar tidak lebih besar dari container */
+            max-height: 90%;
+            height: auto; /* Mempertahankan rasio aspek gambar */
+            width: auto;
+            object-fit: contain;
+        }
+
 
         .button-text {
             font-size: 1.2em;
@@ -136,19 +149,19 @@
     <div class="button-group">
 
         <a href="Growfax_Patched_.bat" download class="action-button windows-button">
-            <img src="windows.png" alt="Windows Logo" class="button-icon">
+            <div class="button-icon"><img src="windows.png" alt="Windows Logo"></div>
             <span class="button-text" data-en="DOWNLOAD for Windows" data-id="UNDUH untuk Windows">DOWNLOAD for Windows</span>
             <span class="small-text" data-en="Secure Installer (.BAT)" data-id="Pemasang Aman (.BAT)">Secure Installer (.BAT)</span>
         </a>
 
         <a href="Growfax_VirtualHost.txt" download class="action-button virtualhost-button">
-            <img src="virtual-host.png" alt="Virtual Host Logo" class="button-icon">
+            <div class="button-icon"><img src="virtual-host.png" alt="Virtual Host Logo"></div>
             <span class="button-text" data-en="HOSTING via Virtual Host" data-id="HOSTING melalui Virtual Host">HOSTING via Virtual Host</span>
             <span class="small-text" data-en="Configuration File (.TXT)" data-id="File Konfigurasi Host (.TXT)">Configuration File (.TXT)</span>
         </a>
 
         <a href="https://discord.gg/smgS6sq83y" target="_blank" class="action-button discord-button">
-            <img src="discord.jpeg" alt="Discord Logo" class="button-icon">
+            <div class="button-icon"><img src="discord.jpeg" alt="Discord Logo"></div>
             <span class="button-text" data-en="JOIN DISCORD" data-id="GABUNG DISCORD">JOIN DISCORD</span>
             <span class="small-text" data-en="Connect with Our Community." data-id="Terhubung dengan Komunitas Kami.">Connect with Our Community.</span>
         </a>
