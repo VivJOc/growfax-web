@@ -31,21 +31,18 @@
         .header { background-color: var(--surface-dark); padding: 15px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
         .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: auto; padding: 0 20px; }
         
-        /* REVISI STYLE UNTUK TEKS H1 AGAR MENJADI KOTAK KECIL */
-        .header h1 { 
+        /* STYLE LOGO GAMBAR BARU (PENGGANTI H1 TEKS KOTAK) */
+        .header-logo {
+            height: **35px**; /* Tinggi logo di PC, kecil dan pas dengan tombol bahasa */
+            width: auto; 
+            /* PENTING: object-fit: contain memastikan logo tidak terpotong atau terdistorsi */
+            object-fit: **contain**; 
             margin: 0; 
-            color: var(--primary-color); 
-            
-            /* Tampilan Kotak/Petak */
-            display: inline-block;
-            font-size: 1.2em; /* Ukuran font di PC */
-            font-weight: 700;
-            padding: 5px 8px; /* Padding agar terlihat kotak kecil */
-            border: 2px solid var(--primary-color);
-            border-radius: 5px;
-            line-height: 1; /* Memastikan tinggi sesuai padding */
-            transition: all 0.3s;
+            vertical-align: middle; 
         }
+        
+        /* Menghapus gaya h1 yang sudah tidak terpakai */
+        /* .header h1 { ... } */
         
         /* Tombol bahasa tetap */
         .language-switcher { display: flex; gap: 10px; }
@@ -53,26 +50,11 @@
         .lang-button:hover { background-color: rgba(255, 255, 255, 0.1); border-color: var(--primary-color); }
         .lang-button.active { background-color: var(--primary-color); border-color: var(--primary-color); }
         
-        /* Kontainer dan Banner */
+        /* Kontainer Utama */
         .container { max-width: 1200px; margin: auto; padding: 0 20px; }
         .main-content { padding-bottom: 60px; }
-        .banner-section { 
-            background-color: var(--surface-dark); 
-            border-radius: 12px; 
-            overflow: hidden; 
-            margin-bottom: 20px; 
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); 
-        }
         
-        .banner-section img { 
-            width: 100%; 
-            height: auto; 
-            max-height: 60px; 
-            object-fit: cover; 
-            display: block; 
-        }
-        
-        h2 { font-size: 2.2em; color: var(--text-light); margin-bottom: 10px; }
+        h2 { font-size: 2.2em; color: var(--text-light); margin-bottom: 10px; margin-top: 40px; } 
         .description { color: var(--text-muted); font-size: 1.1em; margin-bottom: 40px; }
 
         .button-group {
@@ -128,13 +110,12 @@
             
             .header-content { padding: 0 15px; }
             
-            /* UKURAN H1 KOTAK DI HP LEBIH KECIL LAGI */
-            .header h1 {
-                font-size: 1em; /* Font lebih kecil */
-                padding: 4px 6px; /* Padding lebih kecil */
+            /* LOGO GAMBAR DI HP */
+            .header-logo {
+                height: 28px; /* Lebih kecil di HP */
             }
 
-            h2 { font-size: 1.8em; }
+            h2 { font-size: 1.8em; margin-top: 25px; } 
             .description { font-size: 1em; margin-bottom: 30px; }
 
             .button-group { 
@@ -162,7 +143,7 @@
 <div class="header">
     <div class="header-content">
         
-        <h1>GROWFAX</h1>
+        <img src="growfax_logo.png" alt="Growfax Logo" class="header-logo">
         
         <div class="language-switcher">
             <a href="javascript:void(0)" class="lang-button" id="lang-id" onclick="changeLanguage('id');">🇮🇩 ID</a>
@@ -173,10 +154,6 @@
 
 <div class="container main-content">
     
-    <div class="banner-section">
-        <img src="Growfax_banner.jpg" alt="Growfax Official Banner">
-    </div>
-
     <h2 data-en="GET STARTED. SELECT YOUR PLATFORM." data-id="MULAI. PILIH PLATFORM ANDA.">GET STARTED. SELECT YOUR PLATFORM.</h2>
     <p class="description" data-en="Download the required assets and join our official community on Discord." data-id="Unduh aset yang dibutuhkan dan bergabunglah dengan komunitas resmi kami.">Download the required assets and join our official community on Discord.</p>
 
