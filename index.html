@@ -26,14 +26,12 @@
             line-height: 1.6;
             text-align: center;
         }
-
-        /* Header & Navigation Bar */
+        /* ... (Gaya Header dan Language Switcher sama) ... */
         .header {
             background-color: var(--surface-dark);
             padding: 15px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
-
         .header-content {
             display: flex;
             justify-content: space-between;
@@ -42,19 +40,15 @@
             margin: auto;
             padding: 0 20px;
         }
-
         .header h1 {
             margin: 0;
             font-size: 1.8em;
             color: var(--primary-color);
         }
-
-        /* Language Switcher Styles */
         .language-switcher {
             display: flex;
             gap: 10px;
         }
-
         .lang-button {
             background: none;
             border: 1px solid var(--text-muted);
@@ -67,22 +61,37 @@
             font-size: 0.9em;
             line-height: 1; 
         }
-
         .lang-button:hover {
             background-color: rgba(255, 255, 255, 0.1);
             border-color: var(--primary-color);
         }
-
         .lang-button.active {
             background-color: var(--primary-color);
             border-color: var(--primary-color);
         }
         
-        /* Konten Lain */
+        /* Kontainer dan Banner yang Diperbaiki */
         .container { max-width: 1200px; margin: auto; padding: 0 20px; }
         .main-content { padding-bottom: 60px; }
-        .banner-section { background-color: var(--surface-dark); border-radius: 12px; overflow: hidden; margin-bottom: 40px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); }
-        .banner-section img { width: 100%; height: auto; max-height: 450px; object-fit: cover; display: block; }
+        
+        .banner-section {
+            background-color: var(--surface-dark);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .banner-section img {
+            width: 100%;
+            height: auto;
+            /* PERUBAHAN DI SINI: Mengurangi tinggi maksimum banner dari 450px ke 300px */
+            max-height: **300px**;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* ... (Gaya elemen lainnya sama) ... */
         h2 { font-size: 2.2em; color: var(--text-light); margin-bottom: 10px; }
         .description { color: var(--text-muted); font-size: 1.1em; margin-bottom: 40px; }
         .button-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 10px; }
@@ -156,11 +165,9 @@
     const langButtons = document.querySelectorAll('.lang-button');
 
     function changeLanguage(lang) {
-        // 1. Ubah teks untuk semua elemen yang dapat diterjemahkan
         languageElements.forEach(element => {
             const translation = element.getAttribute(`data-${lang}`);
             if (translation) {
-                // Periksa apakah ini elemen <title> khusus
                 if (element.tagName === 'TITLE') {
                     document.title = translation;
                 } else {
@@ -169,10 +176,7 @@
             }
         });
 
-        // 2. Ubah atribut lang pada <html>
         document.documentElement.lang = lang;
-
-        // 3. Perbarui tampilan tombol aktif
         updateActiveButton(lang);
     }
 
@@ -186,7 +190,6 @@
     }
 
     // Panggil changeLanguage('en') saat halaman pertama kali dimuat
-    // untuk memastikan semua elemen diperbarui ke bahasa Inggris, meskipun sudah ada di HTML.
     document.addEventListener('DOMContentLoaded', () => {
         changeLanguage('en');
     });
