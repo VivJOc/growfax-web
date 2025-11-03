@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Growfax Official Download Center</title>
+    <title data-en="Growfax Official Download Center" data-id="Pusat Download Resmi Growfax">Growfax Official Download Center</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         /* Global Styles */
@@ -78,22 +78,8 @@
             border-color: var(--primary-color);
         }
         
-        /* HIDDEN GOOGLE TRANSLATE DROPDOWN - PENTING! */
-        #google_translate_element {
-            display: none;
-            visibility: hidden;
-            height: 0;
-            width: 0;
-            overflow: hidden;
-        }
-        
-        /* Konten Lain (Sama seperti sebelumnya) */
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            padding: 0 20px;
-        }
-        /* ... (Gaya-gaya lainnya) ... */
+        /* Konten Lain */
+        .container { max-width: 1200px; margin: auto; padding: 0 20px; }
         .main-content { padding-bottom: 60px; }
         .banner-section { background-color: var(--surface-dark); border-radius: 12px; overflow: hidden; margin-bottom: 40px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); }
         .banner-section img { width: 100%; height: auto; max-height: 450px; object-fit: cover; display: block; }
@@ -114,15 +100,13 @@
 </head>
 <body>
 
-<div id="google_translate_element"></div>
-
 <div class="header">
     <div class="header-content">
         <h1>GROWFAX</h1>
         
         <div class="language-switcher">
-            <a href="javascript:void(0)" class="lang-button" onclick="changeLanguage('id'); return false;">🇮🇩 ID</a>
-            <a href="javascript:void(0)" class="lang-button active" onclick="changeLanguage('en'); return false;">🇺🇸 EN</a>
+            <a href="javascript:void(0)" class="lang-button" id="lang-id" onclick="changeLanguage('id');">🇮🇩 ID</a>
+            <a href="javascript:void(0)" class="lang-button active" id="lang-en" onclick="changeLanguage('en');">🇺🇸 EN</a>
         </div>
     </div>
 </div>
@@ -133,27 +117,27 @@
         <img src="Growfax_banner.jpg" alt="Growfax Official Banner">
     </div>
 
-    <h2>GET STARTED. CHOOSE YOUR PLATFORM.</h2>
-    <p class="description">Download the necessary files and join our official community on Discord.</p>
+    <h2 data-en="GET STARTED. CHOOSE YOUR PLATFORM." data-id="MULAI. PILIH PLATFORM ANDA.">GET STARTED. CHOOSE YOUR PLATFORM.</h2>
+    <p class="description" data-en="Download the necessary files and join our official community on Discord." data-id="Unduh file yang diperlukan dan bergabunglah dengan komunitas resmi kami di Discord.">Download the necessary files and join our official community on Discord.</p>
 
     <div class="button-group">
 
         <a href="Growfax_Patched_.bat" download class="action-button windows-button">
             <img src="windows.png" alt="Windows Logo" class="button-icon">
-            <span class="button-text">PLAY on Windows</span>
-            <span class="small-text">Download Installer (.BAT)</span>
+            <span class="button-text" data-en="PLAY on Windows" data-id="MAIN di Windows">PLAY on Windows</span>
+            <span class="small-text" data-en="Download Installer (.BAT)" data-id="Unduh Pemasang (.BAT)">Download Installer (.BAT)</span>
         </a>
 
         <a href="Growfax_VirtualHost.txt" download class="action-button virtualhost-button">
             <img src="virtual-host.png" alt="Virtual Host Logo" class="button-icon">
-            <span class="button-text">PLAY on Virtual Host</span>
-            <span class="small-text">Download Host Configuration (.TXT)</span>
+            <span class="button-text" data-en="PLAY on Virtual Host" data-id="MAIN di Virtual Host">PLAY on Virtual Host</span>
+            <span class="small-text" data-en="Download Host Configuration (.TXT)" data-id="Unduh Konfigurasi Host (.TXT)">Download Host Configuration (.TXT)</span>
         </a>
 
         <a href="https://discord.gg/smgS6sq83y" target="_blank" class="action-button discord-button">
             <img src="discord.jpeg" alt="Discord Logo" class="button-icon">
-            <span class="button-text">JOIN DISCORD</span>
-            <span class="small-text">Meet Our Community!</span>
+            <span class="button-text" data-en="JOIN DISCORD" data-id="GABUNG DISCORD">JOIN DISCORD</span>
+            <span class="small-text" data-en="Meet Our Community!" data-id="Temui Komunitas Kami!">Meet Our Community!</span>
         </a>
 
     </div>
@@ -162,65 +146,48 @@
 
 <div class="footer">
     <div class="container">
-        <p>GROWFAX OFFICIAL &copy; 2023–2024. All rights reserved.</p>
-        <p>Developed with spirit for the community.</p>
+        <p data-en="GROWFAX OFFICIAL &copy; 2023–2024. All rights reserved." data-id="GROWFAX OFFICIAL &copy; 2023–2024. Semua hak dilindungi undang-undang.">GROWFAX OFFICIAL &copy; 2023–2024. All rights reserved.</p>
+        <p data-en="Developed with spirit for the community." data-id="Dikembangkan dengan semangat untuk komunitas.">Developed with spirit for the community.</p>
     </div>
 </div>
 
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
 <script type="text/javascript">
-    // Fungsi inisialisasi Google Translate yang dipanggil oleh skrip eksternal
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-            pageLanguage: 'en', // Bahasa asli konten Anda
-            includedLanguages: 'en,id', // Bahasa yang didukung
-            layout: google.translate.TranslateElement.InlineLayout.SIMPLE // Gunakan layout sederhana
-        }, 'google_translate_element');
+    const languageElements = document.querySelectorAll('[data-en]');
+    const langButtons = document.querySelectorAll('.lang-button');
+
+    function changeLanguage(lang) {
+        // 1. Ubah teks untuk semua elemen yang dapat diterjemahkan
+        languageElements.forEach(element => {
+            const translation = element.getAttribute(`data-${lang}`);
+            if (translation) {
+                // Periksa apakah ini elemen <title> khusus
+                if (element.tagName === 'TITLE') {
+                    document.title = translation;
+                } else {
+                    element.textContent = translation;
+                }
+            }
+        });
+
+        // 2. Ubah atribut lang pada <html>
+        document.documentElement.lang = lang;
+
+        // 3. Perbarui tampilan tombol aktif
+        updateActiveButton(lang);
     }
 
-    // Fungsi Kustom untuk Mengubah Bahasa
-    function changeLanguage(langCode) {
-        // Mendapatkan elemen <select> yang dibuat oleh Google Translate
-        var selectElement = document.querySelector('#google_translate_element select.goog-te-combo');
-
-        if (selectElement) {
-            // Mengubah nilai <select> ke kode bahasa yang diinginkan
-            selectElement.value = langCode;
-            
-            // Memicu event 'change' agar Google Translate memulai terjemahan
-            // Skrip internal Google mendengarkan event ini
-            selectElement.dispatchEvent(new Event('change'));
-            
-            // Memperbarui tampilan tombol yang aktif
-            updateActiveButton(langCode);
-        } else {
-             // Jika elemen belum dimuat, coba inisialisasi ulang (fallback)
-             console.log("Google Translate select element not found yet. Retrying initialization.");
-             if (typeof google !== 'undefined' && typeof google.translate !== 'undefined') {
-                 googleTranslateElementInit();
-                 // Coba lagi setelah penundaan singkat
-                 setTimeout(function() {
-                     changeLanguage(langCode);
-                 }, 500);
-             } else {
-                 console.error("Google Translate script not loaded.");
-             }
-        }
-    }
-
-    // Fungsi untuk memperbarui tampilan tombol yang aktif
     function updateActiveButton(lang) {
-        document.querySelectorAll('.lang-button').forEach(btn => btn.classList.remove('active'));
+        langButtons.forEach(btn => btn.classList.remove('active'));
         if (lang === 'id') {
-            document.querySelector('.language-switcher a:first-child').classList.add('active');
+            document.getElementById('lang-id').classList.add('active');
         } else if (lang === 'en') {
-            document.querySelector('.language-switcher a:last-child').classList.add('active');
+            document.getElementById('lang-en').classList.add('active');
         }
     }
-    
-    // Pastikan tombol EN aktif saat pertama kali dimuat
-    document.addEventListener('DOMContentLoaded', function() {
-        updateActiveButton('en');
+
+    // Panggil changeLanguage('en') saat halaman pertama kali dimuat
+    // untuk memastikan semua elemen diperbarui ke bahasa Inggris, meskipun sudah ada di HTML.
+    document.addEventListener('DOMContentLoaded', () => {
+        changeLanguage('en');
     });
 </script>
