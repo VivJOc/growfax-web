@@ -12,7 +12,6 @@
       --btn-bg: linear-gradient(90deg, #2563eb, #06b6d4);
       --btn-text: #fff;
       --card-bg: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-      --copy-btn-bg: #4c4c4c; /* Warna baru untuk tombol Copy */
     }
 
     body.light {
@@ -22,7 +21,6 @@
       --btn-bg: linear-gradient(90deg, #0ea5e9, #2563eb);
       --btn-text: #fff;
       --card-bg: #fff;
-      --copy-btn-bg: #8c9096;
     }
 
     body {
@@ -90,18 +88,6 @@
     .btn-download:hover {
       opacity: 0.9;
       transform: scale(1.02);
-    }
-
-    .btn-copy {
-      /* Gaya baru untuk tombol Copy */
-      background: var(--copy-btn-bg);
-      color: var(--btn-text);
-      text-decoration: none; /* Pastikan tidak ada garis bawah */
-    }
-    
-    .btn-copy:hover {
-        opacity: 0.9;
-        transform: scale(1.02);
     }
 
     .controls {
@@ -178,9 +164,9 @@
 
     <a class="btn btn-download" href="Growfax_Vhost.txt" download id="btn1">Download — Virtual Host</a>
 
-    <button class="btn btn-copy" onclick="copyText('powertunnel')" id="btn2">Copy — Powertunnel</button>
+    <button class="btn btn-download" onclick="copyText('powertunnel', this)" id="btn2">Copy — Powertunnel</button>
     
-    <button class="btn btn-copy" onclick="copyText('surge')" id="btn3">Copy — iOS (Surge)</button>
+    <button class="btn btn-download" onclick="copyText('surge', this)" id="btn3">Copy — iOS (Surge)</button>
 
     <a class="btn btn-download" href="Growfax_Windows.txt" download id="btn4">Download — Windows</a>
     <a class="btn btn-download" href="Growfax_Macos.txt" download id="btn5">Download — macOS</a>
@@ -208,17 +194,16 @@ www.growtopia1.com = 91.134.85.13
 www.growtopia2.com = 91.134.85.13`
     };
 
-    // Fungsi Copy Teks
-    function copyText(key) {
+    // Fungsi Copy Teks yang Diperbarui
+    function copyText(key, buttonElement) {
         const textToCopy = configData[key];
-        const buttonId = (key === 'powertunnel' ? 'btn2' : 'btn3');
-        const originalText = document.getElementById(buttonId).innerText;
+        const originalText = buttonElement.innerText;
         
         navigator.clipboard.writeText(textToCopy).then(() => {
             // Beri umpan balik (feedback) visual bahwa teks berhasil disalin
-            document.getElementById(buttonId).innerText = '✅ Copied!';
+            buttonElement.innerText = '✅ Copied!';
             setTimeout(() => {
-                document.getElementById(buttonId).innerText = originalText;
+                buttonElement.innerText = originalText;
             }, 2000);
         }).catch(err => {
             console.error('Gagal menyalin teks: ', err);
@@ -253,7 +238,8 @@ www.growtopia2.com = 91.134.85.13`
       document.getElementById('desc').innerText = isEnglish ? "Choose the file you want to copy or download." : "Pilih file yang ingin disalin atau di-download.";
 
       document.getElementById('btn1').innerText = isEnglish ? "Download — Virtual Host" : "Unduh — Virtual Host";
-      // Update teks untuk tombol copy
+      
+      // Update teks untuk tombol copy/salin
       document.getElementById('btn2').innerText = isEnglish ? "Copy — Powertunnel" : "Salin — Powertunnel";
       document.getElementById('btn3').innerText = isEnglish ? "Copy — iOS (Surge)" : "Salin — iOS (Surge)";
       
