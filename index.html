@@ -108,18 +108,12 @@
     transform: translateY(8px);
   }
 
-  /* Logo tengah sekarang lebih besar dan jelas */
   .centered-logo {
-    width: 120px; /* Diperbesar */
-    height: 120px; /* Menjamin bentuk kotak */
+    width: 90px;
     border-radius: 12px;
-    object-fit: cover;
     margin-bottom: 18px;
     opacity: 0;
     transform: translateY(8px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    /* Border merah untuk debugging jika gambar tidak ditemukan */
-    border: 3px solid transparent; 
   }
 
   /* Tombol download responsif */
@@ -165,7 +159,8 @@
   .card-ios { background: linear-gradient(135deg, rgba(162,162,162,0.06), rgba(122,122,122,0.04)); }
   .card-powertunnel { background: linear-gradient(135deg, rgba(230,126,34,0.1), rgba(198,90,18,0.06)); }
 
-  /* Stats */
+  /* Stats - *REMOVED* */
+  /*
   .stats {
     display: flex;
     gap: 18px;
@@ -188,30 +183,7 @@
   .stat-card.show { opacity: 1; transform: translateY(0); }
   .stat-number { font-size: 1.4rem; font-weight: 700; color: var(--primary); }
   .stat-label { color: var(--muted); font-size: 0.9rem; margin-top: 6px; }
-
-  /* Sydney Time Card (New Style) */
-  .sydney-time-card {
-    max-width: 320px;
-    margin: 20px auto 10px;
-    padding: 14px 20px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, rgba(65, 105, 225, 0.1), rgba(47, 79, 175, 0.05)); /* Warna Biru Soft */
-    border: 1px solid var(--border);
-    text-align: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  }
-  .sydney-time-card .time-label {
-    font-size: 0.9rem;
-    color: var(--muted);
-    margin-bottom: 4px;
-    display: block;
-  }
-  .sydney-time-card .time-value {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--primary);
-  }
-
+  */
 
   footer {
     margin-top: auto;
@@ -223,7 +195,8 @@
     font-size: 0.9rem;
   }
 
-  /* floating discord + contact */
+  /* floating discord + contact - *REMOVED* */
+  /*
   .floating {
     position: fixed;
     right: 18px;
@@ -251,7 +224,7 @@
   .floating .discord { background: var(--discord); }
   .floating .contact { background: var(--primary); color: #fff; }
 
-  /* floating expanded contact menu */
+  // floating expanded contact menu
   .contact-menu {
     display: none;
     gap: 8px;
@@ -275,6 +248,7 @@
     justify-content: space-between;
   }
   .contact-item img { width: 20px; height: 20px; }
+  */
 
   /* Modal announcement */
   .modal-backdrop {
@@ -335,14 +309,16 @@
     header { padding: 10px 5%; }
     .hero h2 { font-size: 1.5rem; }
     .hero p { font-size: 0.95rem; }
-    .stat-card { min-width: 120px; }
+    /* .stat-card { min-width: 120px; } */
   }
 
   @media (max-width: 480px) {
     .button-grid { grid-template-columns: 1fr; gap: 14px; }
     .download-card { justify-content: flex-start; padding: 14px; }
+    /*
     .contact-item { min-width: 160px; padding: 8px 10px; font-size: 0.95rem; }
     .floating { right: 12px; bottom: 12px; }
+    */
   }
 </style>
 </head>
@@ -350,7 +326,7 @@
 
 <header>
   <div class="brand">
-    <img src="Growfax_banner.jpg" class="brand-logo" alt="Growfax Logo Kecil">
+    <img src="Growfax_banner.jpg" class="brand-logo" alt="Growfax">
     <h1>GROWFAX</h1>
   </div>
   <div class="controls" role="region" aria-label="controls">
@@ -368,8 +344,7 @@
   <section class="hero">
     <h2 class="reveal" data-en="Get Started — Choose Your Platform" data-id="Mulai — Pilih Platform Anda"><span class="translatable">Get Started — Choose Your Platform</span></h2>
     <p class="reveal" data-en="Download the required assets and join our official community." data-id="Unduh aset yang dibutuhkan dan bergabunglah dengan komunitas kami."><span class="translatable">Download the required assets and join our official community.</span></p>
-    
-    <img src="Growfax_banner.jpg" class="centered-logo reveal" alt="Growfax Logo Utama">
+    <img src="Growfax_banner.jpg" class="centered-logo reveal" alt="Growfax">
   </section>
 
   <section class="button-grid" aria-label="Downloads">
@@ -391,28 +366,6 @@
     </a>
   </section>
 
-  <section class="stats" aria-label="Statistics">
-    <div class="stat-card reveal" data-target="downloads">
-      <div class="stat-number" data-start="0" data-end="10234">0</div>
-      <div class="stat-label translatable" data-en="Downloads" data-id="Unduhan">Downloads</div>
-    </div>
-
-    <div class="stat-card reveal" data-target="users">
-      <div class="stat-number" data-start="0" data-end="2432">0</div>
-      <div class="stat-label translatable" data-en="Active Users" data-id="Pengguna Aktif">Active Users</div>
-    </div>
-
-    <div class="stat-card reveal" data-target="uptime">
-      <div class="stat-number" data-start="0" data-end="9999">0</div>
-      <div class="stat-label translatable" data-en="Uptime (hrs)" data-id="Waktu Aktif (jam)">Uptime (hrs)</div>
-    </div>
-  </section>
-
-  <section class="sydney-time-card">
-      <span class="time-label translatable" data-en="Sydney, Australia Local Time" data-id="Waktu Lokal Sydney, Australia">Sydney, Australia Local Time</span>
-      <div id="sydney-time" class="time-value">Loading...</div>
-  </section>
-
   <section style="max-width:900px;margin:22px auto 0;padding:0 16px;">
     <div style="background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid var(--border); padding:12px; border-radius:10px; color:var(--muted);">
       <strong class="translatable" data-en="Latest:" data-id="Terbaru:">Latest:</strong>
@@ -424,31 +377,6 @@
 <footer>
   GROWFAX OFFICIAL © <span id="year"></span>
 </footer>
-
-<div class="floating" aria-hidden="false">
-  <div id="contact-menu" class="contact-menu" aria-hidden="true">
-    <a class="contact-item" href="https://wa.me/6281234567890" target="_blank" rel="noopener" title="WhatsApp">
-      <span>WhatsApp</span>
-      <img src="whatsapp.png" alt="WA">
-    </a>
-    <a class="contact-item" href="mailto:support@growfax.web.id" title="Email">
-      <span>Email</span>
-      <img src="email.png" alt="Email">
-    </a>
-    <a class="contact-item" href="https://t.me/yourtelegram" target="_blank" rel="noopener" title="Telegram">
-      <span>Telegram</span>
-      <img src="telegram.png" alt="TG">
-    </a>
-  </div>
-
-  <button id="contact-toggle" class="btn contact" aria-label="Contact / Chat" title="Contact">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-  </button>
-
-  <a class="btn discord" href="https://discord.gg/smgS6sq83y" target="_blank" title="Discord">
-    <img src="discord.jpeg" alt="Discord" style="width:20px;height:20px;filter:invert(1)">
-  </a>
-</div>
 
 <div id="cookie-banner" role="status" aria-live="polite">
   <span class="translatable" data-en="This website uses cookies to ensure you get the best experience." data-id="Situs ini menggunakan cookie untuk memastikan Anda mendapatkan pengalaman terbaik.">This website uses cookies to ensure you get the best experience.</span>
@@ -530,15 +458,13 @@
   /* -------------------------
      Reveal on scroll (IntersectionObserver)
      ------------------------- */
-  const reveals = document.querySelectorAll('.reveal, .download-card, .stat-card');
+  // NOTE: The 'stat-card' elements are removed, so we only need to observe other reveals.
+  const reveals = document.querySelectorAll('.reveal, .download-card');
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if(entry.isIntersecting){
         entry.target.classList.add('show');
-        // If stat-card, start counter when visible
-        if(entry.target.classList.contains('stat-card')){
-          startCounter(entry.target.querySelector('.stat-number'));
-        }
+        // No counter to start since stat-cards are removed
         revealObserver.unobserve(entry.target);
       }
     });
@@ -547,51 +473,13 @@
   reveals.forEach(el => revealObserver.observe(el));
 
   /* -------------------------
-     Counters
+     Counters - REMOVED (no stats)
      ------------------------- */
+  /*
   function startCounter(el){
-    if(!el) return;
-    if(el.getAttribute('data-done')) return;
-    const start = Number(el.getAttribute('data-start') || 0);
-    const end = Number(el.getAttribute('data-end') || 0);
-    const duration = 1400; // ms
-    let startTime = null;
-    function step(timestamp){
-      if(!startTime) startTime = timestamp;
-      const progress = Math.min((timestamp - startTime) / duration, 1);
-      const value = Math.floor(progress * (end - start) + start);
-      el.textContent = value.toLocaleString();
-      if(progress < 1){
-        window.requestAnimationFrame(step);
-      } else {
-        el.textContent = end.toLocaleString();
-        el.setAttribute('data-done', 'true');
-      }
-    }
-    window.requestAnimationFrame(step);
+    // ... counter logic ...
   }
-  
-  /* -------------------------
-     Sydney Local Time
-     ------------------------- */
-  function updateSydneyTime() {
-      const options = {
-          timeZone: 'Australia/Sydney',
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
-          hour12: false
-      };
-      const sydneyTime = new Date().toLocaleTimeString('en-AU', options);
-      const sydneyTimeElement = document.getElementById('sydney-time');
-      if (sydneyTimeElement) {
-          sydneyTimeElement.textContent = sydneyTime;
-      }
-  }
-
-  // Update time initially and every second
-  updateSydneyTime();
-  setInterval(updateSydneyTime, 1000);
+  */
 
   /* -------------------------
      Cookie banner
@@ -642,8 +530,9 @@
   showModalOnce();
 
   /* -------------------------
-     Floating contact expand
+     Floating contact expand - REMOVED (no floating contact)
      ------------------------- */
+  /*
   const contactToggle = document.getElementById('contact-toggle');
   const contactMenu = document.getElementById('contact-menu');
   let contactOpen = false;
@@ -665,6 +554,7 @@
       contactMenu.classList.remove('show'); contactOpen = false;
     }
   });
+  */
 
   /* -------------------------
      Set year
@@ -680,9 +570,9 @@
         modalBackdrop.classList.remove('show');
         modalBackdrop.setAttribute('aria-hidden','true');
       }
-      if(contactOpen){
-        contactMenu.classList.remove('show'); contactOpen = false;
-      }
+      // if(contactOpen){ // REMOVED (no floating contact)
+      //   contactMenu.classList.remove('show'); contactOpen = false;
+      // }
     }
   });
 
