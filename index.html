@@ -108,12 +108,16 @@
     transform: translateY(8px);
   }
 
+  /* Logo tengah sekarang lebih besar dan jelas */
   .centered-logo {
-    width: 90px;
+    width: 120px; /* Diperbesar dari 90px */
+    height: 120px;
     border-radius: 12px;
+    object-fit: cover;
     margin-bottom: 18px;
     opacity: 0;
     transform: translateY(8px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
   }
 
   /* Tombol download responsif */
@@ -344,7 +348,7 @@
 
 <header>
   <div class="brand">
-    <img src="Growfax_banner.jpg" class="brand-logo" alt="Growfax">
+    <img src="Growfax_banner.jpg" class="brand-logo" alt="Growfax Logo Kecil">
     <h1>GROWFAX</h1>
   </div>
   <div class="controls" role="region" aria-label="controls">
@@ -362,7 +366,7 @@
   <section class="hero">
     <h2 class="reveal" data-en="Get Started — Choose Your Platform" data-id="Mulai — Pilih Platform Anda"><span class="translatable">Get Started — Choose Your Platform</span></h2>
     <p class="reveal" data-en="Download the required assets and join our official community." data-id="Unduh aset yang dibutuhkan dan bergabunglah dengan komunitas kami."><span class="translatable">Download the required assets and join our official community.</span></p>
-    <img src="Growfax_banner.jpg" class="centered-logo reveal" alt="Growfax Logo">
+    <img src="Growfax_banner.jpg" class="centered-logo reveal" alt="Growfax Logo Utama">
   </section>
 
   <section class="button-grid" aria-label="Downloads">
