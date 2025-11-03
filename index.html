@@ -48,54 +48,54 @@
             font-size: 1.0em; 
             font-weight: 400; 
             color: var(--text-muted); 
-            margin: 10px 0 25px 0; 
+            margin: 10px 0 20px 0; 
         }
         
-        /* STYLE LOGO DI TENGAH HALAMAN (DI ATAS TOMBOL DOWNLOAD) */
+        /* STYLE LOGO SANGAT KECIL DAN PROFESIONAL */
         .centered-logo {
-            height: 70px; 
+            height: **40px**; /* Dikecilkan dari 70px */
             width: auto;
             object-fit: contain;
-            margin: 10px auto 30px auto; 
+            margin: 5px auto 20px auto; /* Jarak dikurangi */
             display: block; 
         }
         
         h2 { font-size: 2.2em; color: var(--text-light); margin-bottom: 10px; margin-top: 40px; } 
-        .description { color: var(--text-muted); font-size: 1.1em; margin-bottom: 40px; } 
+        .description { color: var(--text-muted); font-size: 1.1em; margin-bottom: 20px; } /* Jarak dikurangi */
 
-        /* GRUP TOMBOL UTAMA (Diubah menjadi 1 kolom vertikal) */
+        /* GRUP TOMBOL UTAMA (Kini 2 Kolom di PC untuk efisiensi) */
         .button-group {
             display: grid;
-            grid-template-columns: 1fr; /* Diubah menjadi 1 kolom */
-            gap: 15px; /* Jarak antar tombol */
+            grid-template-columns: repeat(2, 1fr); /* Kembali ke 2 kolom di PC */
+            gap: 15px; 
             padding: 0;
             margin-bottom: 30px; 
-            max-width: 350px; /* Batasi lebar tombol di PC agar terlihat seperti contoh */
+            max-width: 500px; /* Batasi lebar total tombol di PC */
             margin-left: auto;
             margin-right: auto;
         }
         
-        /* Tombol Utama (Gaya Border Baru) */
+        /* Tombol Utama (SANGAT KECIL) */
         .action-button {
             display: flex; 
-            flex-direction: row; /* Diubah menjadi baris agar icon dan teks sejajar */
+            flex-direction: row; 
             align-items: center; 
-            justify-content: center; /* Rata tengah horizontal */
+            justify-content: center; 
             text-decoration: none; 
-            padding: 15px 20px; /* Padding ditingkatkan untuk tombol yang lebih besar */
-            border-radius: **12px**; /* Border Lebih Bulat */
+            padding: **8px 10px**; /* Padding sangat kecil */
+            border-radius: 8px; /* Sudut sedikit lebih tegas */
             transition: all 0.2s ease; 
             color: var(--text-light); 
             font-weight: 600; 
             box-shadow: none; 
-            border: none; /* Hapus border garis luar */
+            border: none; 
             width: 100%; 
             max-width: 100%; 
         }
 
         .action-button:hover { 
-            transform: scale(1.02); /* Sedikit efek zoom saat hover */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Shadow untuk kedalaman */
+            transform: translateY(-2px); /* Efek hover lebih halus */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Shadow lebih tipis */
         }
         
         /* Warna Tombol */
@@ -104,13 +104,13 @@
         .ios-button { background-color: #A2A2A2; } 
         .powertunnel-button { background-color: #E67E22; } 
 
-        /* Icon Tombol */
+        /* Icon Tombol (SANGAT KECIL) */
         .button-icon {
             display: flex; justify-content: center; align-items: center; 
-            width: **25px**; /* Dikecilkan lagi untuk sejajar dengan teks */
-            height: **25px**; 
-            margin-right: 10px; /* Jarak antara ikon dan teks */
-            background: none; /* Hapus latar belakang ikon */
+            width: **20px**; /* Sangat kecil */
+            height: **20px**; 
+            margin-right: 8px; 
+            background: none; 
             border-radius: 0; 
             padding: 0; 
         }
@@ -118,13 +118,14 @@
         .button-icon img { max-width: 100%; max-height: 100%; height: auto; width: auto; object-fit: contain; }
 
         .button-text { 
-            font-size: 1.1em; /* Font teks tombol diperbesar */
+            font-size: **0.9em**; /* Font sangat kecil */
             margin-top: 0; 
         }
         
         /* Teks kecil di bawah tombol (DIHAPUS DARI TAMPILAN) */
         .small-text { display: none; } 
 
+        /* Footer dan Discord Button (Tidak diubah) */
         .footer {
             background-color: var(--surface-dark);
             padding: 20px 0;
@@ -136,7 +137,6 @@
         
         .footer p { margin: 5px 0; }
 
-        /* FLOATING DISCORD BUTTON (Profesional) */
         .floating-discord-button {
             position: fixed; bottom: 25px; right: 25px; z-index: 1000; display: flex; align-items: center; justify-content: center;
             width: 60px; height: 60px; background-color: var(--discord-color); border-radius: 50%; 
@@ -152,22 +152,23 @@
             .header-content { padding: 0 15px; }
             .header h1 { font-size: 1.6em; }
 
-            .centered-logo { height: 50px; margin: 10px auto 20px auto; }
+            /* LOGO HP SANGAT KECIL */
+            .centered-logo { height: 30px; margin: 10px auto 15px auto; }
             
             h2 { font-size: 1.8em; margin-top: 25px; } 
-            .description { font-size: 1em; margin-bottom: 20px; } 
+            .description { font-size: 1em; margin-bottom: 15px; } 
 
             #sydney-time { font-size: 0.9em; margin: 10px 0 15px 0; }
             
-            /* Di HP, tata letak tetap 1 kolom */
+            /* Di HP, tetap 2 kolom, tapi dengan margin 100% */
             .button-group { 
-                grid-template-columns: 1fr; 
+                grid-template-columns: repeat(2, 1fr); 
                 gap: 10px; 
                 max-width: 100%;
             }
-            .action-button { padding: 12px 15px; }
-            .button-icon { width: 20px; height: 20px; }
-            .button-text { font-size: 1em; }
+            .action-button { padding: 8px 10px; }
+            .button-icon { width: 18px; height: 18px; }
+            .button-text { font-size: 0.8em; }
             
             .footer { padding: 15px 0; }
             
