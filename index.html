@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -63,7 +63,7 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s, border-color 0.3s;
-            text-decoration: none; /* Menghilangkan underline pada link */
+            text-decoration: none;
             font-size: 0.9em;
         }
 
@@ -77,7 +77,7 @@
             border-color: var(--primary-color);
         }
         
-        /* Semua Gaya Lain dari Kode Sebelumnya (Container, Banner, Button Group, Footer) */
+        /* Container, Banner, Button Group, Footer Styles (Disesuaikan) */
         .container {
             max-width: 1200px;
             margin: auto;
@@ -196,8 +196,8 @@
         <h1>GROWFAX</h1>
         
         <div class="language-switcher">
-            <a href="javascript:void(0)" class="lang-button active" onclick="doGTranslate('id|id'); return false;">🇮🇩 ID</a>
-            <a href="javascript:void(0)" class="lang-button" onclick="doGTranslate('id|en'); return false;">🇺🇸 EN</a>
+            <a href="javascript:void(0)" class="lang-button" onclick="doGTranslate('en|id'); return false;">🇮🇩 ID</a>
+            <a href="javascript:void(0)" class="lang-button active" onclick="doGTranslate('en|en'); return false;">🇺🇸 EN</a>
         </div>
     </div>
 </div>
@@ -209,7 +209,7 @@
     </div>
 
     <h2>GET STARTED. CHOOSE YOUR PLATFORM.</h2>
-    <p class="description">Download file yang diperlukan dan bergabunglah dengan komunitas resmi kami di Discord.</p>
+    <p class="description">Download the necessary files and join our official community on Discord.</p>
 
     <div class="button-group">
 
@@ -228,7 +228,7 @@
         <a href="https://discord.gg/smgS6sq83y" target="_blank" class="action-button discord-button">
             <img src="discord.jpeg" alt="Discord Logo" class="button-icon">
             <span class="button-text">JOIN DISCORD</span>
-            <span class="small-text">Temui Komunitas Kami!</span>
+            <span class="small-text">Meet Our Community!</span>
         </a>
 
     </div>
@@ -238,15 +238,15 @@
 <div class="footer">
     <div class="container">
         <p>GROWFAX OFFICIAL &copy; 2023–2024. All rights reserved.</p>
-        <p>Dikembangkan dengan semangat untuk komunitas.</p>
+        <p>Developed with spirit for the community.</p>
     </div>
 </div>
 
 <script type="text/javascript">
-    // Fungsi untuk memicu terjemahan (ditemukan pada Google Translate Widget)
+    // Fungsi untuk memicu terjemahan
     function doGTranslate(lang_pair) {
         if (typeof GTranslateGetCurrentLang == 'function' && GTranslateGetCurrentLang() == null) {
-            // Jika belum terinisialisasi, muat skrip (hanya sekali)
+            // Muat skrip jika belum ada
             var script = document.createElement('script');
             script.type = 'text/javascript';
             script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
@@ -258,15 +258,15 @@
             return;
         }
 
-        // Ambil bahasa tujuan
         var lang = lang_pair.split('|')[1];
         
-        // Panggil fungsi terjemahan
         var te_element = document.getElementById('google_translate_element');
         if (te_element) te_element.innerHTML = '';
-        new google.translate.TranslateElement({pageLanguage: 'id'}, 'google_translate_element');
+        
+        // Inisialisasi Google Translate dengan bahasa sumber ENGLISH ('en')
+        new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
 
-        // Tambahkan delay kecil untuk eksekusi yang lebih smooth
+        // Pindahkan bahasa tujuan setelah inisialisasi
         setTimeout(function() {
             var select = document.querySelector('select.goog-te-combo');
             if (select) {
@@ -290,7 +290,7 @@
         }
     }
     
-    // Inisialisasi awal ke Indonesia (aktifkan tombol ID)
-    updateActiveButton('id');
+    // Inisialisasi awal ke English (aktifkan tombol EN)
+    updateActiveButton('en');
 </script>
 <div id="google_translate_element" style="display:none;"></div>
