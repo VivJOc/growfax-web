@@ -39,13 +39,20 @@
         /* Kontainer dan Banner */
         .container { max-width: 1200px; margin: auto; padding: 0 20px; }
         .main-content { padding-bottom: 60px; }
-        .banner-section { background-color: var(--surface-dark); border-radius: 12px; overflow: hidden; margin-bottom: 40px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); }
+        .banner-section { 
+            background-color: var(--surface-dark); 
+            border-radius: 12px; 
+            overflow: hidden; 
+            /* MENGURANGI JARAK BAWAH */
+            margin-bottom: **20px**; 
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); 
+        }
         
         .banner-section img { 
             width: 100%; 
             height: auto; 
-            /* PERUBAHAN DI SINI: Mengurangi tinggi maksimum banner ke 80px */
-            max-height: **80px**; 
+            /* TINGGI BARU: 60px */
+            max-height: **60px**; 
             object-fit: cover; 
             display: block; 
         }
