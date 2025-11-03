@@ -1,295 +1,655 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title data-en="Growfax Official Download Center" data-id="Pusat Unduhan Resmi Growfax">Growfax Official Download Center</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title data-en="Growfax Official Download Center" data-id="Pusat Unduhan Resmi Growfax">Growfax Official Download Center</title>
 
-  <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <style>
-    :root{
-      --bg: #0b0c10;
-      --surface: #16181d;
-      --primary: #3B82F6;
-      --accent: #22C55E;
-      --text: #e5e7eb;
-      --muted: #9ca3af;
-      --border: rgba(255,255,255,0.08);
-      --discord: #5865F2;
-      --glass: rgba(255,255,255,0.03);
-      --transition-fast: 180ms;
-      --transition-medium: 300ms;
-      --radius-lg: 14px;
-    }
-    .theme-light {
-      --bg: #f6f7fb;
-      --surface: #ffffff;
-      --primary: #2563eb;
-      --accent: #059669;
-      --text: #0b1020;
-      --muted: #5b6470;
-      --border: rgba(2,6,23,0.06);
-      --discord: #4556e6;
-      --glass: rgba(2,6,23,0.03);
-    }
+<style>
+  :root {
+    --bg: #0b0c10;
+    --surface: #16181d;
+    --primary: #3B82F6;
+    --accent: #22C55E;
+    --text: #e5e7eb;
+    --muted: #9ca3af;
+    --border: rgba(255,255,255,0.08);
+    --discord: #5865F2;
+    --glass: rgba(255,255,255,0.03);
+    --transition-fast: 180ms;
+    --transition-medium: 300ms;
+    --radius-lg: 14px;
+  }
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      min-height:100vh;
-      font-family:'Inter',system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
-      background:var(--bg);
-      color:var(--text);
-      transition: background var(--transition-medium) ease, color var(--transition-medium) ease;
-      display:flex;
-      flex-direction:column;
-    }
+  .theme-light {
+    --bg: #f6f7fb;
+    --surface: #ffffff;
+    --primary: #2563eb;
+    --accent: #059669;
+    --text: #0b1020;
+    --muted: #5b6470;
+    --border: rgba(2,6,23,0.06);
+    --discord: #4556e6;
+    --glass: rgba(2,6,23,0.03);
+  }
 
-    header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:12px 6%;
-      background:linear-gradient(180deg,var(--surface),rgba(0,0,0,0));
-      border-bottom:1px solid var(--border);
-      position:sticky;
-      top:0;
-      z-index:60;
-      backdrop-filter: blur(6px);
-    }
-    .brand{display:flex;gap:12px;align-items:center;}
-    .brand-logo{width:44px;height:44px;border-radius:10px;object-fit:cover;display:block;box-shadow:0 6px 16px rgba(0,0,0,0.25);}
-    .brand h1{margin:0;font-size:1.05rem;letter-spacing:0.6px;color:var(--accent);font-weight:700;}
-    .controls{display:flex;gap:8px;align-items:center;}
-    .lang-btn,.theme-toggle{
-      background:transparent;
-      border:1px solid var(--border);
-      color:var(--text);
-      padding:6px 10px;
-      border-radius:8px;
-      cursor:pointer;
-      font-weight:600;
-      transition: transform var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
-      display:inline-flex;
-      gap:8px;align-items:center;
-    }
-    .lang-btn.active{background:var(--primary);border-color:var(--primary);color:#fff;}
-    main{max-width:1100px;margin:36px auto;padding:0 20px 60px;width:100%;}
-    .hero{text-align:center;margin-bottom:26px;}
-    .hero h2{font-size:1.9rem;margin:0 0 8px;transition: color var(--transition-medium);}
-    .hero p{margin:0;color:var(--muted);font-size:1rem;margin-bottom:12px;}
-    #sydney-time{color:var(--muted);font-size:0.95rem;margin-bottom:18px;display:block;}
-    .centered-logo{width:96px;height:auto;margin:0 auto 22px;border-radius:12px;display:block;}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
 
-    .button-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;}
-    .download-card{
-      display:flex;gap:12px;align-items:center;padding:18px;
-      border-radius:var(--radius-lg);
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border:1px solid var(--border);
-      text-decoration:none;color:inherit;font-weight:600;
-      transition: transform var(--transition-medium) ease, box-shadow var(--transition-medium);
-      box-shadow: 0 6px 18px rgba(2,6,23,0.12);
-    }
-    .download-card:hover{transform:translateY(-6px);box-shadow:0 14px 30px rgba(2,6,23,0.18);}
-    .download-card img{width:36px;height:36px;border-radius:8px;object-fit:contain;}
-    .card-windows{background:linear-gradient(135deg,rgba(0,120,212,0.12),rgba(0,90,158,0.06));}
-    .card-virtualhost{background:linear-gradient(135deg,rgba(249,168,37,0.10),rgba(209,127,0,0.06));}
-    .card-ios{background:linear-gradient(135deg,rgba(162,162,162,0.06),rgba(122,122,122,0.04));}
-    .card-powertunnel{background:linear-gradient(135deg,rgba(230,126,34,0.10),rgba(198,90,18,0.06));}
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background var(--transition-medium), color var(--transition-medium);
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing:antialiased;
+  }
 
-    footer{margin-top:auto;padding:18px 6%;text-align:center;border-top:1px solid var(--border);
-      background:var(--surface);color:var(--muted);font-size:0.92rem;}
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 6%;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    backdrop-filter: blur(8px);
+  }
 
-    .floating-discord{
-      position:fixed;right:18px;bottom:18px;width:56px;height:56px;border-radius:50%;
-      display:flex;align-items:center;justify-content:center;
-      background:var(--discord);box-shadow:0 8px 26px rgba(0,0,0,0.25);
-      transition:transform var(--transition-fast);
-    }
-    .floating-discord:hover{transform:scale(1.08);}
-    .translatable{display:inline-block;transition:opacity var(--transition-fast) ease;opacity:1;}
-    .translatable.fade-out{opacity:0;}
-    .toggle-icon{width:16px;height:16px;display:inline-block;}
+  .brand { display: flex; gap: 10px; align-items: center; }
+  .brand-logo { width: 42px; height: 42px; border-radius: 10px; object-fit: cover; }
+  .brand h1 { font-size: 1.05rem; color: var(--accent); font-weight: 700; }
 
-    /* Cookie Banner */
-    #cookie-banner {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--glass);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--border);
-      padding: 14px 20px;
-      border-radius: 12px;
-      color: var(--text);
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.4s ease, visibility 0.4s ease;
-      z-index: 100;
-    }
-    #cookie-banner.show {
-      opacity: 1;
-      visibility: visible;
-    }
-    #cookie-accept {
-      background: var(--primary);
-      border: none;
-      color: #fff;
-      font-weight: 600;
-      padding: 6px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    #cookie-accept:hover {
-      background: var(--accent);
-    }
+  .controls { display: flex; gap: 8px; align-items: center; }
+  .lang-btn, .theme-toggle {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .lang-btn.active { background: var(--primary); color: #fff; }
 
-    @media (max-width:600px){
-      header{padding:12px 5%}
-      .brand h1{font-size:0.95rem}
-      .hero h2{font-size:1.4rem}
-      .download-card img{width:30px;height:30px}
-      #cookie-banner{width:90%;font-size:0.85rem;flex-direction:column;gap:10px;text-align:center;}
-    }
-  </style>
+  main {
+    flex: 1;
+    max-width: 1100px;
+    margin: 36px auto;
+    padding: 0 16px 60px;
+  }
+
+  .hero {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .hero h2 {
+    font-size: 1.9rem;
+    margin-bottom: 8px;
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .hero p {
+    color: var(--muted);
+    font-size: 1rem;
+    margin-bottom: 14px;
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .centered-logo {
+    width: 90px;
+    border-radius: 12px;
+    margin-bottom: 18px;
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  /* Tombol download responsif */
+  .button-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 18px;
+  }
+
+  .download-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 300ms ease, transform 300ms ease;
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  .download-card.show { opacity: 1; transform: translateY(0); }
+  .download-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 26px rgba(0,0,0,0.25);
+  }
+
+  .download-card img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+  }
+
+  .card-windows { background: linear-gradient(135deg, rgba(0,120,212,0.12), rgba(0,90,158,0.06)); }
+  .card-virtualhost { background: linear-gradient(135deg, rgba(249,168,37,0.1), rgba(209,127,0,0.06)); }
+  .card-ios { background: linear-gradient(135deg, rgba(162,162,162,0.06), rgba(122,122,122,0.04)); }
+  .card-powertunnel { background: linear-gradient(135deg, rgba(230,126,34,0.1), rgba(198,90,18,0.06)); }
+
+  /* Stats */
+  .stats {
+    display: flex;
+    gap: 18px;
+    justify-content: center;
+    margin: 30px 0 10px;
+    flex-wrap: wrap;
+  }
+  .stat-card {
+    min-width: 140px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border: 1px solid var(--border);
+    text-align: center;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 360ms ease, transform 360ms ease;
+  }
+  .stat-card.show { opacity: 1; transform: translateY(0); }
+  .stat-number { font-size: 1.4rem; font-weight: 700; color: var(--primary); }
+  .stat-label { color: var(--muted); font-size: 0.9rem; margin-top: 6px; }
+
+  footer {
+    margin-top: auto;
+    text-align: center;
+    padding: 20px;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  /* floating discord + contact */
+  .floating {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 120;
+    align-items: flex-end;
+  }
+
+  .floating .btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+    cursor: pointer;
+    transition: transform 0.15s ease;
+    border: none;
+  }
+  .floating .btn:active { transform: scale(0.98); }
+  .floating .discord { background: var(--discord); }
+  .floating .contact { background: var(--primary); color: #fff; }
+
+  /* floating expanded contact menu */
+  .contact-menu {
+    display: none;
+    gap: 8px;
+    margin-bottom: 6px;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .contact-menu.show { display: flex; flex-direction: column; }
+  .contact-item {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    min-width: 180px;
+    justify-content: space-between;
+  }
+  .contact-item img { width: 20px; height: 20px; }
+
+  /* Modal announcement */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(2,6,23,0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+  }
+  .modal-backdrop.show { display: flex; }
+  .modal {
+    width: min(720px, 92%);
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    box-shadow: 0 18px 48px rgba(0,0,0,0.5);
+  }
+  .modal h3 { margin: 0 0 6px; font-size: 1.25rem; color: var(--primary); }
+  .modal p { color: var(--muted); margin-bottom: 14px; }
+  .modal .actions { display:flex; gap: 10px; justify-content: flex-end; }
+
+  /* Cookie Banner */
+  #cookie-banner {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    padding: 14px 20px;
+    border-radius: 12px;
+    color: var(--text);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+    z-index: 100;
+  }
+  #cookie-banner.show { opacity: 1; visibility: visible; }
+
+  #cookie-accept { background: var(--primary); border: none; color: #fff; font-weight: 600; padding: 6px 14px; border-radius: 8px; cursor: pointer; transition: background 0.3s ease; }
+  #cookie-accept:hover { background: var(--accent); }
+
+  /* fade helper */
+  .translatable { display:inline-block; transition: opacity var(--transition-fast) ease; }
+  .fade-out { opacity: 0; }
+
+  /* small screens */
+  @media (max-width: 768px) {
+    header { padding: 10px 5%; }
+    .hero h2 { font-size: 1.5rem; }
+    .hero p { font-size: 0.95rem; }
+    .stat-card { min-width: 120px; }
+  }
+
+  @media (max-width: 480px) {
+    .button-grid { grid-template-columns: 1fr; gap: 14px; }
+    .download-card { justify-content: flex-start; padding: 14px; }
+    .contact-item { min-width: 160px; padding: 8px 10px; font-size: 0.95rem; }
+    .floating { right: 12px; bottom: 12px; }
+  }
+</style>
 </head>
 <body>
-  <!-- header -->
-  <header>
-    <div class="brand">
-      <img src="Growfax_banner.jpg" alt="Growfax" class="brand-logo">
-      <div>
-        <h1>GROWFAX</h1>
-        <div style="font-size:0.82rem;color:var(--muted)">Official Download Center</div>
-      </div>
+
+<header>
+  <div class="brand">
+    <img src="Growfax_banner.jpg" class="brand-logo" alt="Growfax">
+    <h1>GROWFAX</h1>
+  </div>
+  <div class="controls" role="region" aria-label="controls">
+    <button id="btn-id" class="lang-btn" title="Bahasa Indonesia">🇮🇩 ID</button>
+    <button id="btn-en" class="lang-btn active" title="English">🇺🇸 EN</button>
+    <button id="theme-toggle" class="theme-toggle" title="Toggle theme">
+      <svg id="icon-sun" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" style="display:inline-block"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      <svg id="icon-moon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" style="display:none"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      <span id="theme-label" style="font-size:0.9rem">Light</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <h2 class="reveal" data-en="Get Started — Choose Your Platform" data-id="Mulai — Pilih Platform Anda"><span class="translatable">Get Started — Choose Your Platform</span></h2>
+    <p class="reveal" data-en="Download the required assets and join our official community." data-id="Unduh aset yang dibutuhkan dan bergabunglah dengan komunitas kami."><span class="translatable">Download the required assets and join our official community.</span></p>
+    <img src="Growfax_banner.jpg" class="centered-logo reveal" alt="Growfax">
+  </section>
+
+  <section class="button-grid" aria-label="Downloads">
+    <a class="download-card card-windows reveal" href="Growfax_Patched_.bat" download>
+      <img src="windows.png" alt="Windows">
+      <div><span class="translatable" data-en="Windows" data-id="Windows">Windows</span></div>
+    </a>
+    <a class="download-card card-virtualhost reveal" href="Growfax_VirtualHost.txt" download>
+      <img src="virtual-host.png" alt="Virtual Host">
+      <div><span class="translatable" data-en="Virtual Host" data-id="Virtual Host">Virtual Host</span></div>
+    </a>
+    <a class="download-card card-ios reveal" href="IOS GROWFAX.txt" download>
+      <img src="surge5.png" alt="iOS">
+      <div><span class="translatable" data-en="iOS" data-id="iOS">iOS</span></div>
+    </a>
+    <a class="download-card card-powertunnel reveal" href="PowerTunel_Host.txt" download>
+      <img src="powertunnel.jpeg" alt="PowerTunnel">
+      <div><span class="translatable" data-en="PowerTunnel" data-id="PowerTunnel">PowerTunnel</span></div>
+    </a>
+  </section>
+
+  <!-- Animated Stats -->
+  <section class="stats" aria-label="Statistics">
+    <div class="stat-card reveal" data-target="downloads">
+      <div class="stat-number" data-start="0" data-end="10234">0</div>
+      <div class="stat-label translatable" data-en="Downloads" data-id="Unduhan">Downloads</div>
     </div>
-    <div class="controls">
-      <button id="btn-id" class="lang-btn">🇮🇩 ID</button>
-      <button id="btn-en" class="lang-btn active">🇺🇸 EN</button>
-      <button id="theme-toggle" class="theme-toggle">
-        <span id="theme-icon" class="toggle-icon">
-          <svg id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="display:none"><path d="M21 12.79A9 9 0 1111.21 3A7 7 0 0021 12.79z"></path></svg>
-          <svg id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="display:inline-block"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg>
-        </span>
-        <span id="theme-label" style="font-size:0.9rem">Light</span>
-      </button>
+
+    <div class="stat-card reveal" data-target="users">
+      <div class="stat-number" data-start="0" data-end="2432">0</div>
+      <div class="stat-label translatable" data-en="Active Users" data-id="Pengguna Aktif">Active Users</div>
     </div>
-  </header>
 
-  <!-- main -->
-  <main>
-    <section class="hero">
-      <h2><span class="translatable" data-en="Get Started — Choose Your Platform" data-id="Mulai — Pilih Platform Anda">Get Started — Choose Your Platform</span></h2>
-      <p><span class="translatable" data-en="Download the required assets and join our official community." data-id="Unduh aset yang dibutuhkan dan bergabunglah dengan komunitas kami.">Download the required assets and join our official community.</span></p>
-      <span id="sydney-time"></span>
-      <img src="Growfax_banner.jpg" class="centered-logo" alt="Growfax">
-    </section>
+    <div class="stat-card reveal" data-target="uptime">
+      <div class="stat-number" data-start="0" data-end="9999">0</div>
+      <div class="stat-label translatable" data-en="Uptime (hrs)" data-id="Waktu Aktif (jam)">Uptime (hrs)</div>
+    </div>
+  </section>
 
-    <section class="button-grid">
-      <a class="download-card card-windows" href="Growfax_Patched_.bat" download>
-        <img src="windows.png" alt="Windows">
-        <div>Windows</div>
-      </a>
-      <a class="download-card card-virtualhost" href="Growfax_VirtualHost.txt" download>
-        <img src="virtual-host.png" alt="Virtual Host">
-        <div>Virtual Host</div>
-      </a>
-      <a class="download-card card-ios" href="IOS GROWFAX.txt" download>
-        <img src="surge5.png" alt="iOS">
-        <div>iOS</div>
-      </a>
-      <a class="download-card card-powertunnel" href="PowerTunel_Host.txt" download>
-        <img src="powertunnel.jpeg" alt="PowerTunnel">
-        <div>PowerTunnel</div>
-      </a>
-    </section>
-  </main>
+  <!-- Optional small changelog -->
+  <section style="max-width:900px;margin:22px auto 0;padding:0 16px;">
+    <div style="background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid var(--border); padding:12px; border-radius:10px; color:var(--muted);">
+      <strong class="translatable" data-en="Latest:" data-id="Terbaru:">Latest:</strong>
+      <span class="translatable" data-en=" VirtualHost v1.2 released — improved stability." data-id=" VirtualHost v1.2 dirilis — stabilitas ditingkatkan."> VirtualHost v1.2 released — improved stability.</span>
+    </div>
+  </section>
+</main>
 
-  <footer>
-    <div>GROWFAX OFFICIAL © <span id="year"></span>. <span class="translatable" data-en="All rights reserved." data-id="Semua hak dilindungi undang-undang.">All rights reserved.</span></div>
-  </footer>
+<footer>
+  GROWFAX OFFICIAL © <span id="year"></span>
+</footer>
 
-  <a href="https://discord.gg/smgS6sq83y" class="floating-discord" target="_blank">
-    <img src="discord.jpeg" alt="Discord" style="width:24px;height:24px;filter:invert(1)">
-  </a>
-
-  <!-- Cookie Banner -->
-  <div id="cookie-banner">
-    <span class="translatable" data-en="This website uses cookies to ensure you get the best experience." data-id="Situs ini menggunakan cookie untuk memastikan Anda mendapatkan pengalaman terbaik.">This website uses cookies to ensure you get the best experience.</span>
-    <button id="cookie-accept" class="translatable" data-en="Accept" data-id="Terima">Accept</button>
+<!-- Floating contact + discord -->
+<div class="floating" aria-hidden="false">
+  <div id="contact-menu" class="contact-menu" aria-hidden="true">
+    <a class="contact-item" href="https://wa.me/6281234567890" target="_blank" rel="noopener" title="WhatsApp">
+      <span>WhatsApp</span>
+      <img src="whatsapp.png" alt="WA">
+    </a>
+    <a class="contact-item" href="mailto:support@growfax.web.id" title="Email">
+      <span>Email</span>
+      <img src="email.png" alt="Email">
+    </a>
+    <a class="contact-item" href="https://t.me/yourtelegram" target="_blank" rel="noopener" title="Telegram">
+      <span>Telegram</span>
+      <img src="telegram.png" alt="TG">
+    </a>
   </div>
 
-  <script>
-    // === theme ===
-    const body = document.documentElement;
-    const themeToggle = document.getElementById('theme-toggle');
-    const themeLabel = document.getElementById('theme-label');
-    const iconSun = document.getElementById('icon-sun');
-    const iconMoon = document.getElementById('icon-moon');
+  <button id="contact-toggle" class="btn contact" aria-label="Contact / Chat" title="Contact">
+    <!-- chat icon -->
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+  </button>
 
-    function getInitialTheme(){
-      const saved = localStorage.getItem('growfax_theme');
-      if(saved) return saved;
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    function applyTheme(t){
-      if(t==='light'){body.classList.add('theme-light');themeLabel.textContent='Light';iconSun.style.display='inline-block';iconMoon.style.display='none';}
-      else{body.classList.remove('theme-light');themeLabel.textContent='Dark';iconSun.style.display='none';iconMoon.style.display='inline-block';}
-      localStorage.setItem('growfax_theme',t);
-    }
-    let currentTheme=getInitialTheme();applyTheme(currentTheme);
-    themeToggle.onclick=()=>{currentTheme=currentTheme==='light'?'dark':'light';applyTheme(currentTheme);};
+  <a class="btn discord" href="https://discord.gg/smgS6sq83y" target="_blank" title="Discord">
+    <img src="discord.jpeg" alt="Discord" style="width:20px;height:20px;filter:invert(1)">
+  </a>
+</div>
 
-    // === translate ===
-    const enBtn=document.getElementById('btn-en'),idBtn=document.getElementById('btn-id');
-    const transElems=document.querySelectorAll('.translatable');
-    function swapLanguage(lang){
-      enBtn.classList.toggle('active',lang==='en');idBtn.classList.toggle('active',lang==='id');
-      transElems.forEach(el=>el.classList.add('fade-out'));
-      setTimeout(()=>{
-        transElems.forEach(el=>{
-          const txt=el.getAttribute(`data-${lang}`);if(txt)el.textContent=txt;
-        });
-        setTimeout(()=>transElems.forEach(el=>el.classList.remove('fade-out')),20);
-      },180);
-      localStorage.setItem('growfax_lang',lang);
-    }
-    const savedLang=localStorage.getItem('growfax_lang')||'en';
-    swapLanguage(savedLang);
-    enBtn.onclick=()=>swapLanguage('en');
-    idBtn.onclick=()=>swapLanguage('id');
+<!-- Cookie Banner -->
+<div id="cookie-banner" role="status" aria-live="polite">
+  <span class="translatable" data-en="This website uses cookies to ensure you get the best experience." data-id="Situs ini menggunakan cookie untuk memastikan Anda mendapatkan pengalaman terbaik.">This website uses cookies to ensure you get the best experience.</span>
+  <button id="cookie-accept" class="translatable" data-en="Accept" data-id="Terima">Accept</button>
+</div>
 
-    // === time ===
-    function updateTime(){
-      const now=new Date();
-      const sydney=now.toLocaleString('en-AU',{timeZone:'Australia/Sydney',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
-      document.getElementById('sydney-time').textContent=`Sydney Time: ${sydney}`;
-    }
-    updateTime();setInterval(updateTime,1000);
-    document.getElementById('year').textContent=new Date().getFullYear();
+<!-- Announcement Modal (shows once) -->
+<div id="modal-backdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal" role="document">
+    <h3 class="translatable" data-en="Announcement" data-id="Pengumuman">Announcement</h3>
+    <p class="translatable" data-en="VirtualHost v1.2 is live — improved stability and installer updates. Check the Virtual Host download." data-id="VirtualHost v1.2 telah tersedia — stabilitas dan pembaruan installer ditingkatkan. Periksa unduhan Virtual Host.">VirtualHost v1.2 is live — improved stability and installer updates. Check the Virtual Host download.</p>
+    <div class="actions">
+      <button id="modal-dismiss" class="theme-toggle translatable" data-en="Dismiss" data-id="Tutup">Dismiss</button>
+      <button id="modal-never" class="theme-toggle translatable" data-en="Don't show again" data-id="Jangan tampilkan lagi">Don't show again</button>
+    </div>
+  </div>
+</div>
 
-    // === cookies ===
-    const cookieBanner=document.getElementById('cookie-banner');
-    const cookieAccept=document.getElementById('cookie-accept');
-    const cookiesAccepted=localStorage.getItem('growfax_cookie_accept');
-    if(!cookiesAccepted){
-      setTimeout(()=>cookieBanner.classList.add('show'),800);
+<script>
+  /* -------------------------
+     Theme (dark/light)
+     ------------------------- */
+  const root = document.documentElement;
+  const themeToggle = document.getElementById('theme-toggle');
+  const themeLabel = document.getElementById('theme-label');
+  const iconSun = document.getElementById('icon-sun');
+  const iconMoon = document.getElementById('icon-moon');
+
+  function getInitialTheme(){
+    const saved = localStorage.getItem('growfax_theme');
+    if(saved) return saved;
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  function applyTheme(t){
+    if(t === 'light'){
+      root.classList.add('theme-light');
+      iconSun && (iconSun.style.display = 'inline-block');
+      iconMoon && (iconMoon.style.display = 'none');
+      themeLabel && (themeLabel.textContent = 'Light');
+    } else {
+      root.classList.remove('theme-light');
+      iconSun && (iconSun.style.display = 'none');
+      iconMoon && (iconMoon.style.display = 'inline-block');
+      themeLabel && (themeLabel.textContent = 'Dark');
     }
-    cookieAccept.onclick=()=>{
-      cookieBanner.classList.remove('show');
-      localStorage.setItem('growfax_cookie_accept','true');
-    };
-  </script>
+    localStorage.setItem('growfax_theme', t);
+  }
+  let currentTheme = getInitialTheme();
+  applyTheme(currentTheme);
+  themeToggle && themeToggle.addEventListener('click', ()=> {
+    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+    applyTheme(currentTheme);
+  });
+
+  /* -------------------------
+     Translate (EN / ID) with smooth fade
+     ------------------------- */
+  const enBtn = document.getElementById('btn-en');
+  const idBtn = document.getElementById('btn-id');
+  const transElems = document.querySelectorAll('.translatable');
+
+  function swapLanguage(lang){
+    enBtn.classList.toggle('active', lang === 'en');
+    idBtn.classList.toggle('active', lang === 'id');
+    transElems.forEach(el => el.classList.add('fade-out'));
+    setTimeout(()=> {
+      transElems.forEach(el => {
+        const text = el.getAttribute(`data-${lang}`);
+        if(text) el.textContent = text;
+      });
+      setTimeout(()=> transElems.forEach(el => el.classList.remove('fade-out')), 20);
+    }, 180);
+    localStorage.setItem('growfax_lang', lang);
+  }
+  const savedLang = localStorage.getItem('growfax_lang') || 'en';
+  swapLanguage(savedLang);
+  enBtn && (enBtn.onclick = ()=> swapLanguage('en'));
+  idBtn && (idBtn.onclick = ()=> swapLanguage('id'));
+
+  /* -------------------------
+     Reveal on scroll (IntersectionObserver)
+     ------------------------- */
+  const reveals = document.querySelectorAll('.reveal, .download-card, .stat-card');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('show');
+        // If stat-card, start counter when visible
+        if(entry.target.classList.contains('stat-card')){
+          startCounter(entry.target.querySelector('.stat-number'));
+        }
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.18 });
+
+  reveals.forEach(el => revealObserver.observe(el));
+
+  /* -------------------------
+     Counters
+     ------------------------- */
+  function startCounter(el){
+    if(!el) return;
+    if(el.getAttribute('data-done')) return;
+    const start = Number(el.getAttribute('data-start') || 0);
+    const end = Number(el.getAttribute('data-end') || 0);
+    const duration = 1400; // ms
+    let startTime = null;
+    function step(timestamp){
+      if(!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const value = Math.floor(progress * (end - start) + start);
+      el.textContent = value.toLocaleString();
+      if(progress < 1){
+        window.requestAnimationFrame(step);
+      } else {
+        el.textContent = end.toLocaleString();
+        el.setAttribute('data-done', 'true');
+      }
+    }
+    window.requestAnimationFrame(step);
+  }
+
+  /* -------------------------
+     Cookie banner
+     ------------------------- */
+  const cookieBanner = document.getElementById('cookie-banner');
+  const cookieAccept = document.getElementById('cookie-accept');
+  if(!localStorage.getItem('growfax_cookie_accept')){
+    setTimeout(()=> cookieBanner.classList.add('show'), 800);
+  }
+  cookieAccept && (cookieAccept.onclick = ()=> {
+    cookieBanner.classList.remove('show');
+    localStorage.setItem('growfax_cookie_accept','true');
+  });
+
+  /* -------------------------
+     Modal Announcement (shows once unless "Don't show again")
+     ------------------------- */
+  const modalBackdrop = document.getElementById('modal-backdrop');
+  const modalDismiss = document.getElementById('modal-dismiss');
+  const modalNever = document.getElementById('modal-never');
+  const modalFlag = 'growfax_modal_seen_v1';
+
+  function showModalOnce(){
+    if(localStorage.getItem(modalFlag)) return;
+    // show after small delay
+    setTimeout(()=> {
+      modalBackdrop.classList.add('show');
+      modalBackdrop.setAttribute('aria-hidden','false');
+    }, 700);
+  }
+  modalDismiss && modalDismiss.addEventListener('click', ()=> {
+    modalBackdrop.classList.remove('show');
+    modalBackdrop.setAttribute('aria-hidden','true');
+  });
+  modalNever && modalNever.addEventListener('click', ()=> {
+    localStorage.setItem(modalFlag, 'true');
+    modalBackdrop.classList.remove('show');
+    modalBackdrop.setAttribute('aria-hidden','true');
+  });
+  // close on backdrop click
+  modalBackdrop && modalBackdrop.addEventListener('click', (ev)=> {
+    if(ev.target === modalBackdrop){
+      modalBackdrop.classList.remove('show');
+      modalBackdrop.setAttribute('aria-hidden','true');
+    }
+  });
+
+  showModalOnce();
+
+  /* -------------------------
+     Floating contact expand
+     ------------------------- */
+  const contactToggle = document.getElementById('contact-toggle');
+  const contactMenu = document.getElementById('contact-menu');
+  let contactOpen = false;
+  contactToggle && contactToggle.addEventListener('click', ()=> {
+    contactOpen = !contactOpen;
+    if(contactOpen){
+      contactMenu.classList.add('show');
+      contactMenu.setAttribute('aria-hidden','false');
+    } else {
+      contactMenu.classList.remove('show');
+      contactMenu.setAttribute('aria-hidden','true');
+    }
+  });
+
+  // close contact menu if click outside
+  document.addEventListener('click', (e) => {
+    if(!contactMenu) return;
+    if(contactOpen && !contactMenu.contains(e.target) && !contactToggle.contains(e.target)){
+      contactMenu.classList.remove('show'); contactOpen = false;
+    }
+  });
+
+  /* -------------------------
+     Set year
+     ------------------------- */
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* -------------------------
+     Accessibility: keyboard support for modal (Esc)
+     ------------------------- */
+  document.addEventListener('keydown', (e)=> {
+    if(e.key === 'Escape'){
+      if(modalBackdrop && modalBackdrop.classList.contains('show')){
+        modalBackdrop.classList.remove('show');
+        modalBackdrop.setAttribute('aria-hidden','true');
+      }
+      if(contactOpen){
+        contactMenu.classList.remove('show'); contactOpen = false;
+      }
+    }
+  });
+
+  /* -------------------------
+     Init: reveal hero elements quickly if already in view
+     ------------------------- */
+  document.querySelectorAll('.hero .reveal').forEach(el => {
+    // ensure the observer will pick them up, but also allow instant show if visible
+    // handled by IntersectionObserver above
+  });
+
+  /* -------------------------
+     Accessibility: ensure focus trap or at least focus on modal when shown
+     ------------------------- */
+  modalBackdrop && modalBackdrop.addEventListener('transitionstart', ()=> {
+    // attempt to focus first button when modal opens
+    const btn = modalBackdrop.querySelector('button');
+    btn && btn.focus();
+  });
+</script>
 </body>
 </html>
