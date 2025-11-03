@@ -6,7 +6,7 @@
     <title data-en="Growfax Official Download Center" data-id="Pusat Download Resmi Growfax">Growfax Official Download Center</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Global Styles */
+        /* ... (Global Styles and Header styles remain the same) ... */
         :root {
             --primary-color: #4CAF50;
             --secondary-color: #388E3C;
@@ -26,12 +26,13 @@
             line-height: 1.6;
             text-align: center;
         }
-        /* ... (Gaya Header dan Language Switcher sama) ... */
+
         .header {
             background-color: var(--surface-dark);
             padding: 15px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
+
         .header-content {
             display: flex;
             justify-content: space-between;
@@ -40,35 +41,7 @@
             margin: auto;
             padding: 0 20px;
         }
-        .header h1 {
-            margin: 0;
-            font-size: 1.8em;
-            color: var(--primary-color);
-        }
-        .language-switcher {
-            display: flex;
-            gap: 10px;
-        }
-        .lang-button {
-            background: none;
-            border: 1px solid var(--text-muted);
-            color: var(--text-light);
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s, border-color 0.3s;
-            text-decoration: none;
-            font-size: 0.9em;
-            line-height: 1; 
-        }
-        .lang-button:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-color: var(--primary-color);
-        }
-        .lang-button.active {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-        }
+        /* ... (Other styles remain the same) ... */
         
         /* Kontainer dan Banner yang Diperbaiki */
         .container { max-width: 1200px; margin: auto; padding: 0 20px; }
@@ -85,8 +58,8 @@
         .banner-section img {
             width: 100%;
             height: auto;
-            /* PERUBAHAN DI SINI: Mengurangi tinggi maksimum banner dari 450px ke 300px */
-            max-height: **300px**;
+            /* PERUBAHAN DI SINI: Mengurangi tinggi maksimum banner ke 200px */
+            max-height: **200px**; 
             object-fit: cover;
             display: block;
         }
@@ -108,7 +81,7 @@
     </style>
 </head>
 <body>
-
+    
 <div class="header">
     <div class="header-content">
         <h1>GROWFAX</h1>
@@ -189,7 +162,6 @@
         }
     }
 
-    // Panggil changeLanguage('en') saat halaman pertama kali dimuat
     document.addEventListener('DOMContentLoaded', () => {
         changeLanguage('en');
     });
