@@ -1,272 +1,418 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title data-en="Growfax Official Download Center" data-id="Pusat Unduhan Resmi Growfax">Growfax Official Download Center</title>
+
+  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    :root {
+    :root{
+      /* color tokens (light/dark will override via .theme-light) */
       --bg: #0b0c10;
       --surface: #16181d;
       --primary: #3B82F6;
       --accent: #22C55E;
       --text: #e5e7eb;
       --muted: #9ca3af;
-      --border: rgba(255, 255, 255, 0.08);
+      --border: rgba(255,255,255,0.08);
       --discord: #5865F2;
+      --glass: rgba(255,255,255,0.03);
+      --transition-fast: 180ms;
+      --transition-medium: 300ms;
+      --radius-lg: 14px;
     }
 
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+    /* light theme overrides */
+    .theme-light {
+      --bg: #f6f7fb;
+      --surface: #ffffff;
+      --primary: #2563eb;
+      --accent: #059669;
+      --text: #0b1020;
+      --muted: #5b6470;
+      --border: rgba(2,6,23,0.06);
+      --discord: #4556e6;
+      --glass: rgba(2,6,23,0.03);
     }
 
-    /* HEADER */
-    header {
-      background-color: var(--surface);
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 6%;
-      position: sticky;
-      top: 0;
-      z-index: 50;
+    /* Basic reset */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:'Inter',system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+      background:var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      transition: background var(--transition-medium) ease, color var(--transition-medium) ease;
+      display:flex;
+      flex-direction:column;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--accent);
-      letter-spacing: 0.5px;
+    /* Header */
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:12px 6%;
+      background:linear-gradient(180deg,var(--surface),rgba(0,0,0,0));
+      border-bottom:1px solid var(--border);
+      position:sticky;
+      top:0;
+      z-index:60;
+      backdrop-filter: blur(6px);
+    }
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .brand-logo{
+      width:44px;
+      height:44px;
+      border-radius:10px;
+      object-fit:cover;
+      display:block;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+    }
+    .brand h1{
+      margin:0;
+      font-size:1.05rem;
+      letter-spacing:0.6px;
+      color:var(--accent);
+      font-weight:700;
     }
 
-    .language-switcher {
-      display: flex;
-      gap: 8px;
+    /* Controls */
+    .controls{ display:flex; gap:8px; align-items:center; }
+
+    .lang-btn, .theme-toggle{
+      background:transparent;
+      border:1px solid var(--border);
+      color:var(--text);
+      padding:6px 10px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:600;
+      transition: transform var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+    }
+    .lang-btn.active{ background:var(--primary); border-color:var(--primary); color:#fff; }
+    .lang-btn:focus, .theme-toggle:focus { outline: 3px solid rgba(59,130,246,0.12); }
+
+    /* Main content */
+    main{
+      max-width:1100px;
+      margin:36px auto;
+      padding:0 20px 60px;
+      width:100%;
+    }
+    .hero{
+      text-align:center;
+      margin-bottom:26px;
+    }
+    .hero h2{
+      font-size:1.9rem;
+      margin:0 0 8px;
+      transition: color var(--transition-medium);
+    }
+    .hero p { margin:0; color:var(--muted); font-size:1rem; margin-bottom:12px; }
+
+    #sydney-time { color:var(--muted); font-size:0.95rem; margin-bottom:18px; display:block; }
+
+    .centered-logo{ width:96px; height:auto; margin: 0 auto 22px; border-radius:12px; display:block; }
+
+    /* Grid */
+    .button-grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+      gap:18px;
+      align-items:stretch;
     }
 
-    .lang-button {
-      background: none;
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 5px 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: 0.2s;
-      font-size: 0.9rem;
+    .download-card{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      padding:18px;
+      border-radius:var(--radius-lg);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid var(--border);
+      text-decoration:none;
+      color:inherit;
+      font-weight:600;
+      transition: transform var(--transition-medium) ease, box-shadow var(--transition-medium), background var(--transition-medium);
+      box-shadow: 0 6px 18px rgba(2,6,23,0.12);
+    }
+    .download-card:hover{ transform: translateY(-6px); box-shadow: 0 14px 30px rgba(2,6,23,0.18); }
+
+    .download-card img{ width:36px; height:36px; border-radius:8px; object-fit:contain; }
+
+    /* Accent backgrounds for cards (keeps contrast in both themes) */
+    .card-windows{ background: linear-gradient(135deg, rgba(0,120,212,0.12), rgba(0,90,158,0.06)); }
+    .card-virtualhost{ background: linear-gradient(135deg, rgba(249,168,37,0.10), rgba(209,127,0,0.06)); }
+    .card-ios{ background: linear-gradient(135deg, rgba(162,162,162,0.06), rgba(122,122,122,0.04)); }
+    .card-powertunnel{ background: linear-gradient(135deg, rgba(230,126,34,0.10), rgba(198,90,18,0.06)); }
+
+    /* footer */
+    footer{
+      margin-top:auto;
+      padding:18px 6%;
+      text-align:center;
+      border-top:1px solid var(--border);
+      background:var(--surface);
+      color:var(--muted);
+      font-size:0.92rem;
     }
 
-    .lang-button.active, .lang-button:hover {
-      background-color: var(--primary);
-      border-color: var(--primary);
+    /* floating discord */
+    .floating-discord{
+      position:fixed; right:18px; bottom:18px;
+      width:56px; height:56px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      background:var(--discord); box-shadow:0 8px 26px rgba(0,0,0,0.25);
+      transition:transform var(--transition-fast);
     }
+    .floating-discord:hover{ transform:scale(1.08); }
 
-    /* MAIN */
-    main {
-      flex: 1;
-      text-align: center;
-      padding: 60px 20px 40px;
-      max-width: 1200px;
-      margin: auto;
+    /* smooth translation helper */
+    .translatable {
+      display:inline-block;
+      transition: opacity var(--transition-fast) ease;
+      opacity:1;
     }
+    .translatable.fade-out { opacity:0; }
 
-    h2 {
-      font-size: 2rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
+    /* theme toggle icon sizes */
+    .toggle-icon { width:16px; height:16px; display:inline-block; }
 
-    p.description {
-      color: var(--muted);
-      font-size: 1.1rem;
-      margin-bottom: 40px;
-    }
-
-    #sydney-time {
-      color: var(--muted);
-      font-size: 0.95rem;
-      margin-bottom: 25px;
-    }
-
-    img.centered-logo {
-      width: 100px;
-      height: auto;
-      margin: 0 auto 40px;
-      display: block;
-      border-radius: 12px;
-    }
-
-    /* DOWNLOAD GRID */
-    .button-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      padding: 0 10px;
-    }
-
-    .download-card {
-      background-color: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      justify-content: center;
-      text-decoration: none;
-      color: var(--text);
-      font-weight: 600;
-      transition: 0.3s;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .download-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-    }
-
-    .download-card img {
-      width: 28px;
-      height: 28px;
-      object-fit: contain;
-    }
-
-    .windows { background: linear-gradient(135deg, #0078D4, #005A9E); }
-    .virtualhost { background: linear-gradient(135deg, #F9A825, #D17F00); }
-    .ios { background: linear-gradient(135deg, #A2A2A2, #7a7a7a); }
-    .powertunnel { background: linear-gradient(135deg, #E67E22, #C65A12); }
-
-    /* FOOTER */
-    footer {
-      background-color: var(--surface);
-      border-top: 1px solid var(--border);
-      text-align: center;
-      padding: 20px;
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    /* DISCORD BUTTON */
-    .floating-discord {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background-color: var(--discord);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-      transition: 0.3s;
-    }
-
-    .floating-discord:hover {
-      transform: scale(1.1);
-    }
-
-    .floating-discord img {
-      width: 28px;
-      height: 28px;
-      filter: invert(100%);
-    }
-
-    @media (max-width: 600px) {
-      h2 { font-size: 1.6rem; }
-      p.description { font-size: 1rem; }
-      .download-card img { width: 22px; height: 22px; }
+    /* small screens */
+    @media (max-width:600px){
+      header{ padding:12px 5% }
+      .brand h1{ font-size:0.95rem }
+      .hero h2{ font-size:1.4rem }
+      .download-card img{ width:30px; height:30px }
     }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>GROWFAX</h1>
-  <div class="language-switcher">
-    <button class="lang-button" id="lang-id" onclick="changeLanguage('id')">🇮🇩 ID</button>
-    <button class="lang-button active" id="lang-en" onclick="changeLanguage('en')">🇺🇸 EN</button>
-  </div>
-</header>
+  <header>
+    <div class="brand" aria-hidden="false">
+      <img src="Growfax_banner.jpg" alt="Growfax" class="brand-logo">
+      <div>
+        <h1>GROWFAX</h1>
+        <div style="font-size:0.82rem;color:var(--muted)">Official Download Center</div>
+      </div>
+    </div>
 
-<main>
-  <h2 data-en="Get Started — Choose Your Platform" data-id="Mulai — Pilih Platform Anda">Get Started — Choose Your Platform</h2>
-  <p class="description" data-en="Download the required assets and join our official community." data-id="Unduh aset yang dibutuhkan dan bergabunglah dengan komunitas kami.">
-    Download the required assets and join our official community.
-  </p>
+    <div class="controls" role="region" aria-label="Controls">
+      <!-- Language buttons -->
+      <button id="btn-id" class="lang-btn" aria-pressed="false" title="Bahasa Indonesia">🇮🇩 ID</button>
+      <button id="btn-en" class="lang-btn active" aria-pressed="true" title="English">🇺🇸 EN</button>
 
-  <span id="sydney-time"></span>
-  <img src="Growfax_banner.jpg" alt="Growfax Logo" class="centered-logo">
+      <!-- Theme toggle -->
+      <button id="theme-toggle" class="theme-toggle" aria-pressed="false" title="Toggle theme">
+        <span id="theme-icon" class="toggle-icon" aria-hidden="true">
+          <!-- sun / moon svg placeholders; JS will switch -->
+          <svg id="icon-moon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+          </svg>
+          <svg id="icon-sun" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+          </svg>
+        </span>
+        <span id="theme-label" style="font-size:0.9rem">Light</span>
+      </button>
+    </div>
+  </header>
 
-  <div class="button-grid">
-    <a href="Growfax_Patched_.bat" download class="download-card windows">
-      <img src="windows.png" alt="Windows Icon">
-      <span data-en="Windows Installer" data-id="Pemasang Windows">Windows Installer</span>
-    </a>
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <h2 id="hero-title">
+        <span class="translatable" data-en="Get Started — Choose Your Platform" data-id="Mulai — Pilih Platform Anda">Get Started — Choose Your Platform</span>
+      </h2>
+      <p class="description"><span class="translatable" data-en="Download the required assets and join our official community." data-id="Unduh aset yang dibutuhkan dan bergabunglah dengan komunitas kami.">Download the required assets and join our official community.</span></p>
+      <span id="sydney-time" aria-live="polite"></span>
+      <img src="Growfax_banner.jpg" alt="Growfax Logo" class="centered-logo">
+    </section>
 
-    <a href="Growfax_VirtualHost.txt" download class="download-card virtualhost">
-      <img src="virtual-host.png" alt="Virtual Host Icon">
-      <span data-en="Virtual Host Config" data-id="Konfigurasi Virtual Host">Virtual Host Config</span>
-    </a>
+    <section class="button-grid" aria-label="Downloads">
+      <a class="download-card card-windows" href="Growfax_Patched_.bat" download>
+        <img src="windows.png" alt="Windows">
+        <div>
+          <div><span class="translatable" data-en="Windows Installer" data-id="Pemasang Windows">Windows Installer</span></div>
+          <div style="font-size:0.85rem;color:var(--muted);margin-top:6px">Secure Installer (.bat)</div>
+        </div>
+      </a>
 
-    <a href="IOS GROWFAX.txt" download class="download-card ios">
-      <img src="surge5.png" alt="iOS Icon">
-      <span data-en="iOS Config File" data-id="File Konfigurasi iOS">iOS Config File</span>
-    </a>
+      <a class="download-card card-virtualhost" href="Growfax_VirtualHost.txt" download>
+        <img src="virtual-host.png" alt="Virtual Host">
+        <div>
+          <div><span class="translatable" data-en="Virtual Host Config" data-id="Konfigurasi Virtual Host">Virtual Host Config</span></div>
+          <div style="font-size:0.85rem;color:var(--muted);margin-top:6px">Configuration File (.txt)</div>
+        </div>
+      </a>
 
-    <a href="PowerTunel_Host.txt" download class="download-card powertunnel">
-      <img src="powertunnel.jpeg" alt="PowerTunnel Icon">
-      <span data-en="PowerTunnel Hosts" data-id="Host PowerTunnel">PowerTunnel Hosts</span>
-    </a>
-  </div>
-</main>
+      <a class="download-card card-ios" href="IOS GROWFAX.txt" download>
+        <img src="surge5.png" alt="iOS">
+        <div>
+          <div><span class="translatable" data-en="iOS Config File" data-id="File Konfigurasi iOS">iOS Config File</span></div>
+          <div style="font-size:0.85rem;color:var(--muted);margin-top:6px">Configuration File (.txt)</div>
+        </div>
+      </a>
 
-<footer>
-  <p data-en="GROWFAX OFFICIAL © 2023–2025. All rights reserved." data-id="GROWFAX OFFICIAL © 2023–2025. Semua hak dilindungi undang-undang.">
-    GROWFAX OFFICIAL © 2023–2025. All rights reserved.
-  </p>
-  <p data-en="Built with dedication for the community." data-id="Dibangun dengan dedikasi untuk komunitas.">
-    Built with dedication for the community.
-  </p>
-</footer>
+      <a class="download-card card-powertunnel" href="PowerTunel_Host.txt" download>
+        <img src="powertunnel.jpeg" alt="PowerTunnel">
+        <div>
+          <div><span class="translatable" data-en="PowerTunnel Hosts" data-id="Host PowerTunnel">PowerTunnel Hosts</span></div>
+          <div style="font-size:0.85rem;color:var(--muted);margin-top:6px">Host File (.txt)</div>
+        </div>
+      </a>
+    </section>
+  </main>
 
-<a href="https://discord.gg/smgS6sq83y" target="_blank" class="floating-discord" title="Join our Discord">
-  <img src="discord.jpeg" alt="Discord Icon">
-</a>
+  <footer>
+    <div>GROWFAX OFFICIAL © <span id="year">2025</span>. <span class="translatable" data-en="All rights reserved." data-id="Semua hak dilindungi undang-undang.">All rights reserved.</span></div>
+    <div style="margin-top:6px;color:var(--muted)">Built with dedication for the community.</div>
+  </footer>
 
-<script>
-  // Waktu Sydney
-  function updateTime() {
-    const now = new Date();
-    const sydney = now.toLocaleString("en-AU", { timeZone: "Australia/Sydney", hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
-    document.getElementById('sydney-time').textContent = "Sydney Time: " + sydney;
-  }
-  updateTime();
-  setInterval(updateTime, 1000);
+  <a href="https://discord.gg/smgS6sq83y" class="floating-discord" target="_blank" title="Join our Discord">
+    <img src="discord.jpeg" alt="Discord" style="width:24px;height:24px;filter:invert(1)">
+  </a>
 
-  // Bahasa
-  const languageElements = document.querySelectorAll('[data-en]');
-  function changeLanguage(lang) {
-    languageElements.forEach(el => {
-      const text = el.getAttribute(`data-${lang}`);
-      if (el.tagName === 'TITLE') document.title = text;
-      else el.textContent = text;
+  <script>
+    /* -----------------------
+       Theme (light/dark) logic
+       ----------------------- */
+    const body = document.documentElement; // set class on html element for easier targeting
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeLabel = document.getElementById('theme-label');
+    const iconSun = document.getElementById('icon-sun');
+    const iconMoon = document.getElementById('icon-moon');
+
+    // determine initial theme:
+    function getInitialTheme(){
+      const saved = localStorage.getItem('growfax_theme');
+      if(saved) return saved;
+      // respect system preference if not set
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      return prefersDark ? 'dark' : 'light';
+    }
+
+    function applyTheme(t){
+      if(t === 'light'){
+        body.classList.remove('theme-dark');
+        body.classList.add('theme-light');
+        themeLabel.textContent = 'Light';
+        iconSun.style.display = 'inline-block';
+        iconMoon.style.display = 'none';
+        themeToggle.setAttribute('aria-pressed', 'false');
+      } else {
+        body.classList.remove('theme-light');
+        body.classList.add('theme-dark');
+        themeLabel.textContent = 'Dark';
+        iconSun.style.display = 'none';
+        iconMoon.style.display = 'inline-block';
+        themeToggle.setAttribute('aria-pressed', 'true');
+      }
+      // save
+      localStorage.setItem('growfax_theme', t);
+    }
+
+    // smooth transitions for colors (temporarily enable)
+    function withSmoothTransition(fn){
+      const root = document.documentElement;
+      root.style.transition = 'background 240ms ease, color 240ms ease';
+      fn();
+      // remove the explicit transition after it's applied (so subsequent instant changes aren't affected)
+      setTimeout(()=> root.style.transition = '', 260);
+    }
+
+    // init
+    let currentTheme = getInitialTheme();
+    withSmoothTransition(()=> applyTheme(currentTheme));
+
+    themeToggle.addEventListener('click', () => {
+      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+      withSmoothTransition(()=> applyTheme(currentTheme));
     });
-    document.getElementById('lang-en').classList.toggle('active', lang === 'en');
-    document.getElementById('lang-id').classList.toggle('active', lang === 'id');
-  }
-</script>
 
+    /* ----------------------------------------------------
+       Language switching with smooth fade (no layout jump)
+       - finds elements with .translatable and swaps data-x
+       ---------------------------------------------------- */
+    const enBtn = document.getElementById('btn-en');
+    const idBtn = document.getElementById('btn-id');
+    const transElems = document.querySelectorAll('.translatable');
+
+    // helper: fade out, swap, fade in
+    function swapLanguage(lang){
+      // update aria/button states
+      enBtn.classList.toggle('active', lang === 'en');
+      idBtn.classList.toggle('active', lang === 'id');
+      enBtn.setAttribute('aria-pressed', lang === 'en');
+      idBtn.setAttribute('aria-pressed', lang === 'id');
+
+      // fade out
+      transElems.forEach(el => el.classList.add('fade-out'));
+
+      // after fade duration, change text
+      setTimeout(()=> {
+        transElems.forEach(el => {
+          const txt = el.getAttribute(`data-${lang}`);
+          if(txt !== null) el.textContent = txt;
+        });
+        // also change <title> tag if present
+        const titleEl = document.querySelector('title');
+        if(titleEl){
+          const t = titleEl.getAttribute(`data-${lang}`);
+          if(t) document.title = t;
+        }
+        // fade in
+        setTimeout(()=> transElems.forEach(el => el.classList.remove('fade-out')), 20);
+      }, 180); // match CSS transition (--transition-fast)
+      // store chosen language
+      localStorage.setItem('growfax_lang', lang);
+    }
+
+    // load saved language (or default to 'en')
+    const savedLang = localStorage.getItem('growfax_lang') || 'en';
+    swapLanguage(savedLang);
+
+    enBtn.addEventListener('click', ()=> swapLanguage('en'));
+    idBtn.addEventListener('click', ()=> swapLanguage('id'));
+
+    /* ------------------------
+       Sydney time updater
+       ------------------------ */
+    function updateTime(){
+      const now = new Date();
+      const sydney = now.toLocaleString('en-AU', {
+        timeZone:'Australia/Sydney',
+        hour: '2-digit', minute:'2-digit', second:'2-digit', hour12:false
+      });
+      document.getElementById('sydney-time').textContent = `Sydney Time: ${sydney}`;
+    }
+    updateTime();
+    setInterval(updateTime, 1000);
+
+    /* Accessibility: allow theme toggle by keyboard space/enter */
+    themeToggle.addEventListener('keydown', e => {
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); themeToggle.click(); }
+    });
+
+    /* set page year */
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
