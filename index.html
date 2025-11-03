@@ -30,18 +30,24 @@
         /* Header */
         .header { background-color: var(--surface-dark); padding: 15px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
         .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: auto; padding: 0 20px; }
-        /* MENGHAPUS STYLE H1 UNTUK LOGO TEXT */
-        /* .header h1 { margin: 0; font-size: 1.8em; color: var(--primary-color); } */
-
-        /* STYLE BARU UNTUK LOGO GAMBAR DI HEADER */
-        .header-logo {
-            height: 40px; /* Tinggi logo kecil */
-            width: auto; /* Lebar otomatis untuk menjaga rasio aspek */
-            object-fit: contain; /* Memastikan gambar tidak terpotong */
-            margin: 0; /* Hapus margin default */
-            vertical-align: middle; /* Agar sejajar dengan tombol bahasa */
+        
+        /* REVISI STYLE UNTUK TEKS H1 AGAR MENJADI KOTAK KECIL */
+        .header h1 { 
+            margin: 0; 
+            color: var(--primary-color); 
+            
+            /* Tampilan Kotak/Petak */
+            display: inline-block;
+            font-size: 1.2em; /* Ukuran font di PC */
+            font-weight: 700;
+            padding: 5px 8px; /* Padding agar terlihat kotak kecil */
+            border: 2px solid var(--primary-color);
+            border-radius: 5px;
+            line-height: 1; /* Memastikan tinggi sesuai padding */
+            transition: all 0.3s;
         }
-
+        
+        /* Tombol bahasa tetap */
         .language-switcher { display: flex; gap: 10px; }
         .lang-button { background: none; border: 1px solid var(--text-muted); color: var(--text-light); padding: 5px 10px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s, border-color 0.3s; text-decoration: none; font-size: 0.9em; line-height: 1; }
         .lang-button:hover { background-color: rgba(255, 255, 255, 0.1); border-color: var(--primary-color); }
@@ -120,11 +126,12 @@
         /* MEDIA QUERIES UNTUK RESPONSIVITAS (HP/Tablet Kecil) */
         @media (max-width: 768px) {
             
-            /* Header lebih ringkas */
             .header-content { padding: 0 15px; }
-            /* LOGO UTAMA DI HEADER UNTUK LAYAR KECIL */
-            .header-logo {
-                height: 30px; /* Logo lebih kecil di HP */
+            
+            /* UKURAN H1 KOTAK DI HP LEBIH KECIL LAGI */
+            .header h1 {
+                font-size: 1em; /* Font lebih kecil */
+                padding: 4px 6px; /* Padding lebih kecil */
             }
 
             h2 { font-size: 1.8em; }
@@ -154,7 +161,8 @@
     
 <div class="header">
     <div class="header-content">
-        <img src="growfax_logo.png" alt="Growfax Logo" class="header-logo">
+        
+        <h1>GROWFAX</h1>
         
         <div class="language-switcher">
             <a href="javascript:void(0)" class="lang-button" id="lang-id" onclick="changeLanguage('id');">🇮🇩 ID</a>
