@@ -698,7 +698,7 @@
 
         <nav class="primary" aria-label="Main navigation">
           <a href="#downloads" id="navDownloads" class="active-nav">📥 Downloads</a> 
-          <a href="#shop" id="navShop">🛒 Shop</a>
+          
   
        </nav>
       </div>
@@ -758,50 +758,7 @@
         </div>
     </section>
 
-    <section id="shop" class="content-section hidden-section" style="margin-top: 60px;
- padding-top: 10px;">
-        <h2>🛒 Growfax Server Roles</h2>
-        <p style="opacity: 0.8;">Support the server and unlock exclusive roles! Direct purchase via PayPal.me.</p>
-
-        <div class="shop-roles">
-            <div class="shop-role-card">
-                <div>
-                    <h3>👑 Admin Server Role</h3>
-       
-              <p class="price" data-usd="45" 
-                        data-idr="675000" data-eur="7.91" data-gbp="36.00" 
-                        data-aud="12.90" data-sgd="60.75" data-cad="11.61">
-                        $45.00 <small>USD</small>
-     
-                   <span class="currency-display">
-                            ~ £36.00 <small>GBP</small> | ~ Rp 675.000 <small>IDR</small> | ~ S$60.75 <small>SGD</small><br>
-                            ~ €7.91 <small>EUR</small> | ~ A$12.90 <small>AUD</small> | ~ C$11.61 <small>CAD</small>
-  
- 
-                      </span>
-                    </p>
-                    <ul id="admin_commands"></ul>
-                </div>
-                <div class="purchase-buttons">
-  
-   
-             <a href="https://paypal.me/BilzXd1/45USD" target="_blank" rel="noopener" class="btn-purchase btn-usd" data-role="admin" data-price="45">Pay $USD</a>
-                    <a href="https://paypal.me/BilzXd1/7.91EUR" target="_blank" rel="noopener" class="btn-purchase btn-eur" data-role="admin" data-price-eur="7.91">Pay €EUR</a>
-                    <a href="https://paypal.me/BilzXd1/36.00GBP" target="_blank" rel="noopener" class="btn-purchase btn-gbp" data-role="admin" data-price-gbp="36.00">Pay £GBP</a>
-                 
-       
-             <a href="https://paypal.me/BilzXd1/12.90AUD" 
- target="_blank" rel="noopener" class="btn-purchase btn-aud" data-role="admin" data-price-aud="12.90">Pay A$AUD</a>
-                    <a href="https://paypal.me/BilzXd1/60.75SGD" target="_blank" rel="noopener" class="btn-purchase btn-sgd" data-role="admin" data-price-sgd="60.75">Pay S$SGD</a>
-                    <a href="https://paypal.me/BilzXd1/11.61CAD" target="_blank" rel="noopener" class="btn-purchase btn-cad" data-role="admin" data-price-cad="11.61">Pay C$CAD</a>
-                    <a href="https://paypal.me/BilzXd1/675000IDR" target="_blank" 
- rel="noopener" class="btn-purchase btn-idr" data-role="admin" data-idr-price="675000">Bayar Rp IDR</a>
-   
-       
-        </div>
-            </div>
-        </div>
-        </section>
+    
   </main>
 
   <section class="discord-section" aria-label="Discord community">
@@ -1039,9 +996,7 @@ const modalCancel = document.getElementById('modalCancel');
 const downloadButtons = document.querySelectorAll('.platform-buttons a[download]');
 const iosButton = document.querySelector('.btn-ios');
 const powertunnelButton = document.querySelector('.btn-powertunnel');
-const shopButtons = document.querySelectorAll('.purchase-buttons .btn-purchase');
-
-// --- NEW AUTH ELEMENTS ---
+// --- NEW AUTH ELEMENTS ---// --- NEW AUTH ELEMENTS ---
 const authBackdrop = document.getElementById('authBackdrop');
 const openAuth = document.getElementById('openAuth');
 const tabLogin = document.getElementById('tabLogin');
@@ -1102,7 +1057,7 @@ const translations = {
     "Skip": "Skip",
     "Tutup Area Admin": "Close Admin Area",
     "Download initiated: ": "Download initiated: ",
-    "Shop purchase: ": "Shop purchase: ",
+    : 
     "Opening PayPal for USD purchase": "Opening PayPal for USD purchase",
     "Opening PayPal for EUR purchase": "Opening PayPal for EUR purchase",
     "Opening PayPal for GBP purchase": "Opening PayPal for GBP purchase",
@@ -1165,7 +1120,7 @@ const translations = {
     "Connect with others and get support in our official Discord server.": "Terhubung dengan orang lain dan dapatkan bantuan di server Discord resmi kami.",
     "Join Growfax Discord": "Gabung Discord Growfax",
     "📥 Downloads": "📥 Unduhan",
-    "🛒 Shop": "🛒 Toko",
+    "": "🛒 Toko",
     "🐞 Report Bug": "🐞 Laporkan Bug",
     "🔑 Admin": "🔑 Admin",
     "Welcome to Growfax": "Selamat Datang di Growfax",
@@ -1219,7 +1174,7 @@ const translations = {
     "SEO Meta updated successfully.": "Meta SEO berhasil diperbarui.",
     "Close Admin Area": "Tutup Area Admin",
     "Download initiated: ": "Unduhan dimulai: ",
-    "Shop purchase: ": "Pembelian toko: ",
+    : "Pembelian toko: ",
     "👑 Admin Server Role": "👑 Peran Admin Server",
     "Can sell role": "Bisa menjual peran",
     "Benefit for selling roles to players.": "Keuntungan dari menjual peran kepada pemain.",
@@ -1565,7 +1520,7 @@ function applyTranslations(lang) {
     
     // Update non-data-original elements
     document.getElementById('navDownloads').textContent = t['📥 Downloads'] || '📥 Downloads';
-    document.getElementById('navShop').textContent = t['🛒 Shop'] || '🛒 Shop';
+    document.getElementById('navShop').textContent = t[''] || '';
     document.getElementById('modalCancel').textContent = t['Cancel'] || 'Batal';
     document.getElementById('modalConfirm').textContent = t['Download'] || 'Unduh';
     document.getElementById('welcomeSave').textContent = t['Save & Continue'] || 'Simpan & Lanjutkan';
@@ -2161,7 +2116,7 @@ function simulateNewActivity() {
   const possibleActivities = [
     { type: "Download initiated: ", details: "VirtualHost.txt" },
     { type: "Download initiated: ", details: "GrowFax_ios_config.txt" },
-    { type: "Shop purchase: ", details: "Admin Role" },
+    { type:  details: "Admin Role" },
     { type: "Admin Login success", details: "192.168.1.1" }
   ];
   const newActivity = possibleActivities[Math.floor(Math.random() * possibleActivities.length)];
@@ -2189,8 +2144,8 @@ function renderAnalyticsDashboard() {
 
     if (activityType.includes(t['Download initiated: ']) && lang === 'id') {
       activityType = t['Download initiated: '];
-    } else if (activityType.includes(t['Shop purchase: ']) && lang === 'id') {
-      activityType = t['Shop purchase: '];
+    } else if (activityType.includes(t[]) && lang === 'id') {
+      activityType = t[];
       details = t[details] || details; // Translate role name
     } else if (activityType === t['Admin Login success']) {
         // No change needed for details (IP)
