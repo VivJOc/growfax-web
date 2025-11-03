@@ -183,6 +183,30 @@
   .stat-number { font-size: 1.4rem; font-weight: 700; color: var(--primary); }
   .stat-label { color: var(--muted); font-size: 0.9rem; margin-top: 6px; }
 
+  /* Sydney Time Card (New Style) */
+  .sydney-time-card {
+    max-width: 320px;
+    margin: 20px auto 10px;
+    padding: 14px 20px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(65, 105, 225, 0.1), rgba(47, 79, 175, 0.05)); /* Warna Biru Soft */
+    border: 1px solid var(--border);
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  .sydney-time-card .time-label {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 4px;
+    display: block;
+  }
+  .sydney-time-card .time-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+  }
+
+
   footer {
     margin-top: auto;
     text-align: center;
@@ -338,7 +362,7 @@
   <section class="hero">
     <h2 class="reveal" data-en="Get Started — Choose Your Platform" data-id="Mulai — Pilih Platform Anda"><span class="translatable">Get Started — Choose Your Platform</span></h2>
     <p class="reveal" data-en="Download the required assets and join our official community." data-id="Unduh aset yang dibutuhkan dan bergabunglah dengan komunitas kami."><span class="translatable">Download the required assets and join our official community.</span></p>
-    <img src="Growfax_banner.jpg" class="centered-logo reveal" alt="Growfax">
+    <img src="Growfax_banner.jpg" class="centered-logo reveal" alt="Growfax Logo">
   </section>
 
   <section class="button-grid" aria-label="Downloads">
@@ -360,7 +384,6 @@
     </a>
   </section>
 
-  <!-- Animated Stats -->
   <section class="stats" aria-label="Statistics">
     <div class="stat-card reveal" data-target="downloads">
       <div class="stat-number" data-start="0" data-end="10234">0</div>
@@ -378,7 +401,11 @@
     </div>
   </section>
 
-  <!-- Optional small changelog -->
+  <section class="sydney-time-card">
+      <span class="time-label translatable" data-en="Sydney, Australia Local Time" data-id="Waktu Lokal Sydney, Australia">Sydney, Australia Local Time</span>
+      <div id="sydney-time" class="time-value">Loading...</div>
+  </section>
+
   <section style="max-width:900px;margin:22px auto 0;padding:0 16px;">
     <div style="background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid var(--border); padding:12px; border-radius:10px; color:var(--muted);">
       <strong class="translatable" data-en="Latest:" data-id="Terbaru:">Latest:</strong>
@@ -391,7 +418,6 @@
   GROWFAX OFFICIAL © <span id="year"></span>
 </footer>
 
-<!-- Floating contact + discord -->
 <div class="floating" aria-hidden="false">
   <div id="contact-menu" class="contact-menu" aria-hidden="true">
     <a class="contact-item" href="https://wa.me/6281234567890" target="_blank" rel="noopener" title="WhatsApp">
@@ -409,7 +435,6 @@
   </div>
 
   <button id="contact-toggle" class="btn contact" aria-label="Contact / Chat" title="Contact">
-    <!-- chat icon -->
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
   </button>
 
@@ -418,13 +443,11 @@
   </a>
 </div>
 
-<!-- Cookie Banner -->
 <div id="cookie-banner" role="status" aria-live="polite">
   <span class="translatable" data-en="This website uses cookies to ensure you get the best experience." data-id="Situs ini menggunakan cookie untuk memastikan Anda mendapatkan pengalaman terbaik.">This website uses cookies to ensure you get the best experience.</span>
   <button id="cookie-accept" class="translatable" data-en="Accept" data-id="Terima">Accept</button>
 </div>
 
-<!-- Announcement Modal (shows once) -->
 <div id="modal-backdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
   <div class="modal" role="document">
     <h3 class="translatable" data-en="Announcement" data-id="Pengumuman">Announcement</h3>
@@ -540,6 +563,28 @@
     }
     window.requestAnimationFrame(step);
   }
+  
+  /* -------------------------
+     Sydney Local Time
+     ------------------------- */
+  function updateSydneyTime() {
+      const options = {
+          timeZone: 'Australia/Sydney',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false
+      };
+      const sydneyTime = new Date().toLocaleTimeString('en-AU', options);
+      const sydneyTimeElement = document.getElementById('sydney-time');
+      if (sydneyTimeElement) {
+          sydneyTimeElement.textContent = sydneyTime;
+      }
+  }
+
+  // Update time initially and every second
+  updateSydneyTime();
+  setInterval(updateSydneyTime, 1000);
 
   /* -------------------------
      Cookie banner
