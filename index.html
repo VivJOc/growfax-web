@@ -12,6 +12,7 @@
       --btn-bg: linear-gradient(90deg, #2563eb, #06b6d4);
       --btn-text: #fff;
       --card-bg: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      --glow-color: #0ea5e9; /* Warna biru untuk glow */
     }
 
     body.light {
@@ -21,6 +22,7 @@
       --btn-bg: linear-gradient(90deg, #0ea5e9, #2563eb);
       --btn-text: #fff;
       --card-bg: #fff;
+      --glow-color: #2563eb; /* Warna biru yang sedikit berbeda untuk light mode */
     }
 
     body {
@@ -64,43 +66,54 @@
       border-radius: 10px;
       margin-bottom: 16px;
       object-fit: contain;
+      /* Efek Glow & Animasi Bergerak */
+      box-shadow: 0 0 0px var(--glow-color); /* Initial state: no glow */
+      animation: floatAndGlow 3s ease-in-out infinite; /* Animasi float */
+      transition: box-shadow 0.3s ease-out; /* Transisi untuk glow */
     }
 
+    /* Animasi untuk efek bergerak dan glow */
+    @keyframes floatAndGlow {
+        0% { transform: translateY(0px); box-shadow: 0 0 5px var(--glow-color); }
+        50% { transform: translateY(-5px); box-shadow: 0 0 15px var(--glow-color); }
+        100% { transform: translateY(0px); box-shadow: 0 0 5px var(--glow-color); }
+    }
+
+    /* Opsi: Glow hanya saat hover jika tidak ingin selalu aktif */
+    /* .banner:hover {
+        box-shadow: 0 0 15px var(--glow-color); 
+    } */
+
     .btn {
-      /* Menggunakan 'button' dan 'a' agar seragam */
       display: block;
       width: 100%;
-      padding: 14px 14px; /* Sedikit diperbesar agar mudah di-tap di HP */
-      margin: 10px 0; /* Margin diperbesar sedikit */
+      padding: 14px 14px;
+      margin: 10px 0;
       border-radius: 8px;
       text-decoration: none;
       font-weight: 600;
       border: 0;
       cursor: pointer;
-      transition: transform 0.1s ease, opacity 0.2s ease; /* Transisi lebih halus */
-      font-size: clamp(14px, 3vw, 16px); /* Ukuran font lebih responsif */
-      line-height: 1; /* Memastikan teks berada di tengah vertikal */
-      /* Mengatasi perbedaan reset default antara 'a' dan 'button' */
+      transition: transform 0.1s ease, opacity 0.2s ease;
+      font-size: clamp(14px, 3vw, 16px);
+      line-height: 1;
       box-sizing: border-box; 
     }
 
     .btn-download {
       background: var(--btn-bg);
       color: var(--btn-text);
-      /* Menghilangkan border default button pada Firefox */
       -moz-appearance: none; 
       -webkit-appearance: none;
       appearance: none;
     }
 
-    /* Efek hover dan active yang responsif */
     .btn-download:hover {
       opacity: 0.9;
-      transform: scale(1.01); /* Efek scaling lebih halus untuk desktop */
+      transform: scale(1.01); 
     }
     
     .btn-download:active {
-        /* Efek saat di-tap/di-klik, penting untuk HP */
         opacity: 0.8;
         transform: scale(0.99);
     }
@@ -119,7 +132,7 @@
       border: 1px solid rgba(255,255,255,0.1);
       color: var(--subtext);
       border-radius: 6px;
-      padding: 8px 10px; /* Padding disesuaikan */
+      padding: 8px 10px;
       cursor: pointer;
       font-size: clamp(12px, 2.5vw, 14px);
       transition: 0.2s;
@@ -159,7 +172,7 @@
       }
       .toggle, .lang {
         width: 100%;
-        min-width: auto; /* Memungkinkan kontrol untuk mengisi penuh lebar */
+        min-width: auto;
       }
     }
   </style>
@@ -216,18 +229,15 @@ www.growtopia2.com = 91.134.85.13`
         const originalText = buttonElement.innerText;
         
         navigator.clipboard.writeText(textToCopy).then(() => {
-            // Beri umpan balik (feedback) visual bahwa teks berhasil disalin
             buttonElement.innerText = '✅ Copied!';
             setTimeout(() => {
-                // Pulihkan teks asli, pastikan teks asli juga diterjemahkan
-                toggleLang(false); // Panggil toggleLang tanpa membalik bahasa
+                toggleLang(false); // Pulihkan teks asli, pastikan teks asli juga diterjemahkan
             }, 2000);
         }).catch(err => {
             console.error('Gagal menyalin teks: ', err);
             alert('Gagal menyalin teks. Silakan coba secara manual.');
         });
     }
-
 
     // Sydney Clock
     function updateClock() {
@@ -246,7 +256,6 @@ www.growtopia2.com = 91.134.85.13`
 
     // Translation
     let lang = 'id';
-    // Fungsi diperbarui agar bisa dipanggil oleh fungsi copyText tanpa membalik 'lang'
     function toggleLang(shouldToggle = true) {
       if (shouldToggle) {
           lang = (lang === 'id') ? 'en' : 'id';
@@ -260,7 +269,6 @@ www.growtopia2.com = 91.134.85.13`
 
       document.getElementById('btn1').innerText = isEnglish ? "Download — Virtual Host" : "Unduh — Virtual Host";
       
-      // Update teks untuk tombol copy/salin
       document.getElementById('btn2').innerText = isEnglish ? "Copy — Powertunnel" : "Salin — Powertunnel";
       document.getElementById('btn3').innerText = isEnglish ? "Copy — iOS (Surge)" : "Salin — iOS (Surge)";
       
