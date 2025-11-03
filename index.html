@@ -40,7 +40,16 @@
         .container { max-width: 1200px; margin: auto; padding: 0 20px; }
         .main-content { padding-bottom: 60px; }
         .banner-section { background-color: var(--surface-dark); border-radius: 12px; overflow: hidden; margin-bottom: 40px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); }
-        .banner-section img { width: 100%; height: auto; max-height: 200px; object-fit: cover; display: block; }
+        
+        .banner-section img { 
+            width: 100%; 
+            height: auto; 
+            /* PERUBAHAN DI SINI: Mengurangi tinggi maksimum banner ke 150px */
+            max-height: **150px**; 
+            object-fit: cover; 
+            display: block; 
+        }
+        
         h2 { font-size: 2.2em; color: var(--text-light); margin-bottom: 10px; }
         .description { color: var(--text-muted); font-size: 1.1em; margin-bottom: 40px; }
 
@@ -76,25 +85,23 @@
         .virtualhost-button { background-color: #F9A825; }
         .discord-button { background-color: var(--discord-color); }
 
-        /* PERBAIKAN PENTING: Mengatur ukuran pada container ikon (DIV) */
+        /* Struktur Ikon yang sudah diperbaiki (tidak terpotong) */
         .button-icon {
-            /* CONTAINER ICON */
-            display: flex; /* Mengaktifkan flexbox untuk menengahkan gambar */
+            display: flex; 
             justify-content: center;
             align-items: center;
-            width: 60px; /* Ukuran container lebih besar sedikit (50px + 5px padding di setiap sisi) */
+            width: 60px; 
             height: 60px;
             margin-bottom: 10px;
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 5px; 
-            padding: 0; /* Hapus padding, gunakan flexbox */
+            padding: 0; 
         }
         
-        /* Gambar di dalam container */
         .button-icon img {
-            max-width: 90%; /* Pastikan gambar tidak lebih besar dari container */
+            max-width: 90%; 
             max-height: 90%;
-            height: auto; /* Mempertahankan rasio aspek gambar */
+            height: auto; 
             width: auto;
             object-fit: contain;
         }
