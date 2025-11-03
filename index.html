@@ -49,12 +49,10 @@
             color: var(--primary-color);
         }
 
-        /* Language Switcher Styles - DIKOREKSI DI SINI */
+        /* Language Switcher Styles */
         .language-switcher {
             display: flex;
             gap: 10px;
-            /* Pastikan teks tombol tidak terpengaruh oleh terjemahan */
-            z-index: 1000; 
         }
 
         .lang-button {
@@ -67,8 +65,6 @@
             transition: background-color 0.3s, border-color 0.3s;
             text-decoration: none;
             font-size: 0.9em;
-            /* Memastikan teks tombol tidak ikut terjemahan GTranslate */
-            /* Ini penting untuk menjaga tombol tetap "ID" dan "EN" */
             line-height: 1; 
         }
 
@@ -82,127 +78,51 @@
             border-color: var(--primary-color);
         }
         
+        /* HIDDEN GOOGLE TRANSLATE DROPDOWN - PENTING! */
+        #google_translate_element {
+            display: none;
+            visibility: hidden;
+            height: 0;
+            width: 0;
+            overflow: hidden;
+        }
+        
         /* Konten Lain (Sama seperti sebelumnya) */
         .container {
             max-width: 1200px;
             margin: auto;
             padding: 0 20px;
         }
-
-        .main-content {
-            padding-bottom: 60px;
-        }
-        
-        .banner-section {
-            background-color: var(--surface-dark);
-            border-radius: 12px;
-            overflow: hidden;
-            margin-bottom: 40px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-        }
-        
-        .banner-section img {
-            width: 100%;
-            height: auto;
-            max-height: 450px;
-            object-fit: cover;
-            display: block;
-        }
-
-        h2 {
-            font-size: 2.2em;
-            color: var(--text-light);
-            margin-bottom: 10px;
-        }
-
-        .description {
-            color: var(--text-muted);
-            font-size: 1.1em;
-            margin-bottom: 40px;
-        }
-
-        .button-group {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            padding: 10px;
-        }
-
-        .action-button {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            padding: 30px 20px;
-            border-radius: 15px;
-            transition: all 0.3s ease;
-            color: var(--text-light);
-            font-weight: 600;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .action-button:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
-            border-color: var(--primary-color);
-        }
-        
-        .windows-button {
-            background-color: #0078D4;
-        }
-        .virtualhost-button {
-            background-color: #F9A825;
-        }
-        .discord-button {
-            background-color: var(--discord-color);
-        }
-
-        .button-icon {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 15px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            padding: 10px;
-            object-fit: cover;
-        }
-
-        .button-text {
-            font-size: 1.4em;
-            margin-top: 5px;
-        }
-
-        .small-text {
-            font-size: 0.9em;
-            font-weight: 400;
-            opacity: 0.7;
-            margin-top: 5px;
-        }
-
-        .footer {
-            background-color: var(--surface-dark);
-            padding: 20px 0;
-            margin-top: 50px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            font-size: 0.9em;
-            color: var(--text-muted);
-        }
-        
-        .footer p {
-            margin: 5px 0;
-        }
+        /* ... (Gaya-gaya lainnya) ... */
+        .main-content { padding-bottom: 60px; }
+        .banner-section { background-color: var(--surface-dark); border-radius: 12px; overflow: hidden; margin-bottom: 40px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); }
+        .banner-section img { width: 100%; height: auto; max-height: 450px; object-fit: cover; display: block; }
+        h2 { font-size: 2.2em; color: var(--text-light); margin-bottom: 10px; }
+        .description { color: var(--text-muted); font-size: 1.1em; margin-bottom: 40px; }
+        .button-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 10px; }
+        .action-button { display: flex; flex-direction: column; align-items: center; text-decoration: none; padding: 30px 20px; border-radius: 15px; transition: all 0.3s ease; color: var(--text-light); font-weight: 600; box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .action-button:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6); border-color: var(--primary-color); }
+        .windows-button { background-color: #0078D4; }
+        .virtualhost-button { background-color: #F9A825; }
+        .discord-button { background-color: var(--discord-color); }
+        .button-icon { width: 80px; height: 80px; margin-bottom: 15px; background-color: rgba(255, 255, 255, 0.1); border-radius: 50%; padding: 10px; object-fit: cover; }
+        .button-text { font-size: 1.4em; margin-top: 5px; }
+        .small-text { font-size: 0.9em; font-weight: 400; opacity: 0.7; margin-top: 5px; }
+        .footer { background-color: var(--surface-dark); padding: 20px 0; margin-top: 50px; border-top: 1px solid rgba(255, 255, 255, 0.05); font-size: 0.9em; color: var(--text-muted); }
+        .footer p { margin: 5px 0; }
     </style>
 </head>
 <body>
+
+<div id="google_translate_element"></div>
 
 <div class="header">
     <div class="header-content">
         <h1>GROWFAX</h1>
         
         <div class="language-switcher">
-            <a href="javascript:void(0)" class="lang-button" onclick="doGTranslate('en|id'); return false;">🇮🇩 ID</a>
-            <a href="javascript:void(0)" class="lang-button active" onclick="doGTranslate('en|en'); return false;">🇺🇸 EN</a>
+            <a href="javascript:void(0)" class="lang-button" onclick="changeLanguage('id'); return false;">🇮🇩 ID</a>
+            <a href="javascript:void(0)" class="lang-button active" onclick="changeLanguage('en'); return false;">🇺🇸 EN</a>
         </div>
     </div>
 </div>
@@ -247,45 +167,51 @@
     </div>
 </div>
 
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 <script type="text/javascript">
-    // Fungsi untuk memicu terjemahan
-    function doGTranslate(lang_pair) {
-        if (typeof GTranslateGetCurrentLang == 'function' && GTranslateGetCurrentLang() == null) {
-            var script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-            document.head.appendChild(script);
-
-            script.onload = function() {
-                doGTranslate(lang_pair);
-            };
-            return;
-        }
-
-        var lang = lang_pair.split('|')[1];
-        
-        var te_element = document.getElementById('google_translate_element');
-        if (te_element) te_element.innerHTML = '';
-        
-        new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-
-        setTimeout(function() {
-            var select = document.querySelector('select.goog-te-combo');
-            if (select) {
-                select.value = lang;
-                select.dispatchEvent(new Event('change'));
-            }
-            updateActiveButton(lang);
-        }, 100); 
+    // Fungsi inisialisasi Google Translate yang dipanggil oleh skrip eksternal
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en', // Bahasa asli konten Anda
+            includedLanguages: 'en,id', // Bahasa yang didukung
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE // Gunakan layout sederhana
+        }, 'google_translate_element');
     }
 
-    // Fungsi inisialisasi dummy
-    function googleTranslateElementInit() {}
+    // Fungsi Kustom untuk Mengubah Bahasa
+    function changeLanguage(langCode) {
+        // Mendapatkan elemen <select> yang dibuat oleh Google Translate
+        var selectElement = document.querySelector('#google_translate_element select.goog-te-combo');
+
+        if (selectElement) {
+            // Mengubah nilai <select> ke kode bahasa yang diinginkan
+            selectElement.value = langCode;
+            
+            // Memicu event 'change' agar Google Translate memulai terjemahan
+            // Skrip internal Google mendengarkan event ini
+            selectElement.dispatchEvent(new Event('change'));
+            
+            // Memperbarui tampilan tombol yang aktif
+            updateActiveButton(langCode);
+        } else {
+             // Jika elemen belum dimuat, coba inisialisasi ulang (fallback)
+             console.log("Google Translate select element not found yet. Retrying initialization.");
+             if (typeof google !== 'undefined' && typeof google.translate !== 'undefined') {
+                 googleTranslateElementInit();
+                 // Coba lagi setelah penundaan singkat
+                 setTimeout(function() {
+                     changeLanguage(langCode);
+                 }, 500);
+             } else {
+                 console.error("Google Translate script not loaded.");
+             }
+        }
+    }
 
     // Fungsi untuk memperbarui tampilan tombol yang aktif
     function updateActiveButton(lang) {
         document.querySelectorAll('.lang-button').forEach(btn => btn.classList.remove('active'));
-        // Mencocokkan berdasarkan kode bahasa target (ID atau EN)
         if (lang === 'id') {
             document.querySelector('.language-switcher a:first-child').classList.add('active');
         } else if (lang === 'en') {
@@ -293,7 +219,8 @@
         }
     }
     
-    // Inisialisasi awal ke English (aktifkan tombol EN)
-    updateActiveButton('en');
+    // Pastikan tombol EN aktif saat pertama kali dimuat
+    document.addEventListener('DOMContentLoaded', function() {
+        updateActiveButton('en');
+    });
 </script>
-<div id="google_translate_element" style="display:none;"></div>
