@@ -63,55 +63,63 @@
         h2 { font-size: 2.2em; color: var(--text-light); margin-bottom: 10px; margin-top: 40px; } 
         .description { color: var(--text-muted); font-size: 1.1em; margin-bottom: 40px; } 
 
-        /* GRUP TOMBOL UTAMA (Kini 4 Kolom di PC) */
+        /* GRUP TOMBOL UTAMA (Diubah menjadi 1 kolom vertikal) */
         .button-group {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* Diubah menjadi 4 kolom */
-            gap: 15px; /* Mengurangi gap agar lebih rapat */
+            grid-template-columns: 1fr; /* Diubah menjadi 1 kolom */
+            gap: 15px; /* Jarak antar tombol */
             padding: 0;
             margin-bottom: 30px; 
+            max-width: 350px; /* Batasi lebar tombol di PC agar terlihat seperti contoh */
+            margin-left: auto;
+            margin-right: auto;
         }
         
-        /* Tombol Utama (DIKECILKAN) */
+        /* Tombol Utama (Gaya Border Baru) */
         .action-button {
             display: flex; 
-            flex-direction: column; 
+            flex-direction: row; /* Diubah menjadi baris agar icon dan teks sejajar */
             align-items: center; 
+            justify-content: center; /* Rata tengah horizontal */
             text-decoration: none; 
-            padding: 10px 10px; /* Padding dikecilkan */
-            border-radius: 8px; 
-            transition: all 0.3s ease; 
+            padding: 15px 20px; /* Padding ditingkatkan untuk tombol yang lebih besar */
+            border-radius: **12px**; /* Border Lebih Bulat */
+            transition: all 0.2s ease; 
             color: var(--text-light); 
             font-weight: 600; 
             box-shadow: none; 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            width: auto; 
+            border: none; /* Hapus border garis luar */
+            width: 100%; 
             max-width: 100%; 
         }
 
-        .action-button:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4); border-color: var(--primary-color); }
-        
-        /* Warna Tombol Baru */
-        .windows-button { background-color: #0078D4; }
-        .virtualhost-button { background-color: #F9A825; }
-        .ios-button { background-color: #A2A2A2; } /* Abu-abu untuk iOS */
-        .powertunnel-button { background-color: #E67E22; } /* Oranye tua untuk PowerTunnel */
-
-        /* Icon Tombol (Dikecilkan) */
-        .button-icon {
-            display: flex; justify-content: center; align-items: center; 
-            width: **35px**; /* Dikecilkan */
-            height: **35px**; /* Dikecilkan */
-            margin-bottom: 5px; 
-            background-color: rgba(255, 255, 255, 0.1); 
-            border-radius: 5px; padding: 0; 
+        .action-button:hover { 
+            transform: scale(1.02); /* Sedikit efek zoom saat hover */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Shadow untuk kedalaman */
         }
         
-        .button-icon img { max-width: 90%; max-height: 90%; height: auto; width: auto; object-fit: contain; }
+        /* Warna Tombol */
+        .windows-button { background-color: #0078D4; }
+        .virtualhost-button { background-color: #F9A825; }
+        .ios-button { background-color: #A2A2A2; } 
+        .powertunnel-button { background-color: #E67E22; } 
+
+        /* Icon Tombol */
+        .button-icon {
+            display: flex; justify-content: center; align-items: center; 
+            width: **25px**; /* Dikecilkan lagi untuk sejajar dengan teks */
+            height: **25px**; 
+            margin-right: 10px; /* Jarak antara ikon dan teks */
+            background: none; /* Hapus latar belakang ikon */
+            border-radius: 0; 
+            padding: 0; 
+        }
+        
+        .button-icon img { max-width: 100%; max-height: 100%; height: auto; width: auto; object-fit: contain; }
 
         .button-text { 
-            font-size: 0.9em; /* Font teks tombol dikecilkan */
-            margin-top: 5px; 
+            font-size: 1.1em; /* Font teks tombol diperbesar */
+            margin-top: 0; 
         }
         
         /* Teks kecil di bawah tombol (DIHAPUS DARI TAMPILAN) */
@@ -151,14 +159,15 @@
 
             #sydney-time { font-size: 0.9em; margin: 10px 0 15px 0; }
             
-            /* Di HP, tata letak diubah menjadi 2 kolom */
+            /* Di HP, tata letak tetap 1 kolom */
             .button-group { 
-                grid-template-columns: repeat(2, 1fr); 
+                grid-template-columns: 1fr; 
                 gap: 10px; 
+                max-width: 100%;
             }
-            .action-button { padding: 8px 8px; }
-            .button-icon { width: 30px; height: 30px; }
-            .button-text { font-size: 0.85em; }
+            .action-button { padding: 12px 15px; }
+            .button-icon { width: 20px; height: 20px; }
+            .button-text { font-size: 1em; }
             
             .footer { padding: 15px 0; }
             
