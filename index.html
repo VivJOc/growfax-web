@@ -12,6 +12,7 @@
       --btn-bg: linear-gradient(90deg, #2563eb, #06b6d4);
       --btn-text: #fff;
       --card-bg: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      --copy-btn-bg: #4c4c4c; /* Warna baru untuk tombol Copy */
     }
 
     body.light {
@@ -21,6 +22,7 @@
       --btn-bg: linear-gradient(90deg, #0ea5e9, #2563eb);
       --btn-text: #fff;
       --card-bg: #fff;
+      --copy-btn-bg: #8c9096;
     }
 
     body {
@@ -88,6 +90,18 @@
     .btn-download:hover {
       opacity: 0.9;
       transform: scale(1.02);
+    }
+
+    .btn-copy {
+      /* Gaya baru untuk tombol Copy */
+      background: var(--copy-btn-bg);
+      color: var(--btn-text);
+      text-decoration: none; /* Pastikan tidak ada garis bawah */
+    }
+    
+    .btn-copy:hover {
+        opacity: 0.9;
+        transform: scale(1.02);
     }
 
     .controls {
@@ -163,8 +177,11 @@
     <div id="clock">Sydney Time: --:--:--</div>
 
     <a class="btn btn-download" href="Growfax_Vhost.txt" download id="btn1">Download — Virtual Host</a>
-    <a class="btn btn-download" href="data:text/plain;charset=utf-8,91.134.85.13%20growtopia1.com%0A91.134.85.13%20growtopia2.com%0A91.134.85.13%20www.growtopia1.com%0A91.134.85.13%20www.growtopia2.com" download="Growfax_Ptunnel.txt" id="btn2">Download — Powertunnel</a>
-    <a class="btn btn-download" href="data:text/plain;charset=utf-8,%5BGeneral%5D%0Abypass-system%20%3D%20true%0A%0A%5BRule%5D%0AFINAL%2CDIRECT%0A%0A%5BHost%5D%0Agrowtopia1.com%20%3D%2091.134.85.13%0Agrowtopia2.com%20%3D%2091.134.85.13%0Awww.growtopia1.com%20%3D%2091.134.85.13%0Awww.growtopia2.com%20%3D%2091.134.85.13" download="Growfax_Surge5.txt" id="btn3">Download — iOS (Surge)</a>
+
+    <button class="btn btn-copy" onclick="copyText('powertunnel')" id="btn2">Copy — Powertunnel</button>
+    
+    <button class="btn btn-copy" onclick="copyText('surge')" id="btn3">Copy — iOS (Surge)</button>
+
     <a class="btn btn-download" href="Growfax_Windows.txt" download id="btn4">Download — Windows</a>
     <a class="btn btn-download" href="Growfax_Macos.txt" download id="btn5">Download — macOS</a>
 
@@ -172,6 +189,44 @@
   </div>
 
   <script>
+    // Data Konfigurasi yang akan disalin
+    const configData = {
+        powertunnel: `91.134.85.13 growtopia1.com
+91.134.85.13 growtopia2.com
+91.134.85.13 www.growtopia1.com
+91.134.85.13 www.growtopia2.com`,
+        surge: `[General]
+bypass-system = true
+
+[Rule]
+FINAL,DIRECT
+
+[Host]
+growtopia1.com = 91.134.85.13
+growtopia2.com = 91.134.85.13
+www.growtopia1.com = 91.134.85.13
+www.growtopia2.com = 91.134.85.13`
+    };
+
+    // Fungsi Copy Teks
+    function copyText(key) {
+        const textToCopy = configData[key];
+        const buttonId = (key === 'powertunnel' ? 'btn2' : 'btn3');
+        const originalText = document.getElementById(buttonId).innerText;
+        
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            // Beri umpan balik (feedback) visual bahwa teks berhasil disalin
+            document.getElementById(buttonId).innerText = '✅ Copied!';
+            setTimeout(() => {
+                document.getElementById(buttonId).innerText = originalText;
+            }, 2000);
+        }).catch(err => {
+            console.error('Gagal menyalin teks: ', err);
+            alert('Gagal menyalin teks. Silakan coba secara manual.');
+        });
+    }
+
+
     // Sydney Clock
     function updateClock() {
       const now = new Date();
@@ -195,11 +250,13 @@
       document.querySelector('.lang').innerText = isEnglish ? "🌍 Indonesia" : "🌍 English";
 
       document.getElementById('title').innerText = isEnglish ? "Growfax — Download Files" : "Growfax — Unduh File";
-      document.getElementById('desc').innerText = isEnglish ? "Choose the file you want to download." : "Pilih file yang ingin di-download.";
+      document.getElementById('desc').innerText = isEnglish ? "Choose the file you want to copy or download." : "Pilih file yang ingin disalin atau di-download.";
 
       document.getElementById('btn1').innerText = isEnglish ? "Download — Virtual Host" : "Unduh — Virtual Host";
-      document.getElementById('btn2').innerText = isEnglish ? "Download — Powertunnel" : "Unduh — Powertunnel";
-      document.getElementById('btn3').innerText = isEnglish ? "Download — iOS (Surge)" : "Unduh — iOS (Surge)";
+      // Update teks untuk tombol copy
+      document.getElementById('btn2').innerText = isEnglish ? "Copy — Powertunnel" : "Salin — Powertunnel";
+      document.getElementById('btn3').innerText = isEnglish ? "Copy — iOS (Surge)" : "Salin — iOS (Surge)";
+      
       document.getElementById('btn4').innerText = isEnglish ? "Download — Windows" : "Unduh — Windows";
       document.getElementById('btn5').innerText = isEnglish ? "Download — macOS" : "Unduh — macOS";
     }
