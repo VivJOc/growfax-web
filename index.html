@@ -51,39 +51,39 @@
             margin: 10px 0 20px 0; 
         }
         
-        /* STYLE LOGO SANGAT KECIL DAN PROFESIONAL */
+        /* STYLE LOGO SANGAT KECIL */
         .centered-logo {
-            height: **40px**; /* Dikecilkan dari 70px */
+            height: 40px; 
             width: auto;
             object-fit: contain;
-            margin: 5px auto 20px auto; /* Jarak dikurangi */
+            margin: 5px auto 20px auto; 
             display: block; 
         }
         
         h2 { font-size: 2.2em; color: var(--text-light); margin-bottom: 10px; margin-top: 40px; } 
-        .description { color: var(--text-muted); font-size: 1.1em; margin-bottom: 20px; } /* Jarak dikurangi */
+        .description { color: var(--text-muted); font-size: 1.1em; margin-bottom: 20px; } 
 
-        /* GRUP TOMBOL UTAMA (Kini 2 Kolom di PC untuk efisiensi) */
+        /* GRUP TOMBOL UTAMA (2 Kolom di PC) */
         .button-group {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Kembali ke 2 kolom di PC */
-            gap: 15px; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 10px; /* Jarak antar tombol dikurangi */
             padding: 0;
             margin-bottom: 30px; 
-            max-width: 500px; /* Batasi lebar total tombol di PC */
+            max-width: 500px; 
             margin-left: auto;
             margin-right: auto;
         }
         
-        /* Tombol Utama (SANGAT KECIL) */
+        /* Tombol Utama (PADDING dan BORDER SANGAT KECIL) */
         .action-button {
             display: flex; 
             flex-direction: row; 
             align-items: center; 
             justify-content: center; 
             text-decoration: none; 
-            padding: **8px 10px**; /* Padding sangat kecil */
-            border-radius: 8px; /* Sudut sedikit lebih tegas */
+            padding: **6px 10px**; /* Padding sangat minimal */
+            border-radius: **5px**; /* Sudut lebih kecil/tajam */
             transition: all 0.2s ease; 
             color: var(--text-light); 
             font-weight: 600; 
@@ -94,8 +94,8 @@
         }
 
         .action-button:hover { 
-            transform: translateY(-2px); /* Efek hover lebih halus */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Shadow lebih tipis */
+            transform: translateY(-1px); /* Efek hover lebih tipis */
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); /* Shadow sangat tipis */
         }
         
         /* Warna Tombol */
@@ -104,12 +104,12 @@
         .ios-button { background-color: #A2A2A2; } 
         .powertunnel-button { background-color: #E67E22; } 
 
-        /* Icon Tombol (SANGAT KECIL) */
+        /* Icon Tombol (SANGAT KECIL SEKALI) */
         .button-icon {
             display: flex; justify-content: center; align-items: center; 
-            width: **20px**; /* Sangat kecil */
-            height: **20px**; 
-            margin-right: 8px; 
+            width: **16px**; /* Dikecilkan lagi */
+            height: **16px**; 
+            margin-right: 6px; /* Jarak ikon-teks dikurangi */
             background: none; 
             border-radius: 0; 
             padding: 0; 
@@ -117,8 +117,9 @@
         
         .button-icon img { max-width: 100%; max-height: 100%; height: auto; width: auto; object-fit: contain; }
 
+        /* Teks Tombol (SANGAT KECIL SEKALI) */
         .button-text { 
-            font-size: **0.9em**; /* Font sangat kecil */
+            font-size: **0.8em**; /* Dikecilkan lagi */
             margin-top: 0; 
         }
         
@@ -152,7 +153,6 @@
             .header-content { padding: 0 15px; }
             .header h1 { font-size: 1.6em; }
 
-            /* LOGO HP SANGAT KECIL */
             .centered-logo { height: 30px; margin: 10px auto 15px auto; }
             
             h2 { font-size: 1.8em; margin-top: 25px; } 
@@ -160,15 +160,15 @@
 
             #sydney-time { font-size: 0.9em; margin: 10px 0 15px 0; }
             
-            /* Di HP, tetap 2 kolom, tapi dengan margin 100% */
+            /* Di HP, tetap 2 kolom */
             .button-group { 
                 grid-template-columns: repeat(2, 1fr); 
-                gap: 10px; 
+                gap: 8px; 
                 max-width: 100%;
             }
-            .action-button { padding: 8px 10px; }
-            .button-icon { width: 18px; height: 18px; }
-            .button-text { font-size: 0.8em; }
+            .action-button { padding: 6px 8px; }
+            .button-icon { width: **14px**; height: **14px**; } /* Icon HP super kecil */
+            .button-text { font-size: **0.75em**; } /* Teks HP super kecil */
             
             .footer { padding: 15px 0; }
             
