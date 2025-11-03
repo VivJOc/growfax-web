@@ -3,168 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Growfax | Download & Komunitas</title>
+    <title>Growfax Official Download Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Gaya Dasar & Reset */
+        /* Global Styles */
+        :root {
+            --primary-color: #4CAF50; /* Hijau yang lebih profesional */
+            --secondary-color: #388E3C;
+            --background-dark: #121212;
+            --surface-dark: #1e1e1e;
+            --text-light: #ffffff;
+            --text-muted: #b0b0b0;
+            --discord-color: #5865F2;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #1a1a2e; /* Latar belakang gelap */
-            color: #fff; /* Teks putih */
+            background-color: var(--background-dark);
+            color: var(--text-light);
             line-height: 1.6;
+            text-align: center;
         }
 
-        /* Kontainer Utama */
+        /* Header / Navigation Bar (Minimalis) */
+        .header {
+            background-color: var(--surface-dark);
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.8em;
+            color: var(--primary-color);
+        }
+
+        /* Container & Sections */
         .container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 20px;
-            background-color: #2c2c54; /* Kontainer agak gelap */
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px;
         }
 
-        /* Banner */
-        .banner {
+        .main-content {
+            padding-bottom: 60px;
+        }
+        
+        /* Google Translate Widget Styling */
+        #google_translate_element {
+            float: right;
+            padding-top: 10px;
+        }
+
+        /* Banner Section */
+        .banner-section {
+            background-color: var(--surface-dark);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .banner-section img {
             width: 100%;
             height: auto;
-            max-height: 350px;
+            max-height: 450px;
             object-fit: cover;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            display: block;
         }
 
-        /* Judul */
-        h1 {
-            color: #6a89cc; /* Warna judul yang menonjol */
-            margin-bottom: 5px;
-        }
-
+        /* Title & Description */
         h2 {
-            color: #b8e994; /* Warna subjudul */
-            margin-top: 30px;
-            margin-bottom: 25px;
+            font-size: 2.2em;
+            color: var(--text-light);
+            margin-bottom: 10px;
         }
 
-        /* Grup Tombol (Responsif) */
+        .description {
+            color: var(--text-muted);
+            font-size: 1.1em;
+            margin-bottom: 40px;
+        }
+
+        /* Button Group */
         .button-group {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 25px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
             padding: 10px;
         }
 
-        /* Gaya Tombol Umum */
+        /* Action Button Styles */
         .action-button {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-decoration: none;
-            padding: 15px;
-            border-radius: 12px;
-            transition: transform 0.3s, box-shadow 0.3s;
-            width: 250px; /* Lebar tetap untuk desktop */
-            min-width: 150px; /* Lebar minimum untuk mobile */
-            color: #fff;
-            font-weight: bold;
+            padding: 30px 20px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            color: var(--text-light);
+            font-weight: 600;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .action-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+            border-color: var(--primary-color);
         }
-
-        /* Gaya Tombol Khusus */
+        
+        /* Specific Button Colors */
         .windows-button {
-            background: linear-gradient(135deg, #1e90ff, #005ce6); /* Biru Windows */
+            background-color: #0078D4; /* Biru Windows */
         }
         .virtualhost-button {
-            background: linear-gradient(135deg, #ff6b6b, #ee5253); /* Merah/Oranye */
+            background-color: #F9A825; /* Kuning/Emas */
         }
         .discord-button {
-            background: linear-gradient(135deg, #7289da, #5865f2); /* Warna Discord */
+            background-color: var(--discord-color);
         }
 
-        /* Gaya Ikon */
+        /* Icon Styling */
         .button-icon {
-            width: 70px;
-            height: 70px;
-            margin-bottom: 10px;
+            width: 80px;
+            height: 80px;
+            margin-bottom: 15px;
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
-            padding: 5px;
+            padding: 10px;
             object-fit: cover;
         }
 
         .button-text {
-            font-size: 1.2em;
+            font-size: 1.4em;
             margin-top: 5px;
         }
 
         .small-text {
             font-size: 0.9em;
-            font-weight: normal;
-            opacity: 0.8;
+            font-weight: 400;
+            opacity: 0.7;
+            margin-top: 5px;
         }
 
-        /* Media Query untuk Responsif (Mobile) */
-        @media (max-width: 600px) {
-            .container {
-                margin: 20px 10px;
-                padding: 15px;
+        /* Footer */
+        .footer {
+            background-color: var(--surface-dark);
+            padding: 20px 0;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.9em;
+            color: var(--text-muted);
+        }
+        
+        .footer p {
+            margin: 5px 0;
+        }
+        
+        /* Responsiveness for Translate Widget */
+        @media (max-width: 768px) {
+            #google_translate_element {
+                float: none;
+                display: block;
+                text-align: center;
+                margin-bottom: 15px;
             }
-            .action-button {
-                width: 100%; /* Tombol penuh lebar di mobile */
-                max-width: 300px;
-            }
-            .button-group {
-                gap: 15px;
-            }
-            .button-icon {
-                width: 60px;
-                height: 60px;
+            .header {
+                text-align: center;
             }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>🚀 Growfax Official</h1>
-    <p>Pusat download resmi dan komunitas.</p>
+<div id="google_translate_element" style="padding-right: 20px;"></div>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'id', includedLanguages: 'id,en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+}
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-    <img src="Growfax_banner.jpg" alt="Growfax Banner" class="banner">
+<div class="header">
+    <div class="container">
+        <h1>GROWFAX</h1>
+    </div>
+</div>
 
-    <h2>Pilih Platform untuk Mulai Bermain:</h2>
+<div class="container main-content">
+    
+    <div class="banner-section">
+        <img src="Growfax_banner.jpg" alt="Growfax Official Banner">
+    </div>
+
+    <h2>GET STARTED. CHOOSE YOUR PLATFORM.</h2>
+    <p class="description">Download file yang diperlukan dan bergabunglah dengan komunitas resmi kami di Discord.</p>
 
     <div class="button-group">
 
         <a href="Growfax_Patched_.bat" download class="action-button windows-button">
             <img src="windows.png" alt="Windows Logo" class="button-icon">
             <span class="button-text">PLAY on Windows</span>
-            <span class="small-text">(File .bat)</span>
+            <span class="small-text">Download Installer (.BAT)</span>
         </a>
 
         <a href="Growfax_VirtualHost.txt" download class="action-button virtualhost-button">
             <img src="virtual-host.png" alt="Virtual Host Logo" class="button-icon">
             <span class="button-text">PLAY on Virtual Host</span>
-            <span class="small-text">(File .txt)</span>
+            <span class="small-text">Download Host Configuration (.TXT)</span>
         </a>
 
         <a href="https://discord.gg/smgS6sq83y" target="_blank" class="action-button discord-button">
             <img src="discord.jpeg" alt="Discord Logo" class="button-icon">
             <span class="button-text">JOIN DISCORD</span>
-            <span class="small-text">Gabung Komunitas Kami!</span>
+            <span class="small-text">Temui Komunitas Kami!</span>
         </a>
 
     </div>
 
-    <p style="margin-top: 40px; font-size: small; opacity: 0.7;">© 2023 Growfax. Pastikan semua file berada di direktori yang sama.</p>
+</div>
 
+<div class="footer">
+    <div class="container">
+        <p>GROWFAX OFFICIAL &copy; 2023–2024. All rights reserved.</p>
+        <p>Dikembangkan dengan semangat untuk komunitas.</p>
+    </div>
 </div>
 
 </body>
