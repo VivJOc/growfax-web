@@ -1,62 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Growfax Virtual Host Configuration</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-<style>
-  body {
-    background-color: #0e0e0e;
-    color: #ffffff;
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 40px;
-    line-height: 1.7;
-  }
-  .container {
-    max-width: 900px;
-    margin: auto;
-    background: #1a1a1a;
-    border-radius: 10px;
-    padding: 30px;
-    box-shadow: 0 6px 25px rgba(0,0,0,0.6);
-  }
-  h1 {
-    color: #4caf50;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  pre {
-    background-color: #111;
-    padding: 20px;
-    border-radius: 8px;
-    color: #00ff9d;
-    font-size: 0.95em;
-    overflow-x: auto;
-  }
-  a.back {
-    display: inline-block;
-    margin-top: 25px;
-    text-decoration: none;
-    color: #4caf50;
-    font-weight: 600;
-    transition: 0.3s;
-  }
-  a.back:hover { color: #66bb6a; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-en="Growfax Official Download Center" data-id="Pusat Unduhan Resmi Growfax">
+    Growfax Official Download Center
+  </title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #4caf50;
+      --primary-hover: #66bb6a;
+      --accent: #00e676;
+      --background: #0e0e0e;
+      --surface: #1a1a1a;
+      --text: #ffffff;
+      --text-muted: #aaaaaa;
+      --discord: #5865f2;
+    }
+
+    * { box-sizing: border-box; transition: all 0.25s ease; }
+
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background-color: var(--background);
+      color: var(--text);
+      text-align: center;
+    }
+
+    .header {
+      background-color: var(--surface);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+      padding: 18px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: auto;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header h1 { margin: 0; font-size: 1.8em; color: var(--primary); font-weight: 700; letter-spacing: 1px; }
+
+    .language-switcher { display: flex; gap: 8px; }
+
+    .lang-button {
+      background: none;
+      border: 1px solid var(--text-muted);
+      color: var(--text);
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9em;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .lang-button.active, .lang-button:hover {
+      background-color: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    .banner-section {
+      max-width: 1200px;
+      margin: 40px auto;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    .banner-section img {
+      width: 100%;
+      height: auto;
+      max-height: 220px;
+      object-fit: cover;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 0 20px;
+    }
+
+    h2 { font-size: 2.3em; font-weight: 700; margin-bottom: 15px; }
+    .description { color: var(--text-muted); font-size: 1.1em; margin-bottom: 50px; }
+
+    .button-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin-bottom: 40px;
+    }
+
+    .action-button {
+      background-color: var(--surface);
+      padding: 18px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .action-button:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+      border-color: var(--primary-hover);
+    }
+
+    .button-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 10px;
+      background-color: rgba(255, 255, 255, 0.05);
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .button-icon img { width: 65%; height: 65%; object-fit: contain; }
+
+    .button-text { font-size: 1.1em; font-weight: 600; margin-top: 8px; }
+
+    .small-text { font-size: 0.85em; color: var(--text-muted); margin-top: 5px; }
+
+    .windows-button { background: linear-gradient(145deg, #0078d4, #0060a9); }
+    .virtualhost-button { background: linear-gradient(145deg, #f9a825, #c49000); }
+
+    .footer {
+      background-color: var(--surface);
+      padding: 25px 0;
+      font-size: 0.9em;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      margin-top: 70px;
+    }
+
+    .footer p { margin: 6px 0; }
+
+    .floating-discord-button {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 60px;
+      height: 60px;
+      background-color: var(--discord);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .floating-discord-button:hover { transform: scale(1.1); }
+    .floating-discord-button img { width: 65%; height: 65%; filter: invert(100%); }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Growfax Virtual Host Configuration</h1>
-    <p>Below is the configuration required for Virtual Host setup. Copy and paste this into your host file or configuration tool:</p>
-    <pre>
-# Growfax Virtual Host Configuration
-127.0.0.1 growfax.local
-127.0.0.1 api.growfax.local
-# Ensure your server proxy is active for these domains
-    </pre>
-    <a href="index.html" class="back">← Back to Main Page</a>
-  </div>
+  <header class="header">
+    <div class="header-content">
+      <h1>GROWFAX</h1>
+      <div class="language-switcher">
+        <a href="javascript:void(0)" class="lang-button" id="lang-id" onclick="changeLanguage('id')">🇮🇩 ID</a>
+        <a href="javascript:void(0)" class="lang-button active" id="lang-en" onclick="changeLanguage('en')">🇺🇸 EN</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="banner-section">
+    <img src="Growfax_banner.jpg" alt="Growfax Official Banner" />
+  </section>
+
+  <main class="container">
+    <h2 data-en="GET STARTED. SELECT YOUR PLATFORM." data-id="MULAI. PILIH PLATFORM ANDA.">
+      GET STARTED. SELECT YOUR PLATFORM.
+    </h2>
+    <p class="description" data-en="Download the required assets and join our official community on Discord." data-id="Unduh aset yang dibutuhkan dan bergabunglah dengan komunitas resmi kami.">
+      Download the required assets and join our official community on Discord.
+    </p>
+
+    <div class="button-group">
+      <a href="Growfax_Patched_.bat" download class="action-button windows-button">
+        <div class="button-icon"><img src="windows.png" alt="Windows Logo" /></div>
+        <span class="button-text" data-en="DOWNLOAD for Windows" data-id="UNDUH untuk Windows">DOWNLOAD for Windows</span>
+        <span class="small-text" data-en="Secure Installer (.BAT)" data-id="Pemasang Aman (.BAT)">Secure Installer (.BAT)</span>
+      </a>
+
+      <a href="virtualhost.html" class="action-button virtualhost-button">
+        <div class="button-icon"><img src="virtual-host.png" alt="Virtual Host Logo" /></div>
+        <span class="button-text" data-en="HOSTING via Virtual Host" data-id="HOSTING melalui Virtual Host">HOSTING via Virtual Host</span>
+        <span class="small-text" data-en="Open Configuration Page" data-id="Buka Halaman Konfigurasi">Open Configuration Page</span>
+      </a>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>GROWFAX OFFICIAL © 2023–2024. All rights reserved.</p>
+    <p>Developed with spirit for the community.</p>
+  </footer>
+
+  <a href="https://discord.gg/smgS6sq83y" target="_blank" class="floating-discord-button" title="Join Discord Community">
+    <img src="discord.jpeg" alt="Discord Icon" />
+  </a>
+
+  <script>
+    const languageElements = document.querySelectorAll("[data-en]");
+    const langButtons = document.querySelectorAll(".lang-button");
+
+    function changeLanguage(lang) {
+      languageElements.forEach((el) => {
+        const text = el.getAttribute(`data-${lang}`);
+        if (text) {
+          if (el.tagName === "TITLE") document.title = text;
+          else el.textContent = text;
+        }
+      });
+      document.documentElement.lang = lang;
+      updateActiveButton(lang);
+    }
+
+    function updateActiveButton(lang) {
+      langButtons.forEach((b) => b.classList.remove("active"));
+      document.getElementById(`lang-${lang}`).classList.add("active");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => changeLanguage("en"));
+  </script>
 </body>
 </html>
