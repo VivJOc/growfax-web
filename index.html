@@ -27,7 +27,7 @@
             text-align: center;
         }
 
-        /* ... (Gaya Header dan Language Switcher sama) ... */
+        /* ... (Gaya Header, Banner, dan Tombol Utama tetap sama) ... */
         .header { background-color: var(--surface-dark); padding: 15px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
         .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: auto; padding: 0 20px; }
         .header h1 { margin: 0; font-size: 1.8em; color: var(--primary-color); }
@@ -36,7 +36,6 @@
         .lang-button:hover { background-color: rgba(255, 255, 255, 0.1); border-color: var(--primary-color); }
         .lang-button.active { background-color: var(--primary-color); border-color: var(--primary-color); }
         
-        /* Kontainer dan Banner */
         .container { max-width: 1200px; margin: auto; padding: 0 20px; }
         .main-content { padding-bottom: 60px; }
         .banner-section { background-color: var(--surface-dark); border-radius: 12px; overflow: hidden; margin-bottom: 40px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); }
@@ -54,70 +53,28 @@
         }
         
         @media (max-width: 600px) {
-            .button-group {
-                grid-template-columns: 1fr;
-            }
+            .button-group { grid-template-columns: 1fr; }
         }
         
-        /* Tombol Utama */
         .action-button {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            padding: 20px 15px; 
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            color: var(--text-light);
-            font-weight: 600;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            width: auto; 
-            max-width: 100%; 
+            display: flex; flex-direction: column; align-items: center; text-decoration: none; padding: 20px 15px; border-radius: 10px; transition: all 0.3s ease; color: var(--text-light); font-weight: 600; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.1); width: auto; max-width: 100%; 
         }
 
-        .action-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-            border-color: var(--primary-color);
-        }
+        .action-button:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); border-color: var(--primary-color); }
         
         .windows-button { background-color: #0078D4; }
         .virtualhost-button { background-color: #F9A825; }
 
-        /* Struktur Ikon Utama */
         .button-icon {
-            display: flex; 
-            justify-content: center;
-            align-items: center;
-            width: 60px; 
-            height: 60px;
-            margin-bottom: 10px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 5px; 
-            padding: 0; 
+            display: flex; justify-content: center; align-items: center; width: 60px; height: 60px; margin-bottom: 10px; background-color: rgba(255, 255, 255, 0.1); border-radius: 5px; padding: 0; 
         }
         
         .button-icon img {
-            max-width: 90%; 
-            max-height: 90%;
-            height: auto; 
-            width: auto;
-            object-fit: contain;
+            max-width: 90%; max-height: 90%; height: auto; width: auto; object-fit: contain;
         }
 
-
-        .button-text {
-            font-size: 1.2em;
-            margin-top: 5px;
-        }
-
-        .small-text {
-            font-size: 0.85em;
-            font-weight: 400;
-            opacity: 0.7;
-            margin-top: 5px;
-        }
+        .button-text { font-size: 1.2em; margin-top: 5px; }
+        .small-text { font-size: 0.85em; font-weight: 400; opacity: 0.7; margin-top: 5px; }
 
         .footer {
             background-color: var(--surface-dark);
@@ -130,14 +87,13 @@
         
         .footer p { margin: 5px 0; }
 
-        /* ========= FLOATING DISCORD BUTTON STYLES PERBAIKAN ========= */
+        /* ========= FLOATING DISCORD BUTTON STYLES PERBAIKAN AKHIR ========= */
         .floating-discord-button {
             position: fixed;
             bottom: 25px; 
             right: 25px;  
             z-index: 1000; 
             
-            /* Gaya tombol ringkas */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -149,6 +105,8 @@
             transition: all 0.3s ease;
             text-decoration: none;
             cursor: pointer;
+            /* PENTING: Menambahkan Border Transparan agar Ikon Tidak menyentuh Tepi */
+            padding: 5px; 
         }
 
         .floating-discord-button:hover {
@@ -158,13 +116,15 @@
         
         /* Ikon Discord di dalam tombol mengambang */
         .floating-discord-button img {
-            width: 80%; /* Dibuat 80% dari container (48px), lebih besar dan proporsional */
-            height: auto; /* Mempertahankan rasio aspek */
-            max-height: 80%;
-            /* PENTING: MENGHILANGKAN FILTER YANG MENYEBABKAN BUG */
-            filter: none; 
-            /* Memberikan object-fit contain untuk memastikan logo tidak terpotong */
+            /* Ukuran ikon diatur relatif terhadap container floating-discord-button */
+            width: 100%; 
+            height: 100%;
             object-fit: contain;
+            
+            /* PENTING: Menerapkan Filter Invert lagi untuk mengubah logo menjadi putih, 
+               tetapi sekarang sudah ada padding (dari properti padding di atas) 
+               untuk memisahkan gambar kotak dari tepi lingkaran. */
+            filter: invert(100%); 
         }
         
     </style>
@@ -207,7 +167,7 @@
 
     </div>
     
-    </div>
+</div>
 
 <div class="footer">
     <div class="container">
