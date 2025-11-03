@@ -12,7 +12,7 @@
       --btn-bg: linear-gradient(90deg, #2563eb, #06b6d4);
       --btn-text: #fff;
       --card-bg: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-      --glow-color: #0ea5e9; /* Warna biru untuk glow */
+      --glow-color: #0ea5e9;
     }
 
     body.light {
@@ -22,7 +22,7 @@
       --btn-bg: linear-gradient(90deg, #0ea5e9, #2563eb);
       --btn-text: #fff;
       --card-bg: #fff;
-      --glow-color: #2563eb; /* Warna biru yang sedikit berbeda untuk light mode */
+      --glow-color: #2563eb;
     }
 
     body {
@@ -66,23 +66,16 @@
       border-radius: 10px;
       margin-bottom: 16px;
       object-fit: contain;
-      /* Efek Glow & Animasi Bergerak */
-      box-shadow: 0 0 0px var(--glow-color); /* Initial state: no glow */
-      animation: floatAndGlow 3s ease-in-out infinite; /* Animasi float */
-      transition: box-shadow 0.3s ease-out; /* Transisi untuk glow */
+      box-shadow: 0 0 0px var(--glow-color);
+      animation: floatAndGlow 3s ease-in-out infinite;
+      transition: box-shadow 0.3s ease-out;
     }
 
-    /* Animasi untuk efek bergerak dan glow */
     @keyframes floatAndGlow {
         0% { transform: translateY(0px); box-shadow: 0 0 5px var(--glow-color); }
         50% { transform: translateY(-5px); box-shadow: 0 0 15px var(--glow-color); }
         100% { transform: translateY(0px); box-shadow: 0 0 5px var(--glow-color); }
     }
-
-    /* Opsi: Glow hanya saat hover jika tidak ingin selalu aktif */
-    /* .banner:hover {
-        box-shadow: 0 0 15px var(--glow-color); 
-    } */
 
     .btn {
       display: block;
@@ -161,7 +154,6 @@
       color: var(--subtext);
     }
 
-    /* Responsive tweaks */
     @media (max-width: 480px) {
       .card {
         padding: 20px 16px;
@@ -204,7 +196,6 @@
   </div>
 
   <script>
-    // Data Konfigurasi yang akan disalin
     const configData = {
         powertunnel: `91.134.85.13 growtopia1.com
 91.134.85.13 growtopia2.com
@@ -223,7 +214,6 @@ www.growtopia1.com = 91.134.85.13
 www.growtopia2.com = 91.134.85.13`
     };
 
-    // Fungsi Copy Teks
     function copyText(key, buttonElement) {
         const textToCopy = configData[key];
         const originalText = buttonElement.innerText;
@@ -231,7 +221,7 @@ www.growtopia2.com = 91.134.85.13`
         navigator.clipboard.writeText(textToCopy).then(() => {
             buttonElement.innerText = '✅ Copied!';
             setTimeout(() => {
-                toggleLang(false); // Pulihkan teks asli, pastikan teks asli juga diterjemahkan
+                toggleLang(false);
             }, 2000);
         }).catch(err => {
             console.error('Gagal menyalin teks: ', err);
@@ -239,7 +229,6 @@ www.growtopia2.com = 91.134.85.13`
         });
     }
 
-    // Sydney Clock
     function updateClock() {
       const now = new Date();
       const sydneyTime = new Date(now.toLocaleString('en-US', { timeZone: 'Australia/Sydney' }));
@@ -249,12 +238,10 @@ www.growtopia2.com = 91.134.85.13`
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Theme Toggle
     function toggleTheme() {
       document.body.classList.toggle('light');
     }
 
-    // Translation
     let lang = 'id';
     function toggleLang(shouldToggle = true) {
       if (shouldToggle) {
