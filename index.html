@@ -456,7 +456,7 @@
   }
   /* NEW: CAD Button */
   .btn-cad {
-      background: #e74c3c; /* Red for CAD */
+      background: #e74c4c; /* Red for CAD */
   }
   .btn-cad:hover {
       background: #c0392b;
@@ -721,11 +721,11 @@
             <img src="windows.png" alt="">Play on Windows
           </a>
 
-          <a href="#" class="btn-ios" data-filename="GrowFax_ios_config.txt" data-filekey="ios" role="listitem">
+          <a href="GrowFax_ios_config.txt" class="btn-ios" data-filename="GrowFax_ios_config.txt" data-filekey="ios" download role="listitem">
             <img src="surge5.png" alt="">Play on iOS
           </a>
 
-          <a href="#" class="btn-powertunnel" data-filename="PowerTunnel_Host.txt" data-filekey="powertunnel" role="listitem">
+          <a href="PowerTunnel_Host.txt" class="btn-powertunnel" data-filename="PowerTunnel_Host.txt" data-filekey="powertunnel" download role="listitem">
             <img src="powertunnel.jpeg" alt="">Play via PowerTunnel
           </a>
         </div>
@@ -891,7 +891,7 @@
                 <p>Status: <strong id="serverStatusDisplay" style="color: var(--success);">Online</strong></p>
                 <button class="btn danger" id="toggleServerStatus" data-original="Toggle Status (Simulate)">Toggle Status (Simulate)</button>
             </div>
-            <div style="margin-top: 20px; padding: 15px; border-radius: 8px; background: var(--glass); border: 1px solid var(--border-color);">
+            <div style="margin-top: 20px; padding: 15px; border-radius: 8px; background: var(--glass); border: 1क्षक solid var(--border-color);">
                 <h4 id="analyticsTitle" style="margin: 0 0 10px; color: var(--accent);" data-original="Analytical Dashboard">Analytical Dashboard</h4>
                 <p style="margin: 5px 0 10px;">
                     <span data-original="Total Downloads:">Total Downloads:</span> <strong id="totalDownloadsDisplay">0</strong>
@@ -1022,9 +1022,8 @@ const shopSection = document.getElementById('shop');
 const newsSection = document.getElementById('news');
 const sections = document.querySelectorAll('.content-section');
 const navLinks = document.querySelectorAll('nav.primary a');
-const downloadButtons = document.querySelectorAll('.platform-buttons a:not(.btn-ios):not(.btn-powertunnel)');
-const iosButton = document.querySelector('.btn-ios');
-const powertunnelButton = document.querySelector('.btn-powertunnel');
+// UPDATED: downloadButtons now includes ALL platform links
+const downloadButtons = document.querySelectorAll('.platform-buttons a'); 
 const modalBackdrop = document.getElementById('downloadModalBackdrop');
 const modalFilename = document.getElementById('modalFilename');
 const modalVersion = document.getElementById('modalVersion');
@@ -1115,32 +1114,21 @@ const FILE_META = {
         version: "v4.2.1",
         updated: "2025-10-31",
         changelog: "Improved launch efficiency.",
-        copytext: "This file is a .BAT executable and cannot be copied as plain text."
+        downloadUrl: "Growfax_Patched_.bat" // Ensure downloadUrl is set for standard download
     },
+    // UPDATED: Removed copytext and added downloadUrl
     ios: {
         version: "v1.1.0",
         updated: "2025-10-25",
-        changelog: "Added support for Surge 5. Updated IP to 91.134.85.13.",
-        copytext: `[General]
-bypass-system = true
-
-[Rule]
-FINAL,DIRECT
-
-[Host]
-growtopia1.com = 91.134.85.13
-growtopia2.com = 91.134.85.13
-www.growtopia1.com = 91.134.85.13
-www.growtopia2.com = 91.134.85.13`
+        changelog: "Added support for Surge 5. Updated IP ke 91.134.85.13.",
+        downloadUrl: "GrowFax_ios_config.txt"
     },
+    // UPDATED: Removed copytext and added downloadUrl
     powertunnel: {
         version: "v2.0.0",
         updated: "2025-10-25",
-        changelog: "Optimized for PowerTunnel v2. Updated IP to 91.134.85.13.",
-        copytext: `91.134.85.13 growtopia1.com
-91.134.85.13 growtopia2.com
-91.134.85.13 www.growtopia1.com
-91.134.85.13 www.growtopia2.com`
+        changelog: "Optimized for PowerTunnel v2. Updated IP ke 91.134.85.13.",
+        downloadUrl: "PowerTunnel_Host.txt"
     }
 };
 
@@ -1787,8 +1775,8 @@ langSelect.addEventListener('change', (e) => {
     updateTime();
 });
 
-/* =========================== Download/Modal Logic =========================== */
-// Handle download button clicks
+/* =========================== Download/Modal Logic (COMBINED HANDLER) =========================== */
+// Handle download button clicks (Now handles all 4 buttons)
 downloadButtons.forEach(button => {
     button.addEventListener('click', (e) => {
         e.preventDefault();
@@ -1798,7 +1786,7 @@ downloadButtons.forEach(button => {
         const lang = langSelect.value;
 
         // Check if file metadata exists for modal info
-        if (!meta) {
+        if (!meta || !meta.downloadUrl) {
             showToast(lang === 'id' ? (translations.id['Download failed: file not found.'] || 'Unduhan gagal: berkas tidak ditemukan.') : 'Download failed: file not found.', 3000);
             return;
         }
@@ -1809,72 +1797,21 @@ downloadButtons.forEach(button => {
         modalUpdated.textContent = meta.updated;
         modalChangelog.textContent = meta.changelog;
 
-        // Hide copy block for standard downloads
+        // Hide copy block and show download button for ALL downloads now
         modalCopyBlock.style.display = 'none';
+        modalConfirm.style.display = 'inline-block';
 
         // Set download link
         modalConfirm.setAttribute('href', meta.downloadUrl);
         modalConfirm.onclick = () => {
             incrementDownload(filekey);
             showToast((translations[lang] && translations[lang]['Download initiated: '] || 'Download initiated: ') + filename, 2000);
+            // Optionally close the modal after a short delay for UX
             setTimeout(() => {
                 modalBackdrop.style.display = 'none';
                 modalBackdrop.setAttribute('aria-hidden', 'true');
             }, 500);
             return true; // Proceed with download
-        };
-
-        // Show modal
-        modalBackdrop.style.display = 'flex';
-        modalBackdrop.setAttribute('aria-hidden', 'false');
-    });
-});
-
-// Handle iOS/PowerTunnel button clicks (Copy Config)
-[iosButton, powertunnelButton].forEach(button => {
-    button.addEventListener('click', (e) => {
-        e.preventDefault();
-        const filename = button.getAttribute('data-filename');
-        const filekey = button.getAttribute('data-filekey');
-        const meta = FILE_META[filekey];
-        const lang = langSelect.value;
-        const t = translations[lang] || translations.en;
-
-        if (!meta || !meta.copytext) {
-            showToast(t['Download failed: file not found.'] || 'Download failed: file not found.', 3000);
-            return;
-        }
-
-        // Populate modal with file info
-        modalFilename.textContent = (t['Filename'] || 'Filename') + ': ' + filename;
-        modalVersion.textContent = meta.version;
-        modalUpdated.textContent = meta.updated;
-        modalChangelog.textContent = meta.changelog;
-        modalCopyText.value = meta.copytext;
-
-        // Show copy block
-        modalCopyBlock.style.display = 'block';
-
-        // Hide/disable download link (since this is a copy)
-        modalConfirm.style.display = 'none'; // Hide download button
-        modalConfirm.onclick = () => { return false; };
-
-        // Set up the dedicated copy button inside the modal
-        copyConfigButton.onclick = () => {
-             // Logic to copy config text
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(meta.copytext).then(() => {
-                    showToast(t['Config copied!'] || 'Config copied!', 2500);
-                }).catch(err => {
-                    console.error('Could not copy text: ', err);
-                    showToast(t['Failed to copy. Please copy manually from the modal.'] || 'Failed to copy. Please copy manually from the modal.', 3000);
-                });
-            } else {
-                // Fallback for older browsers
-                modalCopyText.select();
-                document.execCommand('copy');
-                showToast(t['Config copied!'] || 'Config copied!', 2500);
-            }
         };
 
         // Show modal
