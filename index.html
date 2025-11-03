@@ -27,7 +27,7 @@
             text-align: center;
         }
 
-        /* ... (Header dan Language Switcher styles sama) ... */
+        /* ... (Gaya Header dan Language Switcher sama) ... */
         .header { background-color: var(--surface-dark); padding: 15px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
         .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: auto; padding: 0 20px; }
         .header h1 { margin: 0; font-size: 1.8em; color: var(--primary-color); }
@@ -59,7 +59,7 @@
             }
         }
         
-        /* Tombol yang Lebih Kecil/Profesional */
+        /* Tombol Utama */
         .action-button {
             display: flex;
             flex-direction: column;
@@ -72,12 +72,9 @@
             font-weight: 600;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            /* Pastikan tombol tidak terpengaruh oleh layout floating baru */
             width: auto; 
             max-width: 100%; 
         }
-        /* Hapus .discord-button-container karena tidak digunakan lagi untuk layout di tengah */
-
 
         .action-button:hover {
             transform: translateY(-5px);
@@ -87,9 +84,8 @@
         
         .windows-button { background-color: #0078D4; }
         .virtualhost-button { background-color: #F9A825; }
-        /* Discord Button akan diatur terpisah di bawah */
 
-        /* Struktur Ikon */
+        /* Struktur Ikon Utama */
         .button-icon {
             display: flex; 
             justify-content: center;
@@ -134,22 +130,21 @@
         
         .footer p { margin: 5px 0; }
 
-        /* ========= FLOATING DISCORD BUTTON STYLES ========= */
+        /* ========= FLOATING DISCORD BUTTON STYLES PERBAIKAN ========= */
         .floating-discord-button {
-            /* Posisi Fix, mengambang di layar */
             position: fixed;
-            bottom: 25px; /* Jarak dari bawah */
-            right: 25px;  /* Jarak dari kanan */
-            z-index: 1000; /* Pastikan tombol di atas elemen lain */
+            bottom: 25px; 
+            right: 25px;  
+            z-index: 1000; 
             
-            /* Gaya tombol yang sangat ringkas */
+            /* Gaya tombol ringkas */
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 60px; /* Ukuran ringkas */
+            width: 60px; 
             height: 60px;
             background-color: var(--discord-color);
-            border-radius: 50%; /* Dibuat bulat penuh */
+            border-radius: 50%; 
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
             transition: all 0.3s ease;
             text-decoration: none;
@@ -157,19 +152,20 @@
         }
 
         .floating-discord-button:hover {
-            transform: scale(1.1); /* Efek membesar saat hover */
+            transform: scale(1.1); 
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.7);
         }
         
         /* Ikon Discord di dalam tombol mengambang */
         .floating-discord-button img {
-            width: 30px; /* Ikon kecil di tengah lingkaran */
-            height: 30px;
-            filter: brightness(0) invert(1); /* Jika menggunakan logo berwarna, ini membuatnya putih */
+            width: 80%; /* Dibuat 80% dari container (48px), lebih besar dan proporsional */
+            height: auto; /* Mempertahankan rasio aspek */
+            max-height: 80%;
+            /* PENTING: MENGHILANGKAN FILTER YANG MENYEBABKAN BUG */
+            filter: none; 
+            /* Memberikan object-fit contain untuk memastikan logo tidak terpotong */
+            object-fit: contain;
         }
-        
-        /* Opsional: Teks saat hover (Hanya bisa dilakukan dengan sedikit Javascript atau CSS yang lebih kompleks, 
-           tapi untuk keprofesionalan, ikon bulat saja sudah cukup) */
         
     </style>
 </head>
