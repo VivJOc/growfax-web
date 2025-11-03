@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Growfax Downloads</title>
+  <style>
+    :root {
+      --bg: #0f1720;
+      --text: #e6eef8;
+      --subtext: #9fb3d8;
+      --btn-bg: linear-gradient(90deg, #2563eb, #06b6d4);
+      --btn-text: #fff;
+      --card-bg: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    }
+
+    body.light {
+      --bg: #f5f7fa;
+      --text: #0f1720;
+      --subtext: #42546e;
+      --btn-bg: linear-gradient(90deg, #0ea5e9, #2563eb);
+      --btn-text: #fff;
+      --card-bg: #fff;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      transition: background 0.3s, color 0.3s;
+      padding: 16px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      padding: 24px 20px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 6px 24px rgba(2,6,23,0.6);
+      text-align: center;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    h1 {
+      margin: 10px 0 8px 0;
+      font-size: clamp(20px, 4vw, 24px);
+    }
+
+    p {
+      margin: 0 0 18px 0;
+      color: var(--subtext);
+      font-size: clamp(12px, 2vw, 14px);
+    }
+
+    .banner {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      object-fit: contain;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 12px 14px;
+      margin: 8px 0;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      border: 0;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: clamp(13px, 3vw, 15px);
+    }
+
+    .btn-download {
+      background: var(--btn-bg);
+      color: var(--btn-text);
+    }
+
+    .btn-download:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .toggle, .lang {
+      background: none;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--subtext);
+      border-radius: 6px;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: clamp(12px, 2.5vw, 14px);
+      transition: 0.2s;
+      flex: 1;
+      min-width: 120px;
+    }
+
+    body.light .toggle, body.light .lang {
+      border-color: #ccc;
+      color: #444;
+    }
+
+    .toggle:hover, .lang:hover {
+      opacity: 0.8;
+    }
+
+    #clock {
+      font-size: clamp(12px, 2.5vw, 14px);
+      color: var(--subtext);
+      margin-bottom: 10px;
+    }
+
+    footer {
+      margin-top: 16px;
+      font-size: 12px;
+      color: var(--subtext);
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 480px) {
+      .card {
+        padding: 20px 16px;
+      }
+      .controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .toggle, .lang {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="controls">
+      <button class="toggle" onclick="toggleTheme()">🌗 Theme</button>
+      <button class="lang" onclick="toggleLang()">🌍 English</button>
+    </div>
+
+    <!-- Banner -->
+    <img src="gg.png" alt="Growfax Banner" class="banner">
+
+    <h1 id="title">Growfax — Download Files</h1>
+    <p id="desc">Pilih file yang ingin di-download.</p>
+
+    <div id="clock">Sydney Time: --:--:--</div>
+
+    <a class="btn btn-download" href="Growfax_Vhost.txt" download id="btn1">Download — Virtual Host</a>
+    <a class="btn btn-download" href="Growfax_Ptunnel.txt" download id="btn2">Download — Powertunnel</a>
+    <a class="btn btn-download" href="Growfax_Surge5.txt" download id="btn3">Download — iOS (Surge)</a>
+    <a class="btn btn-download" href="Growfax_Windows.txt" download id="btn4">Download — Windows</a>
+    <a class="btn btn-download" href="Growfax_Macos.txt" download id="btn5">Download — macOS</a>
+
+    <footer>© 2025 Growfax</footer>
+  </div>
+
+  <script>
+    // Sydney Clock
+    function updateClock() {
+      const now = new Date();
+      const sydneyTime = new Date(now.toLocaleString('en-US', { timeZone: 'Australia/Sydney' }));
+      const timeStr = sydneyTime.toLocaleTimeString('en-GB');
+      document.getElementById('clock').innerText = "Sydney Time: " + timeStr;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Theme Toggle
+    function toggleTheme() {
+      document.body.classList.toggle('light');
+    }
+
+    // Translation
+    let lang = 'id';
+    function toggleLang() {
+      lang = (lang === 'id') ? 'en' : 'id';
+      const isEnglish = lang === 'en';
+      document.querySelector('.lang').innerText = isEnglish ? "🌍 Indonesia" : "🌍 English";
+
+      document.getElementById('title').innerText = isEnglish ? "Growfax — Download Files" : "Growfax — Unduh File";
+      document.getElementById('desc').innerText = isEnglish ? "Choose the file you want to download." : "Pilih file yang ingin di-download.";
+
+      document.getElementById('btn1').innerText = isEnglish ? "Download — Virtual Host" : "Unduh — Virtual Host";
+      document.getElementById('btn2').innerText = isEnglish ? "Download — Powertunnel" : "Unduh — Powertunnel";
+      document.getElementById('btn3').innerText = isEnglish ? "Download — iOS (Surge)" : "Unduh — iOS (Surge)";
+      document.getElementById('btn4').innerText = isEnglish ? "Download — Windows" : "Unduh — Windows";
+      document.getElementById('btn5').innerText = isEnglish ? "Download — macOS" : "Unduh — macOS";
+    }
+  </script>
+</body>
+</html>
