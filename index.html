@@ -110,14 +110,16 @@
 
   /* Logo tengah sekarang lebih besar dan jelas */
   .centered-logo {
-    width: 120px; /* Diperbesar dari 90px */
-    height: 120px;
+    width: 120px; /* Diperbesar */
+    height: 120px; /* Menjamin bentuk kotak */
     border-radius: 12px;
     object-fit: cover;
     margin-bottom: 18px;
     opacity: 0;
     transform: translateY(8px);
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    /* Border merah untuk debugging jika gambar tidak ditemukan */
+    border: 3px solid transparent; 
   }
 
   /* Tombol download responsif */
@@ -366,6 +368,7 @@
   <section class="hero">
     <h2 class="reveal" data-en="Get Started — Choose Your Platform" data-id="Mulai — Pilih Platform Anda"><span class="translatable">Get Started — Choose Your Platform</span></h2>
     <p class="reveal" data-en="Download the required assets and join our official community." data-id="Unduh aset yang dibutuhkan dan bergabunglah dengan komunitas kami."><span class="translatable">Download the required assets and join our official community.</span></p>
+    
     <img src="Growfax_banner.jpg" class="centered-logo reveal" alt="Growfax Logo Utama">
   </section>
 
