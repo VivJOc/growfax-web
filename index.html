@@ -99,6 +99,16 @@
     .btn-download:hover { opacity: 0.9; transform: scale(1.01); }
     .btn-download:active { opacity: 0.8; transform: scale(0.99); }
 
+    select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(0,0,0,0.1);
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
     .controls {
       display: flex;
       justify-content: space-between;
@@ -135,17 +145,24 @@
     }
 
     .paypal-box {
-      opacity: 0.4;
-      pointer-events: none;
-      border-radius: 10px;
+      display: none;
+      margin-top: 10px;
       background: rgba(255,255,255,0.05);
+      border-radius: 10px;
       padding: 10px;
-      transition: opacity 0.3s;
     }
-    .paypal-box.active { opacity: 1; pointer-events: auto; }
+
+    .paypal-box.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
 
     #clock { font-size: clamp(12px, 2.5vw, 14px); color: var(--subtext); }
-
     footer { margin-top: 16px; font-size: 12px; color: var(--subtext); }
 
     @media (max-width: 480px) {
@@ -154,7 +171,10 @@
     }
   </style>
 
-  <script src="https://www.paypal.com/sdk/js?client-id=AWomsHIdagP1tiIig6-Q5hOeENO3lhpbCO20tPsBa3CmUx77koWkm6oA1qZCklI7F7PsTa4joZruigyM&components=hosted-buttons&currency=USD"></script>
+  <!-- PayPal Smart Buttons -->
+  <script src="https://www.paypal.com/sdk/js?client-id=AWomsHIdagP1tiIig6-Q5hOeENO3lhpbCO20tPsBa3CmUx77koWkm6oA1qZCklI7F7PsTa4joZruigyM&currency=USD"></script>
+
+  <!-- EmailJS -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
@@ -180,12 +200,18 @@
     <input id="growid" type="text" placeholder="Enter your GrowID before purchasing">
     <input id="buyerEmail" type="email" placeholder="Enter your Email before purchasing">
 
-    <div class="paypal-box"><div id="paypal-container-FF8XAQ7BZ43JJ"></div></div>
-    <div class="paypal-box"><div id="paypal-container-ETYPYS2JQCWDC"></div></div>
-    <div class="paypal-box"><div id="paypal-container-RH289YEZ89TVU"></div></div>
-    <div class="paypal-box"><div id="paypal-container-DH5RHN2XEH9ME"></div></div>
-    <div class="paypal-box"><div id="paypal-container-YA2NYCXBWAREG"></div></div>
-    <div class="paypal-box"><div id="paypal-container-UVRXXDZF7T2KY"></div></div>
+    <select id="roleSelect">
+      <option value="">Select Role</option>
+      <option value="Moderator" data-price="3.29">Moderator — $3.29</option>
+      <option value="Super Moderator" data-price="5.39">Super Moderator — $5.39</option>
+      <option value="Developer" data-price="8.68">Developer — $8.68</option>
+      <option value="God" data-price="11.86">God — $11.86</option>
+      <option value="God Max" data-price="27.55">God Max — $27.55</option>
+    </select>
+
+    <div class="paypal-box" id="paypal-box">
+      <div id="paypal-button-container"></div>
+    </div>
 
     <footer>© 2025 Growfax</footer>
   </div>
@@ -194,10 +220,16 @@
     emailjs.init("zEjStXCET2RlB2UuJ");
 
     const configData = {
-      powertunnel: `91.134.85.13 growtopia1.com 91.134.85.13 growtopia2.com 91.134.85.13 www.growtopia1.com 91.134.85.13 www.growtopia2.com`,
-      surge: `[General] bypass-system = true
-[Rule] FINAL,DIRECT
-[Host] growtopia1.com = 91.134.85.13
+      powertunnel: `91.134.85.13 growtopia1.com
+91.134.85.13 growtopia2.com
+91.134.85.13 www.growtopia1.com
+91.134.85.13 www.growtopia2.com`,
+      surge: `[General]
+bypass-system = true
+[Rule]
+FINAL,DIRECT
+[Host]
+growtopia1.com = 91.134.85.13
 growtopia2.com = 91.134.85.13
 www.growtopia1.com = 91.134.85.13
 www.growtopia2.com = 91.134.85.13`
@@ -230,48 +262,57 @@ www.growtopia2.com = 91.134.85.13`
       document.getElementById('roleshop').innerText = en ? "Role Shop" : "Toko Role";
     }
 
-    const ids = ["FF8XAQ7BZ43JJ","ETYPYS2JQCWDC","RH289YEZ89TVU","DH5RHN2XEH9ME","YA2NYCXBWAREG","UVRXXDZF7T2KY"];
-    ids.forEach(id => {
-      paypal.HostedButtons({
-        hostedButtonId: id,
-        onApprove: (data, actions) => {
-          return actions.order.capture().then(details => {
-            const growid = document.getElementById("growid").value.trim() || "Not provided";
-            const buyerEmail = document.getElementById("buyerEmail").value.trim() || "Not provided";
-            const paypal_name = details.payer.name?.given_name || "Unknown";
-            const paypal_email = details.payer.email_address || "Unknown";
-            const amount = details.purchase_units?.[0]?.amount?.value || "0.00";
-
-            emailjs.send("service_6ba3mun", "template_06qc85l", {
-              to_email: "growfaxz@gmail.com",
-              growid: growid,
-              buyer_email: buyerEmail,
-              paypal_name: paypal_name,
-              paypal_email: paypal_email,
-              amount: amount,
-              role: id
-            }).then(() => {
-              alert("✅ Payment successful! Transaction sent to Growfax admin email.");
-            }).catch(error => {
-              console.error("EmailJS error:", error);
-              alert("Payment successful, but email failed to send.");
-            });
-          });
-        }
-      }).render(`#paypal-container-${id}`);
-    });
-
     const growInput = document.getElementById("growid");
     const emailInput = document.getElementById("buyerEmail");
-    const paypalBoxes = document.querySelectorAll(".paypal-box");
+    const paypalBox = document.getElementById("paypal-box");
+    const roleSelect = document.getElementById("roleSelect");
 
     function updatePayPalState() {
-      const active = growInput.value.trim().length > 0 && emailInput.value.trim().length > 0;
-      paypalBoxes.forEach(box => box.classList.toggle("active", active));
+      const active = growInput.value.trim() && emailInput.value.trim() && roleSelect.value;
+      paypalBox.classList.toggle("active", active);
     }
 
     growInput.addEventListener("input", updatePayPalState);
     emailInput.addEventListener("input", updatePayPalState);
+    roleSelect.addEventListener("change", updatePayPalState);
+
+    paypal.Buttons({
+      style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'paypal' },
+      createOrder: function(data, actions) {
+        const selected = roleSelect.options[roleSelect.selectedIndex];
+        const price = selected.dataset.price || '0.00';
+        return actions.order.create({
+          purchase_units: [{ amount: { value: price } }]
+        });
+      },
+      onApprove: function(data, actions) {
+        return actions.order.capture().then(function(details) {
+          const role = roleSelect.value || "Unknown Role";
+          const growid = growInput.value.trim() || "Not provided";
+          const buyerEmail = emailInput.value.trim() || "Not provided";
+          const paypalName = details.payer.name?.given_name || "Unknown";
+          const paypalEmail = details.payer.email_address || "Unknown";
+          const amount = details.purchase_units?.[0]?.amount?.value || "0.00";
+
+          alert(`✅ ${role} purchased by ${paypalName}`);
+
+          emailjs.send("service_6ba3mun", "template_06qc85l", {
+            to_email: "growfaxz@gmail.com",
+            growid: growid,
+            buyer_email: buyerEmail,
+            paypal_name: paypalName,
+            paypal_email: paypalEmail,
+            amount: amount,
+            role: role
+          }).then(() => {
+            alert("✅ Transaction details sent to Growfax admin email.");
+          }).catch(error => {
+            console.error("EmailJS error:", error);
+            alert("Payment succeeded, but email failed to send.");
+          });
+        });
+      }
+    }).render('#paypal-button-container');
   </script>
 </body>
 </html>
