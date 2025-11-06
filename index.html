@@ -14,6 +14,7 @@
       --card-bg: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
       --glow-color: #0ea5e9;
     }
+
     body.light {
       --bg: #f5f7fa;
       --text: #0f1720;
@@ -23,6 +24,7 @@
       --card-bg: #fff;
       --glow-color: #2563eb;
     }
+
     body {
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
       background: var(--bg);
@@ -35,6 +37,7 @@
       transition: background 0.3s, color 0.3s;
       padding: 16px;
     }
+
     .card {
       background: var(--card-bg);
       padding: 24px 20px;
@@ -45,15 +48,18 @@
       text-align: center;
       transition: background 0.3s, color 0.3s;
     }
+
     h1 {
       margin: 10px 0 8px 0;
       font-size: clamp(20px, 4vw, 24px);
     }
+
     p {
       margin: 0 0 18px 0;
       color: var(--subtext);
       font-size: clamp(12px, 2vw, 14px);
     }
+
     .banner {
       width: 100%;
       height: auto;
@@ -64,11 +70,13 @@
       animation: floatAndGlow 3s ease-in-out infinite;
       transition: box-shadow 0.3s ease-out;
     }
+
     @keyframes floatAndGlow {
       0% { transform: translateY(0px); box-shadow: 0 0 5px var(--glow-color); }
       50% { transform: translateY(-5px); box-shadow: 0 0 15px var(--glow-color); }
       100% { transform: translateY(0px); box-shadow: 0 0 5px var(--glow-color); }
     }
+
     .btn {
       display: block;
       width: 100%;
@@ -84,21 +92,22 @@
       line-height: 1;
       box-sizing: border-box;
     }
+
     .btn-download {
       background: var(--btn-bg);
       color: var(--btn-text);
-      -moz-appearance: none;
-      -webkit-appearance: none;
-      appearance: none;
     }
+
     .btn-download:hover {
       opacity: 0.9;
       transform: scale(1.01);
     }
+
     .btn-download:active {
       opacity: 0.8;
       transform: scale(0.99);
     }
+
     .controls {
       display: flex;
       justify-content: space-between;
@@ -107,6 +116,7 @@
       gap: 8px;
       margin-bottom: 16px;
     }
+
     .toggle, .lang {
       background: none;
       border: 1px solid rgba(255,255,255,0.1);
@@ -119,35 +129,52 @@
       flex: 1;
       min-width: 120px;
     }
+
     body.light .toggle, body.light .lang {
       border-color: #ccc;
       color: #444;
     }
+
     .toggle:hover, .lang:hover {
       opacity: 0.8;
     }
+
     #clock {
       font-size: clamp(12px, 2.5vw, 14px);
       color: var(--subtext);
       margin-bottom: 10px;
     }
+
     footer {
       margin-top: 16px;
       font-size: 12px;
       color: var(--subtext);
     }
+
+    .role-title {
+      margin-top: 25px;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .paypal-box {
+      margin-top: 8px;
+      margin-bottom: 6px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.05);
+      padding: 10px;
+    }
+
     @media (max-width: 480px) {
       .card { padding: 20px 16px; }
-      .controls {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .toggle, .lang {
-        width: 100%;
-        min-width: auto;
-      }
+      .controls { flex-direction: column; align-items: stretch; }
+      .toggle, .lang { width: 100%; min-width: auto; }
     }
   </style>
+
+  <!-- PayPal SDK -->
+  <script src="https://www.paypal.com/sdk/js?client-id=BAAJe318taBVLIPao-ys8TbkKrWAid4tLjY7KDYTVvdUHZZLk3BaC4c1B-EvBdA21kXdyFv_1PpHN8P2Ns&components=hosted-buttons&disable-funding=venmo&currency=USD"></script>
 </head>
 <body>
   <div class="card">
@@ -168,14 +195,15 @@
     <button class="btn btn-download" onclick="copyText('surge', this)" id="btn3">Copy — iOS (Surge)</button>
     <a class="btn btn-download" href="Growfax_Macos.txt" download id="btn4">Download — macOS</a>
 
-    <!-- 🔥 ROLE SHOP DITAMBAHKAN DI SINI -->
-    <h1 style="margin-top: 24px;">🎖️ Role Shop</h1>
-    <a class="btn btn-download" href="https://www.paypal.com/ncp/payment/QL54EP4N2E95J" target="_blank">💎 VIP+</a>
-    <a class="btn btn-download" href="https://www.paypal.com/ncp/payment/ETYPYS2JQCWDC" target="_blank">🛡️ Moderator</a>
-    <a class="btn btn-download" href="https://www.paypal.com/ncp/payment/RH289YEZ89TVU" target="_blank">⚔️ Super Moderator</a>
-    <a class="btn btn-download" href="https://www.paypal.com/ncp/payment/DH5RHN2XEH9ME" target="_blank">🧠 Developer</a>
-    <a class="btn btn-download" href="https://www.paypal.com/ncp/payment/YA2NYCXBWAREG" target="_blank">🔥 God</a>
-    <a class="btn btn-download" href="https://www.paypal.com/ncp/payment/UVRXXDZF7T2KY" target="_blank">🚀 God Max</a>
+    <!-- Role Shop Section -->
+    <div class="role-title" id="roleshop">Role Shop</div>
+
+    <div class="paypal-box"><div id="paypal-container-FF8XAQ7BZ43JJ"></div></div>
+    <div class="paypal-box"><div id="paypal-container-ETYPYS2JQCWDC"></div></div>
+    <div class="paypal-box"><div id="paypal-container-RH289YEZ89TVU"></div></div>
+    <div class="paypal-box"><div id="paypal-container-DH5RHN2XEH9ME"></div></div>
+    <div class="paypal-box"><div id="paypal-container-YA2NYCXBWAREG"></div></div>
+    <div class="paypal-box"><div id="paypal-container-UVRXXDZF7T2KY"></div></div>
 
     <footer>© 2025 Growfax</footer>
   </div>
@@ -183,17 +211,21 @@
   <script>
     const configData = {
       powertunnel: `91.134.85.13 growtopia1.com 91.134.85.13 growtopia2.com 91.134.85.13 www.growtopia1.com 91.134.85.13 www.growtopia2.com`,
-      surge: `[General] bypass-system = true  [Rule] FINAL,DIRECT  [Host] growtopia1.com = 91.134.85.13 growtopia2.com = 91.134.85.13 www.growtopia1.com = 91.134.85.13 www.growtopia2.com = 91.134.85.13`
+      surge: `[General] bypass-system = true
+[Rule] FINAL,DIRECT
+[Host] growtopia1.com = 91.134.85.13
+growtopia2.com = 91.134.85.13
+www.growtopia1.com = 91.134.85.13
+www.growtopia2.com = 91.134.85.13`
     };
 
     function copyText(key, buttonElement) {
       const textToCopy = configData[key];
       const originalText = buttonElement.innerText;
+
       navigator.clipboard.writeText(textToCopy).then(() => {
         buttonElement.innerText = '✅ Copied!';
-        setTimeout(() => {
-          toggleLang(false);
-        }, 2000);
+        setTimeout(() => toggleLang(false), 2000);
       }).catch(err => {
         console.error('Gagal menyalin teks: ', err);
         alert('Gagal menyalin teks. Silakan coba secara manual.');
@@ -215,10 +247,9 @@
 
     let lang = 'id';
     function toggleLang(shouldToggle = true) {
-      if (shouldToggle) {
-        lang = (lang === 'id') ? 'en' : 'id';
-      }
+      if (shouldToggle) lang = (lang === 'id') ? 'en' : 'id';
       const isEnglish = lang === 'en';
+
       document.querySelector('.lang').innerText = isEnglish ? "🌍 Indonesia" : "🌍 English";
       document.getElementById('title').innerText = isEnglish ? "Growfax — Download Files" : "Growfax — Unduh File";
       document.getElementById('desc').innerText = isEnglish ? "Choose the file you want to copy or download." : "Pilih file yang ingin disalin atau di-download.";
@@ -226,7 +257,14 @@
       document.getElementById('btn2').innerText = isEnglish ? "Copy — Powertunnel" : "Salin — Powertunnel";
       document.getElementById('btn3').innerText = isEnglish ? "Copy — iOS (Surge)" : "Salin — iOS (Surge)";
       document.getElementById('btn4').innerText = isEnglish ? "Download — macOS" : "Unduh — macOS";
+      document.getElementById('roleshop').innerText = isEnglish ? "Role Shop" : "Toko Role";
     }
+
+    // Render PayPal Buttons
+    const ids = ["FF8XAQ7BZ43JJ","ETYPYS2JQCWDC","RH289YEZ89TVU","DH5RHN2XEH9ME","YA2NYCXBWAREG","UVRXXDZF7T2KY"];
+    ids.forEach(id => {
+      paypal.HostedButtons({ hostedButtonId: id }).render(`#paypal-container-${id}`);
+    });
   </script>
 </body>
 </html>
