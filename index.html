@@ -30,8 +30,8 @@
       background: var(--bg);
       color: var(--text);
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       min-height: 100vh;
       margin: 0;
       padding: 16px;
@@ -42,25 +42,25 @@
       background: var(--card-bg);
       padding: 24px;
       border-radius: 12px;
-      max-width: 480px;
       width: 100%;
+      max-width: 420px;
       box-shadow: 0 6px 24px rgba(2,6,23,0.6);
       text-align: center;
-      transition: background 0.3s, color 0.3s;
       display: flex;
       flex-direction: column;
       gap: 12px;
+      transition: background 0.3s, color 0.3s;
     }
 
     h1 {
       margin: 0;
-      font-size: clamp(20px, 5vw, 24px);
+      font-size: clamp(20px, 4vw, 24px);
     }
 
     p {
       margin: 0 0 12px 0;
       color: var(--subtext);
-      font-size: clamp(12px, 2.5vw, 14px);
+      font-size: clamp(12px, 2vw, 14px);
     }
 
     .banner {
@@ -81,12 +81,14 @@
       display: block;
       width: 100%;
       padding: 14px;
-      margin: 6px 0;
       border-radius: 8px;
       font-weight: 600;
       border: none;
       cursor: pointer;
       font-size: clamp(14px, 3vw, 16px);
+      box-sizing: border-box;
+      text-align: center;
+      transition: transform 0.1s, opacity 0.2s;
     }
 
     .btn-download {
@@ -94,23 +96,25 @@
       color: var(--btn-text);
     }
 
+    .btn-download:hover { opacity: 0.9; transform: scale(1.01); }
+    .btn-download:active { opacity: 0.8; transform: scale(0.99); }
+
     .controls {
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 8px;
-      margin-bottom: 12px;
     }
 
     .toggle, .lang {
+      background: none;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--subtext);
+      border-radius: 6px;
+      padding: 8px 10px;
+      cursor: pointer;
       flex: 1;
       min-width: 120px;
-      padding: 8px 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: none;
-      color: var(--subtext);
       transition: 0.2s;
     }
 
@@ -119,8 +123,6 @@
       color: #444;
     }
 
-    .toggle:hover, .lang:hover { opacity: 0.8; }
-
     input {
       width: 100%;
       padding: 10px;
@@ -128,36 +130,30 @@
       border: 1px solid rgba(255,255,255,0.2);
       background: rgba(0,0,0,0.1);
       color: var(--text);
-      margin-bottom: 8px;
       box-sizing: border-box;
+      margin-bottom: 8px;
     }
 
     .paypal-box {
-      margin-top: 6px;
+      opacity: 0.4;
+      pointer-events: none;
       border-radius: 10px;
       background: rgba(255,255,255,0.05);
       padding: 10px;
-      opacity: 0.4;
-      pointer-events: none;
       transition: opacity 0.3s;
     }
-
     .paypal-box.active { opacity: 1; pointer-events: auto; }
 
-    footer {
-      margin-top: 16px;
-      font-size: clamp(10px, 2vw, 12px);
-      color: var(--subtext);
-    }
+    #clock { font-size: clamp(12px, 2.5vw, 14px); color: var(--subtext); }
+
+    footer { margin-top: 16px; font-size: 12px; color: var(--subtext); }
 
     @media (max-width: 480px) {
-      .card { padding: 16px; }
       .controls { flex-direction: column; align-items: stretch; }
-      .toggle, .lang { min-width: 0; }
+      .toggle, .lang { width: 100%; }
     }
   </style>
 
-  <!-- PayPal & EmailJS -->
   <script src="https://www.paypal.com/sdk/js?client-id=BAAJe318taBVLIPao-ys8TbkKrWAid4tLjY7KDYTVvdUHZZLk3BaC4c1B-EvBdA21kXdyFv_1PpHN8P2Ns&components=hosted-buttons&currency=USD"></script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
@@ -207,59 +203,57 @@ www.growtopia1.com = 91.134.85.13
 www.growtopia2.com = 91.134.85.13`
     };
 
-    function copyText(key, btn){
+    function copyText(key, btn) {
       navigator.clipboard.writeText(configData[key]);
-      const old=btn.innerText;
-      btn.innerText="✅ Copied!";
-      setTimeout(()=>btn.innerText=old,2000);
+      const old = btn.innerText;
+      btn.innerText = "✅ Copied!";
+      setTimeout(() => btn.innerText = old, 2000);
     }
 
-    // Clock Sydney
-    function updateClock(){
-      const now=new Date();
-      const sydney=new Date(now.toLocaleString('en-US',{timeZone:'Australia/Sydney'}));
-      document.getElementById('clock').innerText="Sydney Time: "+sydney.toLocaleTimeString('en-GB');
+    function updateClock() {
+      const now = new Date();
+      const sydney = new Date(now.toLocaleString('en-US', { timeZone: 'Australia/Sydney' }));
+      document.getElementById('clock').innerText = "Sydney Time: " + sydney.toLocaleTimeString('en-GB');
     }
-    setInterval(updateClock,1000);
+    setInterval(updateClock, 1000);
     updateClock();
 
-    // Dark/Light + Language toggle
-    function toggleTheme(){ document.body.classList.toggle('light'); }
-    let lang='en';
-    function toggleLang(){
-      lang=(lang==='id')?'en':'id';
-      const en=lang==='en';
-      document.querySelector('.lang').innerText=en?"🌍 Indonesia":"🌍 English";
-      document.getElementById('title').innerText=en?"Growfax — Download Files":"Growfax — Unduh File";
-      document.getElementById('desc').innerText=en?"Choose the file you want to copy or download.":"Pilih file yang ingin disalin atau diunduh.";
-      document.getElementById('roleshop').innerText=en?"Role Shop":"Toko Role";
+    function toggleTheme() { document.body.classList.toggle('light'); }
+
+    let lang = 'en';
+    function toggleLang(shouldToggle = true) {
+      if (shouldToggle) lang = (lang === 'id') ? 'en' : 'id';
+      const en = lang === 'en';
+      document.querySelector('.lang').innerText = en ? "🌍 Indonesia" : "🌍 English";
+      document.getElementById('title').innerText = en ? "Growfax — Download Files" : "Growfax — Unduh File";
+      document.getElementById('desc').innerText = en ? "Choose the file you want to copy or download." : "Pilih file yang ingin disalin atau diunduh.";
+      document.getElementById('roleshop').innerText = en ? "Role Shop" : "Toko Role";
     }
 
-    // PayPal + EmailJS
-    const ids=["FF8XAQ7BZ43JJ","ETYPYS2JQCWDC","RH289YEZ89TVU","DH5RHN2XEH9ME","YA2NYCXBWAREG","UVRXXDZF7T2KY"];
-    ids.forEach(id=>{
+    const ids = ["FF8XAQ7BZ43JJ","ETYPYS2JQCWDC","RH289YEZ89TVU","DH5RHN2XEH9ME","YA2NYCXBWAREG","UVRXXDZF7T2KY"];
+    ids.forEach(id => {
       paypal.HostedButtons({
-        hostedButtonId:id,
-        onApprove:(data,actions)=>{
-          return actions.order.capture().then(details=>{
-            const growid=document.getElementById("growid").value.trim()||"Not provided";
-            const buyerEmail=document.getElementById("buyerEmail").value.trim()||"Not provided";
-            const paypal_name=details.payer.name?.given_name||"Unknown";
-            const paypal_email=details.payer.email_address||"Unknown";
-            const amount=details.purchase_units?.[0]?.amount?.value||"0.00";
+        hostedButtonId: id,
+        onApprove: (data, actions) => {
+          return actions.order.capture().then(details => {
+            const growid = document.getElementById("growid").value.trim() || "Not provided";
+            const buyerEmail = document.getElementById("buyerEmail").value.trim() || "Not provided";
+            const paypal_name = details.payer.name?.given_name || "Unknown";
+            const paypal_email = details.payer.email_address || "Unknown";
+            const amount = details.purchase_units?.[0]?.amount?.value || "0.00";
 
-            emailjs.send("service_6ba3mun","template_06qc85l",{
-              to_email:"growfaxz@gmail.com",
-              growid:growid,
-              buyer_email:buyerEmail,
-              paypal_name:paypal_name,
-              paypal_email:paypal_email,
-              amount:amount,
-              role:id
-            }).then(()=>{
+            emailjs.send("service_6ba3mun", "template_06qc85l", {
+              to_email: "growfaxz@gmail.com",
+              growid: growid,
+              buyer_email: buyerEmail,
+              paypal_name: paypal_name,
+              paypal_email: paypal_email,
+              amount: amount,
+              role: id
+            }).then(() => {
               alert("✅ Payment successful! Transaction sent to Growfax admin email.");
-            }).catch(err=>{
-              console.error("EmailJS error:",err);
+            }).catch(error => {
+              console.error("EmailJS error:", error);
               alert("Payment successful, but email failed to send.");
             });
           });
@@ -267,16 +261,17 @@ www.growtopia2.com = 91.134.85.13`
       }).render(`#paypal-container-${id}`);
     });
 
-    // Enable PayPal buttons only if both inputs filled
-    const growInput=document.getElementById("growid");
-    const emailInput=document.getElementById("buyerEmail");
-    const paypalBoxes=document.querySelectorAll(".paypal-box");
-    function updatePayPalState(){
-      const active=growInput.value.trim().length>0 && emailInput.value.trim().length>0;
-      paypalBoxes.forEach(box=>box.classList.toggle("active",active));
+    const growInput = document.getElementById("growid");
+    const emailInput = document.getElementById("buyerEmail");
+    const paypalBoxes = document.querySelectorAll(".paypal-box");
+
+    function updatePayPalState() {
+      const active = growInput.value.trim().length > 0 && emailInput.value.trim().length > 0;
+      paypalBoxes.forEach(box => box.classList.toggle("active", active));
     }
-    growInput.addEventListener("input",updatePayPalState);
-    emailInput.addEventListener("input",updatePayPalState);
+
+    growInput.addEventListener("input", updatePayPalState);
+    emailInput.addEventListener("input", updatePayPalState);
   </script>
 </body>
 </html>
