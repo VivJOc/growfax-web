@@ -43,7 +43,7 @@
       padding: 24px;
       border-radius: 12px;
       width: 100%;
-      max-width: 420px;
+      max-width: 600px;
       box-shadow: 0 6px 24px rgba(2,6,23,0.6);
       text-align: center;
       display: flex;
@@ -54,10 +54,7 @@
       box-sizing: border-box;
     }
 
-    h1, h2 {
-      margin: 0;
-      font-size: clamp(20px, 4vw, 24px);
-    }
+    h1, h2 { margin: 0; font-size: clamp(20px, 3vw, 26px); }
 
     p {
       margin: 0 0 12px 0;
@@ -80,20 +77,33 @@
 
     .btn {
       display: block;
-      width: 100%;
       padding: 14px;
       border-radius: 8px;
       font-weight: 600;
       border: none;
       cursor: pointer;
-      font-size: clamp(14px, 3vw, 16px);
-      text-align: center;
+      font-size: clamp(14px, 1.5vw, 16px);
       transition: transform 0.1s, opacity 0.2s;
+      text-align: center;
+      flex: 1;
     }
 
     .btn-download { background: var(--btn-bg); color: var(--btn-text); }
-    .btn-download:hover { opacity: 0.9; transform: scale(1.01); }
-    .btn-download:active { opacity: 0.8; transform: scale(0.99); }
+    .btn-download:hover { opacity: 0.9; transform: scale(1.02); }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
 
     .toggle, .lang {
       background: none;
@@ -112,14 +122,7 @@
       color: #444;
     }
 
-    .controls {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    #clock { font-size: clamp(12px, 2.5vw, 14px); color: var(--subtext); }
+    #clock { font-size: clamp(12px, 2vw, 14px); color: var(--subtext); }
     footer { margin-top: 16px; font-size: 12px; color: var(--subtext); }
 
     /* Role Shop */
@@ -128,13 +131,32 @@
       flex-direction: column;
       gap: 16px;
       width: 100%;
-      max-width: 420px;
+      max-width: 600px;
       animation: fadeSlide 0.4s ease forwards;
     }
 
     @keyframes fadeSlide {
       from { opacity: 0; transform: translateY(15px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    .input-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .input-group input {
+      flex: 1;
+      min-width: 220px;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(0,0,0,0.1);
+      color: var(--text);
+      font-size: clamp(13px, 1.4vw, 15px);
+      box-sizing: border-box;
     }
 
     .role-card {
@@ -162,11 +184,12 @@
       opacity: 1;
     }
 
-    @media (max-width: 480px) {
-      body { padding: 10px; }
+    @media (max-width: 600px) {
+      .btn-group { flex-direction: column; }
       .controls { flex-direction: column; }
-      .toggle, .lang { width: 100%; }
-      .card { padding: 16px; }
+      .toggle, .lang, .btn { width: 100%; }
+      .input-group { flex-direction: column; }
+      .input-group input { width: 100%; }
     }
   </style>
 
@@ -183,23 +206,25 @@
     <img src="gg.png" alt="Growfax Banner" class="banner">
     <h1 id="title">Growfax — Download Files</h1>
     <p id="desc">Choose the file you want to copy or download.</p>
-
     <div id="clock">Sydney Time: --:--:--</div>
 
-    <a class="btn btn-download" href="Growfax_Vhost.txt" download>Download — Virtual Host</a>
-    <button class="btn btn-download" onclick="copyText('powertunnel', this)">Copy — Powertunnel</button>
-    <button class="btn btn-download" onclick="copyText('surge', this)">Copy — iOS (Surge)</button>
-    <a class="btn btn-download" href="Growfax_Macos.txt" download>Download — macOS</a>
+    <div class="btn-group">
+      <a class="btn btn-download" href="Growfax_Vhost.txt" download>Download — Virtual Host</a>
+      <button class="btn btn-download" onclick="copyText('powertunnel', this)">Copy — Powertunnel</button>
+      <button class="btn btn-download" onclick="copyText('surge', this)">Copy — iOS (Surge)</button>
+      <a class="btn btn-download" href="Growfax_Macos.txt" download>Download — macOS</a>
+    </div>
   </div>
 
-  <!-- Toggle Role Shop -->
-  <button class="btn btn-download" onclick="toggleRoleShop()">🛒 Toggle Role Shop</button>
+  <div class="btn-group" style="max-width:600px;">
+    <button class="btn btn-download" onclick="toggleRoleShop()">🛒 Toggle Role Shop</button>
+  </div>
 
-  <!-- Role Shop -->
   <div class="role-shop" id="roleShop">
-    <input id="growid" type="text" placeholder="Enter your GrowID">
-    <input id="buyerEmail" type="email" placeholder="Enter your Email">
-
+    <div class="input-group">
+      <input id="growid" type="text" placeholder="Enter your GrowID">
+      <input id="buyerEmail" type="email" placeholder="Enter your Email">
+    </div>
     <div id="rolesContainer"></div>
   </div>
 
@@ -279,31 +304,25 @@ www.growtopia2.com = 91.134.85.13`
 
       paypal.Buttons({
         style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'paypal' },
-        createOrder: function(data, actions) {
-          return actions.order.create({
-            purchase_units: [{ amount: { value: role.price } }]
-          });
-        },
-        onApprove: function(data, actions) {
-          return actions.order.capture().then(function(details) {
-            const growid = growInput.value.trim() || "Not provided";
-            const buyerEmail = emailInput.value.trim() || "Not provided";
-            const paypalName = details.payer.name?.given_name || "Unknown";
-            const paypalEmail = details.payer.email_address || "Unknown";
+        createOrder: (data, actions) => actions.order.create({ purchase_units: [{ amount: { value: role.price } }] }),
+        onApprove: (data, actions) => actions.order.capture().then(details => {
+          const growid = growInput.value.trim() || "Not provided";
+          const buyerEmail = emailInput.value.trim() || "Not provided";
+          const paypalName = details.payer.name?.given_name || "Unknown";
+          const paypalEmail = details.payer.email_address || "Unknown";
 
-            alert(`✅ ${role.name} purchased by ${paypalName}`);
+          alert(`✅ ${role.name} purchased by ${paypalName}`);
 
-            emailjs.send("service_6ba3mun", "template_06qc85l", {
-              to_email: "growfaxz@gmail.com",
-              growid,
-              buyer_email: buyerEmail,
-              paypal_name: paypalName,
-              paypal_email: paypalEmail,
-              amount: role.price,
-              role: role.name
-            });
+          emailjs.send("service_6ba3mun", "template_06qc85l", {
+            to_email: "growfaxz@gmail.com",
+            growid,
+            buyer_email: buyerEmail,
+            paypal_name: paypalName,
+            paypal_email: paypalEmail,
+            amount: role.price,
+            role: role.name
           });
-        }
+        })
       }).render(`#paypal-${role.name.replace(/\s/g, '')}`);
     });
 
