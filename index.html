@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Growfax Downloads</title>
+  <title>Growfax Downloads & Role Shop</title>
   <style>
     :root {
       --bg: #0f1720;
@@ -30,8 +30,8 @@
       background: var(--bg);
       color: var(--text);
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
       min-height: 100vh;
       margin: 0;
       padding: 16px;
@@ -50,9 +50,11 @@
       flex-direction: column;
       gap: 12px;
       transition: background 0.3s, color 0.3s;
+      margin-bottom: 20px;
+      box-sizing: border-box;
     }
 
-    h1 {
+    h1, h2 {
       margin: 0;
       font-size: clamp(20px, 4vw, 24px);
     }
@@ -99,13 +101,14 @@
     .btn-download:hover { opacity: 0.9; transform: scale(1.01); }
     .btn-download:active { opacity: 0.8; transform: scale(0.99); }
 
-    select {
+    select, input {
       width: 100%;
       padding: 10px;
       border-radius: 6px;
       border: 1px solid rgba(255,255,255,0.2);
       background: rgba(0,0,0,0.1);
       color: var(--text);
+      box-sizing: border-box;
       margin-bottom: 8px;
     }
 
@@ -133,17 +136,6 @@
       color: #444;
     }
 
-    input {
-      width: 100%;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid rgba(255,255,255,0.2);
-      background: rgba(0,0,0,0.1);
-      color: var(--text);
-      box-sizing: border-box;
-      margin-bottom: 8px;
-    }
-
     .paypal-box {
       display: none;
       margin-top: 10px;
@@ -165,9 +157,28 @@
     #clock { font-size: clamp(12px, 2.5vw, 14px); color: var(--subtext); }
     footer { margin-top: 16px; font-size: 12px; color: var(--subtext); }
 
+    /* Shop Section Styling */
+    .shop-section {
+      background: linear-gradient(180deg, rgba(0,128,255,0.05), rgba(0,128,255,0.02));
+      border: 1px solid rgba(0,128,255,0.3);
+      padding: 20px;
+      width: 100%;
+      max-width: 420px;
+      box-sizing: border-box;
+    }
+    .shop-section h2 {
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    /* Responsive tweaks */
     @media (max-width: 480px) {
+      body { padding: 10px; }
       .controls { flex-direction: column; align-items: stretch; }
       .toggle, .lang { width: 100%; }
+      .card, .shop-section { padding: 16px; }
+      .btn { font-size: 14px; padding: 12px; }
+      select, input { padding: 8px; font-size: 14px; }
     }
   </style>
 
@@ -178,6 +189,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
+  <!-- Download Section -->
   <div class="card">
     <div class="controls">
       <button class="toggle" onclick="toggleTheme()">🌗 Theme</button>
@@ -194,8 +206,12 @@
     <button class="btn btn-download" onclick="copyText('powertunnel', this)">Copy — Powertunnel</button>
     <button class="btn btn-download" onclick="copyText('surge', this)">Copy — iOS (Surge)</button>
     <a class="btn btn-download" href="Growfax_Macos.txt" download>Download — macOS</a>
+  </div>
 
-    <div class="role-title" id="roleshop">Role Shop</div>
+  <!-- Role Shop Section -->
+  <div class="card shop-section">
+    <h2 id="roleshop">Role Shop</h2>
+    <p>Select a role to purchase using PayPal.</p>
 
     <input id="growid" type="text" placeholder="Enter your GrowID before purchasing">
     <input id="buyerEmail" type="email" placeholder="Enter your Email before purchasing">
@@ -212,9 +228,9 @@
     <div class="paypal-box" id="paypal-box">
       <div id="paypal-button-container"></div>
     </div>
-
-    <footer>© 2025 Growfax</footer>
   </div>
+
+  <footer>© 2025 Growfax</footer>
 
   <script>
     emailjs.init("zEjStXCET2RlB2UuJ");
