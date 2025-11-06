@@ -67,7 +67,6 @@
 
     .banner {
       width: 100%;
-      height: auto;
       border-radius: 10px;
       object-fit: contain;
       animation: floatAndGlow 3s ease-in-out infinite;
@@ -88,36 +87,13 @@
       border: none;
       cursor: pointer;
       font-size: clamp(14px, 3vw, 16px);
-      box-sizing: border-box;
       text-align: center;
       transition: transform 0.1s, opacity 0.2s;
     }
 
-    .btn-download {
-      background: var(--btn-bg);
-      color: var(--btn-text);
-    }
-
+    .btn-download { background: var(--btn-bg); color: var(--btn-text); }
     .btn-download:hover { opacity: 0.9; transform: scale(1.01); }
     .btn-download:active { opacity: 0.8; transform: scale(0.99); }
-
-    select, input {
-      width: 100%;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid rgba(255,255,255,0.2);
-      background: rgba(0,0,0,0.1);
-      color: var(--text);
-      box-sizing: border-box;
-      margin-bottom: 8px;
-    }
-
-    .controls {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
 
     .toggle, .lang {
       background: none;
@@ -136,60 +112,68 @@
       color: #444;
     }
 
-    .paypal-box {
-      display: none;
-      margin-top: 10px;
-      background: rgba(255,255,255,0.05);
-      border-radius: 10px;
-      padding: 10px;
-    }
-
-    .paypal-box.active {
-      display: block;
-      animation: fadeIn 0.3s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
     #clock { font-size: clamp(12px, 2.5vw, 14px); color: var(--subtext); }
     footer { margin-top: 16px; font-size: 12px; color: var(--subtext); }
 
-    /* Shop Section Styling */
-    .shop-section {
-      background: linear-gradient(180deg, rgba(0,128,255,0.05), rgba(0,128,255,0.02));
-      border: 1px solid rgba(0,128,255,0.3);
-      padding: 20px;
+    /* Role Shop */
+    .role-shop {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
       width: 100%;
       max-width: 420px;
-      box-sizing: border-box;
-    }
-    .shop-section h2 {
-      margin-bottom: 10px;
-      font-size: 18px;
+      animation: fadeSlide 0.4s ease forwards;
     }
 
-    /* Responsive tweaks */
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .role-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 16px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .role-name { font-weight: 600; margin-bottom: 6px; font-size: 16px; }
+    .role-price { color: var(--subtext); margin-bottom: 10px; }
+
+    .paypal-container {
+      filter: blur(3px);
+      pointer-events: none;
+      opacity: 0.5;
+      transition: all 0.3s ease;
+    }
+
+    .paypal-container.active {
+      filter: none;
+      pointer-events: auto;
+      opacity: 1;
+    }
+
     @media (max-width: 480px) {
       body { padding: 10px; }
-      .controls { flex-direction: column; align-items: stretch; }
+      .controls { flex-direction: column; }
       .toggle, .lang { width: 100%; }
-      .card, .shop-section { padding: 16px; }
-      .btn { font-size: 14px; padding: 12px; }
-      select, input { padding: 8px; font-size: 14px; }
+      .card { padding: 16px; }
     }
   </style>
 
-  <!-- PayPal Smart Buttons -->
   <script src="https://www.paypal.com/sdk/js?client-id=AWomsHIdagP1tiIig6-Q5hOeENO3lhpbCO20tPsBa3CmUx77koWkm6oA1qZCklI7F7PsTa4joZruigyM&currency=USD"></script>
-
-  <!-- EmailJS -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
-  <!-- Download Section -->
   <div class="card">
     <div class="controls">
       <button class="toggle" onclick="toggleTheme()">🌗 Theme</button>
@@ -208,26 +192,15 @@
     <a class="btn btn-download" href="Growfax_Macos.txt" download>Download — macOS</a>
   </div>
 
-  <!-- Role Shop Section -->
-  <div class="card shop-section">
-    <h2 id="roleshop">Role Shop</h2>
-    <p>Select a role to purchase using PayPal.</p>
+  <!-- Toggle Role Shop -->
+  <button class="btn btn-download" onclick="toggleRoleShop()">🛒 Toggle Role Shop</button>
 
-    <input id="growid" type="text" placeholder="Enter your GrowID before purchasing">
-    <input id="buyerEmail" type="email" placeholder="Enter your Email before purchasing">
+  <!-- Role Shop -->
+  <div class="role-shop" id="roleShop">
+    <input id="growid" type="text" placeholder="Enter your GrowID">
+    <input id="buyerEmail" type="email" placeholder="Enter your Email">
 
-    <select id="roleSelect">
-      <option value="">Select Role</option>
-      <option value="Moderator" data-price="3.29">Moderator — $3.29</option>
-      <option value="Super Moderator" data-price="5.39">Super Moderator — $5.39</option>
-      <option value="Developer" data-price="8.68">Developer — $8.68</option>
-      <option value="God" data-price="11.86">God — $11.86</option>
-      <option value="God Max" data-price="27.55">God Max — $27.55</option>
-    </select>
-
-    <div class="paypal-box" id="paypal-box">
-      <div id="paypal-button-container"></div>
-    </div>
+    <div id="rolesContainer"></div>
   </div>
 
   <footer>© 2025 Growfax</footer>
@@ -269,66 +242,80 @@ www.growtopia2.com = 91.134.85.13`
     function toggleTheme() { document.body.classList.toggle('light'); }
 
     let lang = 'en';
-    function toggleLang(shouldToggle = true) {
-      if (shouldToggle) lang = (lang === 'id') ? 'en' : 'id';
+    function toggleLang() {
+      lang = (lang === 'id') ? 'en' : 'id';
       const en = lang === 'en';
       document.querySelector('.lang').innerText = en ? "🌍 Indonesia" : "🌍 English";
       document.getElementById('title').innerText = en ? "Growfax — Download Files" : "Growfax — Unduh File";
       document.getElementById('desc').innerText = en ? "Choose the file you want to copy or download." : "Pilih file yang ingin disalin atau diunduh.";
-      document.getElementById('roleshop').innerText = en ? "Role Shop" : "Toko Role";
     }
+
+    function toggleRoleShop() {
+      const shop = document.getElementById("roleShop");
+      shop.style.display = shop.style.display === "flex" ? "none" : "flex";
+    }
+
+    const roles = [
+      { name: "Moderator", price: "3.29" },
+      { name: "Super Moderator", price: "5.39" },
+      { name: "Developer", price: "8.68" },
+      { name: "God", price: "11.86" },
+      { name: "God Max", price: "27.55" }
+    ];
 
     const growInput = document.getElementById("growid");
     const emailInput = document.getElementById("buyerEmail");
-    const paypalBox = document.getElementById("paypal-box");
-    const roleSelect = document.getElementById("roleSelect");
+    const rolesContainer = document.getElementById("rolesContainer");
+
+    roles.forEach(role => {
+      const div = document.createElement("div");
+      div.className = "role-card";
+      div.innerHTML = `
+        <div class="role-name">${role.name}</div>
+        <div class="role-price">$${role.price}</div>
+        <div class="paypal-container" id="paypal-${role.name.replace(/\s/g, '')}"></div>
+      `;
+      rolesContainer.appendChild(div);
+
+      paypal.Buttons({
+        style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'paypal' },
+        createOrder: function(data, actions) {
+          return actions.order.create({
+            purchase_units: [{ amount: { value: role.price } }]
+          });
+        },
+        onApprove: function(data, actions) {
+          return actions.order.capture().then(function(details) {
+            const growid = growInput.value.trim() || "Not provided";
+            const buyerEmail = emailInput.value.trim() || "Not provided";
+            const paypalName = details.payer.name?.given_name || "Unknown";
+            const paypalEmail = details.payer.email_address || "Unknown";
+
+            alert(`✅ ${role.name} purchased by ${paypalName}`);
+
+            emailjs.send("service_6ba3mun", "template_06qc85l", {
+              to_email: "growfaxz@gmail.com",
+              growid,
+              buyer_email: buyerEmail,
+              paypal_name: paypalName,
+              paypal_email: paypalEmail,
+              amount: role.price,
+              role: role.name
+            });
+          });
+        }
+      }).render(`#paypal-${role.name.replace(/\s/g, '')}`);
+    });
 
     function updatePayPalState() {
-      const active = growInput.value.trim() && emailInput.value.trim() && roleSelect.value;
-      paypalBox.classList.toggle("active", active);
+      const active = growInput.value.trim() && emailInput.value.trim();
+      document.querySelectorAll(".paypal-container").forEach(p => {
+        p.classList.toggle("active", active);
+      });
     }
 
     growInput.addEventListener("input", updatePayPalState);
     emailInput.addEventListener("input", updatePayPalState);
-    roleSelect.addEventListener("change", updatePayPalState);
-
-    paypal.Buttons({
-      style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'paypal' },
-      createOrder: function(data, actions) {
-        const selected = roleSelect.options[roleSelect.selectedIndex];
-        const price = selected.dataset.price || '0.00';
-        return actions.order.create({
-          purchase_units: [{ amount: { value: price } }]
-        });
-      },
-      onApprove: function(data, actions) {
-        return actions.order.capture().then(function(details) {
-          const role = roleSelect.value || "Unknown Role";
-          const growid = growInput.value.trim() || "Not provided";
-          const buyerEmail = emailInput.value.trim() || "Not provided";
-          const paypalName = details.payer.name?.given_name || "Unknown";
-          const paypalEmail = details.payer.email_address || "Unknown";
-          const amount = details.purchase_units?.[0]?.amount?.value || "0.00";
-
-          alert(`✅ ${role} purchased by ${paypalName}`);
-
-          emailjs.send("service_6ba3mun", "template_06qc85l", {
-            to_email: "growfaxz@gmail.com",
-            growid: growid,
-            buyer_email: buyerEmail,
-            paypal_name: paypalName,
-            paypal_email: paypalEmail,
-            amount: amount,
-            role: role
-          }).then(() => {
-            alert("✅ Transaction details sent to Growfax admin email.");
-          }).catch(error => {
-            console.error("EmailJS error:", error);
-            alert("Payment succeeded, but email failed to send.");
-          });
-        });
-      }
-    }).render('#paypal-button-container');
   </script>
 </body>
 </html>
