@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -164,6 +164,25 @@
       border-radius: 10px;
       background: rgba(255,255,255,0.05);
       padding: 10px;
+      opacity: 0.4;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .paypal-box.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    input#growid {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(0,0,0,0.1);
+      color: var(--text);
+      margin-bottom: 16px;
+      box-sizing: border-box;
     }
 
     @media (max-width: 480px) {
@@ -180,13 +199,13 @@
   <div class="card">
     <div class="controls">
       <button class="toggle" onclick="toggleTheme()">🌗 Theme</button>
-      <button class="lang" onclick="toggleLang()">🌍 English</button>
+      <button class="lang" onclick="toggleLang()">🌍 Indonesia</button>
     </div>
 
     <img src="gg.png" alt="Growfax Banner" class="banner">
 
     <h1 id="title">Growfax — Download Files</h1>
-    <p id="desc">Pilih file yang ingin di-download.</p>
+    <p id="desc">Choose the file you want to copy or download.</p>
 
     <div id="clock">Sydney Time: --:--:--</div>
 
@@ -195,8 +214,9 @@
     <button class="btn btn-download" onclick="copyText('surge', this)" id="btn3">Copy — iOS (Surge)</button>
     <a class="btn btn-download" href="Growfax_Macos.txt" download id="btn4">Download — macOS</a>
 
-    <!-- Role Shop Section -->
     <div class="role-title" id="roleshop">Role Shop</div>
+
+    <input id="growid" type="text" placeholder="Enter your GrowID before purchasing">
 
     <div class="paypal-box"><div id="paypal-container-FF8XAQ7BZ43JJ"></div></div>
     <div class="paypal-box"><div id="paypal-container-ETYPYS2JQCWDC"></div></div>
@@ -209,6 +229,8 @@
   </div>
 
   <script>
+    const WEBHOOK_URL = "https://discord.com/api/webhooks/1433499858441998346/flWTzMJFBtWQlwJO0zvY4a9WDGdK9bObKo2AEg2rHNlAlOH3tmT3kwkDhI0LAiv-KSf4";
+
     const configData = {
       powertunnel: `91.134.85.13 growtopia1.com 91.134.85.13 growtopia2.com 91.134.85.13 www.growtopia1.com 91.134.85.13 www.growtopia2.com`,
       surge: `[General] bypass-system = true
@@ -219,24 +241,17 @@ www.growtopia1.com = 91.134.85.13
 www.growtopia2.com = 91.134.85.13`
     };
 
-    function copyText(key, buttonElement) {
-      const textToCopy = configData[key];
-      const originalText = buttonElement.innerText;
-
-      navigator.clipboard.writeText(textToCopy).then(() => {
-        buttonElement.innerText = '✅ Copied!';
-        setTimeout(() => toggleLang(false), 2000);
-      }).catch(err => {
-        console.error('Gagal menyalin teks: ', err);
-        alert('Gagal menyalin teks. Silakan coba secara manual.');
-      });
+    function copyText(key, btn) {
+      navigator.clipboard.writeText(configData[key]);
+      const old = btn.innerText;
+      btn.innerText = "✅ Copied!";
+      setTimeout(() => btn.innerText = old, 2000);
     }
 
     function updateClock() {
       const now = new Date();
-      const sydneyTime = new Date(now.toLocaleString('en-US', { timeZone: 'Australia/Sydney' }));
-      const timeStr = sydneyTime.toLocaleTimeString('en-GB');
-      document.getElementById('clock').innerText = "Sydney Time: " + timeStr;
+      const sydney = new Date(now.toLocaleString('en-US', { timeZone: 'Australia/Sydney' }));
+      document.getElementById('clock').innerText = "Sydney Time: " + sydney.toLocaleTimeString('en-GB');
     }
     setInterval(updateClock, 1000);
     updateClock();
@@ -245,25 +260,53 @@ www.growtopia2.com = 91.134.85.13`
       document.body.classList.toggle('light');
     }
 
-    let lang = 'id';
+    let lang = 'en';
     function toggleLang(shouldToggle = true) {
       if (shouldToggle) lang = (lang === 'id') ? 'en' : 'id';
-      const isEnglish = lang === 'en';
-
-      document.querySelector('.lang').innerText = isEnglish ? "🌍 Indonesia" : "🌍 English";
-      document.getElementById('title').innerText = isEnglish ? "Growfax — Download Files" : "Growfax — Unduh File";
-      document.getElementById('desc').innerText = isEnglish ? "Choose the file you want to copy or download." : "Pilih file yang ingin disalin atau di-download.";
-      document.getElementById('btn1').innerText = isEnglish ? "Download — Virtual Host" : "Unduh — Virtual Host";
-      document.getElementById('btn2').innerText = isEnglish ? "Copy — Powertunnel" : "Salin — Powertunnel";
-      document.getElementById('btn3').innerText = isEnglish ? "Copy — iOS (Surge)" : "Salin — iOS (Surge)";
-      document.getElementById('btn4').innerText = isEnglish ? "Download — macOS" : "Unduh — macOS";
-      document.getElementById('roleshop').innerText = isEnglish ? "Role Shop" : "Toko Role";
+      const en = lang === 'en';
+      document.querySelector('.lang').innerText = en ? "🌍 Indonesia" : "🌍 English";
+      document.getElementById('title').innerText = en ? "Growfax — Download Files" : "Growfax — Unduh File";
+      document.getElementById('desc').innerText = en ? "Choose the file you want to copy or download." : "Pilih file yang ingin disalin atau diunduh.";
+      document.getElementById('roleshop').innerText = en ? "Role Shop" : "Toko Role";
     }
 
-    // Render PayPal Buttons
     const ids = ["FF8XAQ7BZ43JJ","ETYPYS2JQCWDC","RH289YEZ89TVU","DH5RHN2XEH9ME","YA2NYCXBWAREG","UVRXXDZF7T2KY"];
     ids.forEach(id => {
-      paypal.HostedButtons({ hostedButtonId: id }).render(`#paypal-container-${id}`);
+      paypal.HostedButtons({
+        hostedButtonId: id,
+        onApprove: (data, actions) => {
+          return actions.order.capture().then(details => {
+            const growid = document.getElementById("growid").value.trim() || "Not provided";
+            const username = details.payer.name?.given_name || "Unknown";
+            const email = details.payer.email_address || "Unknown";
+            const amount = details.purchase_units?.[0]?.amount?.value || "0.00";
+            fetch(WEBHOOK_URL, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                username: "Growfax Payment",
+                content: `💸 **Payment Successful!**
+**GrowID:** ${growid}
+**PayPal Name:** ${username}
+**Email:** ${email}
+**Amount:** $${amount}
+**Button ID:** ${id}`
+              })
+            });
+            alert("✅ Payment successful! Your info has been sent to Discord.");
+          });
+        }
+      }).render(`#paypal-container-${id}`);
+    });
+
+    // Disable PayPal buttons until GrowID filled
+    const growInput = document.getElementById("growid");
+    const paypalBoxes = document.querySelectorAll(".paypal-box");
+    growInput.addEventListener("input", () => {
+      const val = growInput.value.trim();
+      paypalBoxes.forEach(box => {
+        box.classList.toggle("active", val.length > 0);
+      });
     });
   </script>
 </body>
