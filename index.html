@@ -39,6 +39,7 @@
 
     .container{width:100%; max-width:var(--container-max); margin:0 auto; transition: all var(--transition-time) ease;}
 
+    /* Base card */
     .card{
       background:var(--card-bg);
       border-radius:12px;
@@ -75,6 +76,7 @@
     p.lead{margin:0 0 14px 0; color:var(--subtext); font-size:14px; transition: color var(--transition-time) ease;}
     #clock{color:var(--subtext); font-size:13px; margin-bottom:12px; transition: color var(--transition-time) ease;}
 
+    /* Download grid */
     .download-grid{
       display:grid;
       grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
@@ -99,6 +101,7 @@
     }
     .btn-download:active{transform:translateY(1px);}
 
+    /* Shop / Role area */
     .shop{
       margin-top:6px;
       display:grid;
@@ -116,6 +119,7 @@
       transition: background var(--transition-time) ease, color var(--transition-time) ease;
     }
 
+    /* Inputs */
     .inputs{
       display:flex;
       gap:16px;
@@ -171,6 +175,7 @@
     }
     .email-error.show{display:block;}
 
+    /* Roles grid */
     .roles-grid{
       display:grid;
       grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
@@ -203,7 +208,7 @@
     .role h3{margin:0; font-size:15px;}
     .role .price{color:var(--subtext); font-size:14px; margin-bottom:6px; transition: color var(--transition-time) ease;}
 
-    /* PayPal wrapper slide-in from center */
+    /* PayPal wrapper slide-in center */
     .paypal-wrapper{
       width:100%;
       display:flex;
@@ -211,14 +216,17 @@
       justify-content:center;
       margin-top:6px;
       opacity:0;
-      transform: scale(0);
+      transform: translateY(15px);
       transition: opacity 0.5s ease, transform 0.5s ease;
     }
     .paypal-wrapper.show{
       opacity:1;
-      transform: scale(1);
+      transform: translateY(0);
     }
-    .paypal-wrapper.disabled{pointer-events:none; opacity:0.6;}
+    .paypal-wrapper.disabled{
+      pointer-events:none;
+      opacity:0.6;
+    }
 
     .accepted-cards{
       display:flex;
@@ -245,7 +253,9 @@
     }
   </style>
 
+  <!-- PayPal SDK -->
   <script src="https://www.paypal.com/sdk/js?client-id=AWomsHIdagP1tiIig6-Q5hOeENO3lhpbCO20tPsBa3CmUx77koWkm6oA1qZCklI7F7PsTa4joZruigyM&currency=USD" defer></script>
+  <!-- EmailJS -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
 </head>
 <body>
@@ -269,6 +279,7 @@
     </div>
   </div>
 
+  <!-- Role Shop -->
   <section class="shop">
     <div class="shop-card shop-header">
       <h2 class="shop-title" id="roleshop">Role Shop</h2>
@@ -297,9 +308,9 @@
 </div>
 
 <script>
-window.addEventListener('load',()=>{if(window.emailjs){try{emailjs.init("zEjStXCET2RlB2UuJ");}catch(e){console.warn(e);}}});
+window.addEventListener('load', () => { if(window.emailjs) { try{emailjs.init("zEjStXCET2RlB2UuJ");}catch(e){console.warn(e);} }});
 
-const roles=[
+const roles = [
   {name:"Moderator",price:"3.29"},
   {name:"Super Moderator",price:"5.39"},
   {name:"Developer",price:"8.68"},
@@ -315,6 +326,7 @@ const emailErrorEl=document.getElementById('emailError');
 
 function isEmailValid(email){return email.includes('@');}
 
+// Build role cards with PayPal slide-in
 roles.forEach(role=>{
   const roleWrap=document.createElement('div'); roleWrap.className='role';
   const inner=document.createElement('div'); inner.className='role-inner';
@@ -340,6 +352,7 @@ roles.forEach(role=>{
   roleWrap.appendChild(inner);
   rolesGrid.appendChild(roleWrap);
 
+  // PayPal render
   (function renderPayPal(){
     if(window.paypal && paypal.Buttons){
       paypal.Buttons({
@@ -414,6 +427,7 @@ function copyText(key,btn){
   }).catch(()=>alert('Copy failed.'));
 }
 
+// Clock
 function updateClock(){
   const now=new Date();
   const sydney=new Date(now.toLocaleString('en-US',{timeZone:'Australia/Sydney'}));
@@ -421,6 +435,7 @@ function updateClock(){
 }
 updateClock(); setInterval(updateClock,1000);
 
+// Theme & Language
 function toggleTheme(){document.body.classList.toggle('light');}
 let lang='en';
 function toggleLang(){
