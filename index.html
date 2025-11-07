@@ -9,10 +9,11 @@
       --bg:#0f1720;
       --text:#e6eef8;
       --subtext:#9fb3d8;
-      --muted:rgba(255,255,255,0.4);
+      --muted:rgba(255,255,255,0.45);
       --accent:#2563eb;
       --card-bg:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
       --input-height:40px;
+      --container-max:980px;
     }
     body.light{
       --bg:#f5f7fa;
@@ -35,17 +36,25 @@
       box-sizing:border-box;
     }
 
-    .container{width:100%; max-width:980px; margin:0 auto;}
+    .container{width:100%; max-width:var(--container-max); margin:0 auto;}
 
+    /* Base card */
     .card{
       background:var(--card-bg);
       border-radius:12px;
       padding:18px;
       box-shadow:0 6px 24px rgba(2,6,23,0.45);
       margin-bottom:18px;
+      box-sizing:border-box;
     }
 
-    .controls{display:flex; gap:8px; justify-content:flex-end; margin-bottom:10px; flex-wrap:wrap;}
+    .controls{
+      display:flex;
+      gap:8px;
+      justify-content:flex-end;
+      margin-bottom:10px;
+      flex-wrap:wrap;
+    }
     .btn-small{
       background:none;
       border:1px solid rgba(255,255,255,0.08);
@@ -56,13 +65,15 @@
       font-weight:600;
       min-width:120px;
     }
+    .btn-small:active{transform:translateY(1px);}
+
     .banner{width:100%; height:auto; border-radius:10px; margin-bottom:12px;}
 
     h1{margin:0 0 6px 0; font-size:clamp(18px,3vw,24px);}
     p.lead{margin:0 0 14px 0; color:var(--subtext); font-size:14px;}
     #clock{color:var(--subtext); font-size:13px; margin-bottom:12px;}
 
-    /* Download buttons grid */
+    /* Download grid */
     .download-grid{
       display:grid;
       grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
@@ -84,8 +95,9 @@
       gap:8px;
       box-sizing:border-box;
     }
+    .btn-download:active{transform:translateY(1px);}
 
-    /* Shop Section (minimal clean) */
+    /* Shop / Role area */
     .shop{
       margin-top:6px;
       display:grid;
@@ -102,39 +114,63 @@
       box-shadow:0 6px 20px rgba(2,6,23,0.28);
     }
 
-    /* inputs aligned left and proportional */
+    /* Inputs (left aligned and proportional) */
     .inputs{
       display:flex;
-      gap:10px;
+      gap:16px;
       margin-top:8px;
       flex-wrap:wrap;
-      align-items:start;
+      align-items:flex-start;
     }
-    .inputs input{
-      flex:0 1 320px; /* desktop width */
-      max-width:420px;
-      min-width:200px;
+
+    /* Left column wrapper to keep inputs aligned left and 80% width of card area */
+    .input-left{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      flex:0 1 78%; /* ~80% of card width */
+      min-width:220px;
+      max-width:760px;
+    }
+
+    .input-right{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      flex:0 1 18%;
+      min-width:160px;
+      max-width:220px;
+      align-items:flex-start;
+      justify-content:flex-start;
+    }
+
+    label.field-label{
+      font-size:13px;
+      color:var(--subtext);
+    }
+
+    input[type="text"], input[type="email"]{
       height:var(--input-height);
-      padding:8px 12px;
+      padding:8px 10px;
       border-radius:8px;
       border:1px solid rgba(255,255,255,0.12);
       background:rgba(0,0,0,0.06);
       color:var(--text);
-      box-sizing:border-box;
       font-size:14px;
+      box-sizing:border-box;
+      width:100%;
     }
-    .inputs .left-col{display:flex; flex-direction:column; gap:8px; flex:0 1 420px;}
 
     .warning{
       color:#ffd166;
       font-size:13px;
-      margin-top:6px;
+      margin-top:8px;
       display:none;
       text-align:left;
     }
     .warning.show{display:block;}
 
-    /* role cards grid: 2 columns on wider screens */
+    /* Roles grid - 2 columns desktop, 1 on small screens */
     .roles-grid{
       display:grid;
       grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
@@ -166,18 +202,18 @@
     .role h3{margin:0; font-size:15px;}
     .role .price{color:var(--subtext); font-size:14px; margin-bottom:6px;}
 
-    /* PayPal wrapper that we will disable by pointer-events when inputs are empty */
+    /* PayPal wrapper visible always, disabled via class */
     .paypal-wrapper{
       width:100%;
       display:flex;
       align-items:center;
       justify-content:center;
       margin-top:6px;
-      transition:opacity .25s ease;
+      transition:opacity .2s ease;
     }
     .paypal-wrapper.disabled{
-      opacity:0.55;
-      pointer-events:none; /* prevent clicks */
+      opacity:0.6;
+      pointer-events:none;
     }
 
     /* accepted cards row under paypal */
@@ -197,10 +233,11 @@
 
     footer{margin-top:18px; color:var(--subtext); font-size:13px; text-align:center;}
 
-    /* small screens adjustments */
+    /* Responsive adjustments */
     @media (max-width:900px){
-      .inputs{flex-direction:column; align-items:stretch;}
-      .inputs .left-col{flex:1;}
+      .inputs{flex-direction:column;}
+      .input-left{flex:1 1 100%;}
+      .input-right{flex:1 1 100%;}
       .download-grid{grid-template-columns:1fr;}
       .roles-grid{grid-template-columns:1fr;}
       .controls{justify-content:space-between;}
@@ -209,12 +246,12 @@
 
   <!-- PayPal SDK -->
   <script src="https://www.paypal.com/sdk/js?client-id=AWomsHIdagP1tiIig6-Q5hOeENO3lhpbCO20tPsBa3CmUx77koWkm6oA1qZCklI7F7PsTa4joZruigyM&currency=USD" defer></script>
-  <!-- EmailJS -->
+  <!-- EmailJS (defer) -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
 </head>
 <body>
   <div class="container">
-    <!-- Download card -->
+    <!-- Download Card -->
     <div class="card" role="region" aria-label="Download section">
       <div class="controls" aria-hidden="false">
         <button class="btn-small" onclick="toggleTheme()">🌗 Theme</button>
@@ -234,7 +271,7 @@
       </div>
     </div>
 
-    <!-- Shop section -->
+    <!-- Role Shop Section -->
     <section class="shop" aria-labelledby="roleshop">
       <div class="shop-card shop-header" aria-hidden="false">
         <h2 class="shop-title" id="roleshop">Role Shop</h2>
@@ -243,12 +280,13 @@
 
       <div class="shop-card" aria-label="Role purchase area">
         <div class="inputs" role="form" aria-label="Buyer inputs">
-          <div class="left-col">
-            <label for="growid" style="font-size:13px;margin-bottom:4px;color:var(--subtext);">GrowID</label>
+          <div class="input-left">
+            <label class="field-label" for="growid">GrowID</label>
             <input id="growid" type="text" placeholder="Enter your GrowID" autocomplete="off" />
           </div>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <label for="buyerEmail" style="font-size:13px;margin-bottom:4px;color:var(--subtext);">Email</label>
+
+          <div class="input-right">
+            <label class="field-label" for="buyerEmail">Email</label>
             <input id="buyerEmail" type="email" placeholder="Enter your Email" autocomplete="email" />
           </div>
         </div>
@@ -263,9 +301,14 @@
   </div>
 
   <script>
-    // init emailjs if available
-    if (window.emailjs) { emailjs.init("zEjStXCET2RlB2UuJ"); }
+    // Initialize EmailJS (if loaded)
+    window.addEventListener('load', () => {
+      if (window.emailjs) {
+        try { emailjs.init("zEjStXCET2RlB2UuJ"); } catch(e){ console.warn('EmailJS init error', e); }
+      }
+    });
 
+    // Roles dataset
     const roles = [
       { name: "Moderator", price: "3.29" },
       { name: "Super Moderator", price: "5.39" },
@@ -279,10 +322,10 @@
     const emailInput = document.getElementById('buyerEmail');
     const warningEl = document.getElementById('warning');
 
-    // build role cards
+    // Create role cards with PayPal placeholders + accepted card logos
     roles.forEach(role => {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'role';
+      const roleWrap = document.createElement('div');
+      roleWrap.className = 'role';
 
       const inner = document.createElement('div');
       inner.className = 'role-inner';
@@ -294,28 +337,29 @@
       paypalWrapper.className = 'paypal-wrapper disabled';
       paypalWrapper.id = `paypal-wrapper-${role.name.replace(/\s/g,'')}`;
 
-      const paypalBtnHolder = document.createElement('div');
-      paypalBtnHolder.id = `paypal-button-${role.name.replace(/\s/g,'')}`;
+      const paypalHolder = document.createElement('div');
+      paypalHolder.id = `paypal-button-${role.name.replace(/\s/g,'')}`;
 
-      paypalWrapper.appendChild(paypalBtnHolder);
+      paypalWrapper.appendChild(paypalHolder);
 
       const accepted = document.createElement('div');
       accepted.className = 'accepted-cards';
+      // Using Wikimedia-hosted svg logos (small, widely available). Change URLs if you prefer.
       accepted.innerHTML = `
-        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal"/>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa"/>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="MasterCard"/>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Discover_Card_logo.svg" alt="Discover"/>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" title="PayPal" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa" title="Visa" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="MasterCard" title="MasterCard" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Discover_Card_logo.svg" alt="Discover" title="Discover" />
       `;
 
       inner.appendChild(title);
       inner.appendChild(price);
       inner.appendChild(paypalWrapper);
       inner.appendChild(accepted);
-      wrapper.appendChild(inner);
-      rolesGrid.appendChild(wrapper);
+      roleWrap.appendChild(inner);
+      rolesGrid.appendChild(roleWrap);
 
-      // render PayPal button (retry until SDK ready)
+      // Render PayPal button (retry until SDK available)
       (function renderPayPal(){
         if (window.paypal && paypal.Buttons) {
           paypal.Buttons({
@@ -332,6 +376,7 @@
 
               alert(`✅ ${role.name} purchased by ${paypalName}`);
 
+              // Send transaction to EmailJS (if configured)
               if (window.emailjs) {
                 emailjs.send("service_6ba3mun", "template_06qc85l", {
                   to_email: "growfaxz@gmail.com",
@@ -352,16 +397,18 @@
       })();
     });
 
-    // toggle payability & warning based on inputs
+    // Toggle payability & warning (disabled state)
     function updatePayability() {
       const ok = growInput.value.trim() && emailInput.value.trim();
-      document.querySelectorAll('.paypal-wrapper').forEach(w => w.classList.toggle('disabled', !ok));
+      document.querySelectorAll('.paypal-wrapper').forEach(w => {
+        w.classList.toggle('disabled', !ok);
+      });
       warningEl.classList.toggle('show', !ok);
     }
     growInput.addEventListener('input', updatePayability);
     emailInput.addEventListener('input', updatePayability);
 
-    // copy and clock utilities
+    // Copy utility for download buttons
     const configData = {
       powertunnel: `91.134.85.13 growtopia1.com
 91.134.85.13 growtopia2.com
@@ -377,39 +424,42 @@ growtopia2.com = 91.134.85.13
 www.growtopia1.com = 91.134.85.13
 www.growtopia2.com = 91.134.85.13`
     };
-    function copyText(key, btn){
-      navigator.clipboard.writeText(configData[key]).then(()=>{
+    function copyText(key, btn) {
+      navigator.clipboard.writeText(configData[key]).then(() => {
         const old = btn.textContent;
         btn.textContent = "✅ Copied!";
         setTimeout(()=> btn.textContent = old, 1400);
-      });
+      }).catch(()=>{ alert('Copy failed.'); });
     }
 
-    function updateClock(){
+    // Sydney clock
+    function updateClock() {
       const now = new Date();
-      const sydney = new Date(now.toLocaleString('en-US',{timeZone:'Australia/Sydney'}));
+      const sydney = new Date(now.toLocaleString('en-US', { timeZone: 'Australia/Sydney' }));
       document.getElementById('clock').textContent = 'Sydney Time: ' + sydney.toLocaleTimeString('en-GB');
     }
-    updateClock(); setInterval(updateClock,1000);
+    updateClock(); setInterval(updateClock, 1000);
 
-    // theme & language toggles (default: English)
-    function toggleTheme(){ document.body.classList.toggle('light'); }
+    // Theme & Language toggles (default EN)
+    function toggleTheme() {
+      document.body.classList.toggle('light');
+    }
 
     let lang = 'en';
-    function toggleLang(){
+    function toggleLang() {
       lang = (lang === 'en') ? 'id' : 'en';
       const en = lang === 'en';
       document.querySelector('.btn-small[onclick="toggleLang()"]').textContent = en ? '🌍 Indonesia' : '🌍 English';
       document.getElementById('title').textContent = en ? 'Growfax — Download Files' : 'Growfax — Unduh File';
       document.getElementById('desc').textContent = en ? 'Choose the file you want to copy or download.' : 'Pilih file yang ingin disalin atau diunduh.';
       document.getElementById('roleshop').textContent = en ? 'Role Shop' : 'Toko Role';
-      // warning translations
+      // Warning translations
       warningEl.textContent = en
         ? '⚠️ Please fill in your GrowID and Email to enable payment.'
         : '⚠️ Isi GrowID dan Email terlebih dahulu untuk mengaktifkan pembayaran.';
     }
 
-    // initialize state
+    // Initialize state on load
     updatePayability();
   </script>
 </body>
