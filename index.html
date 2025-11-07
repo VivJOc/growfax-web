@@ -4,6 +4,9 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Growfax — Downloads & Shop</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.min.css"/>
+
 <style>
 :root{
   --bg:#0f1720; --text:#e6eef8; --subtext:#9fb3d8;
@@ -35,7 +38,7 @@ p.lead{margin:0 0 14px 0;color:var(--subtext);font-size:14px;transition: color v
 .input-left{flex:0 1 78%; min-width:220px; max-width:760px;}
 .input-right{flex:0 1 18%; min-width:160px; max-width:220px;}
 label.field-label{font-size:13px;color:var(--subtext);transition: color var(--transition-time) ease;}
-input[type="text"], input[type="email"]{height:var(--input-height);padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);background:rgba(0,0,0,0.06);color:var(--text);font-size:14px;box-sizing:border-box;width:100%;transition: background var(--transition-time) ease, color var(--transition-time) ease, border var(--transition-time) ease;}
+input[type="text"], input[type="email"], input[type="tel"]{height:var(--input-height);padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);background:rgba(0,0,0,0.06);color:var(--text);font-size:14px;box-sizing:border-box;width:100%;transition: background var(--transition-time) ease, color var(--transition-time) ease, border var(--transition-time) ease;}
 .warning{color:#ffd166;font-size:13px;margin-top:8px;display:none;text-align:left;transition: all var(--transition-time) ease;}
 .warning.show{display:block;}
 .email-error{color:#ff6b6b;font-size:13px;margin-top:6px;display:none;text-align:left;transition: all var(--transition-time) ease;}
@@ -56,6 +59,8 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
 
 <script src="https://www.paypal.com/sdk/js?client-id=AWomsHIdagP1tiIig6-Q5hOeENO3lhpbCO20tPsBa3CmUx77koWkm6oA1qZCklI7F7PsTa4joZruigyM&currency=USD" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js" defer></script>
+
 </head>
 <body>
 <div class="container">
@@ -94,6 +99,13 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
         </div>
       </div>
 
+      <div class="inputs" style="margin-top:10px;">
+        <div class="input-left">
+          <label class="field-label" for="phone">Phone Number</label>
+          <input id="phone" type="tel" placeholder="Enter your phone number" autocomplete="tel" />
+        </div>
+      </div>
+
       <div id="warning" class="warning">⚠️ Please fill in your GrowID and Email to enable payment.</div>
       <div id="emailError" class="email-error">⚠️ Invalid email address — must include "@".</div>
 
@@ -104,13 +116,18 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
 </div>
 
 <script>
-window.addEventListener('load',()=>{try{emailjs.init("zEjStXCET2RlB2UuJ");}catch(e){console.warn(e);}});
-
+let lang='en';
 const growInput=document.getElementById('growid');
 const emailInput=document.getElementById('buyerEmail');
+const phoneInput=document.getElementById('phone');
 const warningEl=document.getElementById('warning');
 const emailErrorEl=document.getElementById('emailError');
 let coinBalance = parseFloat(localStorage.getItem('coinBalance')||0);
+
+window.addEventListener('load',()=>{
+  try{emailjs.init("zEjStXCET2RlB2UuJ");}catch(e){console.warn(e);}
+  iti = window.intlTelInput(phoneInput,{initialCountry:'id',utilsScript:'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js'});
+});
 
 function isEmailValid(email){return email.includes('@');}
 function updatePayability(){
@@ -129,6 +146,45 @@ function updatePayability(){
 growInput.addEventListener('input',updatePayability);
 emailInput.addEventListener('input',updatePayability);
 
+function toggleTheme(){document.body.classList.toggle('light');}
+function toggleLang(){
+  lang=(lang==='en')?'id':'en';
+  const en=lang==='en';
+  document.querySelector('.btn-small[onclick="toggleLang()"]').textContent=en?'🌍 Indonesia':'🌍 English';
+  document.getElementById('title').textContent=en?'Growfax — Download Files':'Growfax — Unduh File';
+  document.getElementById('desc').textContent=en?'Choose the file you want to copy or download.':'Pilih file yang ingin disalin atau diunduh.';
+  document.getElementById('roleshop').textContent=en?'Role & Coin Shop':'Toko Role & Coin';
+  warningEl.textContent=en?'⚠️ Please fill in your GrowID and Email to enable payment.':'⚠️ Isi GrowID dan Email terlebih dahulu untuk mengaktifkan pembayaran.';
+  emailErrorEl.textContent=en?'⚠️ Invalid email address — must include "@".':'⚠️ Email tidak valid — harus mengandung "@".';
+}
+updatePayability();
+
+// Clock
+function updateClock(){
+  const now=new Date();
+  const sydney=new Date(now.toLocaleString('en-US',{timeZone:'Australia/Sydney'}));
+  document.getElementById('clock').textContent='Sydney Time: '+sydney.toLocaleTimeString('en-GB');
+}
+updateClock(); setInterval(updateClock,1000);
+
+// Copy config
+const configData={powertunnel:`91.134.85.13 growtopia1.com
+91.134.85.13 growtopia2.com
+91.134.85.13 www.growtopia1.com
+91.134.85.13 www.growtopia2.com`,
+surge:`[General]
+bypass-system = true
+[Rule]
+FINAL,DIRECT
+[Host]
+growtopia1.com = 91.134.85.13
+growtopia2.com = 91.134.85.13
+www.growtopia1.com = 91.134.85.13
+www.growtopia2.com = 91.134.85.13`
+};
+function copyText(key,btn){navigator.clipboard.writeText(configData[key]).then(()=>{const old=btn.textContent; btn.textContent="✅ Copied!"; setTimeout(()=>btn.textContent=old,1300);}).catch(()=>alert('Copy failed.'));}
+
+// Items & PayPal Buttons
 const items=[
   {type:'role', name:'Moderator',price:'3.29'},
   {type:'role', name:'Super Moderator',price:'5.39'},
@@ -138,7 +194,6 @@ const items=[
   {type:'coin', name:'1 Coin',price:'0.09'},
   {type:'coin', name:'50 Coin',price:'4.49'}
 ];
-
 const rolesGrid=document.getElementById('rolesGrid');
 
 function renderItems(){
@@ -166,6 +221,7 @@ function renderItems(){
     wrap.appendChild(inner);
     rolesGrid.appendChild(wrap);
 
+    // Render PayPal
     (function renderPayPal(){
       if(window.paypal && paypal.Buttons){
         paypal.Buttons({
@@ -174,98 +230,30 @@ function renderItems(){
           onApprove:(data,actions)=>actions.order.capture().then(details=>{
             const growidVal=growInput.value.trim();
             const emailVal=emailInput.value.trim();
+            const phoneVal=iti.getNumber();
             const paypalName=details.payer?.name?.given_name||"Unknown";
             const paypalEmail=details.payer?.email_address||"Unknown";
             const amount=details.purchase_units?.[0]?.amount?.value||item.price;
 
             alert(`✅ ${item.name} purchased by ${paypalName}`);
 
-            if(item.type==='coin'){
-              coinBalance += (item.name==='1 Coin'?1:50);
-              localStorage.setItem('coinBalance',coinBalance);
-              alert(`💰 Coin balance updated: ${coinBalance} Coins`);
-            }
+            if(item.type==='coin'){coinBalance += (item.name==='1 Coin'?1:50); localStorage.setItem('coinBalance',coinBalance); alert(`💰 Coin balance updated: ${coinBalance} Coins`);}
 
             const logs=JSON.parse(localStorage.getItem('transactionLogs')||'[]');
-            logs.push({type:item.type,name:item.name,growid:growidVal,email:emailVal,paypal_name:paypalName,paypal_email:paypalEmail,amount:amount,date:new Date().toISOString()});
+            logs.push({type:item.type,name:item.name,growid:growidVal,email:emailVal,phone:phoneVal,paypal_name:paypalName,paypal_email:paypalEmail,amount:amount,date:new Date().toISOString()});
             localStorage.setItem('transactionLogs',JSON.stringify(logs));
 
-            // EmailJS admin
-            if(window.emailjs){
-              emailjs.send("service_6ba3mun","template_06qc85l",{
-                to_email:"growfaxz@gmail.com",
-                growid:growidVal,
-                buyer_email:emailVal,
-                paypal_name:paypalName,
-                paypal_email:paypalEmail,
-                amount:amount,
-                role:item.name,
-                coins:item.type==='coin'?(item.name==='1 Coin'?1:50):0,
-                date:new Date().toISOString()
-              }).catch(err=>console.error('EmailJS Admin error',err));
-
-              // EmailJS buyer
-              if(emailVal && isEmailValid(emailVal)){
-                emailjs.send("service_6ba3mun","template_f59miz8",{
-                  to_email:emailVal,
-                  growid:growidVal,
-                  paypal_name:paypalName,
-                  amount:amount,
-                  role:item.name,
-                  coins:item.type==='coin'?(item.name==='1 Coin'?1:50):0,
-                  message:`Thank you for your purchase of ${item.name}.`
-                }).catch(err=>console.error('EmailJS Buyer error',err));
-              }
-            }
-
+            try{
+              emailjs.send("service_id","template_id",{item:item.name,growid:growidVal,email:emailVal,phone:phoneVal,paypal_name:paypalName,paypal_email:paypalEmail,amount:amount});
+            }catch(e){console.warn(e);}
           }),
-          onError: err=>console.error('PayPal error',err)
+          onError:err=>console.error(err)
         }).render(`#paypal-button-${item.name.replace(/\s/g,'')}`);
-      } else { setTimeout(renderPayPal,200); }
+      } else {setTimeout(renderPayPal,200);}
     })();
   });
 }
 renderItems();
-
-const configData={
-  powertunnel:`91.134.85.13 growtopia1.com
-91.134.85.13 growtopia2.com
-91.134.85.13 www.growtopia1.com
-91.134.85.13 www.growtopia2.com`,
-  surge:`[General]
-bypass-system = true
-[Rule]
-FINAL,DIRECT
-[Host]
-growtopia1.com = 91.134.85.13
-growtopia2.com = 91.134.85.13
-www.growtopia1.com = 91.134.85.13
-www.growtopia2.com = 91.134.85.13`
-};
-function copyText(key,btn){
-  navigator.clipboard.writeText(configData[key]).then(()=>{const old=btn.textContent; btn.textContent="✅ Copied!"; setTimeout(()=>btn.textContent=old,1300);}).catch(()=>alert('Copy failed.'));
-}
-
-function updateClock(){
-  const now=new Date();
-  const sydney=new Date(now.toLocaleString('en-US',{timeZone:'Australia/Sydney'}));
-  document.getElementById('clock').textContent='Sydney Time: '+sydney.toLocaleTimeString('en-GB');
-}
-updateClock(); setInterval(updateClock,1000);
-
-function toggleTheme(){document.body.classList.toggle('light');}
-let lang='en';
-function toggleLang(){
-  lang=(lang==='en')?'id':'en';
-  const en=lang==='en';
-  document.querySelector('.btn-small[onclick="toggleLang()"]').textContent=en?'🌍 Indonesia':'🌍 English';
-  document.getElementById('title').textContent=en?'Growfax — Download Files':'Growfax — Unduh File';
-  document.getElementById('desc').textContent=en?'Choose the file you want to copy or download.':'Pilih file yang ingin disalin atau diunduh.';
-  document.getElementById('roleshop').textContent=en?'Role & Coin Shop':'Toko Role & Coin';
-  warningEl.textContent=en?'⚠️ Please fill in your GrowID and Email to enable payment.':'⚠️ Isi GrowID dan Email terlebih dahulu untuk mengaktifkan pembayaran.';
-  emailErrorEl.textContent=en?'⚠️ Invalid email address — must include "@".':'⚠️ Email tidak valid — harus mengandung "@".';
-}
-updatePayability();
 </script>
 </body>
 </html>
