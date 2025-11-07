@@ -208,7 +208,7 @@
     .role h3{margin:0; font-size:15px;}
     .role .price{color:var(--subtext); font-size:14px; margin-bottom:6px; transition: color var(--transition-time) ease;}
 
-    /* PayPal wrapper slide-in */
+    /* PayPal wrapper slide-in from right */
     .paypal-wrapper{
       width:100%;
       display:flex;
@@ -216,7 +216,7 @@
       justify-content:center;
       margin-top:6px;
       opacity:0;
-      transform: translateX(-30px);
+      transform: translateX(30px);
       transition: opacity 0.5s ease, transform 0.5s ease;
     }
     .paypal-wrapper.show{
@@ -323,16 +323,14 @@ const emailErrorEl=document.getElementById('emailError');
 
 function isEmailValid(email){return email.includes('@');}
 
-// Build role cards
+// Build role cards with PayPal slide-in
 roles.forEach(role=>{
-  const roleWrap=document.createElement('div');
-  roleWrap.className='role';
+  const roleWrap=document.createElement('div'); roleWrap.className='role';
   const inner=document.createElement('div'); inner.className='role-inner';
   const title=document.createElement('h3'); title.textContent=role.name;
   const price=document.createElement('div'); price.className='price'; price.textContent=`$${role.price} — PayPal`;
 
-  const paypalWrapper=document.createElement('div');
-  paypalWrapper.className='paypal-wrapper disabled';
+  const paypalWrapper=document.createElement('div'); paypalWrapper.className='paypal-wrapper disabled';
   paypalWrapper.id=`paypal-wrapper-${role.name.replace(/\s/g,'')}`;
   const paypalHolder=document.createElement('div'); paypalHolder.id=`paypal-button-${role.name.replace(/\s/g,'')}`;
   paypalWrapper.appendChild(paypalHolder);
