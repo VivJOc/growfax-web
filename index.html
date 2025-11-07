@@ -4,6 +4,8 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Growfax — Downloads & Shop</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css">
+
 <style>
 :root{
   --bg:#0f1720; --text:#e6eef8; --subtext:#9fb3d8;
@@ -52,11 +54,31 @@ input[type="text"], input[type="email"]{height:var(--input-height);padding:8px 1
 .accepted-cards img{height:20px;width:auto;display:block;object-fit:contain;}
 footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;transition: color var(--transition-time) ease;}
 @media (max-width:900px){.inputs{flex-direction:column;}.input-left,.input-right{flex:1 1 100%;}.download-grid{grid-template-columns:1fr;}.roles-grid{grid-template-columns:1fr;}.controls{justify-content:space-between;}}
+
+/* --- PERBAIKAN CSS UNTUK intl-tel-input --- */
+.iti { width: 100%; } /* Memastikan container intl-tel-input selebar container induk */
+
+/* Memperbaiki tinggi dan style input agar cocok dengan input kustom Anda */
+.iti input[type=tel] {
+    height: var(--input-height);
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(0,0,0,0.06);
+    color: var(--text);
+    font-size: 14px;
+    box-sizing: border-box;
+    width: 100%; 
+}
+
+/* Memastikan dropdown list terbaca di tema gelap */
+.iti__country-list {
+    color: #0f1720; 
+}
+/* --- AKHIR PERBAIKAN CSS --- */
 </style>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css">
-
-<script src="https://www.paypal.com/sdk/js?client-id=AWomsHIdagP1tiIig6-Q5hOeENO3lhpbCO20tPsBa3CmUx77koKkm6oA1qZCklI7F7PsTa4joZruigyM&currency=USD" defer></script>
+<script src="https://www.paypal.com/sdk/js?client-id=AWomsHIdagP1tiIig6-Q5hOeENO3lhpbCO20tPsBa3CmUx77koWkm6oA1qZCklI7F7PsTa4joZruigyM&currency=USD" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
 </head>
 <body>
@@ -94,7 +116,7 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
           <label class="field-label" for="buyerEmail">Email</label>
           <input id="buyerEmail" type="email" placeholder="Enter your Email" autocomplete="email" />
         </div>
-        <div class="input-left" style="flex: 1 1 100%; max-width: 100%; margin-top: 10px;">
+        <div class="input-full-width" style="width: 100%; margin-top: 10px;">
           <label class="field-label" for="mobileNumber">Mobile Number</label>
           <input id="mobileNumber" type="tel" placeholder="Enter mobile number" autocomplete="tel" style="width: 100%;" />
         </div>
@@ -280,16 +302,13 @@ let iti = null;
 
 if (mobileInputField && window.intlTelInput) {
     iti = window.intlTelInput(mobileInputField, {
-        // Menggunakan IP Geolocation untuk menentukan negara awal (misalnya: Indonesia, +62)
         initialCountry: "auto", 
         geoIpLookup: (callback) => {
             fetch("https://ipapi.co/json")
                 .then((res) => res.json())
                 .then((data) => callback(data.country_code))
-                .catch(() => callback("us")); // Default ke US jika deteksi gagal
+                .catch(() => callback("us")); 
         },
-        // Pastikan input selalu berukuran 100% dan terlihat rapi
-        customContainer: "w-100", 
         utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js",
     });
 }
