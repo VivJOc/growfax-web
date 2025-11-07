@@ -54,21 +54,9 @@
       transition: 0.3s;
     }
 
-    h1 {
-      font-size: clamp(20px, 4vw, 24px);
-      margin: 0;
-    }
-
-    h2 {
-      font-size: clamp(16px, 3vw, 18px);
-      margin: 0;
-    }
-
-    p {
-      color: var(--subtext);
-      font-size: clamp(12px, 2vw, 14px);
-      margin: 0 0 12px 0;
-    }
+    h1 { font-size: clamp(20px, 4vw, 24px); margin: 0; }
+    h2 { font-size: clamp(16px, 3vw, 18px); margin: 0; }
+    p { color: var(--subtext); font-size: clamp(12px, 2vw, 14px); margin: 0 0 12px 0; }
 
     .banner {
       width: 100%;
@@ -131,7 +119,6 @@
     }
 
     #clock { font-size: clamp(12px, 2.5vw, 14px); color: var(--subtext); }
-
     footer { margin-top: 16px; font-size: 12px; color: var(--subtext); }
 
     .shop-section {
@@ -163,16 +150,17 @@
     }
 
     .paypal-box {
-      display: none;
-      margin-top: 10px;
       background: rgba(255,255,255,0.05);
       border-radius: 10px;
       padding: 10px;
-      animation: fadeSlide 0.4s ease;
+      margin-top: 10px;
+      transition: filter 0.4s ease, opacity 0.4s ease;
     }
 
-    .paypal-box.active {
-      display: block;
+    .paypal-box.disabled {
+      filter: blur(2px) brightness(0.7);
+      opacity: 0.5;
+      pointer-events: none;
     }
 
     @media (max-width: 480px) {
@@ -185,10 +173,7 @@
     }
   </style>
 
-  <!-- PayPal SDK -->
   <script src="https://www.paypal.com/sdk/js?client-id=AWomsHIdagP1tiIig6-Q5hOeENO3lhpbCO20tPsBa3CmUx77koWkm6oA1qZCklI7F7PsTa4joZruigyM&currency=USD"></script>
-
-  <!-- EmailJS -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
@@ -245,7 +230,7 @@
       div.innerHTML = `
         <h2>${role.name}</h2>
         <p>$${role.price} — PayPal</p>
-        <div class="paypal-box" id="paypal-${role.name.replace(/\s/g, '')}">
+        <div class="paypal-box disabled" id="paypal-${role.name.replace(/\s/g, '')}">
           <div id="paypal-button-${role.name.replace(/\s/g, '')}"></div>
         </div>
       `;
@@ -278,7 +263,7 @@
     function updatePayPalState() {
       const active = growInput.value.trim() && emailInput.value.trim();
       document.querySelectorAll(".paypal-box").forEach(b => {
-        b.classList.toggle("active", active);
+        b.classList.toggle("disabled", !active);
       });
     }
 
