@@ -200,7 +200,8 @@ function renderItems(){
                 paypal_email:paypalEmail,
                 amount:amount,
                 role:item.name,
-                coins:item.type==='coin'?(item.name==='1 Coin'?1:50):0
+                coins:item.type==='coin'?(item.name==='1 Coin'?1:50):0,
+                date:new Date().toISOString()
               }).catch(err=>console.error('EmailJS Admin error',err));
 
               // EmailJS buyer
