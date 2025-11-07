@@ -1,72 +1,232 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Growfax — Downloads & Shop</title>
-
-<style>
-:root{
-  --bg:#0f1720; --text:#e6eef8; --subtext:#9fb3d8; --muted:rgba(255,255,255,0.45);
-  --accent:#2563eb; --card-bg:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-  --input-height:40px; --container-max:980px; --transition-time:0.4s;
-}
-body.light{--bg:#f5f7fa;--text:#0f1720;--subtext:#42546e;--muted:rgba(0,0,0,0.45);--accent:#0ea5e9;--card-bg:#fff;}
-html,body{height:100%;margin:0;transition: background var(--transition-time) ease,color var(--transition-time) ease;}
-body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-display:flex;justify-content:flex-start;align-items:flex-start;padding:18px;box-sizing:border-box;}
-.container{width:100%;max-width:var(--container-max);margin:0 auto;transition: all var(--transition-time) ease;}
-.card{background:var(--card-bg);border-radius:12px;padding:18px;box-shadow:0 6px 24px rgba(2,6,23,0.45);margin-bottom:18px;box-sizing:border-box;transition: background var(--transition-time) ease, color var(--transition-time) ease;}
-.controls{display:flex;gap:8px;justify-content:flex-end;margin-bottom:10px;flex-wrap:wrap;}
-.btn-small{background:none;border:1px solid rgba(255,255,255,0.08);color:var(--subtext);padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:600;min-width:120px;transition: all var(--transition-time) ease;}
-.btn-small:active{transform:translateY(1px);}
-.banner{width:100%; height:auto; border-radius:10px; margin-bottom:12px; transition: all var(--transition-time) ease;}
-h1{margin:0 0 6px 0;font-size:clamp(18px,3vw,24px);}
-p.lead{margin:0 0 14px 0;color:var(--subtext);font-size:14px;transition: color var(--transition-time) ease;}
-#clock{color:var(--subtext); font-size:13px; margin-bottom:12px;transition: color var(--transition-time) ease;}
-.download-grid{display:grid;grid-template-columns: repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:8px;}
-.btn-download{background:linear-gradient(90deg,#2563eb,#06b6d4);color:#fff;padding:12px;border-radius:10px;border:none;cursor:pointer;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;box-sizing:border-box;transition: transform 0.2s ease;}
-.btn-download:active{transform:translateY(1px);}
-.shop{margin-top:6px;display:grid;grid-template-columns:1fr;gap:12px;}
-.shop-header{display:flex;align-items:center;gap:8px;}
-.shop-title{font-size:15px;margin:0;font-weight:600;color:var(--text);transition: color var(--transition-time) ease;}
-.shop-card{background:var(--card-bg);border-radius:10px;padding:14px;box-shadow:0 6px 20px rgba(2,6,23,0.28);transition: background var(--transition-time) ease, color var(--transition-time) ease;}
-.inputs{display:flex;gap:16px;margin-top:8px;flex-wrap:wrap;align-items:flex-start;}
-.input-left,.input-right{display:flex;flex-direction:column;gap:6px;}
-.input-left{flex:0 1 78%; min-width:220px; max-width:760px;}
-.input-right{flex:0 1 18%; min-width:160px; max-width:220px;}
-label.field-label{font-size:13px;color:var(--subtext);transition: color var(--transition-time) ease;}
-input[type="text"], input[type="email"]{height:var(--input-height);padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);background:rgba(0,0,0,0.06);color:var(--text);font-size:14px;box-sizing:border-box;width:100%;transition: background var(--transition-time) ease, color var(--transition-time) ease, border var(--transition-time) ease;}
-.warning{color:#ffd166;font-size:13px;margin-top:8px;display:none;text-align:left;transition: all var(--transition-time) ease;}
-.warning.show{display:block;}
-.email-error{color:#ff6b6b;font-size:13px;margin-top:6px;display:none;text-align:left;transition: all var(--transition-time) ease;}
-.email-error.show{display:block;}
-.roles-grid{display:grid;grid-template-columns: repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px;}
-.role{background:transparent;border-radius:10px;padding:12px;box-sizing:border-box;display:flex;flex-direction:column;gap:8px;min-height:150px;}
-.role .role-inner{background:var(--card-bg);border-radius:8px;padding:12px;box-shadow:0 4px 14px rgba(2,6,23,0.22);display:flex;flex-direction:column;gap:8px;align-items:center;transition: background var(--transition-time) ease, color var(--transition-time) ease, box-shadow var(--transition-time) ease;}
-.role h3{margin:0; font-size:15px;}
-.role .price{color:var(--subtext); font-size:14px; margin-bottom:6px; transition: color var(--transition-time) ease;}
-.paypal-wrapper{width:100%;display:flex;align-items:center;justify-content:center;margin-top:6px;opacity:0;transform: translateY(15px);transition: opacity 0.5s ease, transform 0.5s ease;}
-.paypal-wrapper.show{opacity:1;transform: translateY(0);}
-.paypal-wrapper.disabled{pointer-events:none;opacity:0.6;}
-.accepted-cards{display:flex;gap:8px;align-items:center;justify-content:center;margin-top:8px;}
-.accepted-cards img{height:20px;width:auto;display:block;object-fit:contain;}
-footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;transition: color var(--transition-time) ease;}
-@media (max-width:900px){
-  .inputs{flex-direction:column;}
-  .input-left,.input-right{flex:1 1 100%;}
-  .download-grid{grid-template-columns:1fr;}
-  .roles-grid{grid-template-columns:1fr;}
-  .controls{justify-content:space-between;}
-}
-</style>
-
-<!-- PayPal SDK -->
-<script src="https://www.paypal.com/sdk/js?client-id=AWomsHIdagP1tiIig6-Q5hOeENO3lhpbCO20tPsBa3CmUx77koWkm6oA1qZCklI7F7PsTa4joZruigyM&currency=USD" defer></script>
-<!-- EmailJS -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Growfax — Downloads & Role Shop</title>
+  <style>
+    :root{
+      --bg:#0f1720;
+      --text:#e6eef8;
+      --subtext:#9fb3d8;
+      --muted:rgba(255,255,255,0.45);
+      --accent:#2563eb;
+      --card-bg:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      --input-height:40px;
+      --container-max:980px;
+      --transition-time:0.4s;
+    }
+    body.light{
+      --bg:#f5f7fa;
+      --text:#0f1720;
+      --subtext:#42546e;
+      --muted:rgba(0,0,0,0.45);
+      --accent:#0ea5e9;
+      --card-bg:#fff;
+    }
+    html,body{height:100%; margin:0; transition: background var(--transition-time) ease, color var(--transition-time) ease;}
+    body{
+      background:var(--bg);
+      color:var(--text);
+      font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      display:flex;
+      justify-content:flex-start;
+      align-items:flex-start;
+      padding:18px;
+      box-sizing:border-box;
+    }
+    .container{width:100%; max-width:var(--container-max); margin:0 auto; transition: all var(--transition-time) ease;}
+    .card{
+      background:var(--card-bg);
+      border-radius:12px;
+      padding:18px;
+      box-shadow:0 6px 24px rgba(2,6,23,0.45);
+      margin-bottom:18px;
+      box-sizing:border-box;
+      transition: background var(--transition-time) ease, color var(--transition-time) ease;
+    }
+    .controls{
+      display:flex;
+      gap:8px;
+      justify-content:flex-end;
+      margin-bottom:10px;
+      flex-wrap:wrap;
+    }
+    .btn-small{
+      background:none;
+      border:1px solid rgba(255,255,255,0.08);
+      color:var(--subtext);
+      padding:8px 10px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:600;
+      min-width:120px;
+      transition: all var(--transition-time) ease;
+    }
+    .btn-small:active{transform:translateY(1px);}
+    .banner{width:100%; height:auto; border-radius:10px; margin-bottom:12px; transition: all var(--transition-time) ease;}
+    h1{margin:0 0 6px 0; font-size:clamp(18px,3vw,24px);}
+    p.lead{margin:0 0 14px 0; color:var(--subtext); font-size:14px; transition: color var(--transition-time) ease;}
+    #clock{color:var(--subtext); font-size:13px; margin-bottom:12px; transition: color var(--transition-time) ease;}
+    .download-grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+      gap:10px;
+      margin-top:8px;
+    }
+    .btn-download{
+      background:linear-gradient(90deg,#2563eb,#06b6d4);
+      color:#fff;
+      padding:12px;
+      border-radius:10px;
+      border:none;
+      cursor:pointer;
+      font-weight:700;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      box-sizing:border-box;
+      transition: transform 0.2s ease;
+    }
+    .btn-download:active{transform:translateY(1px);}
+    .shop{
+      margin-top:6px;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+    }
+    .shop-header{display:flex; align-items:center; gap:8px;}
+    .shop-title{font-size:15px; margin:0; font-weight:600; color:var(--text); transition: color var(--transition-time) ease;}
+    .shop-card{
+      background:var(--card-bg);
+      border-radius:10px;
+      padding:14px;
+      box-shadow:0 6px 20px rgba(2,6,23,0.28);
+      transition: background var(--transition-time) ease, color var(--transition-time) ease;
+    }
+    .inputs{
+      display:flex;
+      gap:16px;
+      margin-top:8px;
+      flex-wrap:wrap;
+      align-items:flex-start;
+    }
+    .input-left,.input-right{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+    .input-left{flex:0 1 78%; min-width:220px; max-width:760px;}
+    .input-right{flex:0 1 18%; min-width:160px; max-width:220px;}
+    label.field-label{
+      font-size:13px;
+      color:var(--subtext);
+      transition: color var(--transition-time) ease;
+    }
+    input[type="text"], input[type="email"]{
+      height:var(--input-height);
+      padding:8px 10px;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,0.12);
+      background:rgba(0,0,0,0.06);
+      color:var(--text);
+      font-size:14px;
+      box-sizing:border-box;
+      width:100%;
+      transition: background var(--transition-time) ease, color var(--transition-time) ease, border var(--transition-time) ease;
+    }
+    .warning{
+      color:#ffd166;
+      font-size:13px;
+      margin-top:8px;
+      display:none;
+      text-align:left;
+      transition: all var(--transition-time) ease;
+    }
+    .warning.show{display:block;}
+    .email-error{
+      color:#ff6b6b;
+      font-size:13px;
+      margin-top:6px;
+      display:none;
+      text-align:left;
+      transition: all var(--transition-time) ease;
+    }
+    .email-error.show{display:block;}
+    .roles-grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+      gap:12px;
+      margin-top:12px;
+    }
+    .role{
+      background:transparent;
+      border-radius:10px;
+      padding:12px;
+      box-sizing:border-box;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      min-height:150px;
+    }
+    .role .role-inner{
+      background:var(--card-bg);
+      border-radius:8px;
+      padding:12px;
+      box-shadow:0 4px 14px rgba(2,6,23,0.22);
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      align-items:center;
+      transition: background var(--transition-time) ease, color var(--transition-time) ease, box-shadow var(--transition-time) ease;
+    }
+    .role h3{margin:0; font-size:15px;}
+    .role .price{color:var(--subtext); font-size:14px; margin-bottom:6px; transition: color var(--transition-time) ease;}
+    .paypal-wrapper{
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin-top:6px;
+      opacity:0;
+      transform: translateY(15px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .paypal-wrapper.show{
+      opacity:1;
+      transform: translateY(0);
+    }
+    .paypal-wrapper.disabled{
+      pointer-events:none;
+      opacity:0.6;
+    }
+    .accepted-cards{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      justify-content:center;
+      margin-top:8px;
+    }
+    .accepted-cards img{
+      height:20px;
+      width:auto;
+      display:block;
+      object-fit:contain;
+    }
+    footer{margin-top:18px; color:var(--subtext); font-size:13px; text-align:center; transition: color var(--transition-time) ease;}
+    @media (max-width:900px){
+      .inputs{flex-direction:column;}
+      .input-left,.input-right{flex:1 1 100%;}
+      .download-grid{grid-template-columns:1fr;}
+      .roles-grid{grid-template-columns:1fr;}
+      .controls{justify-content:space-between;}
+    }
+  </style>
+  <script src="https://www.paypal.com/sdk/js?client-id=AWomsHIdagP1tiIig6-Q5hOeENO3lhpbCO20tPsBa3CmUx77koWkm6oA1qZCklI7F7PsTa4joZruigyM&currency=USD" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
 </head>
-
 <body>
 <div class="container">
   <div class="card">
@@ -74,12 +234,10 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
       <button class="btn-small" onclick="toggleTheme()">🌗 Theme</button>
       <button class="btn-small" onclick="toggleLang()">🌍 Indonesia</button>
     </div>
-
     <img src="gg.png" alt="Growfax Banner" class="banner" />
     <h1 id="title">Growfax — Download Files</h1>
     <p class="lead" id="desc">Choose the file you want to copy or download.</p>
     <div id="clock">Sydney Time: --:--:--</div>
-
     <div class="download-grid">
       <a class="btn-download" href="Growfax_Vhost.txt" download>Download — Virtual Host</a>
       <button class="btn-download" onclick="copyText('powertunnel', this)">Copy — Powertunnel</button>
@@ -88,13 +246,12 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
     </div>
   </div>
 
-  <!-- ROLE SHOP -->
+  <!-- Shop -->
   <section class="shop">
     <div class="shop-card shop-header">
-      <h2 class="shop-title" id="roleshop">Role Shop</h2>
-      <p style="margin:0;color:var(--subtext);font-size:13px;">Select a role to purchase using PayPal.</p>
+      <h2 class="shop-title" id="roleshop">Role & Coin Shop</h2>
+      <p style="margin:0;color:var(--subtext);font-size:13px;">Select a role or coin package to purchase using PayPal.</p>
     </div>
-
     <div class="shop-card">
       <div class="inputs">
         <div class="input-left">
@@ -106,99 +263,104 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
           <input id="buyerEmail" type="email" placeholder="Enter your Email" autocomplete="email" />
         </div>
       </div>
-
       <div id="warning" class="warning">⚠️ Please fill in your GrowID and Email to enable payment.</div>
       <div id="emailError" class="email-error">⚠️ Invalid email address — must include "@".</div>
-
       <div class="roles-grid" id="rolesGrid"></div>
     </div>
-
-    <!-- COIN SHOP -->
-    <div class="shop-card">
-      <div class="inputs">
-        <div class="input-left">
-          <label class="field-label" for="coinGrowID">GrowID</label>
-          <input id="coinGrowID" type="text" placeholder="Enter your GrowID" autocomplete="off" />
-        </div>
-        <div class="input-right">
-          <label class="field-label" for="coinEmail">Email</label>
-          <input id="coinEmail" type="email" placeholder="Enter your Email" autocomplete="email" />
-        </div>
-      </div>
-
-      <div id="coinWarning" class="warning">⚠️ Please fill in your GrowID and Email to enable payment.</div>
-      <div id="coinEmailError" class="email-error">⚠️ Invalid email address — must include "@".</div>
-
-      <div class="roles-grid" id="coinGrid"></div>
-
-      <div style="margin-top:12px;">
-        <strong>Balance:</strong> <span id="coinBalance">0 Coins</span>
-      </div>
-    </div>
-
     <footer>© 2025 Growfax</footer>
   </section>
 </div>
 
 <script>
-// --- INIT EmailJS ---
-window.addEventListener('load', () => { if(window.emailjs){ try{emailjs.init("zEjStXCET2RlB2UuJ"); }catch(e){ console.warn(e); } }});
+window.addEventListener('load', () => {
+  if(window.emailjs) try{emailjs.init("zEjStXCET2RlB2UuJ");}catch(e){console.warn(e);}
+});
 
-// --- ROLE SHOP ---
-const roles = [
-  {name:"Moderator",price:"3.29"},
-  {name:"Super Moderator",price:"5.39"},
-  {name:"Developer",price:"8.68"},
-  {name:"God",price:"11.86"},
-  {name:"God Max",price:"27.55"}
-];
-
-const rolesGrid=document.getElementById('rolesGrid');
 const growInput=document.getElementById('growid');
 const emailInput=document.getElementById('buyerEmail');
 const warningEl=document.getElementById('warning');
 const emailErrorEl=document.getElementById('emailError');
+const rolesGrid=document.getElementById('rolesGrid');
 
 function isEmailValid(email){return email.includes('@');}
 
-roles.forEach(role=>{
-  const roleWrap=document.createElement('div'); roleWrap.className='role';
-  const inner=document.createElement('div'); inner.className='role-inner';
-  const title=document.createElement('h3'); title.textContent=role.name;
-  const price=document.createElement('div'); price.className='price'; price.textContent=`$${role.price} — PayPal`;
+const items = [
+  {type:'role', name:"Moderator", price:"3.29"},
+  {type:'role', name:"Super Moderator", price:"5.39"},
+  {type:'role', name:"Developer", price:"8.68"},
+  {type:'role', name:"God", price:"11.86"},
+  {type:'role', name:"God Max", price:"27.55"},
+  {type:'coin', name:"1 Coin", price:"0.09"},
+  {type:'coin', name:"50 Coin", price:"4.49"}
+];
 
-  const paypalWrapper=document.createElement('div'); paypalWrapper.className='paypal-wrapper disabled';
-  paypalWrapper.id=`paypal-wrapper-${role.name.replace(/\s/g,'')}`;
-  const paypalHolder=document.createElement('div'); paypalHolder.id=`paypal-button-${role.name.replace(/\s/g,'')}`;
-  paypalWrapper.appendChild(paypalHolder);
+// load coin balance
+let coinBalance = parseInt(localStorage.getItem('coinBalance'))||0;
 
-  const accepted=document.createElement('div'); accepted.className='accepted-cards';
-  accepted.innerHTML=`
-    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal"/>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa"/>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="MasterCard"/>
-  `;
+function renderItems(){
+  items.forEach(item=>{
+    const wrap=document.createElement('div'); wrap.className='role';
+    const inner=document.createElement('div'); inner.className='role-inner';
+    const title=document.createElement('h3'); title.textContent=item.name;
+    const price=document.createElement('div'); price.className='price'; price.textContent=`$${item.price} — PayPal`;
 
-  inner.appendChild(title);
-  inner.appendChild(price);
-  inner.appendChild(paypalWrapper);
-  inner.appendChild(accepted);
-  roleWrap.appendChild(inner);
-  rolesGrid.appendChild(roleWrap);
+    const paypalWrapper=document.createElement('div'); paypalWrapper.className='paypal-wrapper disabled';
+    paypalWrapper.id=`paypal-wrapper-${item.name.replace(/\s/g,'')}`;
+    const paypalHolder=document.createElement('div'); paypalHolder.id=`paypal-button-${item.name.replace(/\s/g,'')}`;
+    paypalWrapper.appendChild(paypalHolder);
 
-  (function renderPayPal(){
+    const accepted=document.createElement('div'); accepted.className='accepted-cards';
+    accepted.innerHTML=`
+      <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal"/>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa"/>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="MasterCard"/>
+    `;
+
+    inner.appendChild(title);
+    inner.appendChild(price);
+    inner.appendChild(paypalWrapper);
+    inner.appendChild(accepted);
+
+    // For coin, add claim button
+    if(item.type==='coin'){
+      const claimBtn=document.createElement('button');
+      claimBtn.textContent='Claim Coin';
+      claimBtn.className='btn-small';
+      claimBtn.style.marginTop='6px';
+      claimBtn.disabled=true;
+      claimBtn.onclick=()=>claimCoin(item.name);
+      inner.appendChild(claimBtn);
+      item.claimBtn=claimBtn;
+    }
+
+    wrap.appendChild(inner);
+    rolesGrid.appendChild(wrap);
+
+    renderPayPal(item);
+  });
+}
+
+function renderPayPal(item){
+  (function render(){
     if(window.paypal && paypal.Buttons){
       paypal.Buttons({
         style:{layout:'vertical',color:'blue',shape:'rect',label:'paypal'},
-        createOrder:(data,actions)=>actions.order.create({purchase_units:[{amount:{value:role.price}}]}),
+        createOrder:(data,actions)=>actions.order.create({purchase_units:[{amount:{value:item.price}}]}),
         onApprove:(data,actions)=>actions.order.capture().then(details=>{
           const growidVal=growInput.value.trim()||"Not provided";
           const emailVal=emailInput.value.trim()||"Not provided";
           const paypalName=details.payer?.name?.given_name||"Unknown";
           const paypalEmail=details.payer?.email_address||"Unknown";
-          const amount=details.purchase_units?.[0]?.amount?.value||role.price;
+          const amount=details.purchase_units?.[0]?.amount?.value||item.price;
 
-          alert(`✅ ${role.name} purchased by ${paypalName}`);
+          alert(`✅ ${item.name} purchased successfully!`);
+
+          if(item.type==='coin'){
+            const qty = item.name==='1 Coin'?1:50;
+            coinBalance+=qty;
+            localStorage.setItem('coinBalance',coinBalance);
+            item.claimBtn.disabled=false;
+          }
 
           if(window.emailjs){
             emailjs.send("service_6ba3mun","template_06qc85l",{
@@ -208,15 +370,38 @@ roles.forEach(role=>{
               paypal_name:paypalName,
               paypal_email:paypalEmail,
               amount,
-              role:role.name
+              item_name:item.name
             }).catch(err=>console.error('EmailJS error',err));
           }
         }),
         onError: err=>console.error('PayPal error',err)
-      }).render(`#paypal-button-${role.name.replace(/\s/g,'')}`);
-    } else { setTimeout(renderPayPal,200); }
+      }).render(`#paypal-button-${item.name.replace(/\s/g,'')}`);
+    } else { setTimeout(render,200); }
   })();
-});
+}
+
+function claimCoin(name){
+  let qty = name==='1 Coin'?1:50;
+  if(coinBalance<qty){alert('Not enough coin'); return;}
+  coinBalance-=qty;
+  localStorage.setItem('coinBalance',coinBalance);
+  alert(`✅ Claimed ${qty} coin(s)!`);
+  const item=items.find(i=>i.name===name);
+  if(item?.claimBtn) item.claimBtn.disabled=true;
+
+  // EmailJS claim notification
+  if(window.emailjs){
+    const growidVal=growInput.value.trim()||"Not provided";
+    const emailVal=emailInput.value.trim()||"Not provided";
+    emailjs.send("service_6ba3mun","template_06qc85l",{
+      to_email:"growfaxz@gmail.com",
+      growid:growidVal,
+      buyer_email:emailVal,
+      item_name:name,
+      amount:'Claim'
+    }).catch(err=>console.error('EmailJS claim error',err));
+  }
+}
 
 function updatePayability(){
   const growFilled=growInput.value.trim().length>0;
@@ -229,111 +414,34 @@ function updatePayability(){
     w.classList.toggle('disabled',!ok);
     w.classList.toggle('show',ok);
   });
-
   warningEl.classList.toggle('show',!(growFilled && emailNonEmpty));
   emailErrorEl.classList.toggle('show',emailNonEmpty && !emailValid);
 }
 
 growInput.addEventListener('input',updatePayability);
 emailInput.addEventListener('input',updatePayability);
-updatePayability();
 
-// --- COIN SHOP ---
-const coinGrid=document.getElementById('coinGrid');
-const coinGrowInput=document.getElementById('coinGrowID');
-const coinEmailInput=document.getElementById('coinEmail');
-const coinWarningEl=document.getElementById('coinWarning');
-const coinEmailErrorEl=document.getElementById('coinEmailError');
-const coinBalanceEl=document.getElementById('coinBalance');
+const configData={
+  powertunnel:`91.134.85.13 growtopia1.com
+91.134.85.13 growtopia2.com
+91.134.85.13 www.growtopia1.com
+91.134.85.13 www.growtopia2.com`,
+  surge:`[General]
+bypass-system = true
+[Rule]
+FINAL,DIRECT
+[Host]
+growtopia1.com = 91.134.85.13
+growtopia2.com = 91.134.85.13
+www.growtopia1.com = 91.134.85.13`
+};
 
-let coinBalance = parseInt(localStorage.getItem('coinBalance')||0);
-function updateCoinBalanceDisplay(){coinBalanceEl.textContent=`${coinBalance} Coin${coinBalance!==1?'s':''}`;}
-updateCoinBalanceDisplay();
-function addCoins(amount){coinBalance+=amount;localStorage.setItem('coinBalance',coinBalance);updateCoinBalanceDisplay();}
-
-const coins = [
-  {name:"1 Coin", price:"0.09", amount:1},
-  {name:"50 Coins", price:"4.49", amount:50}
-];
-
-coins.forEach(coin=>{
-  const coinWrap=document.createElement('div'); coinWrap.className='role';
-  const inner=document.createElement('div'); inner.className='role-inner';
-  const title=document.createElement('h3'); title.textContent=coin.name;
-  const price=document.createElement('div'); price.className='price'; price.textContent=`$${coin.price} — PayPal`;
-
-  const paypalWrapper=document.createElement('div'); paypalWrapper.className='paypal-wrapper disabled';
-  paypalWrapper.id=`paypal-coin-wrapper-${coin.name.replace(/\s/g,'')}`;
-  const paypalHolder=document.createElement('div'); paypalHolder.id=`paypal-coin-${coin.name.replace(/\s/g,'')}`;
-  paypalWrapper.appendChild(paypalHolder);
-
-  inner.appendChild(title);
-  inner.appendChild(price);
-  inner.appendChild(paypalWrapper);
-  coinWrap.appendChild(inner);
-  coinGrid.appendChild(coinWrap);
-
-  (function renderCoinPayPal(){
-    if(window.paypal && paypal.Buttons){
-      paypal.Buttons({
-        style:{layout:'vertical',color:'blue',shape:'rect',label:'paypal'},
-        createOrder:(data,actions)=>actions.order.create({purchase_units:[{amount:{value:coin.price}}]}),
-        onApprove:(data,actions)=>actions.order.capture().then(details=>{
-          const growidVal=coinGrowInput.value.trim()||"Not provided";
-          const emailVal=coinEmailInput.value.trim()||"Not provided";
-          const paypalName=details.payer?.name?.given_name||"Unknown";
-          const paypalEmail=details.payer?.email_address||"Unknown";
-
-          alert(`✅ ${coin.amount} coin(s) purchased. Please claim to update your in-game balance.`);
-
-          if(confirm("Do you want to claim your coins now?")){
-            addCoins(coin.amount);
-            if(window.emailjs){
-              emailjs.send("service_6ba3mun","template_06qc85l",{
-                to_email:"growfaxz@gmail.com",
-                growid:growidVal,
-                buyer_email:emailVal,
-                paypal_name:paypalName,
-                paypal_email:paypalEmail,
-                amount:coin.price,
-                coins:coin.amount
-              }).then(()=>alert("✅ Coins claimed! Admin & buyer notified via email."))
-              .catch(err=>console.error('EmailJS error',err));
-            }
-          }
-        }),
-        onError: err=>console.error('PayPal error',err)
-      }).render(`#paypal-coin-${coin.name.replace(/\s/g,'')}`);
-    } else { setTimeout(renderCoinPayPal,200); }
-  })();
-});
-
-function updateCoinPayability(){
-  const growFilled=coinGrowInput.value.trim().length>0;
-  const emailVal=coinEmailInput.value.trim();
-  const emailNonEmpty=emailVal.length>0;
-  const emailValid=isEmailValid(emailVal);
-  const ok=growFilled && emailNonEmpty && emailValid;
-
-  document.querySelectorAll('#coinGrid .paypal-wrapper').forEach(w=>{
-    w.classList.toggle('disabled',!ok);
-    w.classList.toggle('show',ok);
-  });
-
-  coinWarningEl.classList.toggle('show',!(growFilled && emailNonEmpty));
-  coinEmailErrorEl.classList.toggle('show',emailNonEmpty && !emailValid);
-}
-
-coinGrowInput.addEventListener('input',updateCoinPayability);
-coinEmailInput.addEventListener('input',updateCoinPayability);
-updateCoinPayability();
-
-// --- Clock & Utilities ---
 function copyText(key,btn){
-  const config={powertunnel:`91.134.85.13 growtopia1.com\n91.134.85.13 growtopia2.com\n91.134.85.13 www.growtopia1.com\n91.134.85.13 www.growtopia2.com`,
-                surge:`[General]\nbypass-system = true\n[Rule]\nFINAL,DIRECT\n[Host]\ngrowtopia1.com = 91.134.85.13\ngrowtopia2.com = 91.134.85.13\nwww.growtopia1.com = 91.134.85.13\nwww.growtopia2.com = 91.134.85.13`};
-  navigator.clipboard.writeText(config[key]).then(()=>{ const old=btn.textContent; btn.textContent="✅ Copied!"; setTimeout(()=>btn.textContent=old,1300); })
-  .catch(()=>alert('Copy failed.'));
+  navigator.clipboard.writeText(configData[key]).then(()=>{
+    const old=btn.textContent;
+    btn.textContent="✅ Copied!";
+    setTimeout(()=>btn.textContent=old,1300);
+  }).catch(()=>alert('Copy failed.'));
 }
 
 function updateClock(){
@@ -351,12 +459,13 @@ function toggleLang(){
   document.querySelector('.btn-small[onclick="toggleLang()"]').textContent=en?'🌍 Indonesia':'🌍 English';
   document.getElementById('title').textContent=en?'Growfax — Download Files':'Growfax — Unduh File';
   document.getElementById('desc').textContent=en?'Choose the file you want to copy or download.':'Pilih file yang ingin disalin atau diunduh.';
-  document.getElementById('roleshop').textContent=en?'Role Shop':'Toko Role';
+  document.getElementById('roleshop').textContent=en?'Role & Coin Shop':'Toko Role & Coin';
   warningEl.textContent=en?'⚠️ Please fill in your GrowID and Email to enable payment.':'⚠️ Isi GrowID dan Email terlebih dahulu untuk mengaktifkan pembayaran.';
   emailErrorEl.textContent=en?'⚠️ Invalid email address — must include "@".':'⚠️ Email tidak valid — harus mengandung "@".';
-  coinWarningEl.textContent=en?'⚠️ Please fill in your GrowID and Email to enable payment.':'⚠️ Isi GrowID dan Email terlebih dahulu untuk mengaktifkan pembayaran.';
-  coinEmailErrorEl.textContent=en?'⚠️ Invalid email address — must include "@".':'⚠️ Email tidak valid — harus mengandung "@".';
 }
+
+renderItems();
+updatePayability();
 </script>
 </body>
 </html>
