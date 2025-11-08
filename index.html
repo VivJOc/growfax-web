@@ -1,5 +1,3 @@
-role nya ganti aja jadi vip 2$, moderator 6.76$, dan admin 30.78$
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -131,14 +129,13 @@ function updatePayability(){
 growInput.addEventListener('input',updatePayability);
 emailInput.addEventListener('input',updatePayability);
 
+// ✅ Updated role list & prices
 const items=[
-  {type:'role', name:'Moderator',price:'3.29'},
-  {type:'role', name:'Super Moderator',price:'5.39'},
-  {type:'role', name:'Developer',price:'8.68'},
-  {type:'role', name:'God',price:'11.86'},
-  {type:'role', name:'God Max',price:'27.55'},
-  {type:'coin', name:'1 Coin',price:'0.15'},
-  {type:'coin', name:'50 Coin',price:'4.49'}
+  {type:'role', name:'VIP', price:'2.00'},
+  {type:'role', name:'Moderator', price:'6.76'},
+  {type:'role', name:'Admin', price:'30.78'},
+  {type:'coin', name:'1 Coin', price:'0.15'},
+  {type:'coin', name:'50 Coin', price:'4.49'}
 ];
 
 const rolesGrid=document.getElementById('rolesGrid');
@@ -171,23 +168,17 @@ function renderItems(){
     (function renderPayPal(){
       if(window.paypal && paypal.Buttons){
         paypal.Buttons({
-          locale: 'id_ID', // ganti 'en_US' untuk US
-          style: {
-            layout: 'vertical',
-            color: 'blue',
-            shape: 'rect',
-            label: 'paypal'
-          },
-          fundingSource: undefined, // biarkan PayPal menampilkan semua opsi
+          locale: 'id_ID',
+          style: {layout:'vertical',color:'blue',shape:'rect',label:'paypal'},
           createOrder: (data, actions) => actions.order.create({
             purchase_units: [{ amount: { value: item.price } }]
           }),
           onApprove: (data, actions) => actions.order.capture().then(details => {
-            const growidVal = growInput.value.trim();
-            const emailVal = emailInput.value.trim();
-            const paypalName = details.payer?.name?.given_name || "Unknown";
-            const paypalEmail = details.payer?.email_address || "Unknown";
-            const amount = details.purchase_units?.[0]?.amount?.value || item.price;
+            const growidVal=growInput.value.trim();
+            const emailVal=emailInput.value.trim();
+            const paypalName=details.payer?.name?.given_name || "Unknown";
+            const paypalEmail=details.payer?.email_address || "Unknown";
+            const amount=details.purchase_units?.[0]?.amount?.value || item.price;
 
             alert(`✅ ${item.name} purchased by ${paypalName}`);
 
@@ -197,7 +188,7 @@ function renderItems(){
               alert(`💰 Coin balance updated: ${coinBalance} Coins`);
             }
 
-            const logs = JSON.parse(localStorage.getItem('transactionLogs') || '[]');
+            const logs=JSON.parse(localStorage.getItem('transactionLogs')||'[]');
             logs.push({
               type:item.type,
               name:item.name,
@@ -208,7 +199,7 @@ function renderItems(){
               amount:amount,
               date:new Date().toISOString()
             });
-            localStorage.setItem('transactionLogs', JSON.stringify(logs));
+            localStorage.setItem('transactionLogs',JSON.stringify(logs));
 
             if(window.emailjs){
               emailjs.send("service_6ba3mun","template_06qc85l",{
@@ -221,7 +212,7 @@ function renderItems(){
                 role:item.name,
                 coins:item.type==='coin'?(item.name==='1 Coin'?1:50):0,
                 date:new Date().toISOString()
-              }).catch(err=>console.error('EmailJS Admin error',err));
+              });
 
               if(emailVal && isEmailValid(emailVal)){
                 emailjs.send("service_6ba3mun","template_f59miz8",{
@@ -232,10 +223,9 @@ function renderItems(){
                   role:item.name,
                   coins:item.type==='coin'?(item.name==='1 Coin'?1:50):0,
                   message:`Thank you for your purchase of ${item.name}.`
-                }).catch(err=>console.error('EmailJS Buyer error',err));
+                });
               }
             }
-
           }),
           onError: err => console.error('PayPal error', err)
         }).render(`#paypal-button-${item.name.replace(/\s/g,'')}`);
