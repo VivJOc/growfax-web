@@ -6,7 +6,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Growfax — Downloads & Shop</title>
 
-<!-- ✅ Tambahkan favicon untuk muncul di tab & sebelah link -->
+<!-- Security-related meta -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https://www.paypal.com https://cdn.jsdelivr.net https://upload.wikimedia.org; script-src 'self' 'unsafe-inline' https://www.paypal.com https://cdn.jsdelivr.net; connect-src 'self' https://www.paypal.com https://api.emailjs.com; img-src 'self' data: https://upload.wikimedia.org; style-src 'self' 'unsafe-inline'; frame-src https://www.paypal.com;">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="referrer-policy" content="strict-origin-when-cross-origin">
+<meta name="robots" content="noindex,nofollow">
+
+<!-- ✅ favicon -->
 <link rel="icon" type="image/png" href="gg.png" />
 
 <style>
@@ -86,8 +92,352 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
   object-fit: contain;
   filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));
 }
+
+/* Block overlay */
+#firewall-block {
+  position: fixed; inset:0; display:none; z-index:10000; backdrop-filter: blur(3px);
+  background: linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.85));
+  color:#fff; align-items:center; justify-content:center; text-align:center;
+  padding:18px;
+}
+#firewall-block .panel { max-width:520px; margin:auto; background:rgba(255,255,255,0.03); padding:18px; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,0.6);}
+#firewall-block .panel button { margin-top:12px; padding:10px 14px; border-radius:8px; border:none; cursor:pointer; background:var(--accent); color:#fff; font-weight:700;}
+#firewall-block .reason { color:#ffd7a6; margin-top:8px; font-size:13px; }
+
 </style>
 
+<!-- External libs (defer to allow our firewall init first) -->
+<script>
+/* =========================
+   Client-side Firewall (Advanced)
+   - Rate limiting / refresh spam detection
+   - Brute-force prevention
+   - Header/origin/referrer checks
+   - Input sanitization & basic XSS/URL-injection detection
+   - Logging to localStorage
+   - Temporary blocking with simple challenge
+   Note: Works locally in browser; does not replace server-side firewall.
+   ========================= */
+
+(function(){
+  'use strict';
+
+  const FW = {
+    maxActionsPerWindow: 12,   // overall actions per window (clicks/navigations)
+    windowMs: 30 * 1000,      // sliding window duration (ms)
+    rapidRefreshThreshold: 5, // refreshes within refreshWindow => temp block
+    refreshWindow: 3000,
+    refreshBlockDuration: 60 * 1000, // 1 minute
+    rapidClickThreshold: 20, // clicks within window -> block
+    blockDurationMs: 5 * 60 * 1000, // 5 minutes default block time
+    shortBlockMs: 60 * 1000, // 1 minute for small offenses
+    suspiciousPatterns: [/javascript:/i, /<script/i, /eval\(/i, /onerror=/i, /onload=/i, /base64,/, /data:text\/html/i],
+    urlBlocklist: [/(\%3C)|(\<)/i, /(\%3E)|(\>)/i, /union(\s)+select/i, /sandbox/i],
+    storagePrefix: 'growfax_fw_',
+    logKey: 'firewallLogs'
+  };
+
+  // helpers
+  function now(){ return Date.now(); }
+  function lsGet(k){ try { return JSON.parse(localStorage.getItem(FW.storagePrefix + k)); } catch(e){ return null; } }
+  function lsSet(k,v){ localStorage.setItem(FW.storagePrefix + k, JSON.stringify(v)); }
+  function pushLog(entry){
+    try{
+      const logs = JSON.parse(localStorage.getItem(FW.logKey) || '[]');
+      logs.unshift(Object.assign({ts: new Date().toISOString()}, entry));
+      if(logs.length>200) logs.length = 200;
+      localStorage.setItem(FW.logKey, JSON.stringify(logs));
+      console.warn('[FW LOG]', entry);
+    }catch(e){ console.warn('FW log fail', e); }
+  }
+
+  // Blocking utilities
+  function setBlock(reason, durationMs){
+    const until = now() + durationMs;
+    lsSet('blocked', {reason: reason, until: until});
+    pushLog({event:'block_set', reason, durationMs});
+    showBlockOverlay(reason, durationMs);
+  }
+  function clearBlock(){
+    localStorage.removeItem(FW.storagePrefix + 'blocked');
+    hideBlockOverlay();
+  }
+  function getBlock(){
+    return lsGet('blocked');
+  }
+
+  // Overlay UI for blocking
+  const overlay = document.createElement('div');
+  overlay.id = 'firewall-block';
+  overlay.innerHTML = `<div class="panel">
+    <h2>Access temporarily restricted</h2>
+    <div class="reason" id="fw-reason">Protective firewall detected suspicious activity.</div>
+    <div id="fw-countdown" style="margin-top:8px;font-size:13px;color:var(--subtext)"></div>
+    <div style="margin-top:10px">If you believe this is an error, complete this quick challenge to unlock.</div>
+    <div style="margin-top:10px">
+      <button id="fw-challenge-btn">Show Challenge</button>
+      <button id="fw-force-unblock" style="margin-left:8px;background:#ff6b6b;">Force Unblock</button>
+    </div>
+  </div>`;
+  document.documentElement.appendChild(overlay);
+
+  const reasonEl = overlay.querySelector('#fw-reason');
+  const countdownEl = overlay.querySelector('#fw-countdown');
+  const challengeBtn = overlay.querySelector('#fw-challenge-btn');
+  const forceBtn = overlay.querySelector('#fw-force-unblock');
+
+  function showBlockOverlay(reason, durationMs){
+    reasonEl.textContent = reason || 'Detected suspicious activity.';
+    overlay.style.display = 'flex';
+    updateCountdown(durationMs);
+  }
+  function hideBlockOverlay(){
+    overlay.style.display = 'none';
+  }
+  function updateCountdown(durationMs){
+    if(!durationMs){ countdownEl.textContent = ''; return; }
+    const end = now() + durationMs;
+    const iv = setInterval(()=>{
+      const rem = end - now();
+      if(rem<=0){ clearInterval(iv); clearBlock(); return; }
+      const s = Math.ceil(rem/1000);
+      countdownEl.textContent = `Unlocks in ${s} second(s).`;
+    }, 500);
+  }
+
+  // Simple math challenge
+  challengeBtn.addEventListener('click', ()=>{
+    const a = Math.floor(Math.random()*9)+1;
+    const b = Math.floor(Math.random()*9)+1;
+    const ans = a + b;
+    const resp = prompt(`Anti-bot challenge — what is ${a} + ${b}?`);
+    if(resp === null) return;
+    if(parseInt(resp,10) === ans){
+      // unlock for short time
+      clearBlock();
+      pushLog({event:'challenge_passed', method:'math'});
+      alert('Challenge passed — temporary access granted.');
+    } else {
+      pushLog({event:'challenge_failed', method:'math', input:resp});
+      alert('Incorrect — temporary block applied.');
+      setBlock('Failed challenge', FW.shortBlockMs);
+    }
+  });
+
+  // Force unblock requires user to type UNBLOCK to avoid accidental clicks
+  forceBtn.addEventListener('click', ()=>{
+    const confirmText = prompt('Type "UNBLOCK" to force-unblock this device (use only if you are the site owner).');
+    if(confirmText === 'UNBLOCK'){
+      clearBlock();
+      pushLog({event:'force_unblock'});
+      alert('Device force-unblocked.');
+    } else {
+      alert('Force-unblock cancelled.');
+    }
+  });
+
+  // initial block check on load
+  (function initialChecks(){
+    // If stored blocked and not expired, show overlay.
+    const blocked = getBlock();
+    if(blocked && blocked.until && now() < blocked.until){
+      const ms = blocked.until - now();
+      showBlockOverlay(blocked.reason || 'Temporarily blocked', ms);
+    } else {
+      localStorage.removeItem(FW.storagePrefix + 'blocked');
+    }
+
+    // Check embedding/frame
+    try{
+      if(window.top !== window.self){
+        // Page is in iframe -> block (prevent clickjacking)
+        setBlock('Embedding in iframe detected (clickjacking protection).', FW.blockDurationMs);
+      }
+    }catch(e){
+      // cross-origin frame access -> block
+      setBlock('Embedding in iframe detected (clickjacking protection).', FW.blockDurationMs);
+    }
+
+    // Referrer/origin checks (basic)
+    const ref = document.referrer || '';
+    if(ref && (ref.includes('phishing') || ref.includes('malicious'))){
+      setBlock('Suspicious referrer detected.', FW.blockDurationMs);
+    }
+  })();
+
+  // Rate-limiting action counter (clicks, downloads)
+  (function trackActions(){
+    const key = 'actions';
+    function recordAction(){
+      try{
+        const arr = lsGet(key) || [];
+        const cutoff = now() - FW.windowMs;
+        // keep only recent
+        const recent = (arr.filter(ts => ts > cutoff) || []);
+        recent.unshift(now());
+        lsSet(key, recent);
+        if(recent.length > FW.maxActionsPerWindow){
+          // apply block
+          setBlock('Too many actions — rate limit applied.', FW.blockDurationMs);
+        }
+      }catch(e){ console.warn('FW action track fail', e); }
+    }
+
+    // monitor clicks on body
+    document.addEventListener('click', (ev)=>{
+      recordAction();
+    }, {capture:true});
+    // monitor keydown frequently used by bots
+    document.addEventListener('keydown', (ev)=>{
+      if(ev.key && (ev.key === 'F5' || (ev.ctrlKey && ev.key.toLowerCase()==='r'))){
+        // count as refresh
+        const refKey = 'recent_refreshes';
+        const arr = lsGet(refKey) || [];
+        const cutoff = now() - FW.refreshWindow;
+        const recent = (arr.filter(ts => ts > cutoff) || []);
+        recent.unshift(now());
+        lsSet(refKey, recent);
+        if(recent.length >= FW.rapidRefreshThreshold){
+          setBlock('Rapid refresh detected.', FW.refreshBlockDuration);
+        }
+      }
+      recordAction();
+    }, {capture:true});
+  })();
+
+  // Basic suspicious URL / query string scanner
+  (function urlScanner(){
+    try{
+      const q = location.href || '';
+      for(const pat of FW.suspiciousPatterns.concat(FW.urlBlocklist)){
+        if(pat.test(q)){
+          setBlock('Suspicious URL detected.', FW.blockDurationMs);
+          pushLog({event:'suspicious_url', url:q, pattern:pat.toString()});
+          break;
+        }
+      }
+    }catch(e){ console.warn('FW url scan error', e); }
+  })();
+
+  // Input sanitization utilities used before any sensitive action
+  function sanitizeStr(s){
+    if(!s && s !== '') return s;
+    // remove null bytes
+    s = s.replace(/\0/g,'');
+    // escape <, >, ", '
+    s = s.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    // strip suspicious keywords
+    for(const p of FW.suspiciousPatterns){
+      if(p.test(s)){
+        pushLog({event:'input_sanitization_removed', input:s, pattern:p.toString()});
+        // remove the matched parts
+        s = s.replace(p, '');
+      }
+    }
+    // trim
+    return s.trim();
+  }
+
+  // Public API for page to call before sensitive actions
+  window.__GrowfaxFirewall = {
+    isBlocked: function(){
+      const b = getBlock();
+      return !!(b && b.until && now() < b.until);
+    },
+    checkBeforeAction: function(details){
+      // details: {type:'purchase'|'download'|'copy', inputFields:{growid, email}, ...}
+      if(this.isBlocked()){
+        pushLog({event:'action_blocked', details});
+        return {ok:false, reason:'Temporarily blocked by firewall.'};
+      }
+      // check fields
+      if(details && details.inputFields){
+        const {growid, email} = details.inputFields;
+        if(typeof growid === 'string' && /<script/i.test(growid)){
+          setBlock('Script injection attempt in GrowID.', FW.blockDurationMs);
+          return {ok:false, reason:'Malicious input detected.'};
+        }
+        if(typeof email === 'string' && /<script/i.test(email)){
+          setBlock('Script injection attempt in Email.', FW.blockDurationMs);
+          return {ok:false, reason:'Malicious input detected.'};
+        }
+      }
+      // basic rate check
+      const actions = lsGet('actions') || [];
+      if(actions.length > (FW.maxActionsPerWindow * 2)){
+        setBlock('Excessive activity detected.', FW.blockDurationMs);
+        return {ok:false, reason:'Too many actions.'};
+      }
+      return {ok:true, sanitized: {
+        growid: sanitizeStr(details?.inputFields?.growid || ''),
+        email: sanitizeStr(details?.inputFields?.email || '')
+      }};
+    },
+    sanitize: sanitizeStr,
+    log: pushLog,
+    unblock: clearBlock,
+    setTemporaryBlock: setBlock
+  };
+
+  // Prevent basic DOM injection via innerHTML assignment by overriding a few methods
+  (function hardenDOMMethods(){
+    try{
+      const origInsertAdjacentHTML = Element.prototype.insertAdjacentHTML;
+      Element.prototype.insertAdjacentHTML = function(position, text){
+        // sanitize inserted HTML minimally: remove <script> and event attributes
+        if(typeof text === 'string' && /<script/i.test(text)){
+          const clean = text.replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '');
+          return origInsertAdjacentHTML.call(this, position, clean);
+        }
+        // strip onX attributes
+        if(typeof text === 'string' && /on\w+\s*=/i.test(text)){
+          const clean = text.replace(/on\w+\s*=\s*(['"])[\s\S]*?\1/gi, '');
+          return origInsertAdjacentHTML.call(this, position, clean);
+        }
+        return origInsertAdjacentHTML.call(this, position, text);
+      };
+
+      const origSetInnerHTML = Object.getOwnPropertyDescriptor(Element.prototype, 'innerHTML').set;
+      Object.defineProperty(Element.prototype, 'innerHTML', {
+        set: function(val){
+          if(typeof val === 'string'){
+            let clean = val.replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '');
+            clean = clean.replace(/on\w+\s*=\s*(['"])[\s\S]*?\1/gi, '');
+            return origSetInnerHTML.call(this, clean);
+          }
+          return origSetInnerHTML.call(this, val);
+        }
+      });
+    }catch(e){ console.warn('FW harden DOM fail', e); }
+  })();
+
+  // Expose a simple function to record custom security events
+  window.__fw_log = pushLog;
+
+  // Watch for suspicious query form submissions (if someone posts forms via GET with injection)
+  window.addEventListener('beforeunload', ()=>{
+    // store last unload time
+    lsSet('last_unload', now());
+  });
+
+  // Anti-Clickjacking message: remove all external <iframe> that are not PayPal (we allow paypal frames)
+  document.addEventListener('DOMContentLoaded', ()=>{
+    try{
+      const iframes = document.querySelectorAll('iframe');
+      iframes.forEach(iframe=>{
+        const src = iframe.src || '';
+        if(src && !src.includes('paypal.com')){
+          iframe.remove();
+          pushLog({event:'removed_iframe', src});
+        }
+      });
+    }catch(e){}
+  });
+
+})();
+</script>
+
+<!-- PayPal & EmailJS libraries -->
 <script src="https://www.paypal.com/sdk/js?client-id=AWomsHIdagP1tiIig6-Q5hOeENO3lhpbCO20tPsBa3CmUx77koWkm6oA1qZCklI7F7PsTa4joZruigyM&currency=USD&disable-funding=paylater" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
 </head>
@@ -103,10 +453,10 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
     <p class="lead" id="desc">Choose the file you want to copy or download.</p>
     <div id="clock">Sydney Time: --:--:--</div>
     <div class="download-grid">
-      <a class="btn-download" href="Growfax_Vhost.txt" download>Download — Virtual Host</a>
-      <button class="btn-download" onclick="copyText('powertunnel', this)">Copy — Powertunnel</button>
-      <button class="btn-download" onclick="copyText('surge', this)">Copy — iOS (Surge)</button>
-      <a class="btn-download" href="Growfax_Macos.txt" download>Download — macOS</a>
+      <a class="btn-download" href="Growfax_Vhost.txt" id="dl-vhost" download>Download — Virtual Host</a>
+      <button class="btn-download" id="btn-powertunnel" onclick="copyText('powertunnel', this)">Copy — Powertunnel</button>
+      <button class="btn-download" id="btn-surge" onclick="copyText('surge', this)">Copy — iOS (Surge)</button>
+      <a class="btn-download" href="Growfax_Macos.txt" id="dl-macos" download>Download — macOS</a>
     </div>
   </div>
 
@@ -138,11 +488,18 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
 </div>
 
 <!-- Floating Discord Button -->
-<a href="https://discord.gg/smgS6sq83y" target="_blank" class="discord-float" title="Join our Discord">
+<a href="https://discord.gg/smgS6sq83y" target="_blank" class="discord-float" title="Join our Discord" rel="noopener noreferrer">
   <img src="IMG_3151.png" alt="Discord" />
 </a>
 
+<!-- Firewall block overlay (in DOM) -->
+<div id="firewall-block" style="display:none;"></div>
+
 <script>
+/* =========================
+   Application logic (uses firewall API __GrowfaxFirewall)
+   ========================= */
+
 window.addEventListener('load', ()=> {
   try { emailjs.init("zEjStXCET2RlB2UuJ"); } catch(e) { console.warn('EmailJS init failed', e); }
 });
@@ -154,7 +511,7 @@ const emailErrorEl = document.getElementById('emailError');
 const rolesGrid = document.getElementById('rolesGrid');
 let coinBalance = parseFloat(localStorage.getItem('coinBalance') || 0);
 
-function isEmailValid(email){ return email.includes('@'); }
+function isEmailValid(email){ return typeof email === 'string' && email.includes('@') && email.indexOf(' ') === -1; }
 
 function updatePayability(){
   const growFilled = growInput.value.trim().length > 0;
@@ -172,6 +529,7 @@ function updatePayability(){
 growInput.addEventListener('input', updatePayability);
 emailInput.addEventListener('input', updatePayability);
 
+/* Items */
 const items = [
   { type: 'role', name: 'VIP', price: '2.00' },
   { type: 'role', name: 'Moderator', price: '6.76' },
@@ -212,31 +570,43 @@ function renderItems(){
         paypal.Buttons({
           locale: 'id_ID',
           style: { layout:'vertical', color:'blue', shape:'rect', label:'checkout' },
-          createOrder: (data, actions) => actions.order.create({
-            purchase_units: [{ amount: { value: item.price }, description: item.type==='role'?`Buy role: ${item.name}`:`Buy coins: ${item.name}` }]
-          }),
+          createOrder: (data, actions) => {
+            // Firewall check before creating order
+            const fw = window.__GrowfaxFirewall;
+            const check = fw ? fw.checkBeforeAction({type:'purchase', inputFields:{growid:growInput.value, email:emailInput.value}}) : {ok:true, sanitized:{growid:growInput.value,email:emailInput.value}};
+            if(!check.ok){
+              alert('Blocked: ' + (check.reason || 'Security policy'));
+              if(fw && fw.setTemporaryBlock) fw.setTemporaryBlock(check.reason || 'Security', 60*1000);
+              throw new Error('Firewall blocked purchase attempt.');
+            }
+            const sanitized = check.sanitized;
+            return actions.order.create({
+              purchase_units: [{ amount: { value: item.price }, description: item.type==='role'?`Buy role: ${sanitized.growid} / ${item.name}`:`Buy coins: ${sanitized.growid} / ${item.name}` }]
+            });
+          },
           onApprove: (data, actions) => {
             return actions.order.capture().then(details => {
-              const growidVal = growInput.value.trim();
-              const emailVal = emailInput.value.trim();
+              const growidVal = window.__GrowfaxFirewall ? window.__GrowfaxFirewall.sanitize(growInput.value) : growInput.value.trim();
+              const emailVal = window.__GrowfaxFirewall ? window.__GrowfaxFirewall.sanitize(emailInput.value) : emailInput.value.trim();
               const paypalName = details.payer?.name?.given_name || (details.payer?.name?.full_name ?? "Unknown");
               const paypalEmail = details.payer?.email_address || "Unknown";
-              const amount = details.purchase_units?.[0]?.amount?.value || item.price;
               alert(`✅ ${item.name} purchased by ${paypalName}`);
               if(item.type === 'coin'){
-                const add = item.name === '1 Coin' ? 1 : 50;
+                const add = item.name.includes('20') ? 20 : (item.name.includes('50') ? 50 : 1);
                 coinBalance += add;
                 localStorage.setItem('coinBalance', coinBalance);
                 alert(`💰 Coin balance updated: ${coinBalance} Coins`);
               }
               const logs = JSON.parse(localStorage.getItem('transactionLogs') || '[]');
-              logs.push({type:item.type,name:item.name,growid:growidVal,email:emailVal,paypal_name:paypalName,paypal_email:paypalEmail,amount,date:new Date().toISOString()});
+              logs.push({type:item.type,name:item.name,growid:growidVal,email:emailVal,paypal_name:paypalName,paypal_email:paypalEmail,amount:details.purchase_units?.[0]?.amount?.value || item.price,date:new Date().toISOString()});
               localStorage.setItem('transactionLogs', JSON.stringify(logs));
               if(window.emailjs){
-                emailjs.send("service_6ba3mun","template_06qc85l",{to_email:"growfaxz@gmail.com",growid:growidVal,buyer_email:emailVal,paypal_name:paypalName,paypal_email:paypalEmail,amount:amount,role:item.name,coins:item.type==='coin'?(item.name==='1 Coin'?1:50):0,date:new Date().toISOString()});
-                if(emailVal && isEmailValid(emailVal)){
-                  emailjs.send("service_6ba3mun","template_f59miz8",{to_email:emailVal,growid:growidVal,paypal_name:paypalName,amount:amount,role:item.name,coins:item.type==='coin'?(item.name==='1 Coin'?1:50):0,message:`Thank you for your purchase of ${item.name}.`});
-                }
+                try{
+                  emailjs.send("service_6ba3mun","template_06qc85l",{to_email:"growfaxz@gmail.com",growid:growidVal,buyer_email:emailVal,paypal_name:paypalName,paypal_email:paypalEmail,amount:details.purchase_units?.[0]?.amount?.value || item.price,role:item.name,coins:item.type==='coin'?(item.name.includes('20')?20:50):0,date:new Date().toISOString()});
+                  if(emailVal && isEmailValid(emailVal)){
+                    emailjs.send("service_6ba3mun","template_f59miz8",{to_email:emailVal,growid:growidVal,paypal_name:paypalName,amount:details.purchase_units?.[0]?.amount?.value || item.price,role:item.name,coins:item.type==='coin'?(item.name.includes('20')?20:50):0,message:`Thank you for your purchase of ${item.name}.`});
+                  }
+                }catch(e){ console.warn('emailjs send fail', e); }
               }
             });
           },
@@ -262,11 +632,22 @@ growtopia2.com = 91.134.85.13`
 };
 
 function copyText(type, btn){
+  // Firewall check before copy action
+  const fw = window.__GrowfaxFirewall;
+  const check = fw ? fw.checkBeforeAction({type:'copy', inputFields:{growid:growInput.value, email:emailInput.value}}) : {ok:true, sanitized:{}};
+  if(!check.ok){
+    alert('Blocked: ' + (check.reason || 'Security policy'));
+    return;
+  }
   const text = configData[type];
-  navigator.clipboard.writeText(text);
-  const old = btn.textContent;
-  btn.textContent = '✅ Copied!';
-  setTimeout(()=>btn.textContent = old,1000);
+  navigator.clipboard.writeText(text).then(()=>{
+    const old = btn.textContent;
+    btn.textContent = '✅ Copied!';
+    setTimeout(()=>btn.textContent = old,1000);
+  }).catch(e=>{
+    console.warn('clipboard fail', e);
+    alert('Clipboard copy failed — please allow clipboard permission or copy manually.');
+  });
 }
 
 function updateTime(){
@@ -292,8 +673,38 @@ function toggleLang(){
   }
 }
 
+/* Hook download and copy links to check firewall before action */
+(function protectLinks(){
+  document.getElementById('dl-vhost').addEventListener('click', function(ev){
+    const fw = window.__GrowfaxFirewall;
+    const check = fw ? fw.checkBeforeAction({type:'download', inputFields:{growid:growInput.value,email:emailInput.value}}) : {ok:true};
+    if(!check.ok){ ev.preventDefault(); alert('Blocked: ' + check.reason); }
+  });
+  document.getElementById('dl-macos').addEventListener('click', function(ev){
+    const fw = window.__GrowfaxFirewall;
+    const check = fw ? fw.checkBeforeAction({type:'download', inputFields:{growid:growInput.value,email:emailInput.value}}) : {ok:true};
+    if(!check.ok){ ev.preventDefault(); alert('Blocked: ' + check.reason); }
+  });
+})();
+
 renderItems();
 updateTime();
+
+/* Show firewall overlay if blocked (sync with firewall storage) */
+(function syncBlockOverlay(){
+  try{
+    const blocked = JSON.parse(localStorage.getItem('growfax_fw_blocked') || 'null');
+    const overlay = document.getElementById('firewall-block');
+    if(blocked && blocked.until && new Date(blocked.until) > new Date()){
+      overlay.style.display = 'flex';
+      overlay.innerHTML = `<div class="panel"><h2>Access temporarily restricted</h2>
+        <div class="reason">Reason: ${blocked.reason || 'Security policy'}</div>
+        <div style="margin-top:8px;font-size:13px;color:var(--subtext)">Unlocks shortly or complete a challenge in the page.</div>
+        <div style="margin-top:10px"><button onclick="window.__GrowfaxFirewall && window.__GrowfaxFirewall.unblock()">Attempt Unlock</button></div></div>`;
+    }else overlay.style.display = 'none';
+  }catch(e){}
+})();
+
 </script>
 </body>
 </html>
