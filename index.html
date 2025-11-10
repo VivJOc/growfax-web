@@ -93,6 +93,40 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
   filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));
 }
 
+/* Floating Admin Button (left) */
+.admin-float {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 9999;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.06);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.06);
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+}
+.admin-float:hover { transform: translateY(-3px); }
+
+/* Admin panel modal */
+#admin-panel {
+  position: fixed; inset: 0; display: none; z-index: 10001; align-items: center; justify-content: center; padding: 18px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.8));
+}
+#admin-panel .panel {
+  width: min(980px, 96%); max-height: 85vh; overflow:auto; background:var(--card-bg); border-radius:12px; padding:16px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+}
+#admin-panel .panel h3 { margin:0 0 8px 0; color:var(--text); }
+#admin-panel .controls { margin-bottom:12px; display:flex; gap:8px; flex-wrap:wrap; }
+.log-row { padding:8px; border-radius:8px; background: rgba(0,0,0,0.04); margin-bottom:6px; font-size:13px; color:var(--subtext); }
+.small-muted { font-size:12px; color:var(--subtext); }
+
 /* Block overlay */
 #firewall-block {
   position: fixed; inset:0; display:none; z-index:10000; backdrop-filter: blur(3px);
@@ -106,17 +140,18 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
 
 </style>
 
-<!-- Client-side Firewall (Advanced) with Admin Bypass key -->
+<!-- Client-side Firewall (Advanced) with Admin Bypass key and Admin Panel -->
 <script>
 /* =========================
    Client-side Firewall (Advanced)
-   - Admin bypass by URL key (vivjadmin)
+   - Admin bypass by URL key (vivjadmin) OR via localStorage flag set from admin control
    - Rate limiting / refresh spam detection
    - Brute-force prevention
    - Header/origin/referrer checks
    - Input sanitization & basic XSS/URL-injection detection
    - Logging to localStorage
    - Temporary blocking with simple challenge + alert on block
+   - Admin panel to view logs, export, force-unblock, clear logs
    Note: Works locally in browser; does not replace server-side firewall.
    ========================= */
 
@@ -126,7 +161,20 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
   // ADMIN BYPASS: if URL contains ?key=vivjadmin -> skip blocking and firewall enforcement
   const ADMIN_KEY = 'vivjadmin';
   const urlParams = new URLSearchParams(location.search);
-  const isAdmin = (urlParams.get('key') === ADMIN_KEY);
+  const urlHasKey = (urlParams.get('key') === ADMIN_KEY);
+
+  const ADMIN_LS_FLAG = 'growfax_admin_flag'; // boolean true/false in localStorage
+
+  function lsReadRaw(k){
+    try{ return localStorage.getItem(k); }catch(e){ return null; }
+  }
+  function isAdminLocalFlag(){
+    try{
+      return localStorage.getItem(ADMIN_LS_FLAG) === 'true';
+    }catch(e){ return false; }
+  }
+
+  const isAdmin = urlHasKey || isAdminLocalFlag();
 
   const FW = {
     maxActionsPerWindow: 12,   // overall actions per window (clicks/navigations)
@@ -151,7 +199,7 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
     try{
       const logs = JSON.parse(localStorage.getItem(FW.logKey) || '[]');
       logs.unshift(Object.assign({ts: new Date().toISOString()}, entry));
-      if(logs.length>200) logs.length = 200;
+      if(logs.length>1000) logs.length = 1000;
       localStorage.setItem(FW.logKey, JSON.stringify(logs));
       console.warn('[FW LOG]', entry);
     }catch(e){ console.warn('FW log fail', e); }
@@ -162,7 +210,7 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
     if(isAdmin){
       // Admin bypass active — do NOT block, but log and inform in console
       pushLog({event:'block_skipped_for_admin', reason});
-      console.info('Firewall: block skipped for admin (key present). Reason would have been:', reason);
+      console.info('Firewall: block skipped for admin (key present or local flag). Reason would have been:', reason);
       return;
     }
 
@@ -182,7 +230,7 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
     return lsGet('blocked');
   }
 
-  // Overlay UI for blocking
+  // Overlay UI for blocking (created here and appended)
   const overlay = document.createElement('div');
   overlay.id = 'firewall-block';
   overlay.style.display = 'none';
@@ -209,7 +257,7 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
     updateCountdown(durationMs);
   }
   function hideBlockOverlay(){
-    overlay.style.display = 'none';
+    try{ overlay.style.display = 'none'; } catch(e){}
   }
   function updateCountdown(durationMs){
     if(!durationMs){ countdownEl.textContent = ''; return; }
@@ -241,14 +289,14 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
     }
   });
 
-  // Force unblock requires user to type UNBLOCK to avoid accidental clicks
+  // Force unblock requires admin or typing UNBLOCK
   forceBtn.addEventListener('click', ()=>{
     if(isAdmin){
       clearBlock();
       alert('Admin force-unblock executed.');
       return;
     }
-    const confirmText = prompt('Type "UNBLOCK" to force-unblock this device (use only if you are the site owner).');
+    const confirmText = prompt('Type "UNBLOCK" to force-unblock this device (site owner only).');
     if(confirmText === 'UNBLOCK'){
       clearBlock();
       pushLog({event:'force_unblock'});
@@ -261,10 +309,9 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
   // initial block check on load
   (function initialChecks(){
     if(isAdmin){
-      // if admin key present, bypass all firewall checks and indicate in console
-      console.info('Admin bypass active (key present in URL). Firewall enforcement disabled for this session.');
+      console.info('Admin bypass active (URL key or local flag). Firewall enforcement disabled for this session.');
       pushLog({event:'admin_bypass_active'});
-      return;
+      // Do not return here — still perform non-blocking logging or DOM hardening if desired.
     }
 
     // If stored blocked and not expired, show overlay.
@@ -276,27 +323,29 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
       localStorage.removeItem(FW.storagePrefix + 'blocked');
     }
 
-    // Check embedding/frame
+    // Check embedding/frame (if not admin)
     try{
-      if(window.top !== window.self){
-        // Page is in iframe -> block (prevent clickjacking)
-        setBlock('Embedding in iframe detected (clickjacking protection).', FW.blockDurationMs);
+      if(!isAdmin){
+        if(window.top !== window.self){
+          setBlock('Embedding in iframe detected (clickjacking protection).', FW.blockDurationMs);
+        }
       }
     }catch(e){
-      // cross-origin frame access -> block
-      setBlock('Embedding in iframe detected (clickjacking protection).', FW.blockDurationMs);
+      if(!isAdmin) setBlock('Embedding in iframe detected (clickjacking protection).', FW.blockDurationMs);
     }
 
     // Referrer/origin checks (basic)
     const ref = document.referrer || '';
-    if(ref && (ref.includes('phishing') || ref.includes('malicious'))){
-      setBlock('Suspicious referrer detected.', FW.blockDurationMs);
+    if(ref && !isAdmin){
+      if(ref.includes('phishing') || ref.includes('malicious')){
+        setBlock('Suspicious referrer detected.', FW.blockDurationMs);
+      }
     }
   })();
 
   // Rate-limiting action counter (clicks, downloads)
   (function trackActions(){
-    if(isAdmin) return; // skip tracking for admin
+    if(isAdmin) return; // skip heavy tracking for admin
 
     const key = 'actions';
     function recordAction(){
@@ -336,7 +385,7 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
     }, {capture:true});
   })();
 
-  // Basic suspicious URL / query string scanner
+  // Basic suspicious URL / query string scanner (skip if admin)
   (function urlScanner(){
     try{
       if(isAdmin) return;
@@ -415,7 +464,25 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
     sanitize: sanitizeStr,
     log: pushLog,
     unblock: clearBlock,
-    setTemporaryBlock: setBlock
+    setTemporaryBlock: setBlock,
+    // admin helper to set local admin flag
+    setAdminLocalFlag: function(val){
+      try{
+        if(val) localStorage.setItem(ADMIN_LS_FLAG, 'true');
+        else localStorage.removeItem(ADMIN_LS_FLAG);
+        pushLog({event:'admin_flag_set', value: !!val});
+        return true;
+      }catch(e){ return false; }
+    },
+    exportLogs: function(){
+      try{
+        const logs = JSON.parse(localStorage.getItem(FW.logKey) || '[]');
+        return logs;
+      }catch(e){ return []; }
+    },
+    clearLogs: function(){
+      try{ localStorage.removeItem(FW.logKey); pushLog({event:'logs_cleared'}); }catch(e){}
+    }
   };
 
   // Prevent basic DOM injection via innerHTML assignment by overriding a few methods
@@ -534,13 +601,49 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
   <img src="IMG_3151.png" alt="Discord" />
 </a>
 
+<!-- Floating Admin Button -->
+<button class="admin-float" id="admin-float" title="Enter Admin Mode">ADM</button>
+
+<!-- Admin Panel -->
+<div id="admin-panel" aria-hidden="true">
+  <div class="panel">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px;">
+      <h3>Admin Panel — Growfax Firewall</h3>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <button class="btn-small" id="btn-export-logs">Export Logs (JSON)</button>
+        <button class="btn-small" id="btn-clear-logs">Clear Logs</button>
+        <button class="btn-small" id="btn-force-unblock">Force Unblock</button>
+        <button class="btn-small" id="btn-exit-admin">Exit Admin Mode</button>
+      </div>
+    </div>
+
+    <div class="small-muted" style="margin-bottom:8px;">Local firewall logs (from <code>growfax_fw_logs</code>) — only visible to admin. Use export to download JSON.</div>
+    <div id="log-list" style="max-height:60vh; overflow:auto; padding-right:6px;"></div>
+  </div>
+</div>
+
+<!-- Firewall block overlay (in DOM) -->
+<div id="firewall-block" style="display:none;"></div>
+
 <script>
 /* =========================
    Application logic (uses firewall API __GrowfaxFirewall)
    ========================= */
 
+/* Utility to check admin status (URL or localStorage) - mirrors firewall logic */
+function isAdminActive(){
+  try{
+    const urlParams = new URLSearchParams(location.search);
+    if(urlParams.get('key') === 'vivjadmin') return true;
+    if(localStorage.getItem('growfax_admin_flag') === 'true') return true;
+    return false;
+  }catch(e){ return false; }
+}
+
 window.addEventListener('load', ()=> {
   try { emailjs.init("zEjStXCET2RlB2UuJ"); } catch(e) { console.warn('EmailJS init failed', e); }
+  // Admin panel visibility handling
+  setupAdminControls();
 });
 
 const growInput = document.getElementById('growid');
@@ -714,12 +817,14 @@ function toggleLang(){
 
 /* Hook download and copy links to check firewall before action */
 (function protectLinks(){
-  document.getElementById('dl-vhost').addEventListener('click', function(ev){
+  const dlV = document.getElementById('dl-vhost');
+  const dlM = document.getElementById('dl-macos');
+  if(dlV) dlV.addEventListener('click', function(ev){
     const fw = window.__GrowfaxFirewall;
     const check = fw ? fw.checkBeforeAction({type:'download', inputFields:{growid:growInput.value,email:emailInput.value}}) : {ok:true};
     if(!check.ok){ ev.preventDefault(); alert('Blocked: ' + check.reason); }
   });
-  document.getElementById('dl-macos').addEventListener('click', function(ev){
+  if(dlM) dlM.addEventListener('click', function(ev){
     const fw = window.__GrowfaxFirewall;
     const check = fw ? fw.checkBeforeAction({type:'download', inputFields:{growid:growInput.value,email:emailInput.value}}) : {ok:true};
     if(!check.ok){ ev.preventDefault(); alert('Blocked: ' + check.reason); }
@@ -729,23 +834,108 @@ function toggleLang(){
 renderItems();
 updateTime();
 
+/* Admin controls & panel logic */
+function setupAdminControls(){
+  const adminBtn = document.getElementById('admin-float');
+  const panel = document.getElementById('admin-panel');
+  const logList = document.getElementById('log-list');
+  const btnExport = document.getElementById('btn-export-logs');
+  const btnClear = document.getElementById('btn-clear-logs');
+  const btnUnblock = document.getElementById('btn-force-unblock');
+  const btnExit = document.getElementById('btn-exit-admin');
+
+  function openPanel(){
+    // require admin flag
+    if(!isAdminActive()){
+      // prompt for key
+      const key = prompt('Enter admin key to enable Admin Mode:');
+      if(key === null) return;
+      if(key === 'vivjadmin'){
+        try{ localStorage.setItem('growfax_admin_flag','true'); }catch(e){}
+        alert('Admin Mode enabled (local). You can now open the Admin Panel.');
+      } else {
+        alert('Wrong key.');
+        return;
+      }
+    }
+    panel.style.display = 'flex';
+    refreshLogs();
+  }
+
+  function closePanel(){
+    panel.style.display = 'none';
+  }
+
+  function refreshLogs(){
+    try{
+      const logs = JSON.parse(localStorage.getItem('growfax_fw_logs') || '[]');
+      logList.innerHTML = '';
+      if(!logs.length){ logList.innerHTML = '<div class="small-muted">No logs yet.</div>'; return; }
+      logs.slice(0,500).forEach(l=>{
+        const row = document.createElement('div');
+        row.className = 'log-row';
+        const time = l.ts || l.date || '';
+        row.innerHTML = `<div style="display:flex;justify-content:space-between;gap:8px;"><div style="font-weight:700;color:var(--text)">${l.event || 'event'}</div><div class="small-muted">${time}</div></div>
+          <div style="margin-top:6px;color:var(--subtext);font-size:13px;"><pre style="white-space:pre-wrap;margin:0;padding:0;border:0;background:transparent;color:inherit;">${JSON.stringify(l, null, 2)}</pre></div>`;
+        logList.appendChild(row);
+      });
+    }catch(e){ logList.innerHTML = '<div class="small-muted">Failed to load logs.</div>'; }
+  }
+
+  adminBtn.addEventListener('click', openPanel);
+  panel.addEventListener('click', (ev)=>{ if(ev.target === panel) closePanel(); });
+
+  btnExport.addEventListener('click', ()=>{
+    const logs = JSON.parse(localStorage.getItem('growfax_fw_logs') || '[]');
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(logs, null, 2));
+    const a = document.createElement('a');
+    a.href = dataStr;
+    a.download = 'growfax_fw_logs.json';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  });
+
+  btnClear.addEventListener('click', ()=>{
+    if(!confirm('Clear all firewall logs from localStorage?')) return;
+    localStorage.removeItem('growfax_fw_logs');
+    refreshLogs();
+    alert('Logs cleared.');
+  });
+
+  btnUnblock.addEventListener('click', ()=>{
+    try{
+      // Use firewall API if present
+      if(window.__GrowfaxFirewall && window.__GrowfaxFirewall.unblock){
+        window.__GrowfaxFirewall.unblock();
+        alert('Firewall unblocked (if any).');
+      } else {
+        localStorage.removeItem('growfax_fw_blocked');
+        localStorage.removeItem('growfax_fw_blocked');
+        alert('Local block keys removed.');
+      }
+      refreshLogs();
+    }catch(e){ alert('Failed to unblock: '+e); }
+  });
+
+  btnExit.addEventListener('click', ()=>{
+    if(!confirm('Exit Admin Mode on this device?')) return;
+    try{ localStorage.removeItem('growfax_admin_flag'); }catch(e){}
+    alert('Admin Mode disabled locally. To re-enable, provide key again or use URL ?key=vivjadmin.');
+    closePanel();
+  });
+}
+
 /* Show firewall overlay if blocked (sync with firewall storage) */
 (function syncBlockOverlay(){
   try{
     const blocked = JSON.parse(localStorage.getItem('growfax_fw_blocked') || 'null');
-    // we keep compatibility but prefer the fw storagePrefix key
-    const primary = JSON.parse(localStorage.getItem('growfax_fw_blocked')) || JSON.parse(localStorage.getItem('growfax_fw_blocked') || 'null');
-    const alt = (function(){ try{ return JSON.parse(localStorage.getItem('growfax_fw_blocked')); }catch(e){return null;} })();
-    // Use the firewall's storage location if present
     const fwBlocked = (()=>{ try { return JSON.parse(localStorage.getItem('growfax_fw_blocked')); } catch(e){ return null; } })();
-    // Prefer reading from the FW storage prefix (growfax_fw_blocked) or fallback to 'growfax_fw_blocked'
-    const newBlocked = (()=>{ try{ return JSON.parse(localStorage.getItem('growfax_fw_blocked')); }catch(e){return null;} })();
-    // Actually use the main API to check
-    const fwAPI = window.__GrowfaxFirewall;
-    if(fwAPI && fwAPI.isBlocked && fwAPI.isBlocked()){
-      // overlay is already managed by firewall; nothing else to do
-    } else {
-      // nothing
+    // actual firewall sets under kv: growfax_fw_blocked inside its storage prefix; but we handled overlay inside firewall script itself
+    // This sync is a fallback (no-op) to ensure overlay hidden if admin
+    if(isAdminActive()){
+      const overlay = document.getElementById('firewall-block');
+      if(overlay) overlay.style.display = 'none';
     }
   }catch(e){}
 })();
