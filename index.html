@@ -106,21 +106,27 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
 
 </style>
 
-<!-- External libs (defer to allow our firewall init first) -->
+<!-- Client-side Firewall (Advanced) with Admin Bypass key -->
 <script>
 /* =========================
    Client-side Firewall (Advanced)
+   - Admin bypass by URL key (vivjadmin)
    - Rate limiting / refresh spam detection
    - Brute-force prevention
    - Header/origin/referrer checks
    - Input sanitization & basic XSS/URL-injection detection
    - Logging to localStorage
-   - Temporary blocking with simple challenge
+   - Temporary blocking with simple challenge + alert on block
    Note: Works locally in browser; does not replace server-side firewall.
    ========================= */
 
 (function(){
   'use strict';
+
+  // ADMIN BYPASS: if URL contains ?key=vivjadmin -> skip blocking and firewall enforcement
+  const ADMIN_KEY = 'vivjadmin';
+  const urlParams = new URLSearchParams(location.search);
+  const isAdmin = (urlParams.get('key') === ADMIN_KEY);
 
   const FW = {
     maxActionsPerWindow: 12,   // overall actions per window (clicks/navigations)
@@ -134,7 +140,7 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
     suspiciousPatterns: [/javascript:/i, /<script/i, /eval\(/i, /onerror=/i, /onload=/i, /base64,/, /data:text\/html/i],
     urlBlocklist: [/(\%3C)|(\<)/i, /(\%3E)|(\>)/i, /union(\s)+select/i, /sandbox/i],
     storagePrefix: 'growfax_fw_',
-    logKey: 'firewallLogs'
+    logKey: 'growfax_fw_logs'
   };
 
   // helpers
@@ -153,14 +159,24 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
 
   // Blocking utilities
   function setBlock(reason, durationMs){
+    if(isAdmin){
+      // Admin bypass active — do NOT block, but log and inform in console
+      pushLog({event:'block_skipped_for_admin', reason});
+      console.info('Firewall: block skipped for admin (key present). Reason would have been:', reason);
+      return;
+    }
+
     const until = now() + durationMs;
     lsSet('blocked', {reason: reason, until: until});
     pushLog({event:'block_set', reason, durationMs});
+    // show alert for visitor
+    try { alert('Security alert: ' + reason + ' — temporary block applied.'); } catch(e){}
     showBlockOverlay(reason, durationMs);
   }
   function clearBlock(){
     localStorage.removeItem(FW.storagePrefix + 'blocked');
     hideBlockOverlay();
+    pushLog({event:'block_cleared'});
   }
   function getBlock(){
     return lsGet('blocked');
@@ -169,6 +185,7 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
   // Overlay UI for blocking
   const overlay = document.createElement('div');
   overlay.id = 'firewall-block';
+  overlay.style.display = 'none';
   overlay.innerHTML = `<div class="panel">
     <h2>Access temporarily restricted</h2>
     <div class="reason" id="fw-reason">Protective firewall detected suspicious activity.</div>
@@ -226,6 +243,11 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
 
   // Force unblock requires user to type UNBLOCK to avoid accidental clicks
   forceBtn.addEventListener('click', ()=>{
+    if(isAdmin){
+      clearBlock();
+      alert('Admin force-unblock executed.');
+      return;
+    }
     const confirmText = prompt('Type "UNBLOCK" to force-unblock this device (use only if you are the site owner).');
     if(confirmText === 'UNBLOCK'){
       clearBlock();
@@ -238,6 +260,13 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
 
   // initial block check on load
   (function initialChecks(){
+    if(isAdmin){
+      // if admin key present, bypass all firewall checks and indicate in console
+      console.info('Admin bypass active (key present in URL). Firewall enforcement disabled for this session.');
+      pushLog({event:'admin_bypass_active'});
+      return;
+    }
+
     // If stored blocked and not expired, show overlay.
     const blocked = getBlock();
     if(blocked && blocked.until && now() < blocked.until){
@@ -267,6 +296,8 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
 
   // Rate-limiting action counter (clicks, downloads)
   (function trackActions(){
+    if(isAdmin) return; // skip tracking for admin
+
     const key = 'actions';
     function recordAction(){
       try{
@@ -308,6 +339,7 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
   // Basic suspicious URL / query string scanner
   (function urlScanner(){
     try{
+      if(isAdmin) return;
       const q = location.href || '';
       for(const pat of FW.suspiciousPatterns.concat(FW.urlBlocklist)){
         if(pat.test(q)){
@@ -340,12 +372,19 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
 
   // Public API for page to call before sensitive actions
   window.__GrowfaxFirewall = {
+    isAdmin: isAdmin,
     isBlocked: function(){
       const b = getBlock();
       return !!(b && b.until && now() < b.until);
     },
     checkBeforeAction: function(details){
       // details: {type:'purchase'|'download'|'copy', inputFields:{growid, email}, ...}
+      if(isAdmin){
+        return {ok:true, sanitized: {
+          growid: sanitizeStr(details?.inputFields?.growid || ''),
+          email: sanitizeStr(details?.inputFields?.email || '')
+        }};
+      }
       if(this.isBlocked()){
         pushLog({event:'action_blocked', details});
         return {ok:false, reason:'Temporarily blocked by firewall.'};
@@ -397,17 +436,20 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
         return origInsertAdjacentHTML.call(this, position, text);
       };
 
-      const origSetInnerHTML = Object.getOwnPropertyDescriptor(Element.prototype, 'innerHTML').set;
-      Object.defineProperty(Element.prototype, 'innerHTML', {
-        set: function(val){
-          if(typeof val === 'string'){
-            let clean = val.replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '');
-            clean = clean.replace(/on\w+\s*=\s*(['"])[\s\S]*?\1/gi, '');
-            return origSetInnerHTML.call(this, clean);
+      const origDescriptor = Object.getOwnPropertyDescriptor(Element.prototype, 'innerHTML');
+      if(origDescriptor && origDescriptor.set){
+        const origSetInnerHTML = origDescriptor.set;
+        Object.defineProperty(Element.prototype, 'innerHTML', {
+          set: function(val){
+            if(typeof val === 'string'){
+              let clean = val.replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '');
+              clean = clean.replace(/on\w+\s*=\s*(['"])[\s\S]*?\1/gi, '');
+              return origSetInnerHTML.call(this, clean);
+            }
+            return origSetInnerHTML.call(this, val);
           }
-          return origSetInnerHTML.call(this, val);
-        }
-      });
+        });
+      }
     }catch(e){ console.warn('FW harden DOM fail', e); }
   })();
 
@@ -437,7 +479,7 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
 })();
 </script>
 
-<!-- PayPal & EmailJS libraries -->
+<!-- PayPal & EmailJS libraries (defer to allow our firewall init first) -->
 <script src="https://www.paypal.com/sdk/js?client-id=AWomsHIdagP1tiIig6-Q5hOeENO3lhpbCO20tPsBa3CmUx77koWkm6oA1qZCklI7F7PsTa4joZruigyM&currency=USD&disable-funding=paylater" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
 </head>
@@ -491,9 +533,6 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
 <a href="https://discord.gg/smgS6sq83y" target="_blank" class="discord-float" title="Join our Discord" rel="noopener noreferrer">
   <img src="IMG_3151.png" alt="Discord" />
 </a>
-
-<!-- Firewall block overlay (in DOM) -->
-<div id="firewall-block" style="display:none;"></div>
 
 <script>
 /* =========================
@@ -694,14 +733,20 @@ updateTime();
 (function syncBlockOverlay(){
   try{
     const blocked = JSON.parse(localStorage.getItem('growfax_fw_blocked') || 'null');
-    const overlay = document.getElementById('firewall-block');
-    if(blocked && blocked.until && new Date(blocked.until) > new Date()){
-      overlay.style.display = 'flex';
-      overlay.innerHTML = `<div class="panel"><h2>Access temporarily restricted</h2>
-        <div class="reason">Reason: ${blocked.reason || 'Security policy'}</div>
-        <div style="margin-top:8px;font-size:13px;color:var(--subtext)">Unlocks shortly or complete a challenge in the page.</div>
-        <div style="margin-top:10px"><button onclick="window.__GrowfaxFirewall && window.__GrowfaxFirewall.unblock()">Attempt Unlock</button></div></div>`;
-    }else overlay.style.display = 'none';
+    // we keep compatibility but prefer the fw storagePrefix key
+    const primary = JSON.parse(localStorage.getItem('growfax_fw_blocked')) || JSON.parse(localStorage.getItem('growfax_fw_blocked') || 'null');
+    const alt = (function(){ try{ return JSON.parse(localStorage.getItem('growfax_fw_blocked')); }catch(e){return null;} })();
+    // Use the firewall's storage location if present
+    const fwBlocked = (()=>{ try { return JSON.parse(localStorage.getItem('growfax_fw_blocked')); } catch(e){ return null; } })();
+    // Prefer reading from the FW storage prefix (growfax_fw_blocked) or fallback to 'growfax_fw_blocked'
+    const newBlocked = (()=>{ try{ return JSON.parse(localStorage.getItem('growfax_fw_blocked')); }catch(e){return null;} })();
+    // Actually use the main API to check
+    const fwAPI = window.__GrowfaxFirewall;
+    if(fwAPI && fwAPI.isBlocked && fwAPI.isBlocked()){
+      // overlay is already managed by firewall; nothing else to do
+    } else {
+      // nothing
+    }
   }catch(e){}
 })();
 
