@@ -20,7 +20,6 @@
   --bg:#0f1720; --text:#e6eef8; --subtext:#9fb3d8;
   --accent:#2563eb; --card-bg:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
   --input-height:40px; --container-max:980px; --transition-time:0.4s;
-  --online-green: #22c55e;
 }
 body.light{--bg:#f5f7fa; --text:#0f1720; --subtext:#42546e; --accent:#0ea5e9; --card-bg:#fff;}
 html,body{height:100%;margin:0;transition:background var(--transition-time) ease,color var(--transition-time) ease;}
@@ -139,38 +138,21 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
 #firewall-block .panel button { margin-top:12px; padding:10px 14px; border-radius:8px; border:none; cursor:pointer; background:var(--accent); color:#fff; font-weight:700;}
 #firewall-block .reason { color:#ffd7a6; margin-top:8px; font-size:13px; }
 
-/* Player online element (modern style) */
-#player-status {
-  display:flex;
-  align-items:center;
-  gap:8px;
-  font-size:14px;
-  color:var(--subtext);
-  margin-bottom:8px;
-}
-#player-status .dot {
-  width:10px; height:10px; border-radius:50%;
-  background:var(--online-green); box-shadow:0 0 8px rgba(34,197,94,0.25);
-  display:inline-block;
-}
-#player-status .count {
-  font-weight:700;
-  color: #e6eef8;
-  font-size:14px;
-}
-
-/* small responsive tweak */
-@media (max-width:520px){
-  #player-status { font-size:13px; gap:6px; }
-  #player-status .count { font-size:13px; }
-}
 </style>
 
 <!-- Client-side Firewall (Advanced) with Admin Bypass key and Admin Panel -->
 <script>
 /* =========================
    Client-side Firewall (Advanced)
-   (same as original — preserved)
+   - Admin bypass by URL key (vivjadmin) OR via localStorage flag set from admin control
+   - Rate limiting / refresh spam detection
+   - Brute-force prevention
+   - Header/origin/referrer checks
+   - Input sanitization & basic XSS/URL-injection detection
+   - Logging to localStorage
+   - Temporary blocking with simple challenge + alert on block
+   - Admin panel to view logs, export, force-unblock, clear logs
+   Note: Works locally in browser; does not replace server-side firewall.
    ========================= */
 
 (function(){
@@ -578,14 +560,6 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
     <img src="gg.png" alt="Growfax Banner" class="banner" />
     <h1 id="title">Growfax — Download Files</h1>
     <p class="lead" id="desc">Choose the file you want to copy or download.</p>
-
-    <!-- ===== Player online (modern style) — placed above clock ===== -->
-    <div id="player-status" aria-live="polite" title="Players currently online">
-      <span class="dot" id="player-dot" aria-hidden="true"></span>
-      <span style="color:var(--subtext)">Players Online:</span>
-      <span class="count" id="playersOnline">--</span>
-    </div>
-
     <div id="clock">Sydney Time: --:--:--</div>
     <div class="download-grid">
       <a class="btn-download" href="Growfax_Vhost.txt" id="dl-vhost" download>Download — Virtual Host</a>
@@ -654,7 +628,6 @@ footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;tra
 <script>
 /* =========================
    Application logic (uses firewall API __GrowfaxFirewall)
-   + Player online loader (from apiconf.json)
    ========================= */
 
 /* Utility to check admin status (URL or localStorage) - mirrors firewall logic */
@@ -671,9 +644,6 @@ window.addEventListener('load', ()=> {
   try { emailjs.init("zEjStXCET2RlB2UuJ"); } catch(e) { console.warn('EmailJS init failed', e); }
   // Admin panel visibility handling
   setupAdminControls();
-
-  // Start player online loader immediately and on interval
-  initPlayerLoader();
 });
 
 const growInput = document.getElementById('growid');
@@ -822,74 +792,6 @@ function copyText(type, btn){
   });
 }
 
-/* ===== Player online loader (reads apiconf.json from same folder) =====
-   - expects apiconf.json to be accessible (same origin)
-   - minimal schema accepted: { "players_online": 123 }
-   - refresh interval: 10s
-*/
-function setPlayersDisplay(val){
-  const el = document.getElementById('playersOnline');
-  const dot = document.getElementById('player-dot');
-  if(!el) return;
-  if(typeof val === 'number' && !Number.isNaN(val)){
-    el.textContent = val.toString();
-    // if zero, show yellow dot; otherwise green
-    if(val > 0){
-      dot.style.background = 'var(--online-green)';
-      dot.style.boxShadow = '0 0 8px rgba(34,197,94,0.25)';
-      dot.setAttribute('title', 'Online');
-    } else {
-      dot.style.background = '#f59e0b';
-      dot.style.boxShadow = '0 0 8px rgba(245,158,11,0.2)';
-      dot.setAttribute('title', 'No players online');
-    }
-  } else {
-    el.textContent = '—';
-    dot.style.background = '#6b7280';
-    dot.style.boxShadow = 'none';
-    dot.setAttribute('title', 'Unknown');
-  }
-}
-
-async function fetchPlayerCountOnce(){
-  try {
-    // fetch apiconf.json in same directory
-    const res = await fetch('apiconf.json', {cache: 'no-store'});
-    if(!res.ok) throw new Error('Network response not ok');
-    const data = await res.json();
-    // normalized keys: players_online, online, count
-    const count = (typeof data.players_online === 'number') ? data.players_online
-                : (typeof data.online === 'number') ? data.online
-                : (typeof data.count === 'number') ? data.count
-                : (Number.isInteger(Number(data.players_online)) ? Number(data.players_online) : null);
-
-    if(count !== null && !Number.isNaN(count)){
-      setPlayersDisplay(Number(count));
-    } else {
-      // attempt to parse string numbers
-      if(typeof data.players_online === 'string' && /^\d+$/.test(data.players_online)){
-        setPlayersDisplay(Number(data.players_online));
-      } else {
-        setPlayersDisplay(null);
-        console.warn('apiconf.json missing numeric players_online/online/count', data);
-      }
-    }
-  } catch (err){
-    console.warn('Failed to load apiconf.json', err);
-    setPlayersDisplay(null);
-  }
-}
-
-let playerIntervalId = null;
-function initPlayerLoader(){
-  // initial load
-  fetchPlayerCountOnce();
-  // refresh every 10s
-  if(playerIntervalId) clearInterval(playerIntervalId);
-  playerIntervalId = setInterval(fetchPlayerCountOnce, 10000);
-}
-
-/* ===== Clock ===== */
 function updateTime(){
   const now = new Date();
   const sydney = now.toLocaleString("en-US",{timeZone:"Australia/Sydney"});
@@ -898,7 +800,6 @@ function updateTime(){
 }
 setInterval(updateTime,1000);
 
-/* ===== Theme / Lang toggles ===== */
 function toggleTheme(){document.body.classList.toggle('light');}
 let lang='en';
 function toggleLang(){
@@ -931,6 +832,7 @@ function toggleLang(){
 })();
 
 renderItems();
+updateTime();
 
 /* Admin controls & panel logic */
 function setupAdminControls(){
