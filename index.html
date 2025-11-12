@@ -685,7 +685,33 @@ function renderItems(){
   items.forEach(item=>{
     const wrap = document.createElement('div'); wrap.className = 'role';
     const inner = document.createElement('div'); inner.className = 'role-inner';
-    const title = document.createElement('h3'); title.textContent = item.name;
+    const title = document.createElement('h3');
+    /* START MODIFICATION: add image next to Moderator / Admin titles */
+    // keep title styling inline to avoid changing external CSS
+    title.style.display = 'flex';
+    title.style.alignItems = 'center';
+    title.style.gap = '8px';
+    const titleText = document.createElement('span');
+    titleText.textContent = item.name;
+    title.appendChild(titleText);
+    if(item.name === 'Moderator'){
+      const img = document.createElement('img');
+      img.src = 'IMG_3170.png';
+      img.alt = 'Moderator';
+      img.style.height = '25px';
+      img.style.width = 'auto';
+      img.style.display = 'inline-block';
+      title.appendChild(img);
+    } else if(item.name === 'Admin'){
+      const img = document.createElement('img');
+      img.src = 'IMG_3171.png';
+      img.alt = 'Admin';
+      img.style.height = '25px';
+      img.style.width = 'auto';
+      img.style.display = 'inline-block';
+      title.appendChild(img);
+    }
+    /* END MODIFICATION */
     const price = document.createElement('div'); price.className = 'price'; price.textContent = `$${item.price} — Checkout`;
 
     const paypalWrapper = document.createElement('div'); paypalWrapper.className = 'paypal-wrapper disabled';
