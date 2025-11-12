@@ -5,50 +5,36 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Growfax Animated Board</title>
 <style>
-  /* ---------- Background ---------- */
   body {
     margin: 0;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #0f1720 0%, #1e293b 50%, #0f1720 100%);
+    background: linear-gradient(135deg,#0f1720 0%,#1e293b 50%,#0f1720 100%);
     overflow: hidden;
   }
 
-  /* ---------- Animasi papan ---------- */
   .sign {
     width: 500px;
+    border: 3px dashed #38bdf8; /* sementara biar kelihatan area */
     opacity: 0;
     transform: translateX(-600px);
     animation: slideIn 1s ease-in-out infinite;
-  }
-
-  @keyframes slideIn {
-    0% {
-      opacity: 0;
-      transform: translateX(-600px) scale(0.95);
-    }
-    50% {
-      opacity: 1;
-      transform: translateX(0) scale(1);
-    }
-    100% {
-      opacity: 0;
-      transform: translateX(600px) scale(0.95);
-    }
-  }
-
-  /* ---------- Efek glow biru biar makin keren ---------- */
-  .sign {
     filter: drop-shadow(0 0 10px #38bdf8)
             drop-shadow(0 0 25px #0ea5e9)
             drop-shadow(0 0 40px #1d4ed8);
   }
+
+  @keyframes slideIn {
+    0%   {opacity: 0; transform: translateX(-600px) scale(0.95);}
+    50%  {opacity: 1; transform: translateX(0) scale(1);}
+    100% {opacity: 0; transform: translateX(600px) scale(0.95);}
+  }
 </style>
 </head>
-
 <body>
-  <img src="IMG_3164.png" alt="Welcome to Growfax" class="sign">
+  <img src="IMG_3164.png" alt="Welcome to Growfax" class="sign"
+       onerror="this.style.border='3px solid red'; this.style.opacity='1'; this.style.transform='none';">
 </body>
 </html>
