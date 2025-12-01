@@ -1,0 +1,913 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="google-site-verification" content="YeUtDKJsYgZuRRLkvPq0R8tZp57iJsjc-uQC3sxFUaU" />
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Growfax — Downloads & Shop</title>
+
+<!-- Relaxed Content-Security-Policy so common hosts used (GitHub Pages, CDN, PayPal) will load in Safari/Chrome -->
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self' https: data: blob:;
+  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.paypal.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;
+  connect-src 'self' https://www.paypal.com https://api.emailjs.com https://*.githubusercontent.com https:;
+  img-src 'self' data: https:;
+  style-src 'self' 'unsafe-inline' https:;
+  frame-src https://www.paypal.com https:;">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="referrer-policy" content="strict-origin-when-cross-origin">
+<meta name="robots" content="noindex,nofollow">
+
+<link rel="icon" type="image/png" href="gg.png" />
+
+<style>
+:root{
+  --bg:#0f1720; --text:#e6eef8; --subtext:#9fb3d8;
+  --accent:#2563eb; --card-bg:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  --input-height:40px; --container-max:980px; --transition-time:0.4s;
+}
+body.light{--bg:#f5f7fa; --text:#0f1720; --subtext:#42546e; --accent:#0ea5e9; --card-bg:#fff;}
+html,body{height:100%;margin:0;transition:background var(--transition-time) ease,color var(--transition-time) ease;}
+body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+display:flex;justify-content:flex-start;align-items:flex-start;padding:18px;box-sizing:border-box;}
+.container{width:100%;max-width:var(--container-max);margin:0 auto;transition: all var(--transition-time) ease;}
+.card{background:var(--card-bg);border-radius:12px;padding:18px;box-shadow:0 6px 24px rgba(2,6,23,0.45);margin-bottom:18px;box-sizing:border-box;transition: background var(--transition-time) ease, color var(--transition-time) ease;}
+.controls{display:flex;gap:8px;justify-content:flex-end;margin-bottom:10px;flex-wrap:wrap;}
+.btn-small{background:none;border:1px solid rgba(255,255,255,0.08);color:var(--subtext);padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:600;min-width:120px;transition: all var(--transition-time) ease;}
+.btn-small:active{transform:translateY(1px);}
+.banner{width:100%;height:auto;border-radius:10px;margin-bottom:12px;transition: all var(--transition-time) ease;}
+h1{margin:0 0 6px 0;font-size:clamp(18px,3vw,24px);}
+p.lead{margin:0 0 14px 0;color:var(--subtext);font-size:14px;transition: color var(--transition-time) ease;}
+#clock{color:var(--subtext);font-size:13px;margin-bottom:12px;transition: color var(--transition-time) ease;}
+.download-grid{display:grid;grid-template-columns: repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:8px;}
+.btn-download{background:linear-gradient(90deg,#2563eb,#06b6d4);color:#fff;padding:12px;border-radius:10px;border:none;cursor:pointer;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;box-sizing:border-box;transition: transform 0.2s ease;}
+.btn-download:active{transform:translateY(1px);}
+.shop{margin-top:6px;display:grid;grid-template-columns:1fr;gap:12px;}
+.shop-header{display:flex;align-items:center;gap:8px;}
+.shop-title{font-size:15px;margin:0;font-weight:600;color:var(--text);transition: color var(--transition-time) ease;}
+.shop-card{background:var(--card-bg);border-radius:10px;padding:14px;box-shadow:0 6px 20px rgba(2,6,23,0.28);transition: background var(--transition-time) ease, color var(--transition-time) ease;}
+.inputs{display:flex;gap:16px;margin-top:8px;flex-wrap:wrap;align-items:flex-start;}
+.input-left,.input-right{display:flex;flex-direction:column;gap:6px;}
+.input-left{flex:0 1 78%; min-width:220px; max-width:760px;}
+.input-right{flex:0 1 18%; min-width:160px; max-width:220px;}
+label.field-label{font-size:13px;color:var(--subtext);transition: color var(--transition-time) ease;}
+input[type="text"], input[type="email"]{height:var(--input-height);padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);background:rgba(0,0,0,0.06);color:var(--text);font-size:14px;box-sizing:border-box;width:100%;transition: background var(--transition-time) ease, color var(--transition-time) ease, border var(--transition-time) ease;}
+.warning{color:#ffd166;font-size:13px;margin-top:8px;display:none;text-align:left;transition: all var(--transition-time) ease;}
+.warning.show{display:block;}
+.email-error{color:#ff6b6b;font-size:13px;margin-top:6px;display:none;text-align:left;transition: all var(--transition-time) ease;}
+.email-error.show{display:block;}
+.roles-grid{display:grid;grid-template-columns: repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px;}
+.role{background:transparent;border-radius:10px;padding:12px;box-sizing:border-box;display:flex;flex-direction:column;gap:8px;min-height:150px;}
+.role .role-inner{background:var(--card-bg);border-radius:8px;padding:12px;box-shadow:0 4px 14px rgba(2,6,23,0.22);display:flex;flex-direction:column;gap:8px;align-items:center;transition: background var(--transition-time) ease, color var(--transition-time) ease, box-shadow var(--transition-time) ease;}
+.role h3{margin:0;font-size:15px;}
+.role .price{color:var(--subtext);font-size:14px;margin-bottom:6px;transition: color var(--transition-time) ease;}
+.paypal-wrapper{width:100%;display:flex;align-items:center;justify-content:center;margin-top:6px;opacity:0;transform: translateY(15px);transition: opacity 0.5s ease, transform 0.5s ease;}
+.paypal-wrapper.show{opacity:1;transform: translateY(0);}
+.paypal-wrapper.disabled{pointer-events:none;opacity:0.6;}
+.accepted-cards{display:flex;gap:8px;align-items:center;justify-content:center;margin-top:8px;}
+.accepted-cards img{height:20px;width:auto;display:block;object-fit:contain;}
+footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;transition: color var(--transition-time) ease;}
+@media (max-width:900px){.inputs{flex-direction:column;}.input-left,.input-right{flex:1 1 100%;}.download-grid{grid-template-columns:1fr;}.roles-grid{grid-template-columns:1fr;}.controls{justify-content:space-between;}}
+.paypal-button-container > div { border-radius:8px; overflow:hidden; }
+
+/* Floating Discord Button */
+.discord-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #5865F2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.discord-float:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+}
+.discord-float img {
+  width: 65%;
+  height: 65%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));
+}
+
+/* Floating Admin Button (left) */
+.admin-float {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 9999;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.06);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.06);
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+}
+.admin-float:hover { transform: translateY(-3px); }
+
+/* Admin panel modal */
+#admin-panel {
+  position: fixed; inset: 0; display: none; z-index: 10001; align-items: center; justify-content: center; padding: 18px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.8));
+}
+#admin-panel .panel {
+  width: min(980px, 96%); max-height: 85vh; overflow:auto; background:var(--card-bg); border-radius:12px; padding:16px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+}
+#admin-panel .panel h3 { margin:0 0 8px 0; color:var(--text); }
+#admin-panel .controls { margin-bottom:12px; display:flex; gap:8px; flex-wrap:wrap; }
+.log-row { padding:8px; border-radius:8px; background: rgba(0,0,0,0.04); margin-bottom:6px; font-size:13px; color:var(--subtext); }
+.small-muted { font-size:12px; color:var(--subtext); }
+
+/* Block overlay */
+#firewall-block {
+  position: fixed; inset:0; display:none; z-index:10000; backdrop-filter: blur(3px);
+  background: linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.85));
+  color:#fff; align-items:center; justify-content:center; text-align:center;
+  padding:18px;
+}
+#firewall-block .panel { max-width:520px; margin:auto; background:rgba(255,255,255,0.03); padding:18px; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,0.6);}
+#firewall-block .panel button { margin-top:12px; padding:10px 14px; border-radius:8px; border:none; cursor:pointer; background:var(--accent); color:#fff; font-weight:700;}
+#firewall-block .reason { color:#ffd7a6; margin-top:8px; font-size:13px; }
+
+</style>
+
+<!-- Client-side Firewall (Relaxed) with Admin Bypass key and Admin Panel -->
+<script>
+(function(){
+  'use strict';
+
+  // ADMIN BYPASS: if URL contains ?key=vivjadmin -> skip blocking and firewall enforcement
+  const ADMIN_KEY = 'vivjadmin';
+  const urlParams = new URLSearchParams(location.search);
+  const urlHasKey = (urlParams.get('key') === ADMIN_KEY);
+
+  const ADMIN_LS_FLAG = 'growfax_admin_flag'; // boolean true/false in localStorage
+
+  function lsReadRaw(k){
+    try{ return localStorage.getItem(k); }catch(e){ return null; }
+  }
+  function isAdminLocalFlag(){
+    try{
+      return localStorage.getItem(ADMIN_LS_FLAG) === 'true';
+    }catch(e){ return false; }
+  }
+
+  const isAdmin = urlHasKey || isAdminLocalFlag();
+
+  const FW = {
+    maxActionsPerWindow: 40,   // raised so normal use won't trigger
+    windowMs: 30 * 1000,
+    rapidRefreshThreshold: 8,
+    refreshWindow: 3000,
+    refreshBlockDuration: 30 * 1000,
+    rapidClickThreshold: 120,
+    blockDurationMs: 2 * 60 * 1000, // shorter default block time
+    shortBlockMs: 30 * 1000,
+    suspiciousPatterns: [/javascript:/i, /<script/i, /eval\(/i],
+    urlBlocklist: [], // kept empty to avoid false positives when testing from GitHub
+    storagePrefix: 'growfax_fw_',
+    logKey: 'growfax_fw_logs'
+  };
+
+  // helpers
+  function now(){ return Date.now(); }
+  function lsGet(k){ try { return JSON.parse(localStorage.getItem(FW.storagePrefix + k)); } catch(e){ return null; } }
+  function lsSet(k,v){ localStorage.setItem(FW.storagePrefix + k, JSON.stringify(v)); }
+  function pushLog(entry){
+    try{
+      const logs = JSON.parse(localStorage.getItem(FW.logKey) || '[]');
+      logs.unshift(Object.assign({ts: new Date().toISOString()}, entry));
+      if(logs.length>1000) logs.length = 1000;
+      localStorage.setItem(FW.logKey, JSON.stringify(logs));
+      console.warn('[FW LOG]', entry);
+    }catch(e){ console.warn('FW log fail', e); }
+  }
+
+  // Blocking utilities
+  function setBlock(reason, durationMs){
+    if(isAdmin){
+      pushLog({event:'block_skipped_for_admin', reason});
+      console.info('Firewall: block skipped for admin. Reason would have been:', reason);
+      return;
+    }
+
+    const until = now() + durationMs;
+    lsSet('blocked', {reason: reason, until: until});
+    pushLog({event:'block_set', reason, durationMs});
+    try { alert('Security alert: ' + reason + ' — temporary block applied.'); } catch(e){}
+    showBlockOverlay(reason, durationMs);
+  }
+  function clearBlock(){
+    try{
+      localStorage.removeItem(FW.storagePrefix + 'blocked');
+    }catch(e){}
+    hideBlockOverlay();
+    pushLog({event:'block_cleared'});
+  }
+  function getBlock(){
+    return lsGet('blocked');
+  }
+
+  // Overlay UI for blocking (created here and appended)
+  const overlay = document.createElement('div');
+  overlay.id = 'firewall-block';
+  overlay.style.display = 'none';
+  overlay.innerHTML = `<div class="panel">
+    <h2>Access temporarily restricted</h2>
+    <div class="reason" id="fw-reason">Protective firewall detected suspicious activity.</div>
+    <div id="fw-countdown" style="margin-top:8px;font-size:13px;color:var(--subtext)"></div>
+    <div style="margin-top:10px">If you believe this is an error, complete this quick challenge to unlock.</div>
+    <div style="margin-top:10px">
+      <button id="fw-challenge-btn">Show Challenge</button>
+      <button id="fw-force-unblock" style="margin-left:8px;background:#ff6b6b;">Force Unblock</button>
+    </div>
+  </div>`;
+  document.documentElement.appendChild(overlay);
+
+  const reasonEl = overlay.querySelector('#fw-reason');
+  const countdownEl = overlay.querySelector('#fw-countdown');
+  const challengeBtn = overlay.querySelector('#fw-challenge-btn');
+  const forceBtn = overlay.querySelector('#fw-force-unblock');
+
+  function showBlockOverlay(reason, durationMs){
+    reasonEl.textContent = reason || 'Detected suspicious activity.';
+    overlay.style.display = 'flex';
+    updateCountdown(durationMs);
+  }
+  function hideBlockOverlay(){
+    try{ overlay.style.display = 'none'; } catch(e){}
+  }
+  function updateCountdown(durationMs){
+    if(!durationMs){ countdownEl.textContent = ''; return; }
+    const end = now() + durationMs;
+    const iv = setInterval(()=>{
+      const rem = end - now();
+      if(rem<=0){ clearInterval(iv); clearBlock(); return; }
+      const s = Math.ceil(rem/1000);
+      countdownEl.textContent = `Unlocks in ${s} second(s).`;
+    }, 500);
+  }
+
+  // Simple math challenge
+  challengeBtn.addEventListener('click', ()=>{
+    const a = Math.floor(Math.random()*9)+1;
+    const b = Math.floor(Math.random()*9)+1;
+    const ans = a + b;
+    const resp = prompt(`Anti-bot challenge — what is ${a} + ${b}?`);
+    if(resp === null) return;
+    if(parseInt(resp,10) === ans){
+      clearBlock();
+      pushLog({event:'challenge_passed', method:'math'});
+      alert('Challenge passed — temporary access granted.');
+    } else {
+      pushLog({event:'challenge_failed', method:'math', input:resp});
+      alert('Incorrect — temporary block applied.');
+      setBlock('Failed challenge', FW.shortBlockMs);
+    }
+  });
+
+  // Force unblock requires admin or typing UNBLOCK
+  forceBtn.addEventListener('click', ()=>{
+    if(isAdmin){
+      clearBlock();
+      alert('Admin force-unblock executed.');
+      return;
+    }
+    const confirmText = prompt('Type "UNBLOCK" to force-unblock this device (site owner only).');
+    if(confirmText === 'UNBLOCK'){
+      clearBlock();
+      pushLog({event:'force_unblock'});
+      alert('Device force-unblocked.');
+    } else {
+      alert('Force-unblock cancelled.');
+    }
+  });
+
+  // initial block check on load
+  (function initialChecks(){
+    if(isAdmin){
+      console.info('Admin bypass active (URL key or local flag). Firewall enforcement disabled for this session.');
+      pushLog({event:'admin_bypass_active'});
+    }
+
+    // If stored blocked and not expired, show overlay.
+    const blocked = getBlock();
+    if(blocked && blocked.until && now() < blocked.until){
+      const ms = blocked.until - now();
+      showBlockOverlay(blocked.reason || 'Temporarily blocked', ms);
+    } else {
+      try{ localStorage.removeItem(FW.storagePrefix + 'blocked'); }catch(e){}
+    }
+
+    // NOTE: Removed strict iframe embedding auto-block to avoid false positives on GitHub/Safari.
+    // Instead we log if inside iframe.
+    try{
+      if(window.top !== window.self){
+        pushLog({event:'loaded_inside_iframe', note:'No auto-block to avoid false positives'});
+      }
+    }catch(e){}
+  })();
+
+  // Rate-limiting action counter (clicks, downloads)
+  (function trackActions(){
+    if(isAdmin) return;
+
+    const key = 'actions';
+    function recordAction(){
+      try{
+        const arr = lsGet(key) || [];
+        const cutoff = now() - FW.windowMs;
+        const recent = (arr.filter(ts => ts > cutoff) || []);
+        recent.unshift(now());
+        lsSet(key, recent);
+        if(recent.length > FW.maxActionsPerWindow){
+          setBlock('Too many actions — rate limit applied.', FW.blockDurationMs);
+        }
+      }catch(e){ console.warn('FW action track fail', e); }
+    }
+
+    document.addEventListener('click', (ev)=>{
+      recordAction();
+    }, {capture:true});
+    document.addEventListener('keydown', (ev)=>{
+      if(ev.key && (ev.key === 'F5' || (ev.ctrlKey && ev.key.toLowerCase()==='r'))){
+        const refKey = 'recent_refreshes';
+        const arr = lsGet(refKey) || [];
+        const cutoff = now() - FW.refreshWindow;
+        const recent = (arr.filter(ts => ts > cutoff) || []);
+        recent.unshift(now());
+        lsSet(refKey, recent);
+        if(recent.length >= FW.rapidRefreshThreshold){
+          setBlock('Rapid refresh detected.', FW.refreshBlockDuration);
+        }
+      }
+      recordAction();
+    }, {capture:true});
+  })();
+
+  // Basic suspicious URL / query string scanner (disabled urlBlocklist to avoid false positives)
+  (function urlScanner(){
+    try{
+      if(isAdmin) return;
+      const q = location.href || '';
+      for(const pat of FW.suspiciousPatterns){
+        if(pat.test(q)){
+          setBlock('Suspicious URL detected.', FW.blockDurationMs);
+          pushLog({event:'suspicious_url', url:q, pattern:pat.toString()});
+          break;
+        }
+      }
+    }catch(e){ console.warn('FW url scan error', e); }
+  })();
+
+  function sanitizeStr(s){
+    if(!s && s !== '') return s;
+    s = s.replace(/\0/g,'');
+    s = s.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    for(const p of FW.suspiciousPatterns){
+      if(p.test(s)){
+        pushLog({event:'input_sanitization_removed', input:s, pattern:p.toString()});
+        s = s.replace(p, '');
+      }
+    }
+    return s.trim();
+  }
+
+  window.__GrowfaxFirewall = {
+    isAdmin: isAdmin,
+    isBlocked: function(){
+      const b = getBlock();
+      return !!(b && b.until && now() < b.until);
+    },
+    checkBeforeAction: function(details){
+      if(isAdmin){
+        return {ok:true, sanitized: {
+          growid: sanitizeStr(details?.inputFields?.growid || ''),
+          email: sanitizeStr(details?.inputFields?.email || '')
+        }};
+      }
+      if(this.isBlocked()){
+        pushLog({event:'action_blocked', details});
+        return {ok:false, reason:'Temporarily blocked by firewall.'};
+      }
+      if(details && details.inputFields){
+        const {growid, email} = details.inputFields;
+        if(typeof growid === 'string' && /<script/i.test(growid)){
+          setBlock('Script injection attempt in GrowID.', FW.blockDurationMs);
+          return {ok:false, reason:'Malicious input detected.'};
+        }
+        if(typeof email === 'string' && /<script/i.test(email)){
+          setBlock('Script injection attempt in Email.', FW.blockDurationMs);
+          return {ok:false, reason:'Malicious input detected.'};
+        }
+      }
+      const actions = lsGet('actions') || [];
+      if(actions.length > (FW.maxActionsPerWindow * 2)){
+        setBlock('Excessive activity detected.', FW.blockDurationMs);
+        return {ok:false, reason:'Too many actions.'};
+      }
+      return {ok:true, sanitized: {
+        growid: sanitizeStr(details?.inputFields?.growid || ''),
+        email: sanitizeStr(details?.inputFields?.email || '')
+      }};
+    },
+    sanitize: sanitizeStr,
+    log: pushLog,
+    unblock: clearBlock,
+    setTemporaryBlock: setBlock,
+    setAdminLocalFlag: function(val){
+      try{
+        if(val) localStorage.setItem(ADMIN_LS_FLAG, 'true');
+        else localStorage.removeItem(ADMIN_LS_FLAG);
+        pushLog({event:'admin_flag_set', value: !!val});
+        return true;
+      }catch(e){ return false; }
+    },
+    exportLogs: function(){
+      try{
+        const logs = JSON.parse(localStorage.getItem(FW.logKey) || '[]');
+        return logs;
+      }catch(e){ return []; }
+    },
+    clearLogs: function(){
+      try{ localStorage.removeItem(FW.logKey); pushLog({event:'logs_cleared'}); }catch(e){}
+    }
+  };
+
+  // DOM hardening - keep light touch to avoid breaking browser engines
+  (function hardenDOMMethods(){
+    try{
+      const origInsertAdjacentHTML = Element.prototype.insertAdjacentHTML;
+      Element.prototype.insertAdjacentHTML = function(position, text){
+        if(typeof text === 'string' && /<script/i.test(text)){
+          const clean = text.replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '');
+          return origInsertAdjacentHTML.call(this, position, clean);
+        }
+        if(typeof text === 'string' && /on\w+\s*=/i.test(text)){
+          const clean = text.replace(/on\w+\s*=\s*(['"])[\s\S]*?\1/gi, '');
+          return origInsertAdjacentHTML.call(this, position, clean);
+        }
+        return origInsertAdjacentHTML.call(this, position, text);
+      };
+
+      const origDescriptor = Object.getOwnPropertyDescriptor(Element.prototype, 'innerHTML');
+      if(origDescriptor && origDescriptor.set){
+        const origSetInnerHTML = origDescriptor.set;
+        Object.defineProperty(Element.prototype, 'innerHTML', {
+          set: function(val){
+            if(typeof val === 'string'){
+              let clean = val.replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '');
+              clean = clean.replace(/on\w+\s*=\s*(['"])[\s\S]*?\1/gi, '');
+              return origSetInnerHTML.call(this, clean);
+            }
+            return origSetInnerHTML.call(this, val);
+          }
+        });
+      }
+    }catch(e){ console.warn('FW harden DOM fail', e); }
+  })();
+
+  window.__fw_log = pushLog;
+
+  window.addEventListener('beforeunload', ()=>{
+    lsSet('last_unload', now());
+  });
+
+  document.addEventListener('DOMContentLoaded', ()=>{
+    try{
+      // Do not remove external iframes automatically to avoid breaking GitHub previews or embeds.
+      const iframes = document.querySelectorAll('iframe');
+      iframes.forEach(iframe=>{
+        const src = iframe.src || '';
+        if(src && src.includes('malicious.example')){
+          // remove clearly malicious frames only (placeholder example)
+          iframe.remove();
+          pushLog({event:'removed_iframe', src});
+        }
+      });
+    }catch(e){}
+  });
+
+})();
+</script>
+
+<!-- PayPal & EmailJS libraries (defer to allow our firewall init first) -->
+<script src="https://www.paypal.com/sdk/js?client-id=AWomsHIdagP1tiIig6-Q5hOeENO3lhpbCO20tPsBa3CmUx77koWkm6oA1qZCklI7F7PsTa4joZruigyM&currency=USD&disable-funding=paylater" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
+</head>
+<body>
+<div class="container">
+  <div class="card">
+    <div class="controls">
+      <button class="btn-small" onclick="toggleTheme()">🌗 Theme</button>
+      <button class="btn-small" onclick="toggleLang()">🌍 Indonesia</button>
+    </div>
+    <img src="gg.png" alt="Growfax Banner" class="banner" />
+    <h1 id="title">Growfax — Download Files</h1>
+    <p class="lead" id="desc">Choose the file you want to copy or download.</p>
+    <div id="clock">Sydney Time: --:--:--</div>
+    <div class="download-grid">
+      <a class="btn-download" href="Growfax_Vhost.txt" id="dl-vhost" download>Download — Virtual Host</a>
+      <button class="btn-download" id="btn-powertunnel" onclick="copyText('powertunnel', this)">Copy — Powertunnel</button>
+      <button class="btn-download" id="btn-surge" onclick="copyText('surge', this)">Copy — iOS (Surge)</button>
+      <a class="btn-download" href="Growfax_Macos.txt" id="dl-macos" download>Download — macOS</a>
+    </div>
+  </div>
+
+  <section class="shop">
+    <div class="shop-card shop-header">
+      <h2 class="shop-title" id="roleshop">Role & Coin Shop</h2>
+      <p style="margin:0;color:var(--subtext);font-size:13px;">Select item to purchase using PayPal.</p>
+    </div>
+
+    <div class="shop-card">
+      <div class="inputs">
+        <div class="input-left">
+          <label class="field-label" for="growid">GrowID</label>
+          <input id="growid" type="text" placeholder="Enter your GrowID" autocomplete="off" />
+        </div>
+        <div class="input-right">
+          <label class="field-label" for="buyerEmail">Email</label>
+          <input id="buyerEmail" type="email" placeholder="Enter your Email" autocomplete="email" />
+        </div>
+      </div>
+
+      <div id="warning" class="warning">⚠️ Please fill in your GrowID and Email to enable payment.</div>
+      <div id="emailError" class="email-error">⚠️ Invalid email address — must include "@".</div>
+
+      <div class="roles-grid" id="rolesGrid"></div>
+    </div>
+    <footer>© 2025 Growfax</footer>
+  </section>
+</div>
+
+<!-- Floating Discord Button -->
+<a href="https://discord.gg/smgS6sq83y" target="_blank" class="discord-float" title="Join our Discord" rel="noopener noreferrer">
+  <img src="IMG_3151.png" alt="Discord" />
+</a>
+
+<!-- Floating Admin Button -->
+<button class="admin-float" id="admin-float" title="Enter Admin Mode">ADM</button>
+
+<!-- Admin Panel -->
+<div id="admin-panel" aria-hidden="true">
+  <div class="panel">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px;">
+      <h3>Admin Panel — Growfax Firewall</h3>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <button class="btn-small" id="btn-export-logs">Export Logs (JSON)</button>
+        <button class="btn-small" id="btn-clear-logs">Clear Logs</button>
+        <button class="btn-small" id="btn-force-unblock">Force Unblock</button>
+        <button class="btn-small" id="btn-exit-admin">Exit Admin Mode</button>
+      </div>
+    </div>
+
+    <div class="small-muted" style="margin-bottom:8px;">Local firewall logs (from <code>growfax_fw_logs</code>) — only visible to admin. Use export to download JSON.</div>
+    <div id="log-list" style="max-height:60vh; overflow:auto; padding-right:6px;"></div>
+  </div>
+</div>
+
+<script>
+/* =========================
+   Application logic (uses firewall API __GrowfaxFirewall)
+   ========================= */
+
+function isAdminActive(){
+  try{
+    const urlParams = new URLSearchParams(location.search);
+    if(urlParams.get('key') === 'vivjadmin') return true;
+    if(localStorage.getItem('growfax_admin_flag') === 'true') return true;
+    return false;
+  }catch(e){ return false; }
+}
+
+window.addEventListener('load', ()=> {
+  try { emailjs.init("zEjStXCET2RlB2UuJ"); } catch(e) { console.warn('EmailJS init failed', e); }
+  setupAdminControls();
+});
+
+const growInput = document.getElementById('growid');
+const emailInput = document.getElementById('buyerEmail');
+const warningEl = document.getElementById('warning');
+const emailErrorEl = document.getElementById('emailError');
+const rolesGrid = document.getElementById('rolesGrid');
+let coinBalance = parseFloat(localStorage.getItem('coinBalance') || 0);
+
+function isEmailValid(email){ return typeof email === 'string' && email.includes('@') && email.indexOf(' ') === -1; }
+
+function updatePayability(){
+  const growFilled = growInput.value.trim().length > 0;
+  const emailVal = emailInput.value.trim();
+  const emailNonEmpty = emailVal.length > 0;
+  const emailValid = isEmailValid(emailVal);
+  const ok = growFilled && emailNonEmpty && emailValid;
+  document.querySelectorAll('.paypal-wrapper').forEach(w=>{
+    w.classList.toggle('disabled', !ok);
+    w.classList.toggle('show', ok);
+  });
+  warningEl.classList.toggle('show', !(growFilled && emailNonEmpty));
+  emailErrorEl.classList.toggle('show', emailNonEmpty && !emailValid);
+}
+growInput.addEventListener('input', updatePayability);
+emailInput.addEventListener('input', updatePayability);
+
+/* Items */
+const items = [
+  { type: 'role', name: 'VIP', price: '2.00' },
+  { type: 'role', name: 'Moderator', price: '6.76' },
+  { type: 'role', name: 'Admin', price: '30.78' },
+  { type: 'coin', name: '10 Coin', price: '2.00' },
+  { type: 'coin', name: '154 Coin', price: '30.78' }
+];
+
+function renderItems(){
+  rolesGrid.innerHTML = '';
+  items.forEach(item=>{
+    const wrap = document.createElement('div'); wrap.className = 'role';
+    const inner = document.createElement('div'); inner.className = 'role-inner';
+    const title = document.createElement('h3');
+    title.style.display = 'flex';
+    title.style.alignItems = 'center';
+    title.style.gap = '8px';
+    const titleText = document.createElement('span');
+    titleText.textContent = item.name;
+    title.appendChild(titleText);
+    if(item.name === 'Moderator'){
+      const img = document.createElement('img');
+      img.src = 'IMG_3170.png';
+      img.alt = 'Moderator';
+      img.style.height = '25px';
+      img.style.width = 'auto';
+      img.style.display = 'inline-block';
+      title.appendChild(img);
+    } else if(item.name === 'Admin'){
+      const img = document.createElement('img');
+      img.src = 'IMG_3171.png';
+      img.alt = 'Admin';
+      img.style.height = '25px';
+      img.style.width = 'auto';
+      img.style.display = 'inline-block';
+      title.appendChild(img);
+    }
+    const price = document.createElement('div'); price.className = 'price'; price.textContent = `$${item.price} — Checkout`;
+
+    const paypalWrapper = document.createElement('div'); paypalWrapper.className = 'paypal-wrapper disabled';
+    paypalWrapper.id = `paypal-wrapper-${item.name.replace(/\s/g,'')}`;
+    const paypalHolder = document.createElement('div');
+    paypalHolder.id = `paypal-button-${item.name.replace(/\s/g,'')}`;
+    paypalHolder.className = 'paypal-button-container';
+    paypalWrapper.appendChild(paypalHolder);
+
+    const accepted = document.createElement('div'); accepted.className = 'accepted-cards';
+    accepted.innerHTML = `<img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal"/>
+                          <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa"/>
+                          <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="MasterCard"/>`;
+
+    inner.appendChild(title);
+    inner.appendChild(price);
+    inner.appendChild(paypalWrapper);
+    inner.appendChild(accepted);
+    wrap.appendChild(inner);
+    rolesGrid.appendChild(wrap);
+
+    (function renderPayPal(){
+      if(window.paypal && paypal.Buttons){
+        paypal.Buttons({
+          locale: 'id_ID',
+          style: { layout:'vertical', color:'blue', shape:'rect', label:'checkout' },
+          createOrder: (data, actions) => {
+            const fw = window.__GrowfaxFirewall;
+            const check = fw ? fw.checkBeforeAction({type:'purchase', inputFields:{growid:growInput.value, email:emailInput.value}}) : {ok:true, sanitized:{growid:growInput.value,email:emailInput.value}};
+            if(!check.ok){
+              alert('Blocked: ' + (check.reason || 'Security policy'));
+              if(fw && fw.setTemporaryBlock) fw.setTemporaryBlock(check.reason || 'Security', 60*1000);
+              throw new Error('Firewall blocked purchase attempt.');
+            }
+            const sanitized = check.sanitized;
+            return actions.order.create({
+              purchase_units: [{ amount: { value: item.price }, description: item.type==='role'?`Buy role: ${sanitized.growid} / ${item.name}`:`Buy coins: ${sanitized.growid} / ${item.name}` }]
+            });
+          },
+          onApprove: (data, actions) => {
+            return actions.order.capture().then(details => {
+              const growidVal = window.__GrowfaxFirewall ? window.__GrowfaxFirewall.sanitize(growInput.value) : growInput.value.trim();
+              const emailVal = window.__GrowfaxFirewall ? window.__GrowfaxFirewall.sanitize(emailInput.value) : emailInput.value.trim();
+              const paypalName = details.payer?.name?.given_name || (details.payer?.name?.full_name ?? "Unknown");
+              const paypalEmail = details.payer?.email_address || "Unknown";
+              alert(`✅ ${item.name} purchased by ${paypalName}`);
+              if(item.type === 'coin'){
+                const add = item.name.includes('20') ? 20 : (item.name.includes('50') ? 50 : 1);
+                coinBalance += add;
+                localStorage.setItem('coinBalance', coinBalance);
+                alert(`💰 Coin balance updated: ${coinBalance} Coins`);
+              }
+              const logs = JSON.parse(localStorage.getItem('transactionLogs') || '[]');
+              logs.push({type:item.type,name:item.name,growid:growidVal,email:emailVal,paypal_name:paypalName,paypal_email:paypalEmail,amount:details.purchase_units?.[0]?.amount?.value || item.price,date:new Date().toISOString()});
+              localStorage.setItem('transactionLogs', JSON.stringify(logs));
+              if(window.emailjs){
+                try{
+                  emailjs.send("service_6ba3mun","template_06qc85l",{to_email:"growfaxz@gmail.com",growid:growidVal,buyer_email:emailVal,paypal_name:paypalName,paypal_email:paypalEmail,amount:details.purchase_units?.[0]?.amount?.value || item.price,role:item.name,coins:item.type==='coin'?(item.name.includes('20')?20:50):0,date:new Date().toISOString()});
+                  if(emailVal && isEmailValid(emailVal)){
+                    emailjs.send("service_6ba3mun","template_f59miz8",{to_email:emailVal,growid:growidVal,paypal_name:paypalName,amount:details.purchase_units?.[0]?.amount?.value || item.price,role:item.name,coins:item.type==='coin'?(item.name.includes('20')?20:50):0,message:`Thank you for your purchase of ${item.name}.`});
+                  }
+                }catch(e){ console.warn('emailjs send fail', e); }
+              }
+            });
+          },
+          onError: err => { console.error('PayPal error', err); alert('Payment error — check console.'); }
+        }).render(`#paypal-button-${item.name.replace(/\s/g,'')}`);
+      } else setTimeout(renderPayPal, 200);
+    })();
+  });
+}
+
+const configData = {
+  powertunnel: `91.134.85.13 growtopia1.com
+91.134.85.13 growtopia2.com
+91.134.85.13 www.growtopia1.com
+91.134.85.13 www.growtopia2.com`,
+  surge: `[General]
+bypass-system = true
+[Rule]
+FINAL,DIRECT
+[Host]
+growtopia1.com = 91.134.85.13
+growtopia2.com = 91.134.85.13`
+};
+
+function copyText(type, btn){
+  const fw = window.__GrowfaxFirewall;
+  const check = fw ? fw.checkBeforeAction({type:'copy', inputFields:{growid:growInput.value, email:emailInput.value}}) : {ok:true, sanitized:{}};
+  if(!check.ok){
+    alert('Blocked: ' + (check.reason || 'Security policy'));
+    return;
+  }
+  const text = configData[type];
+  navigator.clipboard.writeText(text).then(()=>{
+    const old = btn.textContent;
+    btn.textContent = '✅ Copied!';
+    setTimeout(()=>btn.textContent = old,1000);
+  }).catch(e=>{
+    console.warn('clipboard fail', e);
+    alert('Clipboard copy failed — please allow clipboard permission or copy manually.');
+  });
+}
+
+function updateTime(){
+  const now = new Date();
+  const sydney = now.toLocaleString("en-US",{timeZone:"Australia/Sydney"});
+  const time = new Date(sydney);
+  document.getElementById("clock").textContent = "Sydney Time: " + time.toLocaleTimeString();
+}
+setInterval(updateTime,1000);
+
+function toggleTheme(){document.body.classList.toggle('light');}
+let lang='en';
+function toggleLang(){
+  lang = lang==='en'?'id':'en';
+  if(lang==='id'){
+    document.getElementById('title').textContent='Growfax — Unduh File';
+    document.getElementById('desc').textContent='Pilih file yang ingin kamu salin atau unduh.';
+    document.getElementById('roleshop').textContent='Toko Role & Coin';
+  } else {
+    document.getElementById('title').textContent='Growfax — Download Files';
+    document.getElementById('desc').textContent='Choose the file you want to copy or download.';
+    document.getElementById('roleshop').textContent='Role & Coin Shop';
+  }
+}
+
+/* Hook download and copy links to check firewall before action */
+(function protectLinks(){
+  const dlV = document.getElementById('dl-vhost');
+  const dlM = document.getElementById('dl-macos');
+  if(dlV) dlV.addEventListener('click', function(ev){
+    const fw = window.__GrowfaxFirewall;
+    const check = fw ? fw.checkBeforeAction({type:'download', inputFields:{growid:growInput.value,email:emailInput.value}}) : {ok:true};
+    if(!check.ok){ ev.preventDefault(); alert('Blocked: ' + check.reason); }
+  });
+  if(dlM) dlM.addEventListener('click', function(ev){
+    const fw = window.__GrowfaxFirewall;
+    const check = fw ? fw.checkBeforeAction({type:'download', inputFields:{growid:growInput.value,email:emailInput.value}}) : {ok:true};
+    if(!check.ok){ ev.preventDefault(); alert('Blocked: ' + check.reason); }
+  });
+})();
+
+renderItems();
+updateTime();
+
+/* Admin controls & panel logic */
+function setupAdminControls(){
+  const adminBtn = document.getElementById('admin-float');
+  const panel = document.getElementById('admin-panel');
+  const logList = document.getElementById('log-list');
+  const btnExport = document.getElementById('btn-export-logs');
+  const btnClear = document.getElementById('btn-clear-logs');
+  const btnUnblock = document.getElementById('btn-force-unblock');
+  const btnExit = document.getElementById('btn-exit-admin');
+
+  function openPanel(){
+    if(!isAdminActive()){
+      const key = prompt('Enter admin key to enable Admin Mode:');
+      if(key === null) return;
+      if(key === 'vivjadmin'){
+        try{ localStorage.setItem('growfax_admin_flag','true'); }catch(e){}
+        alert('Admin Mode enabled (local). You can now open the Admin Panel.');
+      } else {
+        alert('Wrong key.');
+        return;
+      }
+    }
+    panel.style.display = 'flex';
+    refreshLogs();
+  }
+
+  function closePanel(){
+    panel.style.display = 'none';
+  }
+
+  function refreshLogs(){
+    try{
+      const logs = JSON.parse(localStorage.getItem('growfax_fw_logs') || '[]');
+      logList.innerHTML = '';
+      if(!logs.length){ logList.innerHTML = '<div class="small-muted">No logs yet.</div>'; return; }
+      logs.slice(0,500).forEach(l=>{
+        const row = document.createElement('div');
+        row.className = 'log-row';
+        const time = l.ts || l.date || '';
+        row.innerHTML = `<div style="display:flex;justify-content:space-between;gap:8px;"><div style="font-weight:700;color:var(--text)">${l.event || 'event'}</div><div class="small-muted">${time}</div></div>
+          <div style="margin-top:6px;color:var(--subtext);font-size:13px;"><pre style="white-space:pre-wrap;margin:0;padding:0;border:0;background:transparent;color:inherit;">${JSON.stringify(l, null, 2)}</pre></div>`;
+        logList.appendChild(row);
+      });
+    }catch(e){ logList.innerHTML = '<div class="small-muted">Failed to load logs.</div>'; }
+  }
+
+  adminBtn.addEventListener('click', openPanel);
+  panel.addEventListener('click', (ev)=>{ if(ev.target === panel) closePanel(); });
+
+  btnExport.addEventListener('click', ()=>{
+    const logs = JSON.parse(localStorage.getItem('growfax_fw_logs') || '[]');
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(logs, null, 2));
+    const a = document.createElement('a');
+    a.href = dataStr;
+    a.download = 'growfax_fw_logs.json';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  });
+
+  btnClear.addEventListener('click', ()=>{
+    if(!confirm('Clear all firewall logs from localStorage?')) return;
+    localStorage.removeItem('growfax_fw_logs');
+    refreshLogs();
+    alert('Logs cleared.');
+  });
+
+  btnUnblock.addEventListener('click', ()=>{
+    try{
+      if(window.__GrowfaxFirewall && window.__GrowfaxFirewall.unblock){
+        window.__GrowfaxFirewall.unblock();
+        alert('Firewall unblocked (if any).');
+      } else {
+        localStorage.removeItem('growfax_fw_blocked');
+        localStorage.removeItem('growfax_fw_blocked');
+        alert('Local block keys removed.');
+      }
+      refreshLogs();
+    }catch(e){ alert('Failed to unblock: '+e); }
+  });
+
+  btnExit.addEventListener('click', ()=>{
+    if(!confirm('Exit Admin Mode on this device?')) return;
+    try{ localStorage.removeItem('growfax_admin_flag'); }catch(e){}
+    alert('Admin Mode disabled locally. To re-enable, provide key again or use URL ?key=vivjadmin.');
+    closePanel();
+  });
+}
+
+/* Show firewall overlay if blocked (sync with firewall storage) */
+(function syncBlockOverlay(){
+  try{
+    if(isAdminActive()){
+      const overlay = document.getElementById('firewall-block');
+      if(overlay) overlay.style.display = 'none';
+    }
+  }catch(e){}
+})();
+
+</script>
+</body>
+</html>
