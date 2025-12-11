@@ -49,32 +49,15 @@ h1{margin:0 0 6px 0;font-size:clamp(18px,3vw,24px);}p.lead{margin:0 0 14px 0;col
 
 <!-- Client-side Firewall (Advanced) with Admin Bypass key and Admin Panel -->
 <script>
-/* =========================
-   Client-side Firewall (Advanced)
-   - Admin bypass by URL key (vivjadmin) OR via localStorage flag set from admin control
-   - Rate limiting / refresh spam detection
-   - Brute-force prevention
-   - Header/origin/referrer checks
-   - Input sanitization & basic XSS/URL-injection detection
-   - Logging to localStorage
-   - Temporary blocking with simple challenge + alert on block
-   - Admin panel to view logs, export, force-unblock, clear logs
-   Note: Works locally in browser; does not replace server-side firewall.
-   ========================= */
-
 (function(){
   'use strict';
 
-  // ADMIN BYPASS: if URL contains ?key=vivjadmin -> skip blocking and firewall enforcement
   const ADMIN_KEY = 'vivjadmin';
   const urlParams = new URLSearchParams(location.search);
   const urlHasKey = (urlParams.get('key') === ADMIN_KEY);
 
-  const ADMIN_LS_FLAG = 'growfax_admin_flag'; // boolean true/false in localStorage
+  const ADMIN_LS_FLAG = 'growfax_admin_flag';
 
-  function lsReadRaw(k){
-    try{ return localStorage.getItem(k); }catch(e){ return null; }
-  }
   function isAdminLocalFlag(){
     try{
       return localStorage.getItem(ADMIN_LS_FLAG) === 'true';
@@ -84,68 +67,63 @@ h1{margin:0 0 6px 0;font-size:clamp(18px,3vw,24px);}p.lead{margin:0 0 14px 0;col
   const isAdmin = urlHasKey || isAdminLocalFlag();
 
   const FW = {
-    maxActionsPerWindow: 12,   // overall actions per window (clicks/navigations)
-    windowMs: 30 * 1000,      // sliding window duration (ms)
-    rapidRefreshThreshold: 5, // refreshes within refreshWindow => temp block
+    maxActionsPerWindow: 12,
+    windowMs: 30000,
+    rapidRefreshThreshold: 5,
     refreshWindow: 3000,
-    refreshBlockDuration: 60 * 1000, // 1 minute
-    rapidClickThreshold: 20, // clicks within window -> block
-    blockDurationMs: 5 * 60 * 1000, // 5 minutes default block time
-    shortBlockMs: 60 * 1000, // 1 minute for small offenses
+    refreshBlockDuration: 60000,
+    rapidClickThreshold: 20,
+    blockDurationMs: 300000,
+    shortBlockMs: 60000,
     suspiciousPatterns: [/javascript:/i, /<script/i, /eval\(/i, /onerror=/i, /onload=/i, /base64,/, /data:text\/html/i],
     urlBlocklist: [/(\%3C)|(\<)/i, /(\%3E)|(\>)/i, /union(\s)+select/i, /sandbox/i],
     storagePrefix: 'growfax_fw_',
     logKey: 'growfax_fw_logs'
   };
 
-  // helpers
   function now(){ return Date.now(); }
   function lsGet(k){ try { return JSON.parse(localStorage.getItem(FW.storagePrefix + k)); } catch(e){ return null; } }
   function lsSet(k,v){ localStorage.setItem(FW.storagePrefix + k, JSON.stringify(v)); }
+
   function pushLog(entry){
     try{
       const logs = JSON.parse(localStorage.getItem(FW.logKey) || '[]');
       logs.unshift(Object.assign({ts: new Date().toISOString()}, entry));
       if(logs.length>1000) logs.length = 1000;
       localStorage.setItem(FW.logKey, JSON.stringify(logs));
-      console.warn('[FW LOG]', entry);
-    }catch(e){ console.warn('FW log fail', e); }
+    }catch(e){}
   }
 
-  // Blocking utilities
   function setBlock(reason, durationMs){
     if(isAdmin){
-      // Admin bypass active — do NOT block, but log and inform in console
       pushLog({event:'block_skipped_for_admin', reason});
-      console.info('Firewall: block skipped for admin (key present or local flag). Reason would have been:', reason);
       return;
     }
-
     const until = now() + durationMs;
     lsSet('blocked', {reason: reason, until: until});
     pushLog({event:'block_set', reason, durationMs});
-    // show alert for visitor
-    try { alert('Security alert: ' + reason + ' — temporary block applied.'); } catch(e){}
+    try { alert('Security alert: ' + reason); } catch(e){}
     showBlockOverlay(reason, durationMs);
   }
+
   function clearBlock(){
     localStorage.removeItem(FW.storagePrefix + 'blocked');
     hideBlockOverlay();
     pushLog({event:'block_cleared'});
   }
+
   function getBlock(){
     return lsGet('blocked');
   }
 
-  // Overlay UI for blocking (created here and appended)
   const overlay = document.createElement('div');
   overlay.id = 'firewall-block';
   overlay.style.display = 'none';
   overlay.innerHTML = `<div class="panel">
     <h2>Access temporarily restricted</h2>
     <div class="reason" id="fw-reason">Protective firewall detected suspicious activity.</div>
-    <div id="fw-countdown" style="margin-top:8px;font-size:13px;color:var(--subtext)"></div>
-    <div style="margin-top:10px">If you believe this is an error, complete this quick challenge to unlock.</div>
+    <div id="fw-countdown" style="margin-top:8px;font-size:13px;"></div>
+    <div style="margin-top:10px">If you believe this is an error, complete this quick challenge.</div>
     <div style="margin-top:10px">
       <button id="fw-challenge-btn">Show Challenge</button>
       <button id="fw-force-unblock" style="margin-left:8px;background:#ff6b6b;">Force Unblock</button>
@@ -159,246 +137,109 @@ h1{margin:0 0 6px 0;font-size:clamp(18px,3vw,24px);}p.lead{margin:0 0 14px 0;col
   const forceBtn = overlay.querySelector('#fw-force-unblock');
 
   function showBlockOverlay(reason, durationMs){
-    reasonEl.textContent = reason || 'Detected suspicious activity.';
+    reasonEl.textContent = reason;
     overlay.style.display = 'flex';
     updateCountdown(durationMs);
   }
-  function hideBlockOverlay(){
-    try{ overlay.style.display = 'none'; } catch(e){}
-  }
+
+  function hideBlockOverlay(){ overlay.style.display='none'; }
+
   function updateCountdown(durationMs){
-    if(!durationMs){ countdownEl.textContent = ''; return; }
     const end = now() + durationMs;
     const iv = setInterval(()=>{
       const rem = end - now();
       if(rem<=0){ clearInterval(iv); clearBlock(); return; }
-      const s = Math.ceil(rem/1000);
-      countdownEl.textContent = `Unlocks in ${s} second(s).`;
+      countdownEl.textContent = `Unlocks in ${Math.ceil(rem/1000)} second(s).`;
     }, 500);
   }
 
-  // Simple math challenge
   challengeBtn.addEventListener('click', ()=>{
     const a = Math.floor(Math.random()*9)+1;
     const b = Math.floor(Math.random()*9)+1;
     const ans = a + b;
-    const resp = prompt(`Anti-bot challenge — what is ${a} + ${b}?`);
+    const resp = prompt(`What is ${a} + ${b}?`);
     if(resp === null) return;
     if(parseInt(resp,10) === ans){
-      // unlock for short time
       clearBlock();
-      pushLog({event:'challenge_passed', method:'math'});
-      alert('Challenge passed — temporary access granted.');
-    } else {
-      pushLog({event:'challenge_failed', method:'math', input:resp});
-      alert('Incorrect — temporary block applied.');
+      alert('Challenge passed.');
+    }else{
       setBlock('Failed challenge', FW.shortBlockMs);
     }
   });
 
-  // Force unblock requires admin or typing UNBLOCK
   forceBtn.addEventListener('click', ()=>{
-    if(isAdmin){
-      clearBlock();
-      alert('Admin force-unblock executed.');
-      return;
-    }
-    const confirmText = prompt('Type "UNBLOCK" to force-unblock this device (site owner only).');
-    if(confirmText === 'UNBLOCK'){
-      clearBlock();
-      pushLog({event:'force_unblock'});
-      alert('Device force-unblocked.');
-    } else {
-      alert('Force-unblock cancelled.');
-    }
+    if(isAdmin){ clearBlock(); alert('Admin force-unblock.'); return; }
+    const txt = prompt('Type "UNBLOCK" to force-unblock.');
+    if(txt === 'UNBLOCK'){ clearBlock(); alert('Device unblocked.'); }
   });
 
-  // initial block check on load
   (function initialChecks(){
-    if(isAdmin){
-      console.info('Admin bypass active (URL key or local flag). Firewall enforcement disabled for this session.');
-      pushLog({event:'admin_bypass_active'});
-    }
+    if(isAdmin) pushLog({event:'admin_bypass_active'});
 
-    // If stored blocked and not expired, show overlay.
     const blocked = getBlock();
     if(blocked && blocked.until && now() < blocked.until){
-      const ms = blocked.until - now();
-      showBlockOverlay(blocked.reason || 'Temporarily blocked', ms);
-    } else {
-      localStorage.removeItem(FW.storagePrefix + 'blocked');
+      showBlockOverlay(blocked.reason, blocked.until - now());
     }
 
-    // Check embedding/frame (if not admin)
     try{
-      if(!isAdmin){
-        if(window.top !== window.self){
-          setBlock('Embedding in iframe detected (clickjacking protection).', FW.blockDurationMs);
-        }
+      if(!isAdmin && window.top !== window.self){
+        setBlock('Iframe embedding detected', FW.blockDurationMs);
       }
-    }catch(e){
-      if(!isAdmin) setBlock('Embedding in iframe detected (clickjacking protection).', FW.blockDurationMs);
-    }
+    }catch(e){}
 
-    // Referrer/origin checks (basic)
     const ref = document.referrer || '';
     if(ref && !isAdmin){
       if(ref.includes('phishing') || ref.includes('malicious')){
-        setBlock('Suspicious referrer detected.', FW.blockDurationMs);
+        setBlock('Suspicious referrer.', FW.blockDurationMs);
       }
     }
   })();
 
-  // Rate-limiting action counter (clicks, downloads)
   (function trackActions(){
-    if(isAdmin) return; // skip heavy tracking for admin
-
+    if(isAdmin) return;
     const key = 'actions';
     function recordAction(){
-      try{
-        const arr = lsGet(key) || [];
-        const cutoff = now() - FW.windowMs;
-        const recent = (arr.filter(ts => ts > cutoff) || []);
-        recent.unshift(now());
-        lsSet(key, recent);
-        if(recent.length > FW.maxActionsPerWindow){
-          setBlock('Too many actions — rate limit applied.', FW.blockDurationMs);
-        }
-      }catch(e){ console.warn('FW action track fail', e); }
+      const arr = lsGet(key) || [];
+      const cutoff = now() - FW.windowMs;
+      const recent = arr.filter(ts => ts > cutoff);
+      recent.unshift(now());
+      lsSet(key, recent);
+      if(recent.length > FW.maxActionsPerWindow){
+        setBlock('Too many actions', FW.blockDurationMs);
+      }
     }
-
-    document.addEventListener('click', (ev)=>{ recordAction(); }, {capture:true});
-    document.addEventListener('keydown', (ev)=>{
-      if(ev.key && (ev.key === 'F5' || (ev.ctrlKey && ev.key.toLowerCase()==='r'))){
-        const refKey = 'recent_refreshes';
-        const arr = lsGet(refKey) || [];
-        const cutoff = now() - FW.refreshWindow;
-        const recent = (arr.filter(ts => ts > cutoff) || []);
+    document.addEventListener('click', ()=>recordAction(), {capture:true});
+    document.addEventListener('keydown', ev=>{
+      if(ev.key==='F5' || (ev.ctrlKey && ev.key.toLowerCase()==='r')){
+        const refKey='recent_refreshes';
+        const arr=lsGet(refKey)||[];
+        const cutoff=now()-FW.refreshWindow;
+        const recent=arr.filter(ts=>ts>cutoff);
         recent.unshift(now());
-        lsSet(refKey, recent);
-        if(recent.length >= FW.rapidRefreshThreshold){
-          setBlock('Rapid refresh detected.', FW.refreshBlockDuration);
+        lsSet(refKey,recent);
+        if(recent.length>=FW.rapidRefreshThreshold){
+          setBlock('Rapid refresh detected',FW.refreshBlockDuration);
         }
       }
       recordAction();
-    }, {capture:true});
+    },{capture:true});
   })();
 
-  // Basic suspicious URL / query string scanner (skip if admin)
   (function urlScanner(){
-    try{
-      if(isAdmin) return;
-      const q = location.href || '';
-      for(const pat of FW.suspiciousPatterns.concat(FW.urlBlocklist)){
-        if(pat.test(q)){
-          setBlock('Suspicious URL detected.', FW.blockDurationMs);
-          pushLog({event:'suspicious_url', url:q, pattern:pat.toString()});
-          break;
-        }
-      }
-    }catch(e){ console.warn('FW url scan error', e); }
-  })();
-
-  function sanitizeStr(s){
-    if(!s && s !== '') return s;
-    s = s.replace(/\0/g,'');
-    s = s.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-    for(const p of FW.suspiciousPatterns){
-      if(p.test(s)){
-        pushLog({event:'input_sanitization_removed', input:s, pattern:p.toString()});
-        s = s.replace(p, '');
+    if(isAdmin) return;
+    const q = location.href;
+    for(const pat of [...FW.suspiciousPatterns,...FW.urlBlocklist]){
+      if(pat.test(q)){
+        setBlock('Suspicious URL detected', FW.blockDurationMs);
+        break;
       }
     }
-    return s.trim();
-  }
-
-  window.__GrowfaxFirewall = {
-    isAdmin: isAdmin,
-    isBlocked: function(){ const b = getBlock(); return !!(b && b.until && now() < b.until); },
-    checkBeforeAction: function(details){
-      if(isAdmin){
-        return {ok:true, sanitized: { growid: sanitizeStr(details?.inputFields?.growid || ''), email: sanitizeStr(details?.inputFields?.email || '') }};
-      }
-      if(this.isBlocked()){ pushLog({event:'action_blocked', details}); return {ok:false, reason:'Temporarily blocked by firewall.'}; }
-      if(details && details.inputFields){
-        const {growid, email} = details.inputFields;
-        if(typeof growid === 'string' && /<script/i.test(growid)){
-          setBlock('Script injection attempt in GrowID.', FW.blockDurationMs);
-          return {ok:false, reason:'Malicious input detected.'};
-        }
-        if(typeof email === 'string' && /<script/i.test(email)){
-          setBlock('Script injection attempt in Email.', FW.blockDurationMs);
-          return {ok:false, reason:'Malicious input detected.'};
-        }
-      }
-      const actions = lsGet('actions') || [];
-      if(actions.length > (FW.maxActionsPerWindow * 2)){
-        setBlock('Excessive activity detected.', FW.blockDurationMs);
-        return {ok:false, reason:'Too many actions.'};
-      }
-      return {ok:true, sanitized: { growid: sanitizeStr(details?.inputFields?.growid || ''), email: sanitizeStr(details?.inputFields?.email || '') }};
-    },
-    sanitize: sanitizeStr,
-    log: pushLog,
-    unblock: clearBlock,
-    setTemporaryBlock: setBlock,
-    setAdminLocalFlag: function(val){ try{ if(val) localStorage.setItem(ADMIN_LS_FLAG, 'true'); else localStorage.removeItem(ADMIN_LS_FLAG); pushLog({event:'admin_flag_set', value: !!val}); return true;}catch(e){return false;} },
-    exportLogs: function(){ try{ const logs = JSON.parse(localStorage.getItem(FW.logKey) || '[]'); return logs; }catch(e){ return []; } },
-    clearLogs: function(){ try{ localStorage.removeItem(FW.logKey); pushLog({event:'logs_cleared'}); }catch(e){} }
-  };
-
-  (function hardenDOMMethods(){
-    try{
-      const origInsertAdjacentHTML = Element.prototype.insertAdjacentHTML;
-      Element.prototype.insertAdjacentHTML = function(position, text){
-        if(typeof text === 'string' && /<script/i.test(text)){
-          const clean = text.replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '');
-          return origInsertAdjacentHTML.call(this, position, clean);
-        }
-        if(typeof text === 'string' && /on\w+\s*=/.test(text)){
-          const clean = text.replace(/on\w+\s*=\s*(['"]).*?\1/gi, '');
-          return origInsertAdjacentHTML.call(this, position, clean);
-        }
-        return origInsertAdjacentHTML.call(this, position, text);
-      };
-
-      const origDescriptor = Object.getOwnPropertyDescriptor(Element.prototype, 'innerHTML');
-      if(origDescriptor && origDescriptor.set){
-        const origSetInnerHTML = origDescriptor.set;
-        Object.defineProperty(Element.prototype, 'innerHTML', {
-          set: function(val){
-            if(typeof val === 'string'){
-              let clean = val.replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '');
-              clean = clean.replace(/on\w+\s*=\s*(['"]).*?\1/gi, '');
-              return origSetInnerHTML.call(this, clean);
-            }
-            return origSetInnerHTML.call(this, val);
-          }
-        });
-      }
-    }catch(e){ console.warn('FW harden DOM fail', e); }
   })();
-
-  window.__fw_log = pushLog;
-  window.addEventListener('beforeunload', ()=>{ lsSet('last_unload', now()); });
-
-  document.addEventListener('DOMContentLoaded', ()=>{
-    try{
-      const iframes = document.querySelectorAll('iframe');
-      iframes.forEach(iframe=>{
-        const src = iframe.src || '';
-        if(src && !src.includes('paypal.com')){
-          iframe.remove();
-          pushLog({event:'removed_iframe', src});
-        }
-      });
-    }catch(e){}
-  });
 
 })();
 </script>
-
 </head>
+
 <body>
 <div class="container">
   <div class="card">
@@ -410,33 +251,30 @@ h1{margin:0 0 6px 0;font-size:clamp(18px,3vw,24px);}p.lead{margin:0 0 14px 0;col
     <h1 id="title">Growfax — Download Files</h1>
     <p class="lead" id="desc">Choose the file you want to copy or download.</p>
     <div id="clock">Sydney Time: --:--:--</div>
+
     <div class="download-grid">
       <a class="btn-download" href="Growfax_Vhost.txt" id="dl-vhost" download>Download — Virtual Host</a>
-      <button class="btn-download" id="btn-powertunnel" onclick="copyText('powertunnel', this)">Copy — Powertunnel</button>
-      <button class="btn-download" id="btn-surge" onclick="copyText('surge', this)">Copy — iOS (Surge)</button>
+      <button class="btn-download" onclick="copyText('powertunnel', this)">Copy — Powertunnel</button>
+      <button class="btn-download" onclick="copyText('surge', this)">Copy — iOS (Surge)</button>
       <a class="btn-download" href="Growfax_Macos.txt" id="dl-macos" download>Download — macOS</a>
     </div>
   </div>
 
-  <!-- SHOP REMOVED: Role & Coin purchase UI and PayPal code have been removed per request -->
-
   <footer>© 2025 Growfax</footer>
 </div>
 
-<!-- Floating Discord Button -->
-<a href="https://discord.gg/smgS6sq83y" target="_blank" class="discord-float" title="Join our Discord" rel="noopener noreferrer">
+<a href="https://discord.gg/smgS6sq83y" target="_blank" class="discord-float">
   <img src="IMG_3151.png" alt="Discord" />
 </a>
 
-<!-- Floating Admin Button -->
-<button class="admin-float" id="admin-float" title="Enter Admin Mode">ADM</button>
+<button class="admin-float" id="admin-float">ADM</button>
 
-<!-- Admin Panel (kept) -->
+<!-- Admin Panel -->
 <div id="admin-panel" aria-hidden="true">
   <div class="panel">
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
       <h3>Admin Panel — Growfax Firewall</h3>
-      <div style="display:flex;gap:8px;align-items:center;">
+      <div style="display:flex;gap:8px;">
         <button class="btn-small" id="btn-export-logs">Export Logs (JSON)</button>
         <button class="btn-small" id="btn-clear-logs">Clear Logs</button>
         <button class="btn-small" id="btn-force-unblock">Force Unblock</button>
@@ -444,45 +282,38 @@ h1{margin:0 0 6px 0;font-size:clamp(18px,3vw,24px);}p.lead{margin:0 0 14px 0;col
       </div>
     </div>
 
-    <div class="small-muted" style="margin-bottom:8px;">Local firewall logs (from <code>growfax_fw_logs</code>) — only visible to admin. Use export to download JSON.</div>
+    <div class="small-muted" style="margin-bottom:8px;">
+      Local firewall logs — only visible to admin.
+    </div>
+
     <div id="log-list" style="max-height:60vh; overflow:auto; padding-right:6px;"></div>
   </div>
 </div>
 
-<!-- Firewall block overlay (in DOM) -->
+<!-- Firewall overlay placeholder -->
 <div id="firewall-block" style="display:none;"></div>
 
 <script>
-/* =========================
-   Application logic (uses firewall API __GrowfaxFirewall)
-   SHOP / PAYMENTS REMOVED
-   ========================= */
+/* ============================
+   General Application Logic
+   ============================ */
 
 function isAdminActive(){
-  try{ const urlParams = new URLSearchParams(location.search); if(urlParams.get('key') === 'vivjadmin') return true; if(localStorage.getItem('growfax_admin_flag') === 'true') return true; return false; }catch(e){ return false; }
+  try{
+    const p = new URLSearchParams(location.search);
+    if(p.get("key") === "vivjadmin") return true;
+    if(localStorage.getItem("growfax_admin_flag") === "true") return true;
+    return false;
+  }catch(e){ return false; }
 }
 
-window.addEventListener('load', ()=> {
-  // EmailJS & PayPal initialization removed (shop removed)
-  setupAdminControls();
-});
-
-const growInput = document.getElementById('growid'); // may be null now since shop removed
-const emailInput = document.getElementById('buyerEmail');
-const warningEl = document.getElementById('warning');
-const emailErrorEl = document.getElementById('emailError');
-let coinBalance = parseFloat(localStorage.getItem('coinBalance') || 0);
-
-function isEmailValid(email){ return typeof email === 'string' && email.includes('@') && email.indexOf(' ') === -1; }
-
-function updatePayability(){ /* noop — payments removed */ }
-
-/* Configs used by copyText */
+/* CONFIG TEXTS */
 const configData = {
   powertunnel: `91.134.85.13 growtopia1.com
 91.134.85.13 growtopia2.com
 91.134.85.13 www.growtopia1.com
 91.134.85.13 www.growtopia2.com`,
+  
   surge: `[General]
 bypass-system = true
 [Rule]
@@ -492,79 +323,152 @@ growtopia1.com = 91.134.85.13
 growtopia2.com = 91.134.85.13`
 };
 
+/* COPY BUTTON */
 function copyText(type, btn){
-  const fw = window.__GrowfaxFirewall;
-  const check = fw ? fw.checkBeforeAction({type:'copy', inputFields:{growid: (document.getElementById('growid')?document.getElementById('growid').value:''), email: (document.getElementById('buyerEmail')?document.getElementById('buyerEmail').value:'')}}) : {ok:true, sanitized:{}};
-  if(!check.ok){ alert('Blocked: ' + (check.reason || 'Security policy')); return; }
   const text = configData[type];
   navigator.clipboard.writeText(text).then(()=>{
     const old = btn.textContent;
-    btn.textContent = '✅ Copied!';
-    setTimeout(()=>btn.textContent = old,1000);
-  }).catch(e=>{ console.warn('clipboard fail', e); alert('Clipboard copy failed — please allow clipboard permission or copy manually.'); });
+    btn.textContent = "✅ Copied!";
+    setTimeout(()=>btn.textContent = old, 1000);
+  });
 }
 
-function updateTime(){ const now = new Date(); const sydney = now.toLocaleString("en-US",{timeZone:"Australia/Sydney"}); const time = new Date(sydney); document.getElementById("clock").textContent = "Sydney Time: " + time.toLocaleTimeString(); }
-setInterval(updateTime,1000);
-
-function toggleTheme(){document.body.classList.toggle('light');}
-let lang='en';
-function toggleLang(){ lang = lang==='en'?'id':'en'; if(lang==='id'){ document.getElementById('title').textContent='Growfax — Unduh File'; document.getElementById('desc').textContent='Pilih file yang ingin kamu salin atau unduh.'; } else { document.getElementById('title').textContent='Growfax — Download Files'; document.getElementById('desc').textContent='Choose the file you want to copy or download.'; } }
-
-(function protectLinks(){
-  const dlV = document.getElementById('dl-vhost');
-  const dlM = document.getElementById('dl-macos');
-  if(dlV) dlV.addEventListener('click', function(ev){ const fw = window.__GrowfaxFirewall; const check = fw ? fw.checkBeforeAction({type:'download', inputFields:{growid:'',email:''}}) : {ok:true}; if(!check.ok){ ev.preventDefault(); alert('Blocked: ' + check.reason); } });
-  if(dlM) dlM.addEventListener('click', function(ev){ const fw = window.__GrowfaxFirewall; const check = fw ? fw.checkBeforeAction({type:'download', inputFields:{growid:'',email:''}}) : {ok:true}; if(!check.ok){ ev.preventDefault(); alert('Blocked: ' + check.reason); } });
-})();
-
+/* SYDNEY CLOCK */
+function updateTime(){
+  const now = new Date();
+  const sydney = now.toLocaleString("en-US",{timeZone:"Australia/Sydney"});
+  document.getElementById("clock").textContent = "Sydney Time: " + new Date(sydney).toLocaleTimeString();
+}
+setInterval(updateTime, 1000);
 updateTime();
 
-/* Admin controls & panel logic (kept) */
+/* THEME */
+function toggleTheme(){ document.body.classList.toggle("light"); }
+
+/* ============================
+   FIXED LANGUAGE SWITCHER
+   ============================ */
+
+let lang = "en";
+
+function toggleLang(){
+  lang = lang === "en" ? "id" : "en";
+  const btnLang = document.querySelector('.btn-small[onclick="toggleLang()"]');
+
+  if(lang === "id"){
+    document.getElementById("title").textContent = "Growfax — Unduh File";
+    document.getElementById("desc").textContent = "Pilih file yang ingin kamu salin atau unduh.";
+    btnLang.textContent = "🌍 English";
+  } else {
+    document.getElementById("title").textContent = "Growfax — Download Files";
+    document.getElementById("desc").textContent = "Choose the file you want to copy or download.";
+    btnLang.textContent = "🌍 Indonesia";
+  }
+}
+
+/* ============================
+   DOWNLOAD PROTECTION
+   ============================ */
+
+(function protectLinks(){
+  const fw = window.__GrowfaxFirewall;
+  function check(ev){
+    if(!fw) return;
+    const r = fw.checkBeforeAction({type:"download", inputFields:{growid:"",email:""}});
+    if(!r.ok){ 
+      ev.preventDefault();
+      alert("Blocked: " + r.reason);
+    }
+  }
+  const v = document.getElementById("dl-vhost");
+  const m = document.getElementById("dl-macos");
+  if(v) v.addEventListener("click", check);
+  if(m) m.addEventListener("click", check);
+})();
+
+/* ============================
+   ADMIN PANEL LOGIC
+   ============================ */
+
 function setupAdminControls(){
-  const adminBtn = document.getElementById('admin-float');
-  const panel = document.getElementById('admin-panel');
-  const logList = document.getElementById('log-list');
-  const btnExport = document.getElementById('btn-export-logs');
-  const btnClear = document.getElementById('btn-clear-logs');
-  const btnUnblock = document.getElementById('btn-force-unblock');
-  const btnExit = document.getElementById('btn-exit-admin');
+  const adminBtn = document.getElementById("admin-float");
+  const panel = document.getElementById("admin-panel");
+  const logList = document.getElementById("log-list");
+
+  const btnExport = document.getElementById("btn-export-logs");
+  const btnClear = document.getElementById("btn-clear-logs");
+  const btnUnblock = document.getElementById("btn-force-unblock");
+  const btnExit = document.getElementById("btn-exit-admin");
 
   function openPanel(){
-    if(!isAdminActive()){ const key = prompt('Enter admin key to enable Admin Mode:'); if(key === null) return; if(key === 'vivjadmin'){ try{ localStorage.setItem('growfax_admin_flag','true'); }catch(e){} alert('Admin Mode enabled (local). You can now open the Admin Panel.'); } else { alert('Wrong key.'); return; } }
-    panel.style.display = 'flex'; refreshLogs();
+    if(!isAdminActive()){
+      const key = prompt("Enter admin key:");
+      if(key !== "vivjadmin"){ alert("Wrong key."); return; }
+      try{ localStorage.setItem("growfax_admin_flag","true"); }catch(e){}
+      alert("Admin Mode enabled.");
+    }
+    panel.style.display = "flex";
+    refreshLogs();
   }
 
-  function closePanel(){ panel.style.display = 'none'; }
+  function closePanel(){ panel.style.display="none"; }
 
   function refreshLogs(){
-    try{ const logs = JSON.parse(localStorage.getItem('growfax_fw_logs') || '[]'); logList.innerHTML = ''; if(!logs.length){ logList.innerHTML = '<div class="small-muted">No logs yet.</div>'; return; } logs.slice(0,500).forEach(l=>{ const row = document.createElement('div'); row.className = 'log-row'; const time = l.ts || l.date || ''; row.innerHTML = `<div style="display:flex;justify-content:space-between;gap:8px;"><div style="font-weight:700;color:var(--text)">${l.event || 'event'}</div><div class="small-muted">${time}</div></div><div style="margin-top:6px;color:var(--subtext);font-size:13px;"><pre style="white-space:pre-wrap;margin:0;padding:0;border:0;background:transparent;color:inherit;">${JSON.stringify(l, null, 2)}</pre></div>`; logList.appendChild(row); }); }catch(e){ logList.innerHTML = '<div class="small-muted">Failed to load logs.</div>'; }
+    const logs = JSON.parse(localStorage.getItem("growfax_fw_logs") || "[]");
+    logList.innerHTML = "";
+    if(!logs.length){
+      logList.innerHTML = "<div class='small-muted'>No logs yet.</div>";
+      return;
+    }
+    logs.slice(0,500).forEach(l=>{
+      const row = document.createElement("div");
+      row.className = "log-row";
+      row.innerHTML = `
+        <div style="display:flex;justify-content:space-between;">
+          <div style="font-weight:700;color:var(--text)">${l.event || "event"}</div>
+          <div class="small-muted">${l.ts || ""}</div>
+        </div>
+        <pre style="white-space:pre-wrap;margin-top:6px;font-size:12px;color:var(--subtext);">${JSON.stringify(l,null,2)}</pre>
+      `;
+      logList.appendChild(row);
+    });
   }
 
-  adminBtn.addEventListener('click', openPanel);
-  panel.addEventListener('click', (ev)=>{ if(ev.target === panel) closePanel(); });
+  adminBtn.addEventListener("click", openPanel);
+  panel.addEventListener("click", ev=>{ if(ev.target === panel) closePanel(); });
 
-  btnExport.addEventListener('click', ()=>{
-    const logs = JSON.parse(localStorage.getItem('growfax_fw_logs') || '[]');
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(logs, null, 2));
-    const a = document.createElement('a'); a.href = dataStr; a.download = 'growfax_fw_logs.json'; document.body.appendChild(a); a.click(); a.remove();
+  btnExport.addEventListener("click", ()=>{
+    const logs = JSON.parse(localStorage.getItem("growfax_fw_logs") || "[]");
+    const a = document.createElement("a");
+    a.href = "data:text/json;charset=utf-8,"+encodeURIComponent(JSON.stringify(logs,null,2));
+    a.download = "growfax_fw_logs.json";
+    a.click();
   });
 
-  btnClear.addEventListener('click', ()=>{
-    if(!confirm('Clear all firewall logs from localStorage?')) return; localStorage.removeItem('growfax_fw_logs'); refreshLogs(); alert('Logs cleared.');
+  btnClear.addEventListener("click", ()=>{
+    if(confirm("Clear all logs?")){
+      localStorage.removeItem("growfax_fw_logs");
+      refreshLogs();
+    }
   });
 
-  btnUnblock.addEventListener('click', ()=>{
-    try{ if(window.__GrowfaxFirewall && window.__GrowfaxFirewall.unblock){ window.__GrowfaxFirewall.unblock(); alert('Firewall unblocked (if any).'); } else { localStorage.removeItem('growfax_fw_blocked'); localStorage.removeItem('growfax_fw_blocked'); alert('Local block keys removed.'); } refreshLogs(); }catch(e){ alert('Failed to unblock: '+e); }
+  btnUnblock.addEventListener("click", ()=>{
+    if(window.__GrowfaxFirewall){
+      __GrowfaxFirewall.unblock();
+      alert("Firewall unblocked.");
+      refreshLogs();
+    }
   });
 
-  btnExit.addEventListener('click', ()=>{
-    if(!confirm('Exit Admin Mode on this device?')) return; try{ localStorage.removeItem('growfax_admin_flag'); }catch(e){} alert('Admin Mode disabled locally. To re-enable, provide key again or use URL ?key=vivjadmin.'); closePanel();
+  btnExit.addEventListener("click", ()=>{
+    if(confirm("Exit Admin Mode?")){
+      localStorage.removeItem("growfax_admin_flag");
+      closePanel();
+    }
   });
 }
 
-/* Show firewall overlay if blocked (sync with firewall storage) */
-(function syncBlockOverlay(){ try{ if(isAdminActive()){ const overlay = document.getElementById('firewall-block'); if(overlay) overlay.style.display = 'none'; } }catch(e){} })();
+setupAdminControls();
 
 </script>
 </body>
