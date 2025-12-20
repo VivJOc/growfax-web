@@ -47,6 +47,72 @@ h1{margin:0 0 6px 0;font-size:clamp(18px,3vw,24px);}p.lead{margin:0 0 14px 0;col
 #firewall-block .panel { max-width:520px; margin:auto; background:rgba(255,255,255,0.03); padding:18px; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,0.6);}#firewall-block .panel button { margin-top:12px; padding:10px 14px; border-radius:8px; border:none; cursor:pointer; background:var(--accent); color:#fff; font-weight:700;}#firewall-block .reason { color:#ffd7a6; margin-top:8px; font-size:13px; }
 </style>
 
+/* =========================
+   FIRE ANIMATION EFFECT
+   ========================= */
+
+.fire-wrapper{
+  pointer-events:none;
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:180px;
+  overflow:hidden;
+  z-index:2;
+}
+
+.fire{
+  position:absolute;
+  bottom:-20px;
+  width:14px;
+  height:14px;
+  background:radial-gradient(circle, #ffeb3b 0%, #ff9800 40%, #ff5722 70%, transparent 72%);
+  border-radius:50%;
+  filter: blur(0.5px);
+  animation: flame-rise linear infinite;
+  opacity:0.9;
+}
+
+@keyframes flame-rise{
+  0%{
+    transform: translateY(0) scale(1);
+    opacity:1;
+  }
+  100%{
+    transform: translateY(-180px) scale(0.2);
+    opacity:0;
+  }
+}
+
+<!-- Fire Effect -->
+<div class="fire-wrapper" id="fire"></div>
+
+<script>
+/* =========================
+   FIRE GENERATOR
+   ========================= */
+
+(function(){
+  const fire = document.getElementById("fire");
+  if(!fire) return;
+
+  function spawnFlame(){
+    const f = document.createElement("div");
+    f.className = "fire";
+    f.style.left = Math.random() * 100 + "%";
+    f.style.animationDuration = (1.5 + Math.random()*1.5) + "s";
+    f.style.transform = `scale(${0.6 + Math.random()*0.8})`;
+    fire.appendChild(f);
+
+    setTimeout(()=>f.remove(), 3000);
+  }
+
+  setInterval(spawnFlame, 120);
+})();
+</script>
+
+  
 <!-- Client-side Firewall (Advanced) with Admin Bypass key and Admin Panel -->
 <script>
 (function(){
