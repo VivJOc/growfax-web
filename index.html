@@ -6,6 +6,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Growfax — Downloads</title>
 
+  <!-- Cloudflare Turnstile -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  
+
 <!-- Security-related meta -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdn.jsdelivr.net https://upload.wikimedia.org; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; connect-src 'self' https://api.emailjs.com; img-src 'self' data: https://upload.wikimedia.org; style-src 'self' 'unsafe-inline'; frame-src https://www.paypal.com;">
 <meta name="referrer" content="no-referrer-when-downgrade">
@@ -46,6 +50,34 @@ h1{margin:0 0 6px 0;font-size:clamp(18px,3vw,24px);}p.lead{margin:0 0 14px 0;col
 #firewall-block { position: fixed; inset:0; display:none; z-index:10000; backdrop-filter: blur(3px); background: linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.85)); color:#fff; align-items:center; justify-content:center; text-align:center; padding:18px; }
 #firewall-block .panel { max-width:520px; margin:auto; background:rgba(255,255,255,0.03); padding:18px; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,0.6);}#firewall-block .panel button { margin-top:12px; padding:10px 14px; border-radius:8px; border:none; cursor:pointer; background:var(--accent); color:#fff; font-weight:700;}#firewall-block .reason { color:#ffd7a6; margin-top:8px; font-size:13px; }
 
+<!-- TURNSTILE PAGE LOAD VERIFICATION -->
+<div id="captcha-overlay"
+style="
+position:fixed;
+inset:0;
+z-index:99999;
+background:rgba(0,0,0,0.9);
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+text-align:center;
+color:#fff;
+">
+
+  <h2>Security Verification</h2>
+  <p style="font-size:13px;color:#ccc;margin-bottom:14px">
+    Please complete verification to continue
+  </p>
+
+  <div class="cf-turnstile"
+    data-sitekey="0x4AAAAAACH0OI0Io5ehYR28"
+    data-callback="onTurnstileVerified">
+  </div>
+
+</div>
+
+  
 /* FIRE_EFFECT_REPLACED */
 .fire-wrapper{
   pointer-events:none;
@@ -587,6 +619,30 @@ setupAdminControls();
   }
 
   setInterval(spawn, 140);
+})();
+</script>
+
+<script>
+(function(){
+  let verified = false;
+
+  window.onTurnstileVerified = function(){
+    verified = true;
+    const ov = document.getElementById("captcha-overlay");
+    if(ov){
+      ov.style.opacity = "0";
+      ov.style.pointerEvents = "none";
+      setTimeout(()=>ov.remove(),300);
+    }
+  };
+
+  // blok semua klik sebelum captcha lolos
+  document.addEventListener("click", function(e){
+    if(!verified){
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, true);
 })();
 </script>
 
