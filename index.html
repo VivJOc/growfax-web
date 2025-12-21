@@ -315,13 +315,37 @@ h1{margin:0 0 6px 0;font-size:clamp(18px,3vw,24px);}p.lead{margin:0 0 14px 0;col
 </head>
 
 <body>
-
-<div id="captcha-screen" style="position:fixed; inset:0; background:#0f1720; z-index:999999; display:flex; flex-direction:column; align-items:center; justify-content:center;">
-  <img src="gg.png" style="width:80px; margin-bottom:20px;">
-  <h2 style="color:#fff; margin-bottom:15px; font-family: sans-serif;">Verify you are human</h2>
   
-  <div class="cf-turnstile" data-sitekey="0x4AAAAAACH0OI0Io5ehYR28" data-callback="verifyEntry"></div>
+<div class="cf-turnstile" 
+     data-sitekey="0x4AAAAAACH0OI0Io5ehYR28" 
+     data-callback="onVerify" 
+     style="display:none;">
 </div>
+
+<script>
+window.addEventListener('load', () => {
+    // tampilkan widget otomatis
+    const widget = document.querySelector('.cf-turnstile');
+    widget.style.display = 'block';
+    widget.querySelector('iframe').contentWindow.postMessage({event:'cf-turnstile-execute'}, '*');
+});
+
+function onVerify(token) {
+    fetch('verify/verify.php', {
+        method: 'POST',
+        headers: {'Content-Type':'application/x-www-form-urlencoded'},
+        body: 'cf-turnstile-response=' + token
+    })
+    .then(res => res.text())
+    .then(res => {
+        if(res.trim() === 'success'){
+            window.location.href = 'home.html'; // redirect ke website utama
+        } else {
+            alert('Verifikasi gagal, refresh untuk coba lagi.');
+        }
+    });
+}
+</script>
 
 <!-- FIRE EFFECT -->
 <div class="fire-wrapper" id="fire-wrapper"></div>
@@ -596,18 +620,6 @@ setupAdminControls();
 
   setInterval(spawn, 140);
 })();
-</script>
-
-<script>
-// Fungsi ini akan otomatis jalan setelah captcha diceklis
-function verifyEntry(token) {
-  const screen = document.getElementById('captcha-screen');
-  if(screen) {
-    screen.style.transition = 'opacity 0.6s ease';
-    screen.style.opacity = '0';
-    setTimeout(() => screen.remove(), 600);
-  }
-}
 </script>
 
 </body>
