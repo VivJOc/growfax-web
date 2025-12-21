@@ -8,6 +8,7 @@
 
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
+
 <!-- Security-related meta -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdn.jsdelivr.net https://upload.wikimedia.org; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; connect-src 'self' https://api.emailjs.com; img-src 'self' data: https://upload.wikimedia.org; style-src 'self' 'unsafe-inline'; frame-src https://www.paypal.com;">
 <meta name="referrer" content="no-referrer-when-downgrade">
@@ -315,10 +316,11 @@ h1{margin:0 0 6px 0;font-size:clamp(18px,3vw,24px);}p.lead{margin:0 0 14px 0;col
 </head>
 
 <body>
-  
+
+<!-- Widget Turnstile -->
 <div class="cf-turnstile" 
      data-sitekey="0x4AAAAAACH0OI0Io5ehYR28" 
-     data-callback="onVerify" 
+     data-callback="onVerify"
      style="position:fixed; top:20px; right:20px; z-index:9999;">
 </div>
 
@@ -335,7 +337,7 @@ function onVerify(token){
             console.log('Verifikasi berhasil!'); 
             // user sekarang bisa akses website
         } else {
-            alert('Verification gagal, coba lagi.');
+            alert('Verification gagal, refresh untuk coba lagi.');
         }
     });
 }
