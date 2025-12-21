@@ -14,6 +14,10 @@
 
 <link rel="icon" type="image/png" href="gg.png" />
 
+<!-- Cloudflare Turnstile -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+
 <style>
 :root{
   --bg:#0f1720; --text:#e6eef8; --subtext:#9fb3d8;
@@ -45,6 +49,33 @@ h1{margin:0 0 6px 0;font-size:clamp(18px,3vw,24px);}p.lead{margin:0 0 14px 0;col
 /* Block overlay */
 #firewall-block { position: fixed; inset:0; display:none; z-index:10000; backdrop-filter: blur(3px); background: linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.85)); color:#fff; align-items:center; justify-content:center; text-align:center; padding:18px; }
 #firewall-block .panel { max-width:520px; margin:auto; background:rgba(255,255,255,0.03); padding:18px; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,0.6);}#firewall-block .panel button { margin-top:12px; padding:10px 14px; border-radius:8px; border:none; cursor:pointer; background:var(--accent); color:#fff; font-weight:700;}#firewall-block .reason { color:#ffd7a6; margin-top:8px; font-size:13px; }
+
+<!-- TURNSTILE CAPTCHA -->
+<div id="turnstile-gate" style="
+position:fixed;
+inset:0;
+z-index:20000;
+background:rgba(0,0,0,0.9);
+display:flex;
+align-items:center;
+justify-content:center;
+">
+  <div style="
+    background:#111;
+    padding:20px;
+    border-radius:12px;
+    text-align:center;
+  ">
+    <h3 style="margin:0 0 10px 0;color:#fff;">Security Check</h3>
+
+    <div class="cf-turnstile"
+      data-sitekey="0x4AAAAAACHz-48PjVrklQLl"
+      data-theme="dark"
+      data-callback="onTurnstileSuccess">
+    </div>
+  </div>
+</div>
+
 
 /* FIRE_EFFECT_REPLACED */
 .fire-wrapper{
@@ -586,6 +617,25 @@ setupAdminControls();
   }
 
   setInterval(spawn, 140);
+})();
+</script>
+
+<script>
+function onTurnstileSuccess(token){
+  try{
+    localStorage.setItem("cf_turnstile_passed","true");
+  }catch(e){}
+  const gate = document.getElementById("turnstile-gate");
+  if(gate) gate.style.display = "none";
+}
+
+(function(){
+  try{
+    if(localStorage.getItem("cf_turnstile_passed")==="true"){
+      const gate = document.getElementById("turnstile-gate");
+      if(gate) gate.style.display = "none";
+    }
+  }catch(e){}
 })();
 </script>
 
