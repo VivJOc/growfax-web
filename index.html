@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta name="google-site-verification" content="YeUtDKJsYgZuRRLkvPq0R8tZp57iJsjc-uQC3sxFUaU" />
+
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Growfax — Downloads</title>
@@ -314,6 +316,13 @@ h1{margin:0 0 6px 0;font-size:clamp(18px,3vw,24px);}p.lead{margin:0 0 14px 0;col
 
 <body>
 
+<div id="captcha-screen" style="position:fixed; inset:0; background:#0f1720; z-index:999999; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+  <img src="gg.png" style="width:80px; margin-bottom:20px;">
+  <h2 style="color:#fff; margin-bottom:15px; font-family: sans-serif;">Verify you are human</h2>
+  
+  <div class="cf-turnstile" data-sitekey="0x4AAAAAACH0OI0Io5ehYR28" data-callback="verifyEntry"></div>
+</div>
+
 <!-- FIRE EFFECT -->
 <div class="fire-wrapper" id="fire-wrapper"></div>
 
@@ -587,6 +596,18 @@ setupAdminControls();
 
   setInterval(spawn, 140);
 })();
+</script>
+
+<script>
+// Fungsi ini akan otomatis jalan setelah captcha diceklis
+function verifyEntry(token) {
+  const screen = document.getElementById('captcha-screen');
+  if(screen) {
+    screen.style.transition = 'opacity 0.6s ease';
+    screen.style.opacity = '0';
+    setTimeout(() => screen.remove(), 600);
+  }
+}
 </script>
 
 </body>
