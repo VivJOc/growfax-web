@@ -1,5 +1,5 @@
 <?php
-$secret = "0x4AAAAAACH0OBdP8ao6pf1HNlY50PefYI0";
+$secret = "0x4AAAAAACH0oOWwMmX3ne2TY0hqikOYzY4
 $response = $_POST['cf-turnstile-response'] ?? null;
 
 if(!$response){
