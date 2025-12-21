@@ -314,44 +314,6 @@ h1{margin:0 0 6px 0;font-size:clamp(18px,3vw,24px);}p.lead{margin:0 0 14px 0;col
 
 <body>
 
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-
-<div id="cloudflare-gate" style="position:fixed; top:0; left:0; width:100%; height:100%; background:white; z-index:9999; display:flex; justify-content:center; align-items:center;">
-    <div style="text-align:center;">
-        <img src="https://www.cloudflare.com/img/logo-cloudflare-dark.svg" width="120">
-        <h2>Verifikasi Keamanan</h2>
-        <p>Silakan centang di bawah untuk masuk ke website.</p>
-        
-        <div class="cf-turnstile" 
-             data-sitekey="0x4AAAAAACH0oKFAimLRmtLt" 
-             data-callback="verifyHuman"></div>
-    </div>
-</div>
-
-<script>
-// Fungsi ini jalan otomatis pas user klik centang
-function verifyHuman(token) {
-    // Di sini kita kirim token ke verify.php pake cara "diam-diam" (AJAX)
-    fetch('verify.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: 'cf-turnstile-response=' + token
-    })
-    .then(response => response.text())
-    .then(data => {
-        if(data.includes("Berhasil")) {
-            // Kalau sukses, tutup lapisan pencegatnya
-            document.getElementById('cloudflare-gate').style.display = 'none';
-            alert("Verifikasi Sukses! Selamat Datang.");
-        } else {
-            alert("Verifikasi Gagal, coba lagi.");
-        }
-    });
-}
-</script>
-
-
-
 <!-- FIRE EFFECT -->
 <div class="fire-wrapper" id="fire-wrapper"></div>
 
