@@ -315,7 +315,8 @@ h1{margin:0 0 6px 0;font-size:clamp(18px,3vw,24px);}p.lead{margin:0 0 14px 0;col
 </head>
 
 <body>
- <div class="cf-turnstile" 
+  
+<div class="cf-turnstile" 
      data-sitekey="0x4AAAAAACH0OI0Io5ehYR28" 
      data-callback="onVerify" 
      style="position:fixed; top:20px; right:20px; z-index:9999;">
@@ -332,9 +333,9 @@ function onVerify(token){
     .then(res => {
         if(res.trim() === 'success'){
             console.log('Verifikasi berhasil!'); 
-            // user sudah bisa lanjut mengakses website
+            // user sekarang bisa akses website
         } else {
-            alert('Verification failed, refresh to try again.');
+            alert('Verification gagal, coba lagi.');
         }
     });
 }
