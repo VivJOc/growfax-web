@@ -7,75 +7,141 @@
 <title>Growfax — Downloads</title>
 
 <!-- Security-related meta -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdn.jsdelivr.net https://upload.wikimedia.org; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; connect-src 'self' https://api.emailjs.com; img-src 'self' data: https://upload.wikimedia.org; style-src 'self' 'unsafe-inline'; frame-src https://www.paypal.com;">
+<meta http-equiv="Content-Security-Policy" content="
+default-src 'self' https://cdn.jsdelivr.net https://upload.wikimedia.org;
+script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://challenges.cloudflare.com;
+connect-src 'self' https://api.emailjs.com https://challenges.cloudflare.com;
+img-src 'self' data: https://upload.wikimedia.org;
+style-src 'self' 'unsafe-inline';
+frame-src https://www.paypal.com https://challenges.cloudflare.com;
+">
 <meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="referrer-policy" content="strict-origin-when-cross-origin">
 <meta name="robots" content="noindex,nofollow">
 
 <link rel="icon" type="image/png" href="gg.png" />
 
+<!-- Cloudflare Turnstile -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
 <style>
 :root{
-  --bg:#0f1720; --text:#e6eef8; --subtext:#9fb3d8;
-  --accent:#2563eb; --card-bg:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-  --input-height:40px; --container-max:980px; --transition-time:0.4s;
+  --bg:#0f1720;
+  --text:#e6eef8;
+  --subtext:#9fb3d8;
+  --accent:#2563eb;
+  --card-bg:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  --container-max:980px;
+  --transition-time:0.4s;
 }
-body.light{--bg:#f5f7fa; --text:#0f1720; --subtext:#42546e; --accent:#0ea5e9; --card-bg:#fff;}
-html,body{height:100%;margin:0;transition:background var(--transition-time) ease,color var(--transition-time) ease;}
-body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial;display:flex;justify-content:flex-start;align-items:flex-start;padding:18px;box-sizing:border-box;}
-.container{width:100%;max-width:var(--container-max);margin:0 auto;transition: all var(--transition-time) ease;}
-.card{background:var(--card-bg);border-radius:12px;padding:18px;box-shadow:0 6px 24px rgba(2,6,23,0.45);margin-bottom:18px;box-sizing:border-box;transition: background var(--transition-time) ease, color var(--transition-time) ease;}
-.controls{display:flex;gap:8px;justify-content:flex-end;margin-bottom:10px;flex-wrap:wrap;}
-.btn-small{background:none;border:1px solid rgba(255,255,255,0.08);color:var(--subtext);padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:600;min-width:120px;transition: all var(--transition-time) ease;}
-.banner{width:100%;height:auto;border-radius:10px;margin-bottom:12px;transition: all var(--transition-time) ease;}
-h1{margin:0 0 6px 0;font-size:clamp(18px,3vw,24px);}p.lead{margin:0 0 14px 0;color:var(--subtext);font-size:14px;transition: color var(--transition-time) ease;}#clock{color:var(--subtext);font-size:13px;margin-bottom:12px;transition: color var(--transition-time) ease;}
-.download-grid{display:grid;grid-template-columns: repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:8px;}
-.btn-download{background:linear-gradient(90deg,#2563eb,#06b6d4);color:#fff;padding:12px;border-radius:10px;border:none;cursor:pointer;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;box-sizing:border-box;transition: transform 0.2s ease;}
-.btn-download:active{transform:translateY(1px);}footer{margin-top:18px;color:var(--subtext);font-size:13px;text-align:center;transition: color var(--transition-time) ease;}
-@media (max-width:900px){.inputs{flex-direction:column;}.input-left,.input-right{flex:1 1 100%;}.download-grid{grid-template-columns:1fr;}.controls{justify-content:space-between;}}
-/* Floating Discord Button */
-.discord-float {position: fixed;bottom: 20px;right: 20px;z-index: 9999;width: 58px;height: 58px;border-radius: 50%;background: #5865F2;display: flex;justify-content: center;align-items: center;box-shadow: 0 4px 16px rgba(0,0,0,0.4);cursor: pointer;transition: transform 0.25s ease, box-shadow 0.25s ease;} .discord-float:hover {transform: scale(1.08);} .discord-float img {width: 65%;height: 65%;object-fit: contain;filter: drop-shadow(0 0 2px rgba(0,0,0,0.3));}
-/* Floating Admin Button (left) */
-.admin-float {position: fixed;bottom: 20px;left: 20px;z-index: 9999;width: 44px;height: 44px;border-radius: 10px;background: rgba(255,255,255,0.06);display: flex;justify-content: center;align-items: center;color: var(--text);border: 1px solid rgba(255,255,255,0.06);cursor: pointer;box-shadow: 0 6px 18px rgba(0,0,0,0.4);} .admin-float:hover { transform: translateY(-3px); }
-/* Admin panel modal */
-#admin-panel {position: fixed; inset: 0; display: none; z-index: 10001; align-items: center; justify-content: center; padding: 18px; background: linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.8));}
-#admin-panel .panel {width: min(980px, 96%); max-height: 85vh; overflow:auto; background:var(--card-bg); border-radius:12px; padding:16px; box-shadow: 0 8px 40px rgba(0,0,0,0.6);}#admin-panel .panel h3 { margin:0 0 8px 0; color:var(--text); }
-.log-row { padding:8px; border-radius:8px; background: rgba(0,0,0,0.04); margin-bottom:6px; font-size:13px; color:var(--subtext); }
-.small-muted { font-size:12px; color:var(--subtext); }
-/* Block overlay */
-#firewall-block { position: fixed; inset:0; display:none; z-index:10000; backdrop-filter: blur(3px); background: linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.85)); color:#fff; align-items:center; justify-content:center; text-align:center; padding:18px; }
-#firewall-block .panel { max-width:520px; margin:auto; background:rgba(255,255,255,0.03); padding:18px; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,0.6);}#firewall-block .panel button { margin-top:12px; padding:10px 14px; border-radius:8px; border:none; cursor:pointer; background:var(--accent); color:#fff; font-weight:700;}#firewall-block .reason { color:#ffd7a6; margin-top:8px; font-size:13px; }
 
-/* FIRE_EFFECT_REPLACED */
-.fire-wrapper{
-  pointer-events:none;
-  position:fixed;
-  bottom:0;
-  left:0;
+body.light{
+  --bg:#f5f7fa;
+  --text:#0f1720;
+  --subtext:#42546e;
+  --accent:#0ea5e9;
+  --card-bg:#ffffff;
+}
+
+html,body{
+  height:100%;
+  margin:0;
+  transition:background var(--transition-time),color var(--transition-time);
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+  display:flex;
+  justify-content:flex-start;
+  align-items:flex-start;
+  padding:18px;
+  box-sizing:border-box;
+}
+
+.container{
   width:100%;
-  height:200px;
-  overflow:hidden;
-  z-index:1;
-}
-.fire-particle{
-  position:absolute;
-  bottom:-20px;
-  width:16px;
-  height:16px;
-  background:radial-gradient(circle,#fff59d 0%,#ffb300 35%,#ff6d00 60%,rgba(255,109,0,0) 72%);
-  border-radius:50%;
-  filter: blur(0.4px);
-  animation: fire-rise linear infinite;
-}
-@keyframes fire-rise{
-  0%{transform:translateY(0) scale(1);opacity:1}
-  100%{transform:translateY(-200px) scale(0.2);opacity:0}
+  max-width:var(--container-max);
+  margin:0 auto;
 }
 
+.card{
+  background:var(--card-bg);
+  border-radius:12px;
+  padding:18px;
+  box-shadow:0 6px 24px rgba(2,6,23,0.45);
+  margin-bottom:18px;
+}
 
-/* =========================
-   PRO FIRE AURA EFFECT
-   ========================= */
+.controls{
+  display:flex;
+  gap:8px;
+  justify-content:flex-end;
+  margin-bottom:10px;
+}
+
+.btn-small{
+  background:none;
+  border:1px solid rgba(255,255,255,0.08);
+  color:var(--subtext);
+  padding:8px 10px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.banner{
+  width:100%;
+  border-radius:10px;
+  margin-bottom:12px;
+}
+
+h1{
+  margin:0 0 6px 0;
+  font-size:clamp(18px,3vw,24px);
+}
+
+p.lead{
+  margin:0 0 14px 0;
+  color:var(--subtext);
+  font-size:14px;
+}
+
+#clock{
+  color:var(--subtext);
+  font-size:13px;
+  margin-bottom:12px;
+}
+
+.download-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:10px;
+}
+
+.btn-download{
+  background:linear-gradient(90deg,#2563eb,#06b6d4);
+  color:#fff;
+  padding:12px;
+  border-radius:10px;
+  border:none;
+  cursor:pointer;
+  font-weight:700;
+  text-decoration:none;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+footer{
+  margin-top:18px;
+  color:var(--subtext);
+  font-size:13px;
+  text-align:center;
+}
+
+/* FIRE EFFECT */
 .fire-wrapper{
   pointer-events:none;
   position:fixed;
@@ -87,232 +153,57 @@ h1{margin:0 0 6px 0;font-size:clamp(18px,3vw,24px);}p.lead{margin:0 0 14px 0;col
   z-index:1;
 }
 
-.fire-aura{
+.fire-particle{
   position:absolute;
-  bottom:-40px;
-  width:40px;
-  height:40px;
-  background:
-    radial-gradient(circle at 50% 70%,
-      rgba(255,255,255,0.9) 0%,
-      rgba(255,200,0,0.9) 20%,
-      rgba(255,120,0,0.9) 45%,
-      rgba(255,60,0,0.6) 65%,
-      rgba(255,60,0,0) 72%
-    );
+  bottom:-20px;
+  width:16px;
+  height:16px;
+  background:radial-gradient(circle,#fff59d 0%,#ffb300 35%,#ff6d00 60%,rgba(255,109,0,0) 72%);
   border-radius:50%;
-  filter: blur(2px);
-  animation: aura-rise linear infinite;
-  mix-blend-mode: screen;
+  animation: fire-rise linear infinite;
 }
 
-@keyframes aura-rise{
-  0%{
-    transform: translateY(0) scale(0.6);
-    opacity:1;
-  }
-  100%{
-    transform: translateY(-260px) scale(1.8);
-    opacity:0;
-  }
+@keyframes fire-rise{
+  from{transform:translateY(0);opacity:1;}
+  to{transform:translateY(-260px);opacity:0;}
 }
-
 </style>
-
-<!-- Client-side Firewall (Advanced) with Admin Bypass key and Admin Panel -->
-<script>
-(function(){
-  'use strict';
-
-  const ADMIN_KEY = 'vivjadmin';
-  const urlParams = new URLSearchParams(location.search);
-  const urlHasKey = (urlParams.get('key') === ADMIN_KEY);
-
-  const ADMIN_LS_FLAG = 'growfax_admin_flag';
-
-  function isAdminLocalFlag(){
-    try{
-      return localStorage.getItem(ADMIN_LS_FLAG) === 'true';
-    }catch(e){ return false; }
-  }
-
-  const isAdmin = urlHasKey || isAdminLocalFlag();
-
-  const FW = {
-    maxActionsPerWindow: 12,
-    windowMs: 30000,
-    rapidRefreshThreshold: 5,
-    refreshWindow: 3000,
-    refreshBlockDuration: 60000,
-    rapidClickThreshold: 20,
-    blockDurationMs: 300000,
-    shortBlockMs: 60000,
-    suspiciousPatterns: [/javascript:/i, /<script/i, /eval\(/i, /onerror=/i, /onload=/i, /base64,/, /data:text\/html/i],
-    urlBlocklist: [/(\%3C)|(\<)/i, /(\%3E)|(\>)/i, /union(\s)+select/i, /sandbox/i],
-    storagePrefix: 'growfax_fw_',
-    logKey: 'growfax_fw_logs'
-  };
-
-  function now(){ return Date.now(); }
-  function lsGet(k){ try { return JSON.parse(localStorage.getItem(FW.storagePrefix + k)); } catch(e){ return null; } }
-  function lsSet(k,v){ localStorage.setItem(FW.storagePrefix + k, JSON.stringify(v)); }
-
-  function pushLog(entry){
-    try{
-      const logs = JSON.parse(localStorage.getItem(FW.logKey) || '[]');
-      logs.unshift(Object.assign({ts: new Date().toISOString()}, entry));
-      if(logs.length>1000) logs.length = 1000;
-      localStorage.setItem(FW.logKey, JSON.stringify(logs));
-    }catch(e){}
-  }
-
-  function setBlock(reason, durationMs){
-    if(isAdmin){
-      pushLog({event:'block_skipped_for_admin', reason});
-      return;
-    }
-    const until = now() + durationMs;
-    lsSet('blocked', {reason: reason, until: until});
-    pushLog({event:'block_set', reason, durationMs});
-    try { alert('Security alert: ' + reason); } catch(e){}
-    showBlockOverlay(reason, durationMs);
-  }
-
-  function clearBlock(){
-    localStorage.removeItem(FW.storagePrefix + 'blocked');
-    hideBlockOverlay();
-    pushLog({event:'block_cleared'});
-  }
-
-  function getBlock(){
-    return lsGet('blocked');
-  }
-
-  const overlay = document.createElement('div');
-  overlay.id = 'firewall-block';
-  overlay.style.display = 'none';
-  overlay.innerHTML = `<div class="panel">
-    <h2>Access temporarily restricted</h2>
-    <div class="reason" id="fw-reason">Protective firewall detected suspicious activity.</div>
-    <div id="fw-countdown" style="margin-top:8px;font-size:13px;"></div>
-    <div style="margin-top:10px">If you believe this is an error, complete this quick challenge.</div>
-    <div style="margin-top:10px">
-      <button id="fw-challenge-btn">Show Challenge</button>
-      <button id="fw-force-unblock" style="margin-left:8px;background:#ff6b6b;">Force Unblock</button>
-    </div>
-  </div>`;
-  document.documentElement.appendChild(overlay);
-
-  const reasonEl = overlay.querySelector('#fw-reason');
-  const countdownEl = overlay.querySelector('#fw-countdown');
-  const challengeBtn = overlay.querySelector('#fw-challenge-btn');
-  const forceBtn = overlay.querySelector('#fw-force-unblock');
-
-  function showBlockOverlay(reason, durationMs){
-    reasonEl.textContent = reason;
-    overlay.style.display = 'flex';
-    updateCountdown(durationMs);
-  }
-
-  function hideBlockOverlay(){ overlay.style.display='none'; }
-
-  function updateCountdown(durationMs){
-    const end = now() + durationMs;
-    const iv = setInterval(()=>{
-      const rem = end - now();
-      if(rem<=0){ clearInterval(iv); clearBlock(); return; }
-      countdownEl.textContent = `Unlocks in ${Math.ceil(rem/1000)} second(s).`;
-    }, 500);
-  }
-
-  challengeBtn.addEventListener('click', ()=>{
-    const a = Math.floor(Math.random()*9)+1;
-    const b = Math.floor(Math.random()*9)+1;
-    const ans = a + b;
-    const resp = prompt(`What is ${a} + ${b}?`);
-    if(resp === null) return;
-    if(parseInt(resp,10) === ans){
-      clearBlock();
-      alert('Challenge passed.');
-    }else{
-      setBlock('Failed challenge', FW.shortBlockMs);
-    }
-  });
-
-  forceBtn.addEventListener('click', ()=>{
-    if(isAdmin){ clearBlock(); alert('Admin force-unblock.'); return; }
-    const txt = prompt('Type "UNBLOCK" to force-unblock.');
-    if(txt === 'UNBLOCK'){ clearBlock(); alert('Device unblocked.'); }
-  });
-
-  (function initialChecks(){
-    if(isAdmin) pushLog({event:'admin_bypass_active'});
-
-    const blocked = getBlock();
-    if(blocked && blocked.until && now() < blocked.until){
-      showBlockOverlay(blocked.reason, blocked.until - now());
-    }
-
-    try{
-      if(!isAdmin && window.top !== window.self){
-        setBlock('Iframe embedding detected', FW.blockDurationMs);
-      }
-    }catch(e){}
-
-    const ref = document.referrer || '';
-    if(ref && !isAdmin){
-      if(ref.includes('phishing') || ref.includes('malicious')){
-        setBlock('Suspicious referrer.', FW.blockDurationMs);
-      }
-    }
-  })();
-
-  (function trackActions(){
-    if(isAdmin) return;
-    const key = 'actions';
-    function recordAction(){
-      const arr = lsGet(key) || [];
-      const cutoff = now() - FW.windowMs;
-      const recent = arr.filter(ts => ts > cutoff);
-      recent.unshift(now());
-      lsSet(key, recent);
-      if(recent.length > FW.maxActionsPerWindow){
-        setBlock('Too many actions', FW.blockDurationMs);
-      }
-    }
-    document.addEventListener('click', ()=>recordAction(), {capture:true});
-    document.addEventListener('keydown', ev=>{
-      if(ev.key==='F5' || (ev.ctrlKey && ev.key.toLowerCase()==='r')){
-        const refKey='recent_refreshes';
-        const arr=lsGet(refKey)||[];
-        const cutoff=now()-FW.refreshWindow;
-        const recent=arr.filter(ts=>ts>cutoff);
-        recent.unshift(now());
-        lsSet(refKey,recent);
-        if(recent.length>=FW.rapidRefreshThreshold){
-          setBlock('Rapid refresh detected',FW.refreshBlockDuration);
-        }
-      }
-      recordAction();
-    },{capture:true});
-  })();
-
-  (function urlScanner(){
-    if(isAdmin) return;
-    const q = location.href;
-    for(const pat of [...FW.suspiciousPatterns,...FW.urlBlocklist]){
-      if(pat.test(q)){
-        setBlock('Suspicious URL detected', FW.blockDurationMs);
-        break;
-      }
-    }
-  })();
-
-})();
-</script>
 </head>
 
 <body>
+
+<!-- TURNSTILE GATE -->
+<div id="turnstile-gate" style="
+position:fixed;
+inset:0;
+z-index:20000;
+background:linear-gradient(180deg, rgba(0,0,0,0.85), rgba(0,0,0,0.95));
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+">
+  <div style="
+    background:rgba(255,255,255,0.05);
+    padding:22px;
+    border-radius:14px;
+    max-width:360px;
+    width:90%;
+    box-shadow:0 8px 40px rgba(0,0,0,0.6);
+  ">
+    <h2 style="margin:0 0 10px 0;">Security Check</h2>
+    <p style="font-size:13px;color:#cbd5f5;margin-bottom:14px;">
+      Please verify you are human to continue.
+    </p>
+
+    <div
+      class="cf-turnstile"
+      data-sitekey="0x4AAAAAACHz-48PjVrklQLl"
+      data-theme="dark"
+      data-callback="onTurnstileSuccess">
+    </div>
+  </div>
+</div>
 
 <!-- FIRE EFFECT -->
 <div class="fire-wrapper" id="fire-wrapper"></div>
@@ -323,16 +214,29 @@ h1{margin:0 0 6px 0;font-size:clamp(18px,3vw,24px);}p.lead{margin:0 0 14px 0;col
       <button class="btn-small" onclick="toggleTheme()">🌗 Theme</button>
       <button class="btn-small" onclick="toggleLang()">🌍 Indonesia</button>
     </div>
+
     <img src="gg.png" alt="Growfax Banner" class="banner" />
+
     <h1 id="title">Growfax — Download Files</h1>
     <p class="lead" id="desc">Choose the file you want to copy or download.</p>
     <div id="clock">Sydney Time: --:--:--</div>
 
     <div class="download-grid">
-      <a class="btn-download" href="Growfax_Vhost.txt" id="dl-vhost" download>Download — Virtual Host</a>
-      <button class="btn-download" onclick="copyText('powertunnel', this)">Copy — Powertunnel</button>
-      <button class="btn-download" onclick="copyText('surge', this)">Copy — iOS (Surge)</button>
-      <a class="btn-download" href="Growfax_Macos.txt" id="dl-macos" download>Download — macOS</a>
+      <a class="btn-download" href="Growfax_Vhost.txt" id="dl-vhost" download>
+        Download — Virtual Host
+      </a>
+
+      <button class="btn-download" onclick="copyText('powertunnel', this)">
+        Copy — Powertunnel
+      </button>
+
+      <button class="btn-download" onclick="copyText('surge', this)">
+        Copy — iOS (Surge)
+      </button>
+
+      <a class="btn-download" href="Growfax_Macos.txt" id="dl-macos" download>
+        Download — macOS
+      </a>
     </div>
   </div>
 
@@ -345,7 +249,7 @@ h1{margin:0 0 6px 0;font-size:clamp(18px,3vw,24px);}p.lead{margin:0 0 14px 0;col
 
 <button class="admin-float" id="admin-float">ADM</button>
 
-<!-- Admin Panel -->
+<!-- ADMIN PANEL -->
 <div id="admin-panel" aria-hidden="true">
   <div class="panel">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
@@ -362,34 +266,42 @@ h1{margin:0 0 6px 0;font-size:clamp(18px,3vw,24px);}p.lead{margin:0 0 14px 0;col
       Local firewall logs — only visible to admin.
     </div>
 
-    <div id="log-list" style="max-height:60vh; overflow:auto; padding-right:6px;"></div>
+    <div id="log-list" style="max-height:60vh; overflow:auto;"></div>
   </div>
 </div>
 
-<!-- Firewall overlay placeholder -->
 <div id="firewall-block" style="display:none;"></div>
 
 <script>
-/* ============================
-   General Application Logic
-   ============================ */
-
-function isAdminActive(){
+/* =========================
+   TURNSTILE HANDLER
+   ========================= */
+function onTurnstileSuccess(token){
   try{
-    const p = new URLSearchParams(location.search);
-    if(p.get("key") === "vivjadmin") return true;
-    if(localStorage.getItem("growfax_admin_flag") === "true") return true;
-    return false;
-  }catch(e){ return false; }
+    localStorage.setItem("cf_turnstile_passed","true");
+  }catch(e){}
+  const gate = document.getElementById("turnstile-gate");
+  if(gate) gate.style.display = "none";
 }
 
-/* CONFIG TEXTS */
+(function(){
+  try{
+    if(localStorage.getItem("cf_turnstile_passed")==="true"){
+      const gate = document.getElementById("turnstile-gate");
+      if(gate) gate.style.display = "none";
+    }
+  }catch(e){}
+})();
+
+/* =========================
+   CONFIG TEXTS
+   ========================= */
 const configData = {
   powertunnel: `91.134.85.13 growtopia1.com
 91.134.85.13 growtopia2.com
 91.134.85.13 www.growtopia1.com
 91.134.85.13 www.growtopia2.com`,
-  
+
   surge: `[General]
 bypass-system = true
 [Rule]
@@ -399,7 +311,9 @@ growtopia1.com = 91.134.85.13
 growtopia2.com = 91.134.85.13`
 };
 
-/* COPY BUTTON */
+/* =========================
+   COPY BUTTON
+   ========================= */
 function copyText(type, btn){
   const text = configData[type];
   navigator.clipboard.writeText(text).then(()=>{
@@ -409,167 +323,99 @@ function copyText(type, btn){
   });
 }
 
-/* SYDNEY CLOCK */
+/* =========================
+   SYDNEY CLOCK
+   ========================= */
 function updateTime(){
   const now = new Date();
   const sydney = now.toLocaleString("en-US",{timeZone:"Australia/Sydney"});
-  document.getElementById("clock").textContent = "Sydney Time: " + new Date(sydney).toLocaleTimeString();
+  document.getElementById("clock").textContent =
+    "Sydney Time: " + new Date(sydney).toLocaleTimeString();
 }
-setInterval(updateTime, 1000);
+setInterval(updateTime,1000);
 updateTime();
 
-/* THEME */
-function toggleTheme(){ document.body.classList.toggle("light"); }
+/* =========================
+   THEME SWITCH
+   ========================= */
+function toggleTheme(){
+  document.body.classList.toggle("light");
+}
 
-/* ============================
-   FIXED LANGUAGE SWITCHER
-   ============================ */
-
+/* =========================
+   LANGUAGE SWITCH
+   ========================= */
 let lang = "en";
-
 function toggleLang(){
-  lang = lang === "en" ? "id" : "en";
   const btnLang = document.querySelector('.btn-small[onclick="toggleLang()"]');
-
-  if(lang === "id"){
+  if(lang === "en"){
+    lang = "id";
     document.getElementById("title").textContent = "Growfax — Unduh File";
-    document.getElementById("desc").textContent = "Pilih file yang ingin kamu salin atau unduh.";
+    document.getElementById("desc").textContent =
+      "Pilih file yang ingin kamu salin atau unduh.";
     btnLang.textContent = "🌍 English";
-  } else {
+  }else{
+    lang = "en";
     document.getElementById("title").textContent = "Growfax — Download Files";
-    document.getElementById("desc").textContent = "Choose the file you want to copy or download.";
+    document.getElementById("desc").textContent =
+      "Choose the file you want to copy or download.";
     btnLang.textContent = "🌍 Indonesia";
   }
 }
 
-/* ============================
-   DOWNLOAD PROTECTION
-   ============================ */
-
-(function protectLinks(){
-  const fw = window.__GrowfaxFirewall;
-  function check(ev){
-    if(!fw) return;
-    const r = fw.checkBeforeAction({type:"download", inputFields:{growid:"",email:""}});
-    if(!r.ok){ 
-      ev.preventDefault();
-      alert("Blocked: " + r.reason);
-    }
-  }
-  const v = document.getElementById("dl-vhost");
-  const m = document.getElementById("dl-macos");
-  if(v) v.addEventListener("click", check);
-  if(m) m.addEventListener("click", check);
-})();
-
-/* ============================
+/* =========================
    ADMIN PANEL LOGIC
-   ============================ */
+   ========================= */
+function isAdminActive(){
+  try{
+    const p = new URLSearchParams(location.search);
+    if(p.get("key")==="vivjadmin") return true;
+    if(localStorage.getItem("growfax_admin_flag")==="true") return true;
+    return false;
+  }catch(e){ return false; }
+}
 
-function setupAdminControls(){
-  const adminBtn = document.getElementById("admin-float");
+(function setupAdmin(){
+  const btn = document.getElementById("admin-float");
   const panel = document.getElementById("admin-panel");
   const logList = document.getElementById("log-list");
 
-  const btnExport = document.getElementById("btn-export-logs");
-  const btnClear = document.getElementById("btn-clear-logs");
-  const btnUnblock = document.getElementById("btn-force-unblock");
-  const btnExit = document.getElementById("btn-exit-admin");
+  if(!btn) return;
 
-  function openPanel(){
+  btn.onclick = ()=>{
     if(!isAdminActive()){
       const key = prompt("Enter admin key:");
-      if(key !== "vivjadmin"){ alert("Wrong key."); return; }
-      try{ localStorage.setItem("growfax_admin_flag","true"); }catch(e){}
-      alert("Admin Mode enabled.");
+      if(key!=="vivjadmin"){ alert("Wrong key"); return; }
+      localStorage.setItem("growfax_admin_flag","true");
     }
-    panel.style.display = "flex";
-    refreshLogs();
-  }
+    panel.style.display="flex";
+    renderLogs();
+  };
 
-  function closePanel(){ panel.style.display="none"; }
+  panel.onclick = e=>{
+    if(e.target===panel) panel.style.display="none";
+  };
 
-  function refreshLogs(){
-    const logs = JSON.parse(localStorage.getItem("growfax_fw_logs") || "[]");
-    logList.innerHTML = "";
+  function renderLogs(){
+    logList.innerHTML="";
+    const logs = JSON.parse(localStorage.getItem("growfax_fw_logs")||"[]");
     if(!logs.length){
-      logList.innerHTML = "<div class='small-muted'>No logs yet.</div>";
+      logList.innerHTML="<div class='small-muted'>No logs.</div>";
       return;
     }
-    logs.slice(0,500).forEach(l=>{
-      const row = document.createElement("div");
-      row.className = "log-row";
-      row.innerHTML = `
-        <div style="display:flex;justify-content:space-between;">
-          <div style="font-weight:700;color:var(--text)">${l.event || "event"}</div>
-          <div class="small-muted">${l.ts || ""}</div>
-        </div>
-        <pre style="white-space:pre-wrap;margin-top:6px;font-size:12px;color:var(--subtext);">${JSON.stringify(l,null,2)}</pre>
-      `;
-      logList.appendChild(row);
+    logs.forEach(l=>{
+      const d=document.createElement("div");
+      d.className="log-row";
+      d.textContent=JSON.stringify(l);
+      logList.appendChild(d);
     });
   }
-
-  adminBtn.addEventListener("click", openPanel);
-  panel.addEventListener("click", ev=>{ if(ev.target === panel) closePanel(); });
-
-  btnExport.addEventListener("click", ()=>{
-    const logs = JSON.parse(localStorage.getItem("growfax_fw_logs") || "[]");
-    const a = document.createElement("a");
-    a.href = "data:text/json;charset=utf-8,"+encodeURIComponent(JSON.stringify(logs,null,2));
-    a.download = "growfax_fw_logs.json";
-    a.click();
-  });
-
-  btnClear.addEventListener("click", ()=>{
-    if(confirm("Clear all logs?")){
-      localStorage.removeItem("growfax_fw_logs");
-      refreshLogs();
-    }
-  });
-
-  btnUnblock.addEventListener("click", ()=>{
-    if(window.__GrowfaxFirewall){
-      __GrowfaxFirewall.unblock();
-      alert("Firewall unblocked.");
-      refreshLogs();
-    }
-  });
-
-  btnExit.addEventListener("click", ()=>{
-    if(confirm("Exit Admin Mode?")){
-      localStorage.removeItem("growfax_admin_flag");
-      closePanel();
-    }
-  });
-}
-
-setupAdminControls();
-
-</script>
-
-<script>
-/* PRO FIRE AURA GENERATOR */
-(function(){
-  const wrap = document.getElementById("fire-wrapper");
-  if(!wrap) return;
-  function spawn(){
-    const f = document.createElement("div");
-    f.className = "fire-particle";
-    f.style.left = Math.random()*100 + "%";
-    f.style.animationDuration = (1.6 + Math.random()*1.6) + "s";
-    f.style.transform = "scale("+(0.5 + Math.random()*0.9)+")";
-    wrap.appendChild(f);
-    setTimeout(()=>f.remove(),3200);
-  }
-  setInterval(spawn,110);
 })();
 </script>
 
-
 <script>
 /* =========================
-   PRO FIRE AURA GENERATOR
+   FIRE PARTICLE GENERATOR
    ========================= */
 (function(){
   const wrap = document.getElementById("fire-wrapper");
@@ -577,17 +423,18 @@ setupAdminControls();
 
   function spawn(){
     const f = document.createElement("div");
-    f.className = "fire-aura";
-    f.style.left = Math.random()*100 + "%";
-    f.style.animationDuration = (2.8 + Math.random()*2.2) + "s";
-    f.style.transform = "scale("+(0.4 + Math.random()*0.6)+")";
+    f.className = "fire-particle";
+    f.style.left = Math.random() * 100 + "%";
+    f.style.animationDuration = (1.6 + Math.random() * 1.6) + "s";
+    f.style.transform = "scale(" + (0.5 + Math.random() * 0.9) + ")";
     wrap.appendChild(f);
-    setTimeout(()=>f.remove(),5200);
+    setTimeout(()=>f.remove(), 3200);
   }
 
-  setInterval(spawn, 140);
+  setInterval(spawn, 110);
 })();
 </script>
 
 </body>
 </html>
+
